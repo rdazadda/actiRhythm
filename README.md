@@ -8,8 +8,6 @@
 [![R-CMD-check](https://github.com/rdazadda/actiRhythm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rdazadda/actiRhythm/actions/workflows/R-CMD-check.yaml)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 **actiRhythm measures circadian rest-activity rhythms from activity
@@ -184,7 +182,7 @@ method reference, so `?circadian.rhythm`, `?cosinor.analysis`, and
 `?circadian.period` are good places to read more. Questions and bug
 reports go to the issue tracker at
 <https://github.com/rdazadda/actiRhythm/issues>, and contributions are
-welcome (see `CONTRIBUTING.md`).
+welcome.
 
 ## Citation
 

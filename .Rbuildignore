@@ -10,7 +10,6 @@
 ^README\.Rmd$
 ^README\.html$
 ^cran-comments\.md$
-^CONTRIBUTING\.md$
 ^_pkgdown\.yml$
 ^pkgdown$
 ^docs$

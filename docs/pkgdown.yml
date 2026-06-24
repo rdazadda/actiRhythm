@@ -1,0 +1,10 @@
+pandoc: 3.8.3
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  actiRhythm: actiRhythm.html
+  nonstationary-rhythms: nonstationary-rhythms.html
+last_built: 2026-06-24T00:00Z
+urls:
+  reference: https://rdazadda.github.io/actiRhythm/reference
+  article: https://rdazadda.github.io/actiRhythm/articles

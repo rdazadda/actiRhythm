@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2025 Raymond Dacosta Azadda, Center for Alaska Native Health
+Copyright (c) 2026 Raymond Dacosta Azadda, Center for Alaska Native Health
 Research, University of Alaska Fairbanks
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

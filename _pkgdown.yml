@@ -1,0 +1,23 @@
+url: https://rdazadda.github.io/actiRhythm/
+
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#1e3a5f"
+    secondary: "#f4a900"
+    navbar-bg: "#1e3a5f"
+    navbar-fg: "#ffffff"
+    link-color: "#2c5282"
+    headings-color: "#1e3a5f"
+
+navbar:
+  structure:
+    left: [intro, reference, articles]
+    right: [search, github]
+  bg: primary
+  type: dark
+  components:
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/rdazadda/actiRhythm
+      aria-label: GitHub

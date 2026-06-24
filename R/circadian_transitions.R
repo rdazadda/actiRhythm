@@ -1,0 +1,159 @@
+#' Rest-Activity State Transition Rates (kRA, kAR)
+#'
+#' Computes the rest-to-activity and activity-to-rest transition rates from a
+#' binarized activity series, following the survival-curve method used by
+#' pyActigraphy (Lim et al. 2011). Thresholds the series into rest/active epochs,
+#' builds the per-lag transition probability (hazard) of each bout type from the
+#' bout-length survival curve, and takes a single rate over the LOWESS
+#' "sustained" plateau of that curve.
+#'
+#' @param counts Numeric activity vector; \code{NA} are dropped.
+#' @param threshold Activity level at or above which an epoch is "active"
+#'   (default 1, i.e. any non-zero count).
+#' @param frac LOWESS smoother span for the sustained-region search (default 0.3).
+#' @param iter LOWESS robustifying iterations (default 0).
+#'
+#' @return An object of class \code{actiRhythm_transitions}: a list with
+#'   \code{kRA}/\code{kAR} (sustained rest-to-active / active-to-rest rates),
+#'   \code{pRA}/\code{pAR} (overall per-epoch transition probabilities,
+#'   1 / mean bout length), bout counts, and the two transition curves.
+#'
+#' @references
+#' Lim ASP, Yu L, Costa MD, et al. (2011). Quantification of the fragmentation of
+#' rest-activity patterns in elderly individuals using a state transition
+#' analysis. Sleep, 34(11):1569-1581.
+#'
+#' @examples
+#' set.seed(1)
+#' counts <- as.integer(stats::runif(5000) < 0.1) * 100
+#' state.transitions(counts)
+#'
+#' @export
+state.transitions <- function(counts, threshold = 1, frac = 0.3, iter = 0) {
+  active <- as.integer(counts >= threshold)
+  active <- active[!is.na(active)]
+  if (length(active) < 4L) {
+    return(structure(list(kRA = NA_real_, kAR = NA_real_, pRA = NA_real_, pAR = NA_real_,
+      threshold = threshold, n_rest_bouts = 0L, n_act_bouts = 0L,
+      rest_curve = NULL, act_curve = NULL, insufficient = TRUE),
+      class = "actiRhythm_transitions"))
+  }
+
+  r <- rle(active)
+  rest_bouts <- r$lengths[r$values == 0L]
+  act_bouts  <- r$lengths[r$values == 1L]
+
+  rest_curve <- .transition_curve(rest_bouts)
+  act_curve  <- .transition_curve(act_bouts)
+
+  structure(list(
+    kRA = .sustain_rate(rest_curve, frac, iter),
+    kAR = .sustain_rate(act_curve,  frac, iter),
+    pRA = if (length(rest_bouts)) length(rest_bouts) / sum(rest_bouts) else NA_real_,
+    pAR = if (length(act_bouts))  length(act_bouts)  / sum(act_bouts)  else NA_real_,
+    threshold    = threshold,
+    n_rest_bouts = length(rest_bouts),
+    n_act_bouts  = length(act_bouts),
+    rest_curve   = rest_curve,
+    act_curve    = act_curve,
+    insufficient = FALSE
+  ), class = "actiRhythm_transitions")
+}
+
+
+# Bout-length survival curve -> per-lag transition probability (hazard), with the
+# gap correction and sqrt-count weights used by pyActigraphy.
+.transition_curve <- function(bouts) {
+  bouts <- bouts[is.finite(bouts) & bouts > 0]
+  if (length(bouts) < 3L) return(NULL)
+  tab  <- table(bouts)
+  t    <- as.integer(names(tab))
+  n_at <- as.numeric(tab)
+  if (length(t) < 2L) return(NULL)
+
+  Nt   <- rev(cumsum(rev(n_at)))        # number of bouts of length >= t[i]
+  dNt  <- Nt - c(Nt[-1], 0)             # number terminating exactly at t[i]
+  prob <- (dNt / Nt)[-length(t)] / diff(t)   # gap-corrected per-epoch hazard
+  w    <- sqrt(Nt[-length(Nt)] + Nt[-1])
+  data.frame(lag = t[-length(t)], prob = prob, weight = w)
+}
+
+# Single rate over the LOWESS-defined sustained plateau of a transition curve.
+.sustain_rate <- function(curve, frac = 0.3, iter = 0) {
+  if (is.null(curve) || nrow(curve) == 0L) return(NA_real_)
+  if (nrow(curve) < 3L) return(stats::weighted.mean(curve$prob, curve$weight))
+
+  sm <- stats::lowess(curve$lag, curve$prob, f = frac, iter = iter)$y
+  s  <- stats::sd(curve$prob)
+  if (!is.finite(s) || s == 0) return(stats::weighted.mean(curve$prob, curve$weight))
+
+  below <- abs(curve$prob - sm) < s
+  rr <- rle(below)
+  on <- which(rr$values)
+  if (!length(on)) return(stats::weighted.mean(curve$prob, curve$weight))
+
+  best   <- on[which.max(rr$lengths[on])]
+  ends   <- cumsum(rr$lengths)
+  starts <- c(1L, ends[-length(ends)] + 1L)
+  span   <- starts[best]:ends[best]
+  stats::weighted.mean(curve$prob[span], curve$weight[span])
+}
+
+
+#' @export
+print.actiRhythm_transitions <- function(x, ...) {
+  cat("Rest-Activity State Transitions\n\n")
+  if (isTRUE(x$insufficient)) { cat("  Insufficient data\n\n"); return(invisible(x)) }
+  cat(sprintf("  Threshold:  >= %g counts = active\n", x$threshold))
+  cat(sprintf("  kRA (rest->active): %s   (%d rest bouts)\n",
+              formatC(x$kRA, format = "f", digits = 4), x$n_rest_bouts))
+  cat(sprintf("  kAR (active->rest): %s   (%d active bouts)\n",
+              formatC(x$kAR, format = "f", digits = 4), x$n_act_bouts))
+  cat(sprintf("  pRA / pAR:          %s / %s\n",
+              formatC(x$pRA, format = "f", digits = 4),
+              formatC(x$pAR, format = "f", digits = 4)))
+  invisible(x)
+}
+
+
+#' Rest-Active Transition Probabilities (ASTP / SATP)
+#'
+#' Closed-form maximum-likelihood and Bayesian estimates of the rest-to-active
+#' and active-to-rest transition probabilities, the reciprocal-mean-bout-length
+#' fragmentation estimators (Danilevicz et al. 2024). Each is a transition count
+#' over the time at risk. Unlike the survival-curve rates in
+#' \code{\link{state.transitions}}, these come straight from the bout counts.
+#'
+#' @param counts Numeric activity vector.
+#' @param threshold Counts at or above which an epoch is active (default 1).
+#' @param lambda Bayesian prior pseudo-count (default 1).
+#'
+#' @return A list with the MLE and Bayesian \code{tp_ra} (rest to active) and
+#'   \code{tp_ar} (active to rest), the active bout count and the mean active
+#'   bout length.
+#'
+#' @references
+#' Danilevicz IM, et al. (2024). Measures of fragmentation of rest activity
+#' patterns: mathematical properties and interpretability. \emph{BMC Medical
+#' Research Methodology}, 24:132. \doi{10.1186/s12874-024-02255-w}
+#'
+#' @seealso \code{\link{state.transitions}}, \code{\link{activity.balance.index}}
+#'
+#' @examples
+#' counts <- c(rep(0, 50), rep(100, 20), rep(0, 40), rep(80, 30), rep(0, 60))
+#' transition.probability(counts)
+#'
+#' @export
+transition.probability <- function(counts, threshold = 1, lambda = 1) {
+  active <- suppressWarnings(as.numeric(counts)) >= threshold
+  active[is.na(active)] <- FALSE
+  r <- rle(active); v <- r$values; nv <- length(v)
+  T_active <- sum(active); T_rest <- sum(!active)
+  n_ar <- if (nv > 1L) sum(v[-nv] & !v[-1]) else 0L   # active -> rest boundaries
+  n_ra <- if (nv > 1L) sum(!v[-nv] & v[-1]) else 0L   # rest -> active boundaries
+  mle   <- function(n, tot) if (tot > 0) n / tot else NA_real_
+  bayes <- function(n, tot) (n + lambda) / (tot + lambda)
+  list(tp_ar_mle = mle(n_ar, T_active), tp_ra_mle = mle(n_ra, T_rest),
+       tp_ar_bayes = bayes(n_ar, T_active), tp_ra_bayes = bayes(n_ra, T_rest),
+       n_active_bouts = sum(v), mean_active_bout = if (any(v)) mean(r$lengths[v]) else NA_real_)
+}

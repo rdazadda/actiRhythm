@@ -61,6 +61,7 @@ Suggests:
     ActCR,
     agcounts,
     cosinor,
+    GGIR,
     GGIRread,
     knitr,
     lomb,

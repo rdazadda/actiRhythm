@@ -223,9 +223,21 @@ function returns a `ggplot` object you can theme and save with
 
 ## Documentation
 
+The package website, <https://rdazadda.github.io/actiRhythm/>, collects
+the full documentation.
 [`vignette("actiRhythm")`](https://rdazadda.github.io/actiRhythm/articles/actiRhythm.md)
-walks through a full analysis, from reading a file to exporting the
-results. Each function’s help page carries its method reference, so
+is the get-started walkthrough and
+[`vignette("output-codebook")`](https://rdazadda.github.io/actiRhythm/articles/output-codebook.md)
+is a data dictionary for every metric the package reports. A set of
+articles goes deeper: [Choosing a
+method](https://rdazadda.github.io/actiRhythm/articles/choosing-a-method.html)
+maps each question to the right function; [Validation against reference
+packages](https://rdazadda.github.io/actiRhythm/articles/validation.html)
+cross-checks the metrics live against nparACT, ActCR and the cosinor
+package; and the method-family articles (nonparametric, cosinor, period,
+fractal, sleep, phase, raw acceleration, batch) each work one family
+from the math to a worked example. Every function’s help page also
+carries its method reference, so
 [`?circadian.rhythm`](https://rdazadda.github.io/actiRhythm/reference/circadian.rhythm.md),
 [`?cosinor.analysis`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md),
 and

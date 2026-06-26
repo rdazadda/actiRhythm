@@ -10,16 +10,16 @@ library(ggplot2)
 
 Every rhythm metric in actiRhythm starts from the same two columns: a
 regular **timestamp** and a per-epoch **count**. Getting your recording
-into that shape – and marking the stretches where the device was not on
-the body – is the whole job of this article. Whether the data arrives as
+into that shape, and marking the stretches where the device was not on
+the body, is the whole job of this article. Whether the data arrives as
 an ActiGraph `.agd` database, an ActiLife `.csv` export, or a column in
 some other data frame, the reader returns the same tidy frame, and the
 analysis functions never need to know where it came from.
 
 The rule to carry through this article: **a count of zero is not the
 same as rest.** A taken-off device reads as a long, flat block of zeros
-that looks like the deepest sleep you will ever measure – and if you
-feed it to the rhythm functions as if it were real rest, it will distort
+that looks like the deepest sleep you will ever measure, and if you feed
+it to the rhythm functions as if it were real rest, it will distort
 every number. Detecting non-wear and passing the result as `wear_time`
 is how you keep “the device was in a drawer” from masquerading as “the
 subject was perfectly still”.
@@ -36,8 +36,8 @@ fixed epoch grid and whose remaining columns are counts:
   turns that into the tidy `timestamp` / `axis1` / `axis2` / `axis3` /
   `steps` frame (plus `lux` and inclinometer columns when present).
 - [`read.actigraph.csv()`](https://rdazadda.github.io/actiRhythm/reference/read.actigraph.csv.md)
-  parses an ActiLife epoch CSV – start time and epoch length come from
-  the header, the count columns are matched by name – and returns the
+  parses an ActiLife epoch CSV (start time and epoch length come from
+  the header, the count columns are matched by name) and returns the
   **same shape** directly.
 - [`counts.from.data.frame()`](https://rdazadda.github.io/actiRhythm/reference/counts.from.data.frame.md)
   pulls a count column (and optional time column) out of any data frame,
@@ -73,15 +73,15 @@ article. Here we stay at the epoch level.
   [`read.actigraph.csv()`](https://rdazadda.github.io/actiRhythm/reference/read.actigraph.csv.md)
   to match.
 - **Zero is ambiguous.** A zero count can be genuine stillness or a
-  device that is off. Nothing in the reading step can tell them apart –
-  that is what the non-wear algorithms below are for.
+  device that is off. Nothing in the reading step can tell them apart.
+  That is what the non-wear algorithms below are for.
 
 ## Recovering known truth: an injected device-off block
 
 Before trusting non-wear detection on real data, plant a gap whose
 location we know and confirm the algorithms recover *exactly* that
 block. We build a clean three-day count series from a day-night cosine,
-then switch the device “off” – a run of zeros – for a known 180-minute
+then switch the device “off” (a run of zeros) for a known 180-minute
 window.
 
 ``` r
@@ -96,9 +96,9 @@ gap <- 1000:1179            # a 180-minute device-off block at a known location
 counts <- worn; counts[gap] <- 0
 ```
 
-Both detectors return a logical mask – `TRUE` = wear, `FALSE` = non-wear
-– one value per epoch. We ask each which epochs it flagged as non-wear
-and compare to the planted block.
+Both detectors return a logical mask (`TRUE` = wear, `FALSE` =
+non-wear), one value per epoch. We ask each which epochs it flagged as
+non-wear and compare to the planted block.
 
 ``` r
 
@@ -179,8 +179,8 @@ defaults differ. {.table}
 
 The 75-minute gap clears Troiano’s 60-minute frame but not Choi’s
 90-minute one, so Troiano flags it and Choi does not. The lone 250-count
-spike sits below nothing Choi cares about – it is flanked by zeros, so
-Choi absorbs it and keeps the full 180-epoch block – while it exceeds
+spike sits below nothing Choi cares about (it is flanked by zeros, so
+Choi absorbs it and keeps the full 180-epoch block), while it exceeds
 Troiano’s `stoplevel` of 100, ending the bout at that minute and leaving
 179. Neither is “right”; they encode different definitions of non-wear,
 and you choose to match the literature you are comparing against.
@@ -233,7 +233,7 @@ has.inclinometer(read.agd(example_agd(1), verbose = FALSE))
 #> [1] TRUE
 ```
 
-Feeding the wear mask forward is the same one argument as before – the
+Feeding the wear mask forward is the same one argument as before. The
 metrics now ignore any device-off stretch.
 
 ``` r
@@ -250,12 +250,12 @@ Wear-time output is plain, but the yardsticks matter:
 
 - **Percent worn.** A logical mask; its mean is the fraction of the
   recording on the body. Many analyses ask for a minimum number of valid
-  hours per day before a day counts –
+  hours per day before a day counts.
   [`circadian.rhythm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.rhythm.md)
   enforces that through `min_valid_hours`.
 - **Non-wear runs, not scattered epochs.** Both algorithms flag *runs*
   of at least `frame` minutes, so the mask is blocky by construction;
-  isolated zeros inside an active day stay “wear”. That is intentional –
+  isolated zeros inside an active day stay “wear”. That is intentional:
   a single quiet minute is rest, not a removed device.
 - **Choi versus Troiano.** Choi’s longer frame and flanking-window guard
   make it conservative (it flags less, more confidently); Troiano’s
@@ -317,10 +317,10 @@ counts.from.data.frame(df, count_col = "activity", time_col = "clock")
 
 **Writing back out.**
 [`write.agd()`](https://rdazadda.github.io/actiRhythm/reference/write.agd.md)
-saves a counts frame as a standard `.agd` SQLite database – the same
+saves a counts frame as a standard `.agd` SQLite database (the same
 schema
 [`read.agd()`](https://rdazadda.github.io/actiRhythm/reference/read.agd.md)
-opens – so you can round-trip, share, or hand a cleaned series to
+opens), so you can round-trip, share, or hand a cleaned series to
 ActiLife.
 
 ``` r
@@ -338,10 +338,10 @@ c(rows_in = nrow(agd), rows_out = nrow(back),
 than epoch counts,
 [`gt3x.to.agd()`](https://rdazadda.github.io/actiRhythm/reference/gt3x.to.agd.md)
 computes ActiGraph counts (the agcounts implementation of Neishabouri et
-al. 2022 ([Neishabouri et al., 2022](#ref-neishabouri2022))) and writes
-them straight to an `.agd`, carrying the device and subject metadata
-from the header. It needs the optional `agcounts` and `read.gt3x`
-packages, so it is shown but not run here.
+al. ([2022](#ref-neishabouri2022))) and writes them straight to an
+`.agd`, carrying the device and subject metadata from the header. It
+needs the optional `agcounts` and `read.gt3x` packages, so it is shown
+but not run here.
 
 ``` r
 
@@ -370,16 +370,15 @@ agd      <- agd.counts(read.agd(agd_path))
 
 ## Reference and validation
 
-The two non-wear algorithms implement Choi et al. (2011) ([Choi et al.,
-2011](#ref-choi2011)) and the Troiano et al. (2008) NHANES protocol
-([Troiano et al., 2008](#ref-troiano2008));
+The two non-wear algorithms implement Choi et al.
+([2011](#ref-choi2011)) and the Troiano et al.
+([2008](#ref-troiano2008)) NHANES protocol;
 [`gt3x.to.agd()`](https://rdazadda.github.io/actiRhythm/reference/gt3x.to.agd.md)
 and the raw readers compute counts with the open ActiGraph-count
-algorithm of Neishabouri et al. (2022) ([Neishabouri et al.,
-2022](#ref-neishabouri2022)), the same family validated against ActiLife
-by Brond et al. (2017) ([Brond et al., 2017](#ref-brond2017)).
-actiRhythm’s non-wear masks and count round-trips are cross-checked
-against reference implementations in the
+algorithm of Neishabouri et al. ([2022](#ref-neishabouri2022)), the same
+family validated against ActiLife by Brond et al.
+([2017](#ref-brond2017)). actiRhythm’s non-wear masks and count
+round-trips are cross-checked against reference implementations in the
 [Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
 article and the package’s test suite; the raw count computation is
 documented in the [raw

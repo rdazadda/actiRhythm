@@ -21,7 +21,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">actiRhythm</a>
 
@@ -39,9 +39,14 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/choosing-a-method.html">Choosing a method</a></li>
-    <li><a class="dropdown-item" href="../articles/output-codebook.html">Output codebook (metrics data dictionary)</a></li>
-    <li><a class="dropdown-item" href="../articles/validation.html">Validation against reference packages</a></li>
+<li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Get started</h6></li>
+    <li><a class="dropdown-item" href="../articles/choosing-a-method.html">Choosing a method</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Data &amp; workflow</h6></li>
+    <li><a class="dropdown-item" href="../articles/io-and-wear-time.html">Reading data and wear-time detection</a></li>
+    <li><a class="dropdown-item" href="../articles/raw-pipeline.html">From raw acceleration</a></li>
+    <li><a class="dropdown-item" href="../articles/batch-workflow.html">Batch processing and reporting</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Method families</h6></li>
     <li><a class="dropdown-item" href="../articles/nonparametric.html">Nonparametric rhythm metrics</a></li>
@@ -53,10 +58,9 @@
     <li><a class="dropdown-item" href="../articles/beyond-the-basics.html">Beyond the basics: profile, decomposition, and finer metrics</a></li>
     <li><a class="dropdown-item" href="../articles/nonstationary-rhythms.html">Nonstationary and complex rhythms</a></li>
     <li><hr class="dropdown-divider"></li>
-    <li><h6 class="dropdown-header" data-toc-skip>Data &amp; workflow</h6></li>
-    <li><a class="dropdown-item" href="../articles/io-and-wear-time.html">Reading data and wear-time detection</a></li>
-    <li><a class="dropdown-item" href="../articles/raw-pipeline.html">From raw acceleration</a></li>
-    <li><a class="dropdown-item" href="../articles/batch-workflow.html">Batch processing and reporting</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Codebook &amp; validation</h6></li>
+    <li><a class="dropdown-item" href="../articles/output-codebook.html">Output codebook (metrics data dictionary)</a></li>
+    <li><a class="dropdown-item" href="../articles/validation.html">Validation against reference packages</a></li>
   </ul>
 </li>
       </ul>
@@ -464,12 +468,12 @@ single amplitude cannot <span class="citation">(<a href="#ref-lim2011">Lim et al
 Regularity Index, social jet lag, and LIDS <span class="citation">(<a href="#ref-phillips2017">Phillips et al., 2017</a>; <a href="#ref-winnebeck2018">Winnebeck et al., 2018</a>; <a href="#ref-wittmann2006">Wittmann et al., 2006</a>)</span>.</p>
 <table class="table">
 <colgroup>
-<col width="8%">
-<col width="39%">
-<col width="7%">
-<col width="25%">
-<col width="5%">
-<col width="14%">
+<col width="6%">
+<col width="30%">
+<col width="27%">
+<col width="20%">
+<col width="4%">
+<col width="11%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Metric</th>
@@ -482,11 +486,12 @@ Regularity Index, social jet lag, and LIDS <span class="citation">(<a href="#ref
 <tbody>
 <tr class="odd">
 <td align="left">SRI</td>
-<td align="left">Sleep Regularity Index: probability two epochs 24 h
-apart share the same state (requires sleep_state)</td>
-<td align="left">percent</td>
-<td align="left">approx 0 to 100; higher = more regular (100 = perfectly
-regular)</td>
+<td align="left">Sleep Regularity Index: how consistently the sleep/wake
+state repeats 24 h apart (requires sleep_state)</td>
+<td align="left">200*P - 100, where P is the fraction of epoch pairs 24
+h apart in the same state; index points</td>
+<td align="left">-100 to 100; 100 = perfectly regular, 0 = random,
+higher = more regular</td>
 <td align="left">phillips2017</td>
 <td align="left">sleep.regularity.index()</td>
 </tr>
@@ -498,7 +503,7 @@ work days (requires sleep_periods)</td>
 <td align="left">typically 0 to 3; larger = greater misalignment</td>
 <td align="left">wittmann2006</td>
 <td align="left">social.jet.lag()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>a</mi><msub><mi>l</mi><mi>j</mi></msub><mi>e</mi><msub><mi>t</mi><mi>l</mi></msub><mi>a</mi><msub><mi>g</mi><mi>h</mi></msub><mi>o</mi><mi>u</mi><mi>r</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>M</mi><mi>S</mi><mi>W</mi><mo stretchy="false" form="prefix">|</mo><mi>M</mi><mi>i</mi><mi>d</mi><mo>−</mo><mi>s</mi><mi>l</mi><mi>e</mi><mi>e</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>w</mi><mi>o</mi><mi>r</mi><mi>k</mi><mi>d</mi><mi>a</mi><mi>y</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>k</mi><mi>h</mi><mi>o</mi><mi>u</mi><mi>r</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>−</mo><mn>24</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mi>t</mi><mi>o</mi><mn>24</mn><mo stretchy="false" form="prefix">|</mo><mi>w</mi><mi>i</mi><mi>t</mi><mi>t</mi><mi>m</mi><mi>a</mi><mi>n</mi><mi>n</mi><mn>2006</mn><mo stretchy="false" form="prefix">|</mo><mi>s</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>l</mi><mi>.</mi><mi>j</mi><mi>e</mi><mi>t</mi><mi>.</mi><mi>l</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">social_jet_lag_hours |
-|MSW                  |Mid-sleep on work days                                                                                |clock hours (0-24) |0 to 24                                                          |wittmann2006  |social.jet.lag()</annotation></semantics></math>MSW</td>
+|MSW                  |Mid-sleep on work days                                                                                  |clock hours (0-24)                                                                             |0 to 24                                                                 |wittmann2006  |social.jet.lag()</annotation></semantics></math>MSW</td>
 </tr>
 <tr class="odd">
 <td align="left">MSF</td>
@@ -507,7 +512,7 @@ work days (requires sleep_periods)</td>
 <td align="left">0 to 24</td>
 <td align="left">wittmann2006</td>
 <td align="left">social.jet.lag()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>S</mi><mi>F</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>l</mi><mi>i</mi><mi>d</mi><msub><mi>s</mi><mi>p</mi></msub><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><msub><mi>d</mi><mi>m</mi></msub><mi>i</mi><mi>n</mi><mo stretchy="false" form="prefix">|</mo><mi>M</mi><mi>e</mi><mi>a</mi><mi>n</mi><mi>L</mi><mi>o</mi><mi>c</mi><mi>o</mi><mi>m</mi><mi>o</mi><mi>t</mi><mi>o</mi><mi>r</mi><mi>I</mi><mi>n</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>D</mi><mi>u</mi><mi>r</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>S</mi><mi>l</mi><mi>e</mi><mi>e</mi><mi>p</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>d</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>l</mi><mi>e</mi><mi>e</mi><msub><mi>p</mi><mi>p</mi></msub><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mi>m</mi><mi>i</mi><mi>n</mi><mi>u</mi><mi>t</mi><mi>e</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>t</mi><mi>y</mi><mi>p</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>l</mi><mi>l</mi><mi>y</mi><mn>60</mn><mi>t</mi><mi>o</mi><mn>120</mn><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false" form="prefix">|</mo><mi>w</mi><mi>i</mi><mi>n</mi><mi>n</mi><mi>e</mi><mi>b</mi><mi>e</mi><mi>c</mi><mi>k</mi><mn>2018</mn><mo stretchy="false" form="prefix">|</mo><mi>l</mi><mi>i</mi><mi>d</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">MSF                  |
-|lids_period_min      |Mean Locomotor Inactivity During Sleep ultradian period (requires sleep_periods)                      |minutes            |typically 60 to 120 min                                          |winnebeck2018 |lids()</annotation></semantics></math>mean_period_min</td>
+|lids_period_min      |Mean Locomotor Inactivity During Sleep ultradian period (requires sleep_periods)                        |minutes                                                                                        |typically 60 to 120 min                                                 |winnebeck2018 |lids()</annotation></semantics></math>mean_period_min</td>
 </tr>
 <tr class="even">
 <td align="left">lids_MRI</td>

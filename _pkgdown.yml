@@ -5,8 +5,8 @@ template:
   bslib:
     primary: "#1e3a5f"
     secondary: "#f4a900"
-    navbar-bg: "#1e3a5f"
-    navbar-fg: "#ffffff"
+    navbar-bg: "#ffffff"
+    navbar-fg: "#1e3a5f"
     link-color: "#2c5282"
     headings-color: "#1e3a5f"
 
@@ -14,8 +14,8 @@ navbar:
   structure:
     left: [intro, reference, articles]
     right: [search, github]
-  bg: primary
-  type: dark
+  bg: light
+  type: light
   components:
     github:
       icon: fab fa-github fa-lg
@@ -189,12 +189,16 @@ reference:
   - starts_with("plot.")
 
 articles:
-- title: Get started & reference
-  navbar: ~
+- title: Get started
+  navbar: Get started
   contents:
   - '`articles/choosing-a-method`'
-  - '`output-codebook`'
-  - '`articles/validation`'
+- title: Data & workflow
+  navbar: Data & workflow
+  contents:
+  - '`articles/io-and-wear-time`'
+  - '`articles/raw-pipeline`'
+  - '`articles/batch-workflow`'
 - title: Method families
   navbar: Method families
   contents:
@@ -206,9 +210,8 @@ articles:
   - '`articles/phase-regularity`'
   - '`articles/beyond-the-basics`'
   - '`articles/nonstationary-rhythms`'
-- title: Data & workflow
-  navbar: Data & workflow
+- title: Codebook & validation
+  navbar: Codebook & validation
   contents:
-  - '`articles/io-and-wear-time`'
-  - '`articles/raw-pipeline`'
-  - '`articles/batch-workflow`'
+  - '`output-codebook`'
+  - '`articles/validation`'

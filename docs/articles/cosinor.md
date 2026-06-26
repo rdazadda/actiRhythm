@@ -9,16 +9,16 @@ library(ggplot2)
 ## The idea, and a rule to remember
 
 The cosinor fits a cosine of fixed period to the rest-activity rhythm
-and reads three interpretable numbers off it: the **MESOR** (the
-rhythm-adjusted mean), the **amplitude** (half the peak-to-trough
-swing), and the **acrophase** (the clock time of the peak). Where the
-nonparametric metrics make no shape assumption, the cosinor makes a
-strong one – a single, symmetric sinusoid – and in return gives you
-parameters you can model and compare across people.
+and reads three interpretable numbers off it: the MESOR (the
+rhythm-adjusted mean), the amplitude (half the peak-to-trough swing),
+and the acrophase (the clock time of the peak). Where the nonparametric
+metrics make no shape assumption, the cosinor makes a strong one (a
+single, symmetric sinusoid) and in return gives you parameters you can
+model and compare across people.
 
-The rule to carry through this article: **a significant rhythmicity test
-tells you the rhythm is not flat – not that a single cosine is the right
-shape.** Always read the percent-rhythm alongside the p-value; it is how
+The rule to carry through this article: a significant rhythmicity test
+tells you the rhythm is not flat, not that a single cosine is the right
+shape. Always read the percent-rhythm alongside the p-value; it is how
 much of the daily structure the one cosine actually captures, and a low
 value is the data telling you the shape is wrong.
 
@@ -55,7 +55,7 @@ of variance the cosine explains is the **percent-rhythm**, $`100\,R^2`$.
 - **One symmetric sinusoid.** The model has a single peak and trough of
   equal, smooth shape. Asymmetric days (a fast morning rise, a slow
   evening decline), squared-off days, naps, and bimodal patterns all
-  violate it – the section “When a single cosine is the wrong shape”
+  violate it. The section “When a single cosine is the wrong shape”
   below makes this concrete.
 - **A fixed, known period.** The cosinor assumes $`\tau`$; it does not
   estimate it. If the rhythm may be free-running, estimate the period
@@ -151,9 +151,9 @@ cosine cannot follow.
 
 For the joint uncertainty in amplitude and acrophase together,
 [`cosinor.confidence.ellipse()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.confidence.ellipse.md)
-returns the Bingham et al. (1982) ellipse ([Bingham et al.,
-1982](#ref-bingham1982)); an ellipse that excludes the origin is the
-geometric form of “a detectable rhythm”.
+returns the Bingham et al. ([1982](#ref-bingham1982)) ellipse; an
+ellipse that excludes the origin is the geometric form of “a detectable
+rhythm”.
 
 ``` r
 
@@ -165,22 +165,22 @@ c(excludes_origin = el$excludes_origin, rhythm_detected = el$rhythm_detected)
 
 ## Reading the numbers
 
-- **MESOR** is the rhythm-adjusted mean – the midline of the fitted
-  cosine, not the raw average.
+- **MESOR** is the rhythm-adjusted mean, the midline of the fitted
+  cosine rather than the raw average.
 - **Amplitude** is half the peak-to-trough swing; larger is a stronger
   sinusoidal component.
-- **Acrophase** is the clock time of the peak and is **circular**: 23.5
-  and 0.5 are an hour apart, not 23, and it is interpretable only once
-  the amplitude is clearly non-zero.
-- **Percent-rhythm** is the share of variance the cosine explains. A
-  small p-value with a *low* percent-rhythm is the cue that the rhythm
-  is real but the single cosine is the wrong shape.
+- **Acrophase** is the clock time of the peak and is circular: 23.5 and
+  0.5 are an hour apart, not 23, and it is interpretable only once the
+  amplitude is clearly non-zero.
+- **Percent-rhythm** is the share of variance the cosine explains; a
+  *low* value next to a small p-value is the warning the rule above
+  flags.
 
 ## When a single cosine is the wrong shape
 
-This is the rule in action. We build a **siesta day** – an active
-morning and evening with a midday dip – which has a clear 24-hour rhythm
-but is not a single symmetric cosine.
+This is the rule in action. We build a **siesta day** (an active morning
+and evening with a midday dip), which has a clear 24-hour rhythm but is
+not a single symmetric cosine.
 
 ``` r
 
@@ -197,11 +197,11 @@ c(rhythmic = rts$rhythmic, p_value = rts$p_value, percent_rhythm = rts$percent_r
 #>   1.000000e+00   3.743731e-05   6.212000e+01
 ```
 
-The test is **significant** – the rhythm is not flat – yet the single
-cosine explains only about 62 percent of the day. The missing third is
-the midday dip, which a symmetric cosine cannot represent. A
-multi-harmonic fit recovers it: it selects two components and explains
-the day in full.
+The test is significant (the rhythm is not flat), yet the single cosine
+explains only about 62 percent of the day. The missing third is the
+midday dip, which a symmetric cosine cannot represent. A multi-harmonic
+fit recovers it: it selects two components and explains essentially all
+of it (the chunk below reports the R-squared).
 
 ``` r
 
@@ -215,20 +215,18 @@ mc$harmonics
 #> x4        2  54.41006    2.011788
 ```
 
-The lesson is the rule: take the significant p-value as “there is a
-rhythm”, but let the low percent-rhythm send you to a richer model
-rather than reporting a misleading single acrophase.
+So in practice, let the low percent-rhythm, not the significant p-value,
+send you to a richer model rather than a misleading single acrophase.
 
 ## The wider cosinor family
 
-- **Asymmetric and squared-off days** –
+- **Asymmetric and squared-off days**:
   [`cosinor.extended()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.extended.md)
   and
   [`cosinor.antilogistic()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.antilogistic.md)
   fit the sigmoidally transformed cosine of Marler et al.
-  2006. ([Marler et al., 2006](#ref-marler2006)), adding shape
-        parameters (steepness, up- and down-mesor times) the single
-        cosinor lacks.
+  ([2006](#ref-marler2006)), adding shape parameters (steepness, up- and
+  down-mesor times) the single cosinor lacks.
 
 ``` r
 
@@ -239,20 +237,20 @@ c(MESOR = fit$MESOR, amplitude = fit$amplitude, acrophase = fit$acrophase,
 #> 372.95566 488.79342  16.59496  11.60451  21.58541
 ```
 
-- **Several harmonics, chosen objectively** –
+- **Several harmonics, chosen objectively**:
   [`cosinor.multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.multicomponent.md)
   adds components and picks how many by AIC or BIC, as in the siesta
   example above.
-- **The parametric amplitude as a ratio** –
+- **The parametric amplitude as a ratio**:
   [`circadian.quotient()`](https://rdazadda.github.io/actiRhythm/reference/circadian.quotient.md)
   turns the cosinor amplitude and MESOR into the circadian quotient
   (amplitude / MESOR).
-- **Pooling the evidence** –
+- **Pooling the evidence**:
   [`consensus.rhythmicity()`](https://rdazadda.github.io/actiRhythm/reference/consensus.rhythmicity.md)
   runs the cosinor F-test, the Bingham ellipse, the Lomb-Scargle
   false-alarm probability, and the chi-square periodogram together, and
   reports a majority vote with a combined p-value.
-- **From one subject to a group** –
+- **From one subject to a group**:
   [`population.cosinor()`](https://rdazadda.github.io/actiRhythm/reference/population.cosinor.md)
   pools per-subject fits into a Bingham population-mean rhythm with
   confidence intervals, and
@@ -276,16 +274,14 @@ c(MESOR = fit$MESOR, amplitude = fit$amplitude, acrophase = fit$acrophase,
 
 ## Reference and validation
 
-The cosinor follows Cornelissen (2014) ([Cornelissen,
-2014](#ref-cornelissen2014)) with the zero-amplitude test of Nelson et
-al. (1979) ([Nelson et al., 1979](#ref-nelson1979)), the anti-logistic
-extension of Marler et al. (2006) ([Marler et al.,
-2006](#ref-marler2006)), and the population framework of Bingham et
-al. (1982) ([Bingham et al., 1982](#ref-bingham1982)). actiRhythm’s
-single and extended cosinor are cross-checked against the `cosinor`
-package and
+The cosinor follows Cornelissen ([2014](#ref-cornelissen2014)) with the
+zero-amplitude test of Nelson et al. ([1979](#ref-nelson1979)), the
+anti-logistic extension of Marler et al. ([2006](#ref-marler2006)), and
+the population framework of Bingham et al. ([1982](#ref-bingham1982)).
+actiRhythm’s single and extended cosinor are cross-checked against the
+`cosinor` package and
 [`ActCR::ActExtendCosinor`](https://rdrr.io/pkg/ActCR/man/ActExtendCosinor.html)
-– to the printed precision – in the
+(to the printed precision) in the
 [Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
 article and the package’s test suite.
 

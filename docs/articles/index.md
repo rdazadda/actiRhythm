@@ -1,13 +1,18 @@
 # Articles
 
-### Get started & reference
+### Get started
 
 - [Choosing a
   method](https://rdazadda.github.io/actiRhythm/articles/choosing-a-method.md):
-- [Output codebook (metrics data
-  dictionary)](https://rdazadda.github.io/actiRhythm/articles/output-codebook.md):
-- [Validation against reference
-  packages](https://rdazadda.github.io/actiRhythm/articles/validation.md):
+
+### Data & workflow
+
+- [Reading data and wear-time
+  detection](https://rdazadda.github.io/actiRhythm/articles/io-and-wear-time.md):
+- [From raw
+  acceleration](https://rdazadda.github.io/actiRhythm/articles/raw-pipeline.md):
+- [Batch processing and
+  reporting](https://rdazadda.github.io/actiRhythm/articles/batch-workflow.md):
 
 ### Method families
 
@@ -28,11 +33,9 @@
 - [Nonstationary and complex
   rhythms](https://rdazadda.github.io/actiRhythm/articles/nonstationary-rhythms.md):
 
-### Data & workflow
+### Codebook & validation
 
-- [Reading data and wear-time
-  detection](https://rdazadda.github.io/actiRhythm/articles/io-and-wear-time.md):
-- [From raw
-  acceleration](https://rdazadda.github.io/actiRhythm/articles/raw-pipeline.md):
-- [Batch processing and
-  reporting](https://rdazadda.github.io/actiRhythm/articles/batch-workflow.md):
+- [Output codebook (metrics data
+  dictionary)](https://rdazadda.github.io/actiRhythm/articles/output-codebook.md):
+- [Validation against reference
+  packages](https://rdazadda.github.io/actiRhythm/articles/validation.md):

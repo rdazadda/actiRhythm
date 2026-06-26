@@ -12,8 +12,8 @@ The nonparametric metrics describe a rest-activity rhythm **without
 assuming it has any particular shape**. Where the cosinor asks “how well
 does a cosine fit?”, interdaily stability, intradaily variability, and
 relative amplitude ask only “how regular, how fragmented, and how deep
-is the rhythm?” – questions you can answer even when the daily profile
-is asymmetric, bimodal, or squared-off, which real rest-activity data
+is the rhythm?”, questions you can answer even when the daily profile is
+asymmetric, bimodal, or squared-off, which real rest-activity data
 usually is.
 
 The rule to carry through this article: **nonparametric metrics make no
@@ -29,20 +29,20 @@ epoch, with overall mean $`\bar x`$. Bin them to hourly means and let
 $`\bar x_h`$ be the mean across all days at hour-of-day $`h`$, over
 $`p = 24`$ hours.
 
-**Interdaily stability (IS)** – how tightly the pattern repeats from one
+**Interdaily stability (IS)**, how tightly the pattern repeats from one
 day to the next ([Witting et al., 1990](#ref-witting1990)):
 ``` math
 \mathrm{IS} = \frac{n \sum_{h=1}^{p}(\bar x_h - \bar x)^2}{p \sum_{i=1}^{n}(x_i - \bar x)^2}.
 ```
 
-**Intradaily variability (IV)** – how fragmented the rhythm is, from the
+**Intradaily variability (IV)**, how fragmented the rhythm is, from the
 squared hour-to-hour differences ([Witting et al.,
 1990](#ref-witting1990)):
 ``` math
 \mathrm{IV} = \frac{n \sum_{i=2}^{n}(x_i - x_{i-1})^2}{(n-1)\sum_{i=1}^{n}(x_i - \bar x)^2}.
 ```
 
-**Relative amplitude (RA)** – the day-night contrast, from the
+**Relative amplitude (RA)**, the day-night contrast, from the
 most-active 10-hour window M10 and the least-active 5-hour window L5 of
 the average day ([Van Someren et al., 1999](#ref-vansomeren1999)):
 ``` math
@@ -185,7 +185,7 @@ State each metric in human terms:
 The most informative reading is often the **combination**. This
 recording pairs a high RA (near 0.98) with a low IS (near 0.23): the
 days are strongly active, but the pattern does not repeat at the same
-clock time – a strong rhythm carried on irregular timing, which neither
+clock time, a strong rhythm carried on irregular timing, which neither
 number says on its own.
 
 ## The wider nonparametric family
@@ -196,7 +196,7 @@ descriptors.
 **Generalising L5/M10 to any window.**
 [`activity.extrema()`](https://rdazadda.github.io/actiRhythm/reference/activity.extrema.md)
 reports the least- and most-active window of any length, with onset and
-midpoint times – L1/M1 and L5/M10 are special cases.
+midpoint times. L1/M1 and L5/M10 are special cases.
 
 ``` r
 
@@ -257,8 +257,8 @@ dichotomy.index(agd$axis1, agd$timestamp, rest = h >= 23 | h < 7)
 [`state.transitions()`](https://rdazadda.github.io/actiRhythm/reference/state.transitions.md)
 and
 [`transition.probability()`](https://rdazadda.github.io/actiRhythm/reference/transition.probability.md)
-summarise how readily the subject switches between rest and activity –
-the kRA/kAR rates and the closed-form transition probabilities –
+summarise how readily the subject switches between rest and activity
+(the kRA/kAR rates and the closed-form transition probabilities),
 capturing fragmentation a single amplitude cannot ([Lim et al.,
 2011](#ref-lim2011)).
 
@@ -313,14 +313,13 @@ than pooled, shows how steady the active phase is.
 
 ## Reference and validation
 
-The nonparametric battery follows Witting et al. (1990) ([Witting et
-al., 1990](#ref-witting1990)) and Van Someren et al. (1999) ([Van
-Someren et al., 1999](#ref-vansomeren1999)), with the multiscale and
-dichotomy extensions of Goncalves et al. (2014) ([Goncalves et al.,
-2014](#ref-goncalves2014)) and Mormont et al. (2000) ([Mormont et al.,
-2000](#ref-mormont2000)). actiRhythm’s IS, IV, RA, L5, and M10 are
-cross-checked against the `nparACT` and `ActCR` reference
-implementations – to the printed precision – in the
+The nonparametric battery follows Witting et al.
+([1990](#ref-witting1990)) and Van Someren et al.
+([1999](#ref-vansomeren1999)), with the multiscale and dichotomy
+extensions of Goncalves et al. ([2014](#ref-goncalves2014)) and Mormont
+et al. ([2000](#ref-mormont2000)). actiRhythm’s IS, IV, RA, L5, and M10
+are cross-checked against the `nparACT` and `ActCR` reference
+implementations (to the printed precision) in the
 [Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
 article and the package’s test suite.
 

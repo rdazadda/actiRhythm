@@ -37,8 +37,8 @@ act on.
 
 ## The shape of a run
 
-There is no equation here – the family is plumbing, not a model – but
-the output has a fixed shape worth stating up front.
+There is no equation here (the family is plumbing, not a model), but the
+output has a fixed shape worth stating up front.
 
 - **[`circadian.batch()`](https://rdazadda.github.io/actiRhythm/reference/circadian.batch.md)**
   returns a data frame: a `file` column, an `error` column, and then the
@@ -68,7 +68,7 @@ Knowing the shape is most of knowing how to script against it.
 - **Readable, regularly-epoched files.** The batch assumes each path is
   an `.agd` ActiGraph file
   [`read.agd()`](https://rdazadda.github.io/actiRhythm/reference/read.agd.md)
-  can open. Anything else becomes an `error` row – which is the design,
+  can open. Anything else becomes an `error` row, which is the design,
   not a failure.
 - **A consistent epoch across files.** By default the epoch is inferred
   per file from the timestamps; mixing 30 s and 60 s recordings is
@@ -86,8 +86,8 @@ Knowing the shape is most of knowing how to script against it.
   [`cosinor.compare()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.compare.md)
   fit one cosinor per subject and then pool; they assume each subject
   contributes an averaged 24-hour profile with at least
-  `min_valid_hours` of data. They are not a substitute for a mixed model
-  – see [Choosing a
+  `min_valid_hours` of data. They are not a substitute for a mixed
+  model. See [Choosing a
   method](https://rdazadda.github.io/actiRhythm/articles/choosing-a-method.md)
   for when to reach for one.
 
@@ -198,8 +198,8 @@ batch[, c("file", "error", "IS", "IV", "RA",
 #> 2    0.050151893   24.09425
 ```
 
-Two files in, two rows out, with `error` all `NA` – both read and
-analysed cleanly – and the full metric set sitting alongside in columns
+Two files in, two rows out, with `error` all `NA` (both read and
+analysed cleanly), and the full metric set sitting alongside in columns
 we have only sampled here. Each row carries everything the [output
 codebook](https://rdazadda.github.io/actiRhythm/articles/output-codebook.md)
 documents.
@@ -251,10 +251,10 @@ be. A few human yardsticks for scanning a study-sized table:
 - **`error`** is the first column to read, not the last. Sort or filter
   on it before trusting any metric; a non-`NA` value means that row’s
   numbers are missing, not that the subject has a flat rhythm.
-- **`rhythm_p_value`** below 0.05 says the day-night cosine is real –
-  but read it with `percent_rhythm` (how much of the day the single
-  cosine captures) and `IS`/`IV` (how stable and how fragmented),
-  exactly as in the
+- **`rhythm_p_value`** below 0.05 says the day-night cosine is real, but
+  read it with `percent_rhythm` (how much of the day the single cosine
+  captures) and `IS`/`IV` (how stable and how fragmented), exactly as in
+  the
   [cosinor](https://rdazadda.github.io/actiRhythm/articles/cosinor.md)
   and
   [nonparametric](https://rdazadda.github.io/actiRhythm/articles/nonparametric.md)
@@ -293,7 +293,7 @@ openxlsx::getSheetNames(xlsx)
 
 [`circadian.batch()`](https://rdazadda.github.io/actiRhythm/reference/circadian.batch.md)
 accepts the same `file =` argument to write a single workbook whose
-Summary sheet has one row per file – the study-level companion to the
+Summary sheet has one row per file, the study-level companion to the
 per-subject workbook above.
 
 **Saving a figure.**
@@ -340,20 +340,19 @@ file.exists(png)
 ## Reference and validation
 
 The two group tools implement the population-mean cosinor and
-between-group comparison of Bingham et al. (1982) ([Bingham et al.,
-1982](#ref-bingham1982)):
+between-group comparison of Bingham et al. ([1982](#ref-bingham1982)):
 [`population.cosinor()`](https://rdazadda.github.io/actiRhythm/reference/population.cosinor.md)
 averages the linearized per-subject coefficients into a Bingham group
 rhythm with confidence intervals, and
 [`cosinor.compare()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.compare.md)
 runs the Bingham / Hotelling $`T^2`$ omnibus alongside circular-aware
 per-parameter tests. Every metric a batch row or workbook reports is the
-same quantity validated in its own article – the
+same quantity validated in its own article (the
 [cosinor](https://rdazadda.github.io/actiRhythm/articles/cosinor.md) and
 [nonparametric](https://rdazadda.github.io/actiRhythm/articles/nonparametric.md)
 families are cross-checked against reference implementations in the
 [Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
-article – and the meaning of each column is documented in the [output
+article), and the meaning of each column is documented in the [output
 codebook](https://rdazadda.github.io/actiRhythm/articles/output-codebook.md).
 
 ## References

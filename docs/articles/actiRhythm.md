@@ -156,9 +156,10 @@ rhythmicity.test(agd$axis1, agd$timestamp, cosinor_result = cos)
 A small p-value rejects the flat-line null. Here the test is clearly
 significant (p well under 0.05) and the single cosine explains a little
 over forty percent of the variance, so the acrophase above is worth
-reading. The percent-rhythm also reminds you that more than half the
-variance is structure a single cosine misses. Overlay the fit to see
-what it is and is not catching.
+reading. The percent-rhythm also reminds you that the rest of the
+variance, more than half, is a mix of noise and structure a single
+cosine cannot capture. Overlay the fit to see what it is and is not
+catching.
 
 ``` r
 
@@ -208,7 +209,7 @@ cycle itself is not in doubt. Its exact length is less certain.
 refines that peak and bootstraps it with a circular block bootstrap
 ([Kunsch, 1989](#ref-kunsch1989); [Politis & Romano,
 1992](#ref-politis1992)), which respects the autocorrelation in activity
-data, and the interval it returns is wide enough to span 24 hours. On a
+data. The interval it returns is wide enough to span 24 hours. On a
 single recording the period is clearly present but not pinned to the
 hour. Passing `seed = 1` makes the bootstrap reproducible; the 50
 replicates here keep the vignette fast, and a real interval would use
@@ -331,7 +332,7 @@ across time scales ([Costa et al., 2002](#ref-costa2002)), and
 asks whether one scaling exponent is enough or the series is genuinely
 multifractal ([Kantelhardt et al., 2002](#ref-kantelhardt2002)). Their
 help pages carry the math, and the [Beyond the
-basics](https://rdazadda.github.io/actiRhythm/articles/beyond-the-basics.md)
+basics](https://rdazadda.github.io/actiRhythm/articles/beyond-the-basics.html)
 article runs them on this recording; here it is enough to know they
 refine, not replace, the single alpha above.
 
@@ -532,7 +533,10 @@ consensus.rhythmicity(agd$axis1, agd$timestamp)
 
 For this recording three of the four tests agree that a rhythm is
 present and the Fisher-combined p-value is effectively zero, so the
-verdict is unambiguous even where one method on its own might hesitate.
+evidence leans firmly toward a real rhythm even where one method on its
+own might hesitate. Read that combined p-value as indicative rather than
+exact, though: the four tests run on the same series, so they are not
+independent, which is the assumption Fisher’s method rests on.
 
 ## A one-row summary
 
@@ -560,11 +564,9 @@ little over 24 hours.
 
 ## A whole study at once
 
-You have now run the whole arc on one recording: read it, describe the
-rhythm without assuming a shape, test whether it is real, locate and
-bound its period, probe its finer structure, and pool the separate tests
-into one verdict, ending with a single summary row. Most studies,
-though, are a folder of recordings rather than one, and that is what
+You have now run the whole arc on one recording, ending with a single
+summary row. Most studies, though, are a folder of recordings rather
+than one, and that is what
 [`circadian.batch()`](https://rdazadda.github.io/actiRhythm/reference/circadian.batch.md)
 is for. It runs this entire arc over every `.agd` file in a directory
 and returns one row per recording, so a cohort becomes a single data
@@ -606,14 +608,14 @@ circadian.workbook(agd$axis1, agd$timestamp, file = "subject01.xlsx")
 
 - Decomposition, the multi-harmonic profile, and the finer nonparametric
   and phase metrics are demonstrated in [Beyond the
-  basics](https://rdazadda.github.io/actiRhythm/articles/beyond-the-basics.md).
+  basics](https://rdazadda.github.io/actiRhythm/articles/beyond-the-basics.html).
 - Reading raw `.gt3x`/`.cwa`/`.bin` files, calibration, the
   ENMO/MAD/z-angle metrics, and diary-free posture-based sleep are in
   [From raw
-  acceleration](https://rdazadda.github.io/actiRhythm/articles/raw-pipeline.md).
+  acceleration](https://rdazadda.github.io/actiRhythm/articles/raw-pipeline.html).
 - When a rhythm drifts, shifts phase, or fragments across the recording,
   see [Nonstationary and complex
-  rhythms](https://rdazadda.github.io/actiRhythm/articles/nonstationary-rhythms.md).
+  rhythms](https://rdazadda.github.io/actiRhythm/articles/nonstationary-rhythms.html).
 - [`?circadian.rhythm`](https://rdazadda.github.io/actiRhythm/reference/circadian.rhythm.md),
   [`?cosinor.analysis`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md),
   [`?circadian.period`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md),

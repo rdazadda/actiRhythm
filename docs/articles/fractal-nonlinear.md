@@ -11,7 +11,7 @@ library(ggplot2)
 The fractal and nonlinear metrics ask a different question from the
 cosinor or the nonparametric battery. Those describe the **shape and
 depth** of the average day; the fractal tools describe the **temporal
-texture** of the minute-to-minute fluctuations – how this minute’s
+texture** of the minute-to-minute fluctuations: how this minute’s
 activity remembers the last, and how that memory stretches across scales
 from minutes to hours. Healthy activity is neither smooth nor purely
 random: it carries a self-similar, “1/f” structure, and that structure
@@ -84,7 +84,7 @@ hold their entropy across scales.
   embedded rhythm or a device-off step can masquerade as long-range
   correlation. Gate on wear time first.
 - **Amplitude-blind, by design.** $`\alpha`$ is invariant to scaling the
-  signal, so it complements – never replaces – the amplitude metrics.
+  signal, so it complements, never replaces, the amplitude metrics.
   Report it alongside, not instead of, the cosinor and nonparametric
   numbers.
 - **Heavy zeros distort the negative moments.** Activity counts have
@@ -136,21 +136,23 @@ knitr::kable(
 DFA recovers the planted scaling exponent: 0.5 for white noise, 1.0 for
 1/f, 1.5 for a random walk. {.table}
 
-The exponent tracks the planted process almost exactly. The same scaling
-shows in the log-log fluctuation plot: the steeper the line, the longer
-the memory.
+The exponent tracks the planted process almost exactly. The fluctuation
+plot for the random-walk (brown) series shows the scaling directly: a
+single straight line on log-log axes, whose slope is the exponent.
 
 ``` r
 
 plot_dfa(brown)
 ```
 
-![DFA fluctuation curves for the three planted processes. The slope is
-the scaling exponent: shallow for white noise, steepest for the random
-walk.](fractal-nonlinear_files/figure-html/dfa-plot-1.png)
+![DFA fluctuation curve for the random-walk (brown) series on log-log
+axes. The slope is the scaling exponent (~1.5 here); one straight line
+is monofractal
+scaling.](fractal-nonlinear_files/figure-html/dfa-plot-1.png)
 
-DFA fluctuation curves for the three planted processes. The slope is the
-scaling exponent: shallow for white noise, steepest for the random walk.
+DFA fluctuation curve for the random-walk (brown) series on log-log
+axes. The slope is the scaling exponent (~1.5 here); one straight line
+is monofractal scaling.
 
 ## On a real recording
 
@@ -177,9 +179,9 @@ dfa
 #>   Guide: near 0.5 = uncorrelated, near 1.0 = 1/f, near 1.5 = Brownian
 ```
 
-The overall $`\alpha`$ sits in the **0.9-1.0 healthy band** – the
-$`1/f`$ signature of intact activity regulation – rather than near the
-0.5 of noise or the 1.5 of a random walk.
+The overall $`\alpha`$ sits in the **0.9-1.0 healthy band** (the $`1/f`$
+signature of intact activity regulation) rather than near the 0.5 of
+noise or the 1.5 of a random walk.
 
 ## Reading the numbers
 
@@ -318,18 +320,17 @@ recordings.
 
 ## Reference and validation
 
-DFA follows Peng et al. (1994) ([Peng et al., 1994](#ref-peng1994)) with
-the activity-specific framing of Hu et al. (2001, 2009) ([Hu et al.,
-2001](#ref-hu2001); [Hu et al., 2009](#ref-hu2009)); the multifractal
-generalisation is Kantelhardt et al. (2002) ([Kantelhardt et al.,
-2002](#ref-kantelhardt2002)); and multiscale entropy combines the
-sample-entropy estimator of Richman and Moorman (2000) ([Richman &
-Moorman, 2000](#ref-richman2000)) with the multiscale construction of
-Costa et al. (2002) ([Costa et al., 2002](#ref-costa2002)). actiRhythm’s
-DFA and MSE are implemented in base R against these reference algorithms
-and exercised against their known limits – $`\alpha\to0.5`$ for white
-noise, $`\to1.5`$ for a random walk, entropy declining with scale for
-noise – in the package’s test suite; see also the
+DFA follows Peng et al. ([1994](#ref-peng1994)) with the
+activity-specific framing of Hu et al. ([2001](#ref-hu2001); [Hu et al.,
+2009](#ref-hu2009)); the multifractal generalisation is Kantelhardt et
+al. ([2002](#ref-kantelhardt2002)); and multiscale entropy combines the
+sample-entropy estimator of Richman & Moorman ([2000](#ref-richman2000))
+with the multiscale construction of Costa et al.
+([2002](#ref-costa2002)). actiRhythm’s DFA and MSE are implemented in
+base R against these reference algorithms and exercised against their
+known limits ($`\alpha\to0.5`$ for white noise, $`\to1.5`$ for a random
+walk, entropy declining with scale for noise) in the package’s test
+suite; see also the
 [Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
 article.
 

@@ -1,12 +1,12 @@
 # Choosing a method
 
 actiRhythm gives you many functions, and several can look like they
-answer the same question. This guide maps the **question you have** to
-the function that answers it, and pulls apart the methods that overlap.
-The rule throughout: start simple, and escalate only when the data
-demand it. The actogram and the nonparametric summary answer most
-questions on their own; the rest of the package is there for the
-recordings that are not so tidy.
+answer the same question. This guide maps the question you have to the
+function that answers it, and pulls apart the methods that overlap. The
+rule throughout: start simple, and escalate only when the data demand
+it. The actogram and the nonparametric summary answer most questions on
+their own; the rest of the package is there for the recordings that are
+not so tidy.
 
 ## Start here, every time
 
@@ -28,13 +28,13 @@ specific question below is yours.
 
 Two complementary answers:
 
-- **Without assuming a shape** –
+- **Without assuming a shape**:
   [`circadian.rhythm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.rhythm.md)
   returns interdaily stability (IS, how tightly the pattern repeats),
   intradaily variability (IV, how fragmented it is), and relative
   amplitude (RA, the day-night contrast) ([Van Someren et al.,
   1999](#ref-vansomeren1999); [Witting et al., 1990](#ref-witting1990)).
-- **With a fitted cosine** –
+- **With a fitted cosine**:
   [`cosinor.analysis()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md)
   gives an interpretable MESOR, amplitude, and acrophase, and
   [`rhythmicity.test()`](https://rdazadda.github.io/actiRhythm/reference/rhythmicity.test.md)
@@ -42,39 +42,38 @@ Two complementary answers:
   ([Cornelissen, 2014](#ref-cornelissen2014); [Nelson et al.,
   1979](#ref-nelson1979)).
 
-Use the **nonparametric** route when you do not want to assume a
-sinusoid, and the **cosinor** route when you want interpretable
-parameters. They complement rather than compete: a high RA with a low
-IS, for instance, is a strong rhythm carried on irregular timing –
-something neither number says alone. To pool every test into one
-verdict,
+Use the nonparametric route when you do not want to assume a sinusoid,
+and the cosinor route when you want interpretable parameters. They
+complement rather than compete: a high RA with a low IS, for instance,
+is a strong rhythm carried on irregular timing, something neither number
+says alone. To pool every test into one verdict,
 [`consensus.rhythmicity()`](https://rdazadda.github.io/actiRhythm/reference/consensus.rhythmicity.md)
 runs the cosinor F-test, the Bingham ellipse, the Lomb-Scargle
 false-alarm probability, and the chi-square periodogram, and reports a
 majority vote and a Fisher-combined p-value ([Fisher,
 1925](#ref-fisher1925)).
 
-## What is the period – is it really 24 hours?
+## What is the period, and is it really 24 hours?
 
-A cosinor **assumes** a fixed period (24 h by default). If the rhythm
-might run long or short (a free-running or drifting period), estimate it
+A cosinor assumes a fixed period (24 h by default). If the rhythm might
+run long or short (a free-running or drifting period), estimate it
 instead of assuming it:
 
-- [`circadian.period()`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md)
-  – a Lomb-Scargle periodogram; **tolerates missing epochs and uneven
-  sampling** ([Lomb, 1976](#ref-lomb1976); [Ruf, 1999](#ref-ruf1999)).
-- [`chi.sq.periodogram()`](https://rdazadda.github.io/actiRhythm/reference/chi.sq.periodogram.md)
-  – the classic Sokolove-Bushell periodogram; expects **near-regular**
+- [`circadian.period()`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md):
+  a Lomb-Scargle periodogram; tolerates missing epochs and uneven
+  sampling ([Lomb, 1976](#ref-lomb1976); [Ruf, 1999](#ref-ruf1999)).
+- [`chi.sq.periodogram()`](https://rdazadda.github.io/actiRhythm/reference/chi.sq.periodogram.md):
+  the classic Sokolove-Bushell periodogram; expects near-regular
   sampling ([Sokolove & Bushell, 1978](#ref-sokolove1978)).
-- [`period.ci()`](https://rdazadda.github.io/actiRhythm/reference/period.ci.md)
-  – a circular block-bootstrap confidence interval on the period
-  ([Politis & Romano, 1992](#ref-politis1992)).
+- [`period.ci()`](https://rdazadda.github.io/actiRhythm/reference/period.ci.md):
+  a circular block-bootstrap confidence interval on the period ([Politis
+  & Romano, 1992](#ref-politis1992)).
 
 **Lomb-Scargle vs chi-square:** prefer Lomb-Scargle when the recording
 has gaps or irregular epochs; the chi-square periodogram is the
 traditional choice for regularly sampled actigraphy. Running both and
 seeing the peak land in the same place is reassurance that it is real
-and not an artifact of one method –
+and not an artifact of one method.
 [`consensus.rhythmicity()`](https://rdazadda.github.io/actiRhythm/reference/consensus.rhythmicity.md)
 uses both for exactly this reason.
 
@@ -83,17 +82,17 @@ uses both for exactly this reason.
 In order of increasing waveform flexibility, choose the simplest the
 percent-rhythm says is enough:
 
-- [`cosinor.analysis()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md)
-  – one symmetric cosine; simplest and most interpretable.
+- [`cosinor.analysis()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md):
+  one symmetric cosine; simplest and most interpretable.
 - [`cosinor.extended()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.extended.md)
   /
-  [`cosinor.antilogistic()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.antilogistic.md)
-  – adds nonlinear shape for the asymmetric, squared-off real day
-  ([Marler et al., 2006](#ref-marler2006)).
-- [`cosinor.multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.multicomponent.md)
-  – several harmonics, with the number chosen by AIC or BIC.
-- [`circadian.flm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.flm.md)
-  – a functional model of the whole daily profile that follows the true
+  [`cosinor.antilogistic()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.antilogistic.md):
+  adds nonlinear shape for the asymmetric, squared-off real day ([Marler
+  et al., 2006](#ref-marler2006)).
+- [`cosinor.multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.multicomponent.md):
+  several harmonics, with the number chosen by AIC or BIC.
+- [`circadian.flm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.flm.md):
+  a functional model of the whole daily profile that follows the true
   morning rise and evening decline ([Wang et al.,
   2011](#ref-wang2011flm)).
 
@@ -104,23 +103,23 @@ The last two are demonstrated in the *Beyond the basics* article.
 When the actogram band bends or breaks up, a single summary averages the
 change away. Switch to the time-resolved tools:
 
-- [`circadian.spectrogram()`](https://rdazadda.github.io/actiRhythm/reference/circadian.spectrogram.md)
-  – period and its strength as a surface over time.
-- [`circadian.ssa()`](https://rdazadda.github.io/actiRhythm/reference/circadian.ssa.md)
-  – separates the series into trend, circadian, and noise ([Golyandina &
+- [`circadian.spectrogram()`](https://rdazadda.github.io/actiRhythm/reference/circadian.spectrogram.md):
+  period and its strength as a surface over time.
+- [`circadian.ssa()`](https://rdazadda.github.io/actiRhythm/reference/circadian.ssa.md):
+  separates the series into trend, circadian, and noise ([Golyandina &
   Zhigljavsky, 2013](#ref-golyandina2013)).
 - [`circadian.emd()`](https://rdazadda.github.io/actiRhythm/reference/circadian.emd.md)
   with
-  [`hilbert.huang()`](https://rdazadda.github.io/actiRhythm/reference/hilbert.huang.md)
-  – an instantaneous, cycle-by-cycle period ([N. E. Huang et al.,
+  [`hilbert.huang()`](https://rdazadda.github.io/actiRhythm/reference/hilbert.huang.md):
+  an instantaneous, cycle-by-cycle period ([N. E. Huang et al.,
   1998](#ref-huang1998)).
-- [`circadian.wavelet()`](https://rdazadda.github.io/actiRhythm/reference/circadian.wavelet.md)
-  – the full time-frequency power surface.
-- [`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md)
-  – dates a regime change directly from the counts.
-- [`curve.registration()`](https://rdazadda.github.io/actiRhythm/reference/curve.registration.md)
-  – a chronotype phase that does not blur when the days disagree
-  ([Krafty et al., 2019](#ref-krafty2019)).
+- [`circadian.wavelet()`](https://rdazadda.github.io/actiRhythm/reference/circadian.wavelet.md):
+  the full time-frequency power surface.
+- [`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md):
+  dates a regime change directly from the counts.
+- [`curve.registration()`](https://rdazadda.github.io/actiRhythm/reference/curve.registration.md):
+  a chronotype phase that does not blur when the days disagree ([Krafty
+  et al., 2019](#ref-krafty2019)).
 
 These have their own walkthrough in the *Nonstationary and complex
 rhythms* article.
@@ -130,34 +129,34 @@ rhythms* article.
 Two recordings can share the same IS and amplitude yet differ in their
 moment-to-moment dynamics:
 
-- [`fractal.dfa()`](https://rdazadda.github.io/actiRhythm/reference/fractal.dfa.md)
-  – the detrended-fluctuation exponent (long-range correlation) ([Peng
-  et al., 1994](#ref-peng1994)).
-- [`mfdfa()`](https://rdazadda.github.io/actiRhythm/reference/mfdfa.md)
-  – multifractality, summarised by the spectrum width ([Kantelhardt et
+- [`fractal.dfa()`](https://rdazadda.github.io/actiRhythm/reference/fractal.dfa.md):
+  the detrended-fluctuation exponent (long-range correlation) ([Peng et
+  al., 1994](#ref-peng1994)).
+- [`mfdfa()`](https://rdazadda.github.io/actiRhythm/reference/mfdfa.md):
+  multifractality, summarised by the spectrum width ([Kantelhardt et
   al., 2002](#ref-kantelhardt2002)).
-- [`multiscale.entropy()`](https://rdazadda.github.io/actiRhythm/reference/multiscale.entropy.md)
-  – how complexity changes across coarse-graining scales ([Costa et al.,
+- [`multiscale.entropy()`](https://rdazadda.github.io/actiRhythm/reference/multiscale.entropy.md):
+  how complexity changes across coarse-graining scales ([Costa et al.,
   2002](#ref-costa2002)).
 
 Demonstrated in *Beyond the basics*.
 
 ## When does the person sleep, and how regular?
 
-- **A per-epoch sleep/wake label from counts** –
+- **A per-epoch sleep/wake label from counts**:
   [`sleep.cole.kripke()`](https://rdazadda.github.io/actiRhythm/reference/sleep.cole.kripke.md)
   for adults ([Cole et al., 1992](#ref-cole1992)),
   [`sleep.sadeh()`](https://rdazadda.github.io/actiRhythm/reference/sleep.sadeh.md)
   for children and adolescents ([Sadeh et al., 1994](#ref-sadeh1994)).
-- **Regularity of that label day to day** –
+- **Regularity of that label day to day**:
   [`sleep.regularity.index()`](https://rdazadda.github.io/actiRhythm/reference/sleep.regularity.index.md)
   ([Phillips et al., 2017](#ref-phillips2017)), with
   [`sri.matrix()`](https://rdazadda.github.io/actiRhythm/reference/sri.matrix.md)
   for the day-by-day heatmap.
-- **Each night’s onset and wake, straight from the counts** –
+- **Each night’s onset and wake, straight from the counts**:
   [`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md)
   ([Chen & Sun, 2024](#ref-chensun2024)).
-- **Every rest bout, naps included** –
+- **Every rest bout, naps included**:
   [`rest.periods()`](https://rdazadda.github.io/actiRhythm/reference/rest.periods.md)
   (Roenneberg) ([Roenneberg et al., 2015](#ref-roenneberg2015)) and
   [`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)
@@ -166,10 +165,10 @@ Demonstrated in *Beyond the basics*.
   [`rest.hmm()`](https://rdazadda.github.io/actiRhythm/reference/rest.hmm.md)
   is a probabilistic state-space alternative ([Q. Huang et al.,
   2018](#ref-huang2018hmm)).
-- **Timing against the social clock** –
+- **Timing against the social clock**:
   [`social.jet.lag()`](https://rdazadda.github.io/actiRhythm/reference/social.jet.lag.md)
   ([Wittmann et al., 2006](#ref-wittmann2006)); the ultradian structure
-  within sleep –
+  within sleep,
   [`lids()`](https://rdazadda.github.io/actiRhythm/reference/lids.md)
   ([Winnebeck et al., 2018](#ref-winnebeck2018)).
 
@@ -180,15 +179,15 @@ finds the *one main* rest bout of each night (sleep and wake timing).
 and
 [`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)
 consolidate *every* rest bout across the recording, daytime naps
-included – run both for an independent cross-check.
+included. Run both for an independent cross-check.
 [`rest.hmm()`](https://rdazadda.github.io/actiRhythm/reference/rest.hmm.md)
 models rest probabilistically rather than as hard bouts.
 
 ## Counts or raw acceleration?
 
-- You have **count files** (`.agd`) or pre-extracted counts – analyse
-  them directly; everything above takes a count series.
-- You have **raw files** (`.gt3x`, `.cwa`, `.bin`) –
+- You have count files (`.agd`) or pre-extracted counts: analyse them
+  directly; everything above takes a count series.
+- You have raw files (`.gt3x`, `.cwa`, `.bin`):
   [`read.raw()`](https://rdazadda.github.io/actiRhythm/reference/read.raw.md)
   and
   [`raw.metrics()`](https://rdazadda.github.io/actiRhythm/reference/raw.metrics.md)
@@ -208,20 +207,20 @@ comparisons or ActiGraph cut-points.
 
 ## One subject or a group?
 
-Every function above describes **one** recording. For a study:
+Every function above describes one recording. For a study:
 
-- **Group mean rhythm** –
+- **Group mean rhythm**:
   [`population.cosinor()`](https://rdazadda.github.io/actiRhythm/reference/population.cosinor.md)
   pools per-subject cosinor fits into a Bingham population-mean rhythm
   with confidence intervals ([Bingham et al., 1982](#ref-bingham1982)).
-- **Two-group comparison** –
+- **Two-group comparison**:
   [`cosinor.compare()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.compare.md)
   tests whether the rhythm differs between groups (an omnibus Hotelling
   T^2 plus per-parameter tests) ([Bingham et al.,
   1982](#ref-bingham1982)).
-- **Covariates, repeated measures, or nesting** – run
+- **Covariates, repeated measures, or nesting**: run
   [`circadian.batch()`](https://rdazadda.github.io/actiRhythm/reference/circadian.batch.md)
-  over the folder to get one row of metrics per recording, then feed
+  over the folder to get one row of metrics per recording. Then feed
   those per-subject metrics (IS, IV, RA, MESOR, amplitude, acrophase,
   period) into a mixed model with `lme4` or `nlme` alongside your
   design. The package supplies the metrics; you supply the multilevel
@@ -257,7 +256,7 @@ trustworthy:
   [`detect.nonwear.troiano()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.troiano.md)
   (counts) or
   [`detect.nonwear.raw()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.raw.md)
-  (raw) build one. Note that
+  (raw) build one.
   [`rest.periods()`](https://rdazadda.github.io/actiRhythm/reference/rest.periods.md)
   and
   [`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)

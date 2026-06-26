@@ -9,7 +9,7 @@ library(ggplot2)
 ## The idea, and a rule to remember
 
 The cosinor assumes the period; period estimation **finds** it. Given a
-recording, these tools ask “what is the dominant cycle length?” – not
+recording, these tools ask “what is the dominant cycle length?”, not
 “how well does a 24-hour cosine fit?” That matters whenever the rhythm
 may be free-running (a tau that is not exactly 24), as it is in jet lag,
 shift work, dim-light protocols, and many clinical and animal
@@ -22,8 +22,8 @@ method long standard in chronobiology ([Sokolove & Bushell,
 
 The rule to carry through this article: **the chi-square periodogram
 needs near-regular sampling, while Lomb-Scargle tolerates gaps.**
-Actigraphy is rarely gap-free – non-wear, dropped epochs, mixed epoch
-lengths – and a single device-off stretch can pull the chi-square peak
+Actigraphy is rarely gap-free (non-wear, dropped epochs, mixed epoch
+lengths), and a single device-off stretch can pull the chi-square peak
 off the true period while Lomb-Scargle, which works from the actual
 timestamps, stays on it. When in doubt with gappy data, trust
 Lomb-Scargle.
@@ -48,8 +48,7 @@ This offset is exactly what makes the estimate invariant to the
 irregular spacing of the $`t_i`$: Lomb-Scargle is the least-squares fit
 of a sinusoid at each trial period. Standard-normalised this way, the
 power lies in $`[0, 1]`$, and its significance is read from the Baluev
-(2008) analytic false-alarm probability ([Baluev,
-2008](#ref-baluev2008)).
+([2008](#ref-baluev2008)) analytic false-alarm probability.
 
 The **chi-square** periodogram instead folds the series at each integer
 trial period $`P`$ (in epochs) into $`P`$ phase bins over
@@ -58,7 +57,7 @@ means $`\bar A_h`$ separate from the grand mean $`\bar A`$([Sokolove &
 Bushell, 1978](#ref-sokolove1978)):
 
 ``` math
-Q_P = \frac{N \sum_{h=1}^{P}(\bar A_h - \bar A)^2}{\sum_{i=1}^{N}(A_i - \bar A)^2}.
+Q_P = \frac{K\,N \sum_{h=1}^{P}(\bar A_h - \bar A)^2}{\sum_{i=1}^{N}(A_i - \bar A)^2}.
 ```
 
 Under the null of no rhythm at $`P`$, $`Q_P \sim \chi^2_{P-1}`$, which
@@ -76,13 +75,13 @@ true phase distorts every $`Q_P`$.
   rather than guessing.
 - **Stationarity.** Both periodograms assume one period holds across the
   recording. When tau drifts (re-entrainment, fragmentation), a single
-  global number hides it – use
+  global number hides it. Use
   [`circadian.spectrogram()`](https://rdazadda.github.io/actiRhythm/reference/circadian.spectrogram.md)
   to see the period over time.
 - **Regular sampling, for the chi-square periodogram only.** Its
   phase-folding needs a near-uniform grid; gaps mis-align the fold.
   Lomb-Scargle carries the real times and is unbiased under irregular
-  sampling – the centrepiece of this article.
+  sampling, the centrepiece of this article.
 - **A search window.** The peak is taken within `[from, to]` (default
   18-30 h). A rhythm outside the window cannot be found; widen it for
   ultradian or infradian work.
@@ -91,7 +90,7 @@ true phase distorts every $`Q_P`$.
 
 Before trusting these tools on real data, watch them recover a period we
 plant. We build a ten-day minute-level recording from a cosine whose
-period is **25 hours, not 24** – a deliberately free-running tau – then
+period is **25 hours, not 24** (a deliberately free-running tau), then
 add noise.
 
 ``` r
@@ -119,7 +118,7 @@ knitr::kable(
 
 Both periodograms recover the planted 25-hour period. {.table}
 
-Both land on 25, not the conventional 24 – the method reports the period
+Both land on 25, not the conventional 24: the method reports the period
 we put in, not the one we expected. The confidence interval should then
 **bracket** the planted value.
 [`period.ci()`](https://rdazadda.github.io/actiRhythm/reference/period.ci.md)
@@ -203,10 +202,10 @@ State each output in human terms:
 ## When the sampling is gappy
 
 This is the rule in action. We take the same planted-25 h series and
-**knock out a contiguous block of epochs** – a roughly two-day
-device-off gap – then re-estimate. Lomb-Scargle reads the real
-timestamps and should hold at 25; the chi-square fold, which assumes a
-regular grid, should slip.
+**knock out a contiguous block of epochs** (a roughly two-day device-off
+gap), then re-estimate. Lomb-Scargle reads the real timestamps and
+should hold at 25; the chi-square fold, which assumes a regular grid,
+should slip.
 
 ``` r
 
@@ -234,8 +233,8 @@ knitr::kable(
 After a multi-day gap, Lomb-Scargle stays on 25 h; the chi-square peak
 slips off. {.table}
 
-The chi-square period moves off 25 – pulled toward a wrong value because
-the samples after the gap no longer fold onto their true phase – while
+The chi-square period moves off 25 (pulled toward a wrong value because
+the samples after the gap no longer fold onto their true phase), while
 Lomb-Scargle, anchored to the actual times, returns essentially the same
 tau as before. The lesson is the rule: with gappy actigraphy, reach for
 Lomb-Scargle and treat a chi-square peak with suspicion until you have
@@ -267,12 +266,12 @@ Sliding-window chi-square spectrogram of the bundled recording. The
 dashed line is 24 h; bright bands show where power concentrates and how
 the dominant period wanders across the days.
 
-**Ultradian band power.** Rhythms faster than a day – the roughly
-90-minute, 4-hour, and 8-hour bands – carry real physiology.
+**Ultradian band power.** Rhythms faster than a day (the roughly
+90-minute, 4-hour, and 8-hour bands) carry real physiology.
 [`ultradian.bandpower()`](https://rdazadda.github.io/actiRhythm/reference/ultradian.bandpower.md)
 partitions the activity variance into dyadic period bands with an
 undecimated Haar wavelet and reports the fraction of variance in each
-([Sokolove & Bushell, 1978](#ref-sokolove1978)).
+([Percival & Walden, 2000](#ref-percival2000)).
 
 ``` r
 
@@ -319,19 +318,17 @@ residual.spectrum(agd$axis1, agd$timestamp, period = 24)
 
 ## Reference and validation
 
-The Lomb-Scargle estimator follows Lomb (1976) ([Lomb,
-1976](#ref-lomb1976)) and Scargle (1982) ([Scargle,
-1982](#ref-scargle1982)), with the analytic false-alarm probability of
-Baluev (2008) ([Baluev, 2008](#ref-baluev2008)) and the actigraphy
-application of Ruf (1999) ([Ruf, 1999](#ref-ruf1999)); the chi-square
-periodogram is that of Sokolove and Bushell (1978) ([Sokolove & Bushell,
-1978](#ref-sokolove1978)). The period confidence interval uses the
-moving-block bootstrap of Kunsch (1989) ([Kunsch,
-1989](#ref-kunsch1989)) in its circular form ([Politis & Romano,
+The Lomb-Scargle estimator follows Lomb ([1976](#ref-lomb1976)) and
+Scargle ([1982](#ref-scargle1982)), with the analytic false-alarm
+probability of Baluev ([2008](#ref-baluev2008)) and the actigraphy
+application of Ruf ([1999](#ref-ruf1999)); the chi-square periodogram is
+that of Sokolove & Bushell ([1978](#ref-sokolove1978)). The period
+confidence interval uses the moving-block bootstrap of Kunsch
+([1989](#ref-kunsch1989)) in its circular form ([Politis & Romano,
 1992](#ref-politis1992)). actiRhythm’s Lomb-Scargle power and the
 chi-square $`Q_P`$ statistic are cross-checked against the `lomb` and
-`zeitgebr`/`periodogram` reference implementations – to the printed
-precision – in the
+`zeitgebr`/`periodogram` reference implementations (to the printed
+precision) in the
 [Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
 article and the package’s test suite.
 
@@ -348,6 +345,10 @@ stationary observations. *The Annals of Statistics*, *17*(3), 1217–1241.
 Lomb, N. R. (1976). Least-squares frequency analysis of unequally spaced
 data. *Astrophysics and Space Science*, *39*(2), 447–462.
 <https://doi.org/10.1007/BF00648343>
+
+Percival, D. B., & Walden, A. T. (2000). *Wavelet methods for time
+series analysis*. Cambridge University Press.
+<https://doi.org/10.1017/CBO9780511841040>
 
 Politis, D. N., & Romano, J. P. (1992). A circular block-resampling
 procedure for stationary data. In R. LePage & L. Billard (Eds.),

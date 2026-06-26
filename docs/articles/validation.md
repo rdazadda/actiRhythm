@@ -3,12 +3,12 @@
 actiRhythm computes its metrics from hand-written code rather than by
 wrapping other packages, so it is fair to ask whether those metrics
 actually reproduce the established implementations. This article answers
-that by running the reference packages **side by side** on the recording
+that by running the reference packages side by side on the recording
 that ships with actiRhythm, and emitting the agreement from the code
-that follows – no number here is typed by hand. The same comparisons run
-in the package’s own test suite (`test-circadian-nparact.R`,
-`test-circadian-cosinor-extended.R`), so they are checked on every
-build.
+that follows: no number here is typed by hand. Several of these checks
+also run in the package’s own test suite (for example
+`test-circadian-nparact.R` and `test-circadian-cosinor-extended.R`), so
+they are exercised on every build.
 
 Each comparison guards its reference package with
 [`requireNamespace()`](https://rdrr.io/r/base/ns-load.html): a chunk
@@ -44,11 +44,10 @@ cat(sprintf("%d complete days of 60-second epochs\n", keep / 1440))
 ## Nonparametric metrics versus ActCR
 
 `ActCR` is the Johns Hopkins reimplementation of the interdaily
-stability and intradaily variability of Witting et al. (1990) ([Witting
-et al., 1990](#ref-witting1990)). Its `IS()` takes a days-by-epochs
-matrix and `IV()` a chronological vector; on the same hourly profile
-actiRhythm uses internally, the two implementations agree to the printed
-precision.
+stability and intradaily variability of Witting et al.
+([1990](#ref-witting1990)). Its `IS()` takes a days-by-epochs matrix and
+`IV()` a chronological vector; on the same hourly profile actiRhythm
+uses internally, the two implementations agree to the printed precision.
 
 ``` r
 
@@ -71,7 +70,7 @@ IS and IV: actiRhythm vs ActCR. {.table}
 ## Nonparametric metrics versus nparACT
 
 `nparACT` is the free reference implementation of the full nonparametric
-battery – IS, IV, RA, L5, M10 ([Van Someren et al.,
+battery: IS, IV, RA, L5, M10 ([Van Someren et al.,
 1999](#ref-vansomeren1999); [Witting et al., 1990](#ref-witting1990)).
 It reads a `time` / `activity` data frame by name from the global
 environment and a sampling rate in Hz. The chunk below reproduces the
@@ -97,10 +96,10 @@ knitr::kable(cmp, digits = 3, caption = "IS/IV/RA/L5/M10: actiRhythm vs nparACT.
 ## Single cosinor versus the cosinor package
 
 [`cosinor.analysis()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md)
-fits the single-component cosinor of Cornelissen (2014) ([Cornelissen,
-2014](#ref-cornelissen2014)). The `cosinor` package fits the same model
-through its formula interface; given the same averaged daily profile,
-the MESOR and amplitude match exactly.
+fits the single-component cosinor of Cornelissen
+([2014](#ref-cornelissen2014)). The `cosinor` package fits the same
+model through its formula interface; given the same averaged daily
+profile, the MESOR and amplitude match exactly.
 
 ``` r
 
@@ -127,15 +126,15 @@ Single cosinor: actiRhythm vs the cosinor package. {.table}
 ## Extended (anti-logistic) cosinor versus ActCR
 
 [`cosinor.antilogistic()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.antilogistic.md)
-fits the sigmoidally transformed cosine of Marler et al. (2006) ([Marler
-et al., 2006](#ref-marler2006)) – the same model as
+fits the sigmoidally transformed cosine of Marler et al.
+([2006](#ref-marler2006)), the same model as
 [`ActCR::ActExtendCosinor()`](https://rdrr.io/pkg/ActCR/man/ActExtendCosinor.html).
 We validate it on a controlled profile with a *moderate* transition,
-where every shape parameter is identifiable. (On a recording with
+where every shape parameter is identifiable. On a recording with
 near-square days, the steepness `beta` is only weakly constrained once
-the rest-activity transition is sharp – the likelihood is nearly flat in
-`beta` – so the other parameters still agree closely while `beta` itself
-is not pinned down. We therefore show the well-posed case.)
+the rest-activity transition is sharp, because the likelihood is then
+nearly flat in `beta`; the other parameters still agree closely while
+`beta` itself is not pinned down, so we show the well-posed case here.
 
 ``` r
 
@@ -176,12 +175,19 @@ Anti-logistic cosinor: actiRhythm vs ActExtendCosinor. {.table}
 
 ## Raw metrics versus GGIR
 
-The raw-acceleration chain – van Hees auto-calibration, ENMO/MAD, and
-the diary-free z-angle sleep detector – is validated against `GGIR`, the
-package that established those algorithms. That comparison needs a raw
-file and GGIR’s full parts 1-4, so it lives in the [From raw
+The raw-acceleration chain (van Hees auto-calibration, ENMO/MAD, and the
+diary-free z-angle sleep detector) reimplements the algorithms `GGIR`
+established, and is cross-checked against GGIR directly. On a real wrist
+recording kept in the source repository (a multi-day raw file is too
+large for the CRAN build), the [From raw
 acceleration](https://rdazadda.github.io/actiRhythm/articles/raw-pipeline.md)
-article rather than here.
+article computes per-epoch ENMO and the z-angle against
+[`GGIR::g.getmeta()`](https://wadpac.github.io/GGIR/reference/g.getmeta.html),
+and the sleep-period window against GGIR’s HDCZA detector (`HASPT`).
+Those tables are computed live whenever the repository and GGIR are
+present; they report the per-epoch correlations and the window agreement
+directly, and the package’s opt-in `test-ggir.R` re-runs the same
+comparison and fails if the agreement degrades.
 
 ## Bottom line
 
@@ -190,13 +196,12 @@ variability, and single cosinor reproduce `ActCR` and the `cosinor`
 package to the printed precision; the full nonparametric battery matches
 `nparACT` to its rounded output; and the anti-logistic cosinor matches
 `ActExtendCosinor` on an identifiable profile. These are not one-off
-checks – they are part of the package’s test suite and run on every
-build. The methods behind them are Witting et al. (1990) ([Witting et
-al., 1990](#ref-witting1990)), Van Someren et al. (1999) ([Van Someren
-et al., 1999](#ref-vansomeren1999)), Cornelissen (2014) ([Cornelissen,
-2014](#ref-cornelissen2014)), Nelson et al. (1979) ([Nelson et al.,
-1979](#ref-nelson1979)), and Marler et al. (2006) ([Marler et al.,
-2006](#ref-marler2006)).
+checks: they are part of the package’s test suite and run on every
+build. The methods behind them are Witting et al.
+([1990](#ref-witting1990)), Van Someren et al.
+([1999](#ref-vansomeren1999)), Cornelissen
+([2014](#ref-cornelissen2014)), Nelson et al. ([1979](#ref-nelson1979)),
+and Marler et al. ([2006](#ref-marler2006)).
 
 ## References
 

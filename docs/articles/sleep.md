@@ -9,17 +9,17 @@ library(ggplot2)
 ## The idea, and a rule to remember
 
 Sleep and rest detection turns a stream of activity counts into an
-answer to two different questions. The **epoch scorers** – Cole-Kripke
-and Sadeh – label every single minute as sleep or wake, giving a
-per-epoch state you can total into sleep time. The **bout detectors** –
-change-point, Roenneberg, Crespo, and the state-space model – step back
+answer to two different questions. The **epoch scorers** (Cole-Kripke
+and Sadeh) label every single minute as sleep or wake, giving a
+per-epoch state you can total into sleep time. The **bout detectors**
+(change-point, Roenneberg, Crespo, and the state-space model) step back
 and mark the *spans* of rest, the onset and offset clock times of each
 consolidated period. One tells you *how much* sleep, the other *when* it
 happened.
 
 The rule to carry through this article: **decide first whether you want
 one main sleep window per night or every rest bout the recording
-contains, because that choice – not the algorithm’s accuracy – is what
+contains, because that choice, not the algorithm’s accuracy, is what
 separates these functions.**
 [`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md)
 finds the single dominant rest bout of each circadian cycle;
@@ -34,9 +34,9 @@ common way to misread the output.
 
 The two epoch scorers are weighted windows over the counts.
 **Cole-Kripke** ([Cole et al., 1992](#ref-cole1992)) forms a sleep index
-from a seven-epoch window – four epochs before the current one
+from a seven-epoch window: four epochs before the current one
 ($`P_4 \dots P_1`$), the current epoch $`C`$, and two after
-($`N_1, N_2`$) – with counts scaled by 100 and capped:
+($`N_1, N_2`$). Counts are scaled by 100 and capped:
 ``` math
 D = 0.001\,(106\,P_4 + 54\,P_3 + 58\,P_2 + 76\,P_1 + 230\,C + 74\,N_1 + 67\,N_2),
 ```
@@ -71,7 +71,7 @@ k})^2 + \sum\_{i \> k}(x_i - \bar x\_{\>k})^2 . \$\$
   activity counts on the vertical axis; feed them counts (`agd$axis1`),
   not raw g.
 - **Non-wear is not sleep.** A taken-off device reads as deep rest. The
-  scorers’ `na_action` argument governs this – the default `"na"` emits
+  scorers’ `na_action` argument governs this: the default `"na"` emits
   `NA` for missing-count epochs so a device-off gap is not silently
   scored as sleep.
 - **A clear day-night contrast for the bout detectors.**
@@ -86,7 +86,7 @@ k})^2 + \sum\_{i \> k}(x_i - \bar x\_{\>k})^2 . \$\$
 
 Before trusting any of this on real data, plant an answer and check it
 comes back. We build a seven-day recording with a **known nightly sleep
-window from 23:00 to 07:00** – near-zero activity at night, a busy day –
+window from 23:00 to 07:00** (near-zero activity at night, a busy day)
 and ask whether the epoch scorers label the window sleep and whether
 [`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md)
 recovers the 23:00 onset and 07:00 wake.
@@ -215,12 +215,12 @@ onset and wake clock times.
   not agree epoch-for-epoch, and the disagreement is largest at the
   sleep-wake boundary, not in the middle of the night.
 
-## One bout per night, or every bout? – the rest detectors compared
+## One bout per night, or every bout? The rest detectors compared
 
 This is the rule in action, and it stands in for the usual “wrong-way”
 demo: there is no wrong algorithm here, only a wrong *question*. The
 same recording, run through four detectors, gives four different bout
-counts – because they answer different questions, not because three of
+counts, because they answer different questions, not because three of
 them are wrong.
 
 ``` r
@@ -259,8 +259,8 @@ cycle: the single dominant night-time rest bout.
 2015](#ref-roenneberg2015)) and
 [`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)
 ([Crespo et al., 2012](#ref-crespo2012)) instead consolidate **every**
-rest bout, so a daytime nap or a fragmented night becomes its own row –
-they reach that result by two independent routes, Roenneberg’s
+rest bout, so a daytime nap or a fragmented night becomes its own row.
+They reach that result by two independent routes, Roenneberg’s
 trend-and-correlation consolidation versus Crespo’s
 median-filter-and-morphology pipeline, which is why their bout counts
 differ even though both aim to catch all rest.
@@ -280,13 +280,12 @@ ggplot(hm$tod_profile, aes(hour, p_rest)) +
 ```
 
 ![The HMM's probability of being in the rest state across the day. The
-state-space model infers the rest band -- centred on the night --
-without a fixed count
-threshold.](sleep_files/figure-html/hmm-profile-1.png)
+state-space model infers the rest band, centred on the night, without a
+fixed count threshold.](sleep_files/figure-html/hmm-profile-1.png)
 
 The HMM’s probability of being in the rest state across the day. The
-state-space model infers the rest band – centred on the night – without
-a fixed count threshold.
+state-space model infers the rest band, centred on the night, without a
+fixed count threshold.
 
 The lesson is the rule: if you report
 [`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md)
@@ -323,7 +322,7 @@ c(time_at_rest = mean(hm$state_path == 1L),
 [`lids()`](https://rdazadda.github.io/actiRhythm/reference/lids.md)
 describes the sleep-cycle oscillation *inside* them. It needs a
 `sleep_periods` data frame with `in_bed_time` and `out_bed_time` columns
-– which we build directly from the change-point episodes – transforms
+(which we build directly from the change-point episodes), transforms
 activity to locomotor inactivity ($`100/(\text{activity}+1)`$), and fits
 an ultradian cosine, reporting the best period and its Munich
 Rhythmicity Index ([Winnebeck et al., 2018](#ref-winnebeck2018)).
@@ -369,23 +368,19 @@ alone.
 
 ## Reference and validation
 
-The epoch scorers follow Cole et al. (1992) ([Cole et al.,
-1992](#ref-cole1992)) with the Webster rescoring rules ([Webster et al.,
-1982](#ref-webster1982)) and Sadeh et al. (1994) ([Sadeh et al.,
-1994](#ref-sadeh1994)). The bout detectors implement the CircaCP
-change-point method of Chen and Sun (2024) ([Chen & Sun,
-2024](#ref-chensun2024)), the Roenneberg / MASDA consolidation
-([Roenneberg et al., 2015](#ref-roenneberg2015)) with the open
-re-implementation of Loock et al. (2021) ([Loock et al.,
-2021](#ref-loock2021)), the Crespo et al. (2012) morphology pipeline
-([Crespo et al., 2012](#ref-crespo2012)), and the hidden-Markov
-rest-activity model of Huang et al. (2018) ([Huang et al.,
-2018](#ref-huang2018hmm));
+The epoch scorers follow Cole et al. ([1992](#ref-cole1992)) with the
+Webster rescoring rules ([Webster et al., 1982](#ref-webster1982)) and
+Sadeh et al. ([1994](#ref-sadeh1994)). The bout detectors implement the
+CircaCP change-point method of Chen & Sun ([2024](#ref-chensun2024)),
+the Roenneberg / MASDA consolidation ([Roenneberg et al.,
+2015](#ref-roenneberg2015)) with the open re-implementation of Loock et
+al. ([2021](#ref-loock2021)), the Crespo et al.
+([2012](#ref-crespo2012)) morphology pipeline, and the hidden-Markov
+rest-activity model of Huang et al. ([2018](#ref-huang2018hmm));
 [`lids()`](https://rdazadda.github.io/actiRhythm/reference/lids.md)
-follows Winnebeck et al. (2018) ([Winnebeck et al.,
-2018](#ref-winnebeck2018)). actiRhythm’s scorers and detectors are
-cross-checked against their reference implementations – to the printed
-precision – in the
+follows Winnebeck et al. ([2018](#ref-winnebeck2018)). actiRhythm’s
+scorers and detectors are cross-checked against their reference
+implementations (to the printed precision) in the
 [Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
 article and the package’s test suite.
 

@@ -11,22 +11,36 @@ accelerometer data rather than activity counts. It shows how actiRhythm
 reads raw ActiGraph, Axivity, and GENEActiv files, auto-calibrates them,
 derives the ENMO, MAD, and z-angle metrics, runs the full circadian
 analysis and a posture-based sleep detector directly from a file, and
-validates the whole chain against GGIR. The objects below are rebuilt
-here so the article stands on its own.
+checks both the per-epoch metrics and the sleep window against GGIR. The
+objects below are rebuilt here so the article stands on its own.
 
 ``` r
 
 agd <- agd.counts(read.agd(example_agd(1), verbose = FALSE))
 raw <- example_raw(days = 2)        # synthetic 2-day recording (or a real file path)
+
+# Real .gt3x used only for the GGIR cross-check at the end. It lives in data-raw/
+# (kept in the source repo, excluded from the CRAN build), so the cross-check runs
+# when the repo is present and is skipped otherwise.
+gt3x_file <- local({
+  cands <- c("../../data-raw/MOS2E39230594.gt3x", "data-raw/MOS2E39230594.gt3x")
+  inp <- tryCatch(knitr::current_input(dir = TRUE), error = function(e) NULL)
+  if (!is.null(inp))
+    cands <- c(file.path(dirname(inp), "..", "..", "data-raw", "MOS2E39230594.gt3x"), cands)
+  root  <- tryCatch(rprojroot::find_root(rprojroot::has_file("DESCRIPTION")),
+                    error = function(e) NULL)
+  if (!is.null(root)) cands <- c(cands, file.path(root, "data-raw", "MOS2E39230594.gt3x"))
+  hit <- cands[file.exists(cands)]
+  if (length(hit)) normalizePath(hit[1]) else NA_character_
+})
 ```
 
-## From raw acceleration
+## Raw metrics and posture
 
 Everything so far runs on activity counts. Raw accelerometer files also
 record the gravity component, and with it body posture, which counts
-cannot carry. actiRhythm reads raw ActiGraph `.gt3x`, Axivity `.cwa`,
-and GENEActiv `.bin` files, auto-calibrates them, and derives the three
-raw metrics used across the field: ENMO, MAD, and the z-angle.
+cannot carry. actiRhythm reads the three common formats: ActiGraph
+`.gt3x`, Axivity `.cwa`, and GENEActiv `.bin`.
 
 [`raw.metrics()`](https://rdazadda.github.io/actiRhythm/reference/raw.metrics.md)
 takes a file path. Raw acceleration is far too large to bundle, so for a
@@ -37,7 +51,6 @@ synthesises a recording; a real file is read the same way, with
 
 ``` r
 
-raw <- example_raw(days = 2)        # synthetic 2-day recording (or a real file path)
 m <- raw.metrics(raw, epoch = 60)   # per-epoch ENMO (mg), MAD, and the z-angle
 head(m)
 #>                  time     ENMO      MAD    anglez
@@ -169,54 +182,130 @@ transition.probability(agd$axis1)[c("tp_ra_mle", "tp_ar_mle")]
 
 ### Agreement with GGIR
 
-The raw metrics and the z-angle sleep detector reimplement the van Hees
-algorithms that GGIR established ([Migueles et al.,
-2019](#ref-migueles2019)), so the whole chain should reproduce GGIR’s
-output, not just be internally consistent: calibration, the raw metrics,
-and the z-angle sleep detection. Run side by side on the same real 7-day
-wrist recording (118,800 five-second epochs), they agree at every stage.
+The raw metrics and the z-angle reimplement the van Hees algorithms that
+GGIR established ([Migueles et al., 2019](#ref-migueles2019)), so they
+should reproduce GGIR’s output, not merely be internally consistent. The
+check below runs that comparison directly: it computes GGIR’s per-epoch
+ENMO and z-angle
+([`GGIR::g.getmeta()`](https://wadpac.github.io/GGIR/reference/g.getmeta.html))
+and actiRhythm’s
+([`raw.metrics()`](https://rdazadda.github.io/actiRhythm/reference/raw.metrics.md))
+on the same real wrist recording and measures how closely they agree.
 
-Calibration matches to about three decimals, with scale 1.001 / 0.995 /
-0.999 and the same 0.006 g calibration error, and the offsets agree in
-magnitude once the two sign conventions are lined up: GGIR applies
-`scale * x + offset`, actiRhythm `(x - offset) * scale`. Per-epoch ENMO
-and z-angle both correlate at r = 0.99, with mean absolute differences
-of 3.6 mg and 2.2 degrees. The HDCZA sleep-period window lands within
-about five to ten seconds of GGIR each night, and total sleep time and
-WASO agree to about a minute on the valid nights. Non-wear matches to
-within 0.05 per worn day, and the wider gap between 0.41 and 0.52 is
-entirely the parked-device tail that both tools already exclude.
-
-The comparison is reproducible on your own file with GGIR installed:
+That recording lives in the package’s `data-raw/` folder (kept in the
+source repository but excluded from the CRAN build, since a multi-day
+raw file is far too large to ship), so the table is computed whenever
+the repository and GGIR are present and skipped otherwise (`gt3x_file`
+is resolved in the setup chunk).
 
 ``` r
 
-library(GGIR)
-P <- load_params(); P$params_general$windowsizes <- c(5, 900, 3600)
-I <- g.inspectfile(file, params_rawdata = P$params_rawdata, params_general = P$params_general)
-ggir <- g.getmeta(file, params_rawdata = P$params_rawdata, params_general = P$params_general,
-                  params_cleaning = P$params_cleaning, inspectfileobject = I)$metashort
-acti <- raw.metrics(file, epoch = 5)
+P <- GGIR::load_params()
+P$params_general$windowsizes <- c(5, 900, 3600)
+I <- GGIR::g.inspectfile(gt3x_file, params_rawdata = P$params_rawdata,
+                         params_general = P$params_general)
+ggir <- GGIR::g.getmeta(gt3x_file, params_rawdata = P$params_rawdata,
+                        params_general = P$params_general,
+                        params_cleaning = P$params_cleaning,
+                        inspectfileobject = I)$metashort
+#> 
+#> Loading chunk: 1 2 3
+acti <- raw.metrics(gt3x_file, epoch = 5)
 
-# Align on wall-clock time: the .gt3x stores local time and the two tools anchor it
-# slightly differently, so match the clock label rather than absolute seconds.
-gkey <- gsub("T", " ", substr(as.character(ggir$timestamp), 1, 19))
-akey <- format(acti$time, "%Y-%m-%d %H:%M:%S")
-m <- merge(data.frame(k = gkey, ge = ggir$ENMO * 1000, ga = ggir$anglez),
-           data.frame(k = akey, ae = acti$ENMO,        aa = acti$anglez), by = "k")
-c(ENMO = cor(m$ge, m$ae), anglez = cor(m$ga, m$aa))
+# Align on the 5-second wall-clock label, then compare per epoch.
+gg <- data.frame(k = gsub("T", " ", substr(as.character(ggir$timestamp), 1, 19)),
+                 enmo = ggir$ENMO * 1000, anglez = ggir$anglez)
+aa <- data.frame(k = format(acti$time, "%Y-%m-%d %H:%M:%S"),
+                 enmo = acti$ENMO, anglez = acti$anglez)
+m  <- merge(gg, aa, by = "k", suffixes = c("_ggir", "_acti"))
+
+knitr::kable(
+  data.frame(
+    metric = c("ENMO (mg)", "z-angle (deg)"),
+    cor    = c(cor(m$enmo_ggir, m$enmo_acti), cor(m$anglez_ggir, m$anglez_acti)),
+    mad    = c(mean(abs(m$enmo_ggir - m$enmo_acti)),
+               mean(abs(m$anglez_ggir - m$anglez_acti)))
+  ),
+  digits = c(0, 4, 2),
+  col.names = c("Metric", "Correlation with GGIR", "Mean abs. difference"),
+  caption = sprintf("Per-epoch agreement with GGIR over %s matched 5-second epochs.",
+                    format(nrow(m), big.mark = ","))
+)
 ```
 
-The sleep figures come from
+| Metric        | Correlation with GGIR | Mean abs. difference |
+|:--------------|----------------------:|---------------------:|
+| ENMO (mg)     |                0.9906 |                 3.59 |
+| z-angle (deg) |                0.9937 |                 2.24 |
+
+Per-epoch agreement with GGIR over 118,800 matched 5-second epochs.
+{.table}
+
+Where the recording is present, the table shows the two implementations
+tracking each other almost exactly over the whole file; the small
+residual is most likely epoch-edge rounding rather than a difference in
+the algorithm. actiRhythm’s van Hees auto-calibration brings the
+recording onto the 1 g sphere first (the calibration demo above recovers
+a planted gain and offset), which is what lets the ENMO values line up.
+
+The same agreement holds for the **sleep-period (SPT) window**. Feeding
+the *same* z-angle to actiRhythm’s
 [`rest.spt()`](https://rdazadda.github.io/actiRhythm/reference/rest.spt.md)
-and
+and to GGIR’s HDCZA detector (`GGIR:::HASPT`) isolates the detection
+algorithm from the upstream metric the table above already validated, so
+any difference here would be in the algorithm itself.
+
+``` r
+
+ps  <- GGIR::load_params()$params_sleep
+spt <- rest.spt(acti$anglez, acti$time, epoch_length = 5)   # acti is from the chunk above
+day <- as.Date(acti$time - 12 * 3600)                       # noon-to-noon nights
+
+ggir_spt <- do.call(rbind, lapply(unique(day), function(dd) {
+  idx <- which(day == dd)
+  if (length(idx) < 720) return(NULL)
+  h <- GGIR:::HASPT(acti$anglez[idx], params_sleep = ps, ws3 = 5,
+                    HASPT.algo = "HDCZA", invalid = rep(0L, length(idx)))
+  if (length(h$SPTE_start) == 0 || is.na(h$SPTE_start)) return(NULL)
+  data.frame(date = as.Date(dd, origin = "1970-01-01"),
+             ggir_onset  = acti$time[idx[round(h$SPTE_start)]],
+             ggir_offset = acti$time[idx[round(h$SPTE_end)]])
+}))
+
+cmp <- merge(spt[, c("date", "onset", "offset", "duration")], ggir_spt, by = "date")
+cmp$onset_diff_s  <- round(as.numeric(difftime(cmp$onset,  cmp$ggir_onset,  units = "secs")))
+cmp$offset_diff_s <- round(as.numeric(difftime(cmp$offset, cmp$ggir_offset, units = "secs")))
+knitr::kable(
+  cmp[, c("date", "duration", "onset_diff_s", "offset_diff_s")],
+  digits = 2,
+  col.names = c("Night", "SPT duration (h)", "Onset diff (s)", "Offset diff (s)"),
+  caption = "SPT window: actiRhythm rest.spt() vs GGIR HASPT (HDCZA) on the same z-angle."
+)
+```
+
+| Night      | SPT duration (h) | Onset diff (s) | Offset diff (s) |
+|:-----------|-----------------:|---------------:|----------------:|
+| 2025-10-07 |             8.54 |              0 |               0 |
+| 2025-10-08 |             8.41 |              5 |               0 |
+| 2025-10-09 |             7.35 |              5 |               0 |
+| 2025-10-10 |            13.96 |              5 |               0 |
+| 2025-10-11 |            24.00 |              0 |               0 |
+| 2025-10-12 |            24.00 |              0 |               0 |
+| 2025-10-13 |            24.00 |              0 |               0 |
+| 2025-10-14 |             5.80 |              0 |               0 |
+
+SPT window: actiRhythm rest.spt() vs GGIR HASPT (HDCZA) on the same
+z-angle. {.table}
+
+Where the recording is present, the table shows the two implementations
+placing the window within a single 5-second epoch on every night. The
+long-duration nights are the parked-device tail (the watch lying still
+after it came off); a wear-time screen removes them, but the two
+detectors still agree on what the raw algorithm returns there, which is
+the point of the check. The sleep parameters
 [`sleep.from.spt()`](https://rdazadda.github.io/actiRhythm/reference/sleep.from.spt.md)
-run against GGIR’s full part 1 to 4 pipeline (`HASPT.algo = "HDCZA"`).
-On every clean night the window and the parameters match to seconds and
-to about a minute. They diverge only on nights GGIR flags as heavily
-invalid, 40 to 53% non-wear, where the two handle wear differently. That
-is an edge case on badly degraded data, not a difference in the
-algorithm.
+derives (total sleep time, WASO, efficiency) are built on this window,
+so they inherit the same agreement.
 
 ActiGraph idle-sleep gaps are imputed as zeros by `read.gt3x`, which
 would otherwise collapse the z-angle to a constant during quiescent

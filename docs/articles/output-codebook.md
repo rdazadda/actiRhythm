@@ -1,7 +1,7 @@
 # Output codebook (metrics data dictionary)
 
 This is the lookup for every metric `actiRhythm` emits in its one-row
-summary – the columns of
+summary: the columns of
 [`circadian.batch()`](https://rdazadda.github.io/actiRhythm/reference/circadian.batch.md),
 the **Summary** sheet of
 [`circadian.workbook()`](https://rdazadda.github.io/actiRhythm/reference/circadian.workbook.md),
@@ -10,8 +10,8 @@ what it is, its formula or units, the range you should expect, the
 defining reference, and where it lives in the result object.
 
 The table below, the workbook’s *Data Dictionary* sheet, and the
-package’s tests all read one file –
-`inst/extdata/metrics_dictionary.csv` – so the codebook can never drift
+package’s tests all read one file
+(`inst/extdata/metrics_dictionary.csv`), so the codebook can never drift
 from the code (a test checks that the documented metrics are exactly
 those
 [`circadian.batch()`](https://rdazadda.github.io/actiRhythm/reference/circadian.batch.md)
@@ -26,7 +26,7 @@ Each metric is named exactly as it appears as a column of the
 [`circadian.batch()`](https://rdazadda.github.io/actiRhythm/reference/circadian.batch.md)
 data frame and the workbook **Summary** sheet. The **Output object**
 column shows where the same value lives when you call the producing
-function directly – `circadian.rhythm()$IS`, `cosinor.analysis()$mesor`,
+function directly: `circadian.rhythm()$IS`, `cosinor.analysis()$mesor`,
 and so on. The **Reference** column gives the citation key for the
 method; full references are listed at the end. A metric whose **Range**
 notes “requires `sleep_state`” or “requires `sleep_periods`” is `NA`
@@ -127,11 +127,11 @@ Index, social jet lag, and LIDS ([Phillips et al.,
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
-| SRI | Sleep Regularity Index: probability two epochs 24 h apart share the same state (requires sleep_state) | percent | approx 0 to 100; higher = more regular (100 = perfectly regular) | phillips2017 | sleep.regularity.index() |
+| SRI | Sleep Regularity Index: how consistently the sleep/wake state repeats 24 h apart (requires sleep_state) | 200\*P - 100, where P is the fraction of epoch pairs 24 h apart in the same state; index points | -100 to 100; 100 = perfectly regular, 0 = random, higher = more regular | phillips2017 | sleep.regularity.index() |
 | social_jet_lag_hours | Social jet lag: mid-sleep difference between free and work days (requires sleep_periods) | hours | typically 0 to 3; larger = greater misalignment | wittmann2006 | social.jet.lag()$`social_jet_lag_hours |
-|MSW                  |Mid-sleep on work days                                                                                |clock hours (0-24) |0 to 24                                                          |wittmann2006  |social.jet.lag()`$MSW |
+|MSW                  |Mid-sleep on work days                                                                                  |clock hours (0-24)                                                                             |0 to 24                                                                 |wittmann2006  |social.jet.lag()`$MSW |
 | MSF | Mid-sleep on free days | clock hours (0-24) | 0 to 24 | wittmann2006 | social.jet.lag()$`MSF                  |
-|lids_period_min      |Mean Locomotor Inactivity During Sleep ultradian period (requires sleep_periods)                      |minutes            |typically 60 to 120 min                                          |winnebeck2018 |lids()`$mean_period_min |
+|lids_period_min      |Mean Locomotor Inactivity During Sleep ultradian period (requires sleep_periods)                        |minutes                                                                                        |typically 60 to 120 min                                                 |winnebeck2018 |lids()`$mean_period_min |
 | lids_MRI | Mean Munich Rhythmicity Index of the LIDS cycles (requires sleep_periods) | unitless | 0 to 1; higher = stronger ultradian rhythm | winnebeck2018 | lids()\$mean_MRI |
 
 ## References

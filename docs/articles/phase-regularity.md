@@ -15,8 +15,8 @@ and awake at the same clock times from one day to the next; activity
 onset and offset, the composite phase deviation, and the
 phase-concentration tests pin down the timing of a daily marker and how
 tightly it clusters; social jet lag measures the gap between your
-work-day and free-day timing – the clock you keep for work versus the
-one your body would choose.
+work-day and free-day timing: the clock you keep for work versus the one
+your body would choose.
 
 The rule to carry through this article: **regularity is consistency of
 timing, not quality of sleep.** The Sleep Regularity Index rewards a
@@ -85,7 +85,7 @@ et al., 2016](#ref-fischer2016)).
   [`sri.matrix()`](https://rdazadda.github.io/actiRhythm/reference/sri.matrix.md)
   reports how many consecutive-day pairs it actually used.
 - **Missing data lowers power, not bias.** Non-wear epochs scored `NA`
-  are skipped from the concordance count rather than read as sleep – but
+  are skipped from the concordance count rather than read as sleep, but
   a recording that is mostly gaps leaves little to compare.
 
 ## Recovering known truth
@@ -162,7 +162,7 @@ sri.matrix(state, agd$timestamp)
 ```
 
 [`sleep.regularity.index()`](https://rdazadda.github.io/actiRhythm/reference/sleep.regularity.index.md)
-is the same number with a lighter return – it calls
+is the same number with a lighter return: it calls
 [`sri.matrix()`](https://rdazadda.github.io/actiRhythm/reference/sri.matrix.md)
 internally, so the two always agree.
 
@@ -194,7 +194,7 @@ activity.onset.offset(agd$axis1, agd$timestamp)
   regular sleeper; the population mid-range sits near $`60`$-$`70`$;
   below about $`40`$ is markedly irregular. Here it is mid-range: the
   sleep/wake pattern repeats moderately well from day to day. Remember
-  the rule – a high SRI says *consistent*, not *healthy*.
+  the rule: a high SRI says *consistent*, not *healthy*.
 - **Activity onset / offset** are clock hours and are **circular**: an
   onset of 23.8 and one of 0.2 are half an hour apart, not 23. Read them
   as the times the active day begins and ends.
@@ -210,7 +210,7 @@ The same timing idea generates a family of related descriptors.
 [`social.jet.lag()`](https://rdazadda.github.io/actiRhythm/reference/social.jet.lag.md)
 needs a small table of sleep periods with `in_bed_time` and
 `out_bed_time`. We build a synthetic week: five work nights to bed at
-23:00 up at 07:00, two free nights to bed at 01:00 up at 10:00 – later
+23:00 up at 07:00, two free nights to bed at 01:00 up at 10:00, later
 and longer, as free days usually are.
 
 ``` r
@@ -230,8 +230,8 @@ c(MSW = sjl$MSW_time, MSF = sjl$MSF_time, MSFsc = sjl$MSFsc_time,
 #>     "03:00"     "05:30"     "05:09"       "2.5"      "2.14"
 ```
 
-The free-day mid-sleep falls 2.5 hours later than the work-day one – the
-social jet lag – and the sleep-debt correction trims that to the smaller
+The free-day mid-sleep falls 2.5 hours later than the work-day one (the
+social jet lag), and the sleep-debt correction trims that to the smaller
 SJLsc, the part of the shift not explained by weekend catch-up sleep. A
 value above one hour is the threshold commonly flagged as a health
 concern ([Wittmann et al., 2006](#ref-wittmann2006)).
@@ -290,7 +290,7 @@ that clustering.
 
 **How far the phase strays.**
 [`composite.phase.deviation()`](https://rdazadda.github.io/actiRhythm/reference/composite.phase.deviation.md)
-summarises the same onsets as a single instability score – the precision
+summarises the same onsets as a single instability score: the precision
 (scatter around the person’s own mean phase) and accuracy (distance from
 a reference) combined day by day ([Fischer et al.,
 2016](#ref-fischer2016)).
@@ -353,19 +353,17 @@ circadian.onset.ci(onsets)
 
 ## Reference and validation
 
-The Sleep Regularity Index follows Phillips et al. (2017) ([Phillips et
-al., 2017](#ref-phillips2017)) in its full epoch-by-day concordance
-form; social jet lag and the sleep-debt correction follow Wittmann et
-al. (2006) ([Wittmann et al., 2006](#ref-wittmann2006)) and Roenneberg
-et al. (2012, 2003) ([Roenneberg et al., 2003](#ref-roenneberg2003);
-[Roenneberg et al., 2012](#ref-roenneberg2012)). The phase markers use
-the relative-difference onset of Roenneberg et al. (2003) ([Roenneberg
-et al., 2003](#ref-roenneberg2003)), the composite phase deviation of
-Fischer and Roenneberg (2016) ([Fischer et al.,
-2016](#ref-fischer2016)), and the circular tests of Fisher (1993)
-([Fisher, 1993](#ref-fisher1993)) and Landler et al. (2019) ([Landler et
-al., 2019](#ref-landler2019)). actiRhythm’s SRI and phase metrics are
-cross-checked against their reference definitions in the
+The Sleep Regularity Index follows Phillips et al.
+([2017](#ref-phillips2017)) in its full epoch-by-day concordance form;
+social jet lag and the sleep-debt correction follow Wittmann et al.
+([2006](#ref-wittmann2006)) and ([2003](#ref-roenneberg2003); Roenneberg
+et al.; [2012](#ref-roenneberg2012)). The phase markers use the
+relative-difference onset of Roenneberg et al.
+([2003](#ref-roenneberg2003)), the composite phase deviation of Fischer
+et al. ([2016](#ref-fischer2016)), and the circular tests of Fisher
+([1993](#ref-fisher1993)) and Landler et al. ([2019](#ref-landler2019)).
+actiRhythm’s SRI and phase metrics are cross-checked against their
+reference definitions in the
 [Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
 article and the package’s test suite.
 

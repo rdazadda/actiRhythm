@@ -40,7 +40,7 @@ Description: Quantifies the circadian rest-activity rhythm of a single subject
     'Excel' workbook. Developed by the Center for Alaska Native Health Research
     (CANHR).
 License: MIT + file LICENSE
-URL: https://github.com/rdazadda/actiRhythm
+URL: https://github.com/rdazadda/actiRhythm, https://rdazadda.github.io/actiRhythm/
 BugReports: https://github.com/rdazadda/actiRhythm/issues
 Language: en-US
 Depends: R (>= 4.1)
@@ -49,12 +49,14 @@ Imports:
     grDevices,
     ggplot2,
     Rcpp (>= 1.0.0),
+    Rdpack,
     RSQLite,
     scales,
     splines,
     stats,
     utils
 LinkingTo: Rcpp
+RdMacros: Rdpack
 Suggests:
     ActCR,
     agcounts,

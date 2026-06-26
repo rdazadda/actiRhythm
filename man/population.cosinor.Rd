@@ -58,7 +58,5 @@ population.cosinor(act, as.POSIXct(ts, tz = "UTC", origin = "1970-01-01"), subj)
 
 }
 \references{
-Bingham C, Arbogast B, Cornelissen Guillaume G, Lee JK, Halberg F (1982).
-Inferential statistical methods for estimating and comparing cosinor
-parameters. Chronobiologia, 9(4):397-439.
+\insertRef{bingham1982}{actiRhythm}
 }

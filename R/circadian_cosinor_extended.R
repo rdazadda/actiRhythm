@@ -130,13 +130,9 @@
 #' matching ActCR), so no extra package dependency is required.
 #'
 #' @references
-#' Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). The sigmoidally
-#' transformed cosine curve: a mathematical model for circadian rhythms with
-#' symmetric non-sinusoidal shapes. \emph{Statistics in Medicine},
-#' 25(22):3893-3904.
+#' \insertRef{marler2006}{actiRhythm}
 #'
-#' Wang J, et al. (2021). ActCR: Extract Circadian Rhythms Metrics from
-#' Actigraphy Data. R package.
+#' \insertRef{wang2021actcr}{actiRhythm}
 #'
 #' @examples
 #' \donttest{
@@ -336,9 +332,7 @@ cosinor.antilogistic <- function(counts, timestamps, period = 24) {
 #' \eqn{\phi = acrophase \cdot 2\pi / T}.
 #'
 #' @references
-#' Bingham C, Arbogast B, Cornelissen Guillaume G, Lee JK, Halberg F (1982).
-#' Inferential statistical methods for estimating and comparing cosinor
-#' parameters. \emph{Chronobiologia}, 9(4):397-439.
+#' \insertRef{bingham1982}{actiRhythm}
 #'
 #' @examples
 #' \donttest{
@@ -485,8 +479,7 @@ cosinor.confidence.ellipse <- function(cosinor_result, level = 0.95,
 #'   non-positive.
 #'
 #' @references
-#' Nelson W, Tong YL, Lee JK, Halberg F (1979). Methods for cosinor-rhythmometry.
-#' \emph{Chronobiologia}, 6(4):305-323.
+#' \insertRef{nelson1979}{actiRhythm}
 #'
 #' @examples
 #' \donttest{

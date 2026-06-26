@@ -51,13 +51,9 @@
 #'   reconstruction error. Never errors.
 #'
 #' @references
-#' Huang NE, Shen Z, Long SR, et al. (1998). The empirical mode decomposition and
-#' the Hilbert spectrum for nonlinear and non-stationary time series analysis.
-#' \emph{Proceedings of the Royal Society A}, 454(1971):903-995.
-#' \doi{10.1098/rspa.1998.0193}
+#' \insertRef{huang1998}{actiRhythm}
 #'
-#' Wu Z, Huang NE (2009). Ensemble empirical mode decomposition. \emph{Advances in
-#' Adaptive Data Analysis}, 1(1):1-41. \doi{10.1142/S1793536909000047}
+#' \insertRef{wuhuang2009}{actiRhythm}
 #'
 #' @seealso \code{\link{hilbert.huang}}, \code{\link{circadian.ssa}}
 #'
@@ -168,9 +164,7 @@ print.actiRhythm_emd <- function(x, ...) {
 #'   Never errors.
 #'
 #' @references
-#' Huang NE, Shen Z, Long SR, et al. (1998). The empirical mode decomposition and
-#' the Hilbert spectrum. \emph{Proceedings of the Royal Society A}, 454:903-995.
-#' \doi{10.1098/rspa.1998.0193}
+#' \insertRef{huang1998}{actiRhythm}
 #'
 #' @seealso \code{\link{circadian.emd}}
 #'

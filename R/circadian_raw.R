@@ -53,9 +53,7 @@ circadian.raw <- function(x, metric = c("ENMO", "MAD"), device = "auto",
 #'   object, a list with \code{ABI_overall}, \code{ABI_short}, \code{ABI_long}.
 #'
 #' @references
-#' Danilevicz IM, et al. (2024). Measures of fragmentation of rest activity
-#' patterns: mathematical properties and interpretability. \emph{BMC Medical
-#' Research Methodology}, 24:132. \doi{10.1186/s12874-024-02255-w}
+#' \insertRef{danilevicz2024}{actiRhythm}
 #'
 #' @examples
 #' activity.balance.index(1.0)   # perfect 1/f balance -> 1

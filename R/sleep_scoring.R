@@ -36,13 +36,9 @@
 #' short sleep bouts that follow or are surrounded by sustained wake as wake.
 #'
 #' @references
-#' Cole RJ, Kripke DF, Gruen W, Mullaney DJ, Gillin JC (1992). Automatic
-#' sleep/wake identification from wrist activity. \emph{Sleep}, 15(5):461-469.
-#' \doi{10.1093/sleep/15.5.461}
+#' \insertRef{cole1992}{actiRhythm}
 #'
-#' Webster JB, Kripke DF, Messin S, Mullaney DJ, Wyborney G (1982). An activity
-#' based sleep monitor system for ambulatory use. \emph{Sleep}, 5(4):389-399.
-#' \doi{10.1093/sleep/5.4.389}
+#' \insertRef{webster1982}{actiRhythm}
 #'
 #' @seealso \code{\link{sleep.sadeh}}, \code{\link{sleep.regularity.index}}
 #'
@@ -143,9 +139,7 @@ sleep.cole.kripke <- function(counts, apply_rescoring = TRUE, epoch_length = 60,
 #' implementations).
 #'
 #' @references
-#' Sadeh A, Sharkey KM, Carskadon MA (1994). Activity-based sleep-wake
-#' identification: an empirical test of methodological issues. \emph{Sleep},
-#' 17(3):201-207. \doi{10.1093/sleep/17.3.201}
+#' \insertRef{sadeh1994}{actiRhythm}
 #'
 #' @seealso \code{\link{sleep.cole.kripke}}, \code{\link{sleep.regularity.index}}
 #'

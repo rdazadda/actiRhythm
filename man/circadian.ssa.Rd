@@ -70,16 +70,11 @@ ssa
 
 }
 \references{
-Golyandina N, Zhigljavsky A (2013). Singular Spectrum Analysis for Time
-Series. Springer. \doi{10.1007/978-3-642-34913-3}
+\insertRef{golyandina2013}{actiRhythm}
 
-Vautard R, Yiou P, Ghil M (1992). Singular-spectrum analysis: a toolkit for
-short, noisy chaotic signals. \emph{Physica D}, 58(1-4):95-126.
-\doi{10.1016/0167-2789(92)90103-T}
+\insertRef{vautard1992}{actiRhythm}
 
-Hammad G, Reyt M, Beliy N, et al. (2021). pyActigraphy: open-source python
-package for actigraphy data visualization and analysis. \emph{PLOS
-Computational Biology}, 17(10):e1009514. \doi{10.1371/journal.pcbi.1009514}
+\insertRef{hammad2021}{actiRhythm}
 }
 \seealso{
 \code{\link{circadian.period}}, \code{\link{circadian.flm}}

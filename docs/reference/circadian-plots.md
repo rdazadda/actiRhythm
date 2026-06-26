@@ -28,18 +28,23 @@ when the package theme helpers are unavailable.
 
 ## References
 
-Lomb NR (1976). Least-squares frequency analysis of unequally spaced
-data. *Astrophysics and Space Science*, 39(2):447-462.
+Lomb NR (1976). “Least-squares frequency analysis of unequally spaced
+data.” *Astrophysics and Space Science*, **39**(2), 447–462.
+[doi:10.1007/BF00648343](https://doi.org/10.1007/BF00648343) .
 
-Scargle JD (1982). Studies in astronomical time series analysis. II.
-Statistical aspects of spectral analysis of unevenly spaced data. *The
-Astrophysical Journal*, 263:835-853.
+Scargle JD (1982). “Studies in astronomical time series analysis. II.
+Statistical aspects of spectral analysis of unevenly spaced data.” *The
+Astrophysical Journal*, **263**, 835–853.
+[doi:10.1086/160554](https://doi.org/10.1086/160554) .
 
-Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). The sigmoidally
-transformed cosine curve: a mathematical model for circadian rhythms
-with symmetric non-sinusoidal shapes. *Statistics in Medicine*,
-25(22):3893-3904.
+Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). “The
+sigmoidally transformed cosine curve: a mathematical model for circadian
+rhythms with symmetric non-sinusoidal shapes.” *Statistics in Medicine*,
+**25**(22), 3893–3904.
+[doi:10.1002/sim.2466](https://doi.org/10.1002/sim.2466) .
 
 Peng CK, Buldyrev SV, Havlin S, Simons M, Stanley HE, Goldberger AL
-(1994). Mosaic organization of DNA nucleotides. *Physical Review E*,
-49(2):1685-1689.
+(1994). “Mosaic organization of DNA nucleotides.” *Physical Review E*,
+**49**(2), 1685–1689.
+[doi:10.1103/PhysRevE.49.1685](https://doi.org/10.1103/PhysRevE.49.1685)
+.

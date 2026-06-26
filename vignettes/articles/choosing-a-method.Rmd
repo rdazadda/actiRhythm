@@ -1,0 +1,194 @@
+---
+title: "Choosing a method"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+bibliography: ../REFERENCES.bib
+csl: ../apa.csl
+link-citations: true
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+actiRhythm gives you many functions, and several can look like they answer the
+same question. This guide maps the question you have to the function that
+answers it, and pulls apart the methods that overlap. The rule throughout: start
+simple, and escalate only when the data demand it. The actogram and the
+nonparametric summary answer most questions on their own; the rest of the package
+is there for the recordings that are not so tidy.
+
+## Start here, every time
+
+Plot the recording first with `plot_actogram()`, then run `circadian.rhythm()`,
+`cosinor.analysis()`, and `rhythmicity.test()` (or `consensus.rhythmicity()` for
+all of them at once). If the active band stacks into a straight vertical column
+and the numbers sit comfortably, you are done. Reach further only when the band
+bends, scatters, or fragments, or when a specific question below is yours.
+
+## Is there a rhythm, and how strong?
+
+Two complementary answers:
+
+- **Without assuming a shape**: `circadian.rhythm()` returns interdaily
+  stability (IS, how tightly the pattern repeats), intradaily variability (IV,
+  how fragmented it is), and relative amplitude (RA, the day-night contrast)
+  [@witting1990; @vansomeren1999].
+- **With a fitted cosine**: `cosinor.analysis()` gives an interpretable MESOR,
+  amplitude, and acrophase, and `rhythmicity.test()` is the zero-amplitude F-test
+  of whether that rhythm is real [@cornelissen2014; @nelson1979].
+
+Use the nonparametric route when you do not want to assume a sinusoid, and the
+cosinor route when you want interpretable parameters. They complement rather
+than compete: a high RA with a low IS, for instance, is a strong rhythm carried on
+irregular timing, something neither number says alone. To pool every test into
+one verdict, `consensus.rhythmicity()` runs the cosinor F-test, the Bingham
+ellipse, the Lomb-Scargle false-alarm probability, and the chi-square periodogram,
+and reports a majority vote and a Fisher-combined p-value [@fisher1925].
+
+## What is the period, and is it really 24 hours?
+
+A cosinor assumes a fixed period (24 h by default). If the rhythm might run
+long or short (a free-running or drifting period), estimate it instead of assuming
+it:
+
+- `circadian.period()`: a Lomb-Scargle periodogram; tolerates missing epochs
+  and uneven sampling [@lomb1976; @ruf1999].
+- `chi.sq.periodogram()`: the classic Sokolove-Bushell periodogram; expects
+  near-regular sampling [@sokolove1978].
+- `period.ci()`: a circular block-bootstrap confidence interval on the period
+  [@politis1992].
+
+**Lomb-Scargle vs chi-square:** prefer Lomb-Scargle when the recording has gaps or
+irregular epochs; the chi-square periodogram is the traditional choice for
+regularly sampled actigraphy. Running both and seeing the peak land in the same
+place is reassurance that it is real and not an artifact of one method.
+`consensus.rhythmicity()` uses both for exactly this reason.
+
+## How is the rhythm shaped?
+
+In order of increasing waveform flexibility, choose the simplest the percent-rhythm
+says is enough:
+
+- `cosinor.analysis()`: one symmetric cosine; simplest and most interpretable.
+- `cosinor.extended()` / `cosinor.antilogistic()`: adds nonlinear shape for the
+  asymmetric, squared-off real day [@marler2006].
+- `cosinor.multicomponent()`: several harmonics, with the number chosen by AIC or
+  BIC.
+- `circadian.flm()`: a functional model of the whole daily profile that follows
+  the true morning rise and evening decline [@wang2011flm].
+
+The last two are demonstrated in the *Beyond the basics* article.
+
+## Does the rhythm drift, shift, or fragment?
+
+When the actogram band bends or breaks up, a single summary averages the change
+away. Switch to the time-resolved tools:
+
+- `circadian.spectrogram()`: period and its strength as a surface over time.
+- `circadian.ssa()`: separates the series into trend, circadian, and noise
+  [@golyandina2013].
+- `circadian.emd()` with `hilbert.huang()`: an instantaneous, cycle-by-cycle
+  period [@huang1998].
+- `circadian.wavelet()`: the full time-frequency power surface.
+- `sleep.changepoints()`: dates a regime change directly from the counts.
+- `curve.registration()`: a chronotype phase that does not blur when the days
+  disagree [@krafty2019].
+
+These have their own walkthrough in the *Nonstationary and complex rhythms*
+article.
+
+## How complex or fractal is the signal?
+
+Two recordings can share the same IS and amplitude yet differ in their
+moment-to-moment dynamics:
+
+- `fractal.dfa()`: the detrended-fluctuation exponent (long-range correlation)
+  [@peng1994].
+- `mfdfa()`: multifractality, summarised by the spectrum width [@kantelhardt2002].
+- `multiscale.entropy()`: how complexity changes across coarse-graining scales
+  [@costa2002].
+
+Demonstrated in *Beyond the basics*.
+
+## When does the person sleep, and how regular?
+
+- **A per-epoch sleep/wake label from counts**: `sleep.cole.kripke()` for adults
+  [@cole1992], `sleep.sadeh()` for children and adolescents [@sadeh1994].
+- **Regularity of that label day to day**: `sleep.regularity.index()`
+  [@phillips2017], with `sri.matrix()` for the day-by-day heatmap.
+- **Each night's onset and wake, straight from the counts**:
+  `sleep.changepoints()` [@chensun2024].
+- **Every rest bout, naps included**: `rest.periods()` (Roenneberg)
+  [@roenneberg2015] and `rest.crespo()` (Crespo) [@crespo2012], two independent
+  algorithms; `rest.hmm()` is a probabilistic state-space alternative
+  [@huang2018hmm].
+- **Timing against the social clock**: `social.jet.lag()` [@wittmann2006]; the
+  ultradian structure within sleep, `lids()` [@winnebeck2018].
+
+**Which rest detector?** `sleep.changepoints()` finds the *one main* rest bout of
+each night (sleep and wake timing). `rest.periods()` and `rest.crespo()` consolidate
+*every* rest bout across the recording, daytime naps included. Run both for an
+independent cross-check. `rest.hmm()` models rest probabilistically rather than as
+hard bouts.
+
+## Counts or raw acceleration?
+
+- You have count files (`.agd`) or pre-extracted counts: analyse them
+  directly; everything above takes a count series.
+- You have raw files (`.gt3x`, `.cwa`, `.bin`): `read.raw()` and
+  `raw.metrics()` give ENMO, MAD, and the **z-angle**, the gravity/posture signal
+  counts cannot carry. The z-angle drives diary-free, posture-based sleep
+  detection (`rest.spt()`, `sib.vanhees()`) that needs no scored sleep at all. See
+  the *From raw acceleration* article.
+
+Cross-brand counts (converting Axivity or GENEActiv to ActiGraph-equivalent
+counts) are an approximation [@brond2017]: fine for the relative and normalised
+metrics here (IS, IV, RA, the periodograms, SRI), not for absolute-count
+comparisons or ActiGraph cut-points.
+
+## One subject or a group?
+
+Every function above describes one recording. For a study:
+
+- **Group mean rhythm**: `population.cosinor()` pools per-subject cosinor fits
+  into a Bingham population-mean rhythm with confidence intervals [@bingham1982].
+- **Two-group comparison**: `cosinor.compare()` tests whether the rhythm differs
+  between groups (an omnibus Hotelling T^2 plus per-parameter tests) [@bingham1982].
+- **Covariates, repeated measures, or nesting**: run `circadian.batch()` over the
+  folder to get one row of metrics per recording. Then feed those per-subject
+  metrics (IS, IV, RA, MESOR, amplitude, acrophase, period) into a mixed model with
+  `lme4` or `nlme` alongside your design. The package supplies the metrics; you
+  supply the multilevel model.
+
+## A quick map
+
+| Your question | Reach for | Walkthrough |
+|---|---|---|
+| Is there a rhythm, and how strong? | `circadian.rhythm`, `cosinor.analysis` + `rhythmicity.test`, `consensus.rhythmicity` | Get started |
+| What is the period? | `circadian.period`, `chi.sq.periodogram`, `period.ci` | Get started |
+| What shape is the day? | `cosinor.extended`, `cosinor.multicomponent`, `circadian.flm` | Beyond the basics |
+| Does it drift or fragment? | `circadian.spectrogram`, `circadian.ssa`, `circadian.emd`, `sleep.changepoints` | Nonstationary and complex rhythms |
+| How fractal/complex? | `fractal.dfa`, `mfdfa`, `multiscale.entropy` | Beyond the basics |
+| When is sleep, how regular? | `sleep.cole.kripke`/`sleep.sadeh`, `sleep.regularity.index`, `rest.periods`/`rest.crespo` | Get started |
+| Raw files, posture, diary-free sleep | `read.raw`, `raw.metrics`, `rest.spt` + `sib.vanhees` | From raw acceleration |
+| A group, not one subject | `population.cosinor`, `cosinor.compare`, then `lme4`/`nlme` | Get started |
+| What does column *X* mean? | the metric tables | Output codebook |
+
+## Assumptions to respect
+
+These hold across the package and decide whether any of the above is trustworthy:
+
+- **Evenly spaced epochs and enough valid days.** `circadian.rhythm()` sets aside
+  days with too little valid recording before computing; very short records give
+  unstable IS/IV and unreliable periods.
+- **Wear time.** Gate the counts on valid wear, or supply a mask; if you have none,
+  `detect.nonwear.choi()` / `detect.nonwear.troiano()` (counts) or
+  `detect.nonwear.raw()` (raw) build one. `rest.periods()` and
+  `rest.crespo()` apply no wear filter themselves.
+- **Epoch length.** It affects IV and the epoch sleep scorers, which were validated
+  at 60-second epochs.
+
+## References

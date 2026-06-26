@@ -60,13 +60,9 @@ period.ci(counts, ts, n_boot = 50, seed = 1)
 
 }
 \references{
-Kunsch HR (1989). The jackknife and the bootstrap for general stationary
-observations. \emph{The Annals of Statistics}, 17(3):1217-1241.
-\doi{10.1214/aos/1176347265}
+\insertRef{kunsch1989}{actiRhythm}
 
-Politis DN, Romano JP (1992). A circular block-resampling procedure for
-stationary data. In: LePage R, Billard L (eds), Exploring the Limits of
-Bootstrap, 263-270. Wiley, New York.
+\insertRef{politis1992}{actiRhythm}
 }
 \seealso{
 \code{\link{circadian.period}}

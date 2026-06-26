@@ -39,6 +39,5 @@ ultradian.bandpower(100 + 50 * sin(2 * pi * th / 4), ts)   # a 4-hour rhythm
 
 }
 \references{
-Percival DB, Walden AT (2000). \emph{Wavelet Methods for Time Series Analysis}.
-Cambridge University Press. \doi{10.1017/CBO9780511841040}
+\insertRef{percival2000}{actiRhythm}
 }

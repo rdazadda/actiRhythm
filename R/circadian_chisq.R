@@ -40,17 +40,11 @@
 #'   empty vectors; the function never throws.
 #'
 #' @references
-#' Sokolove PG, Bushell WN (1978). The chi square periodogram: its utility for
-#' analysis of circadian rhythms. \emph{Journal of Theoretical Biology},
-#' 72(1):131-160. \doi{10.1016/0022-5193(78)90022-X}
+#' \insertRef{sokolove1978}{actiRhythm}
 #'
-#' Refinetti R, Cornelissen G, Halberg F (2007). Procedures for numerical
-#' analysis of circadian rhythms. \emph{Biological Rhythm Research}, 38(4):275-325.
-#' \doi{10.1080/09291010600903692}
+#' \insertRef{refinetti2007}{actiRhythm}
 #'
-#' Sidak Z (1967). Rectangular confidence regions for the means of multivariate
-#' normal distributions. \emph{Journal of the American Statistical Association},
-#' 62(318):626-633. \doi{10.1080/01621459.1967.10482935}
+#' \insertRef{sidak1967}{actiRhythm}
 #'
 #' @seealso \code{\link{circadian.period}} for the Lomb-Scargle estimator.
 #' @export

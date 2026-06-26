@@ -39,10 +39,11 @@ day. Never errors.
 
 ## References
 
-Lim ASP, Yu L, Costa MD, et al. (2011). Quantification of the
-fragmentation of rest-activity patterns in elderly individuals using a
-state transition analysis. *Sleep*, 34(11):1569-1581.
-[doi:10.5665/sleep.1400](https://doi.org/10.5665/sleep.1400)
+Lim ASP, Yu L, Costa MD, Leurgans SE, Buchman AS, Bennett DA, Saper CB
+(2011). “Quantification of the fragmentation of rest-activity patterns
+in elderly individuals using a state transition analysis.” *Sleep*,
+**34**(11), 1569–1581.
+[doi:10.5665/sleep.1400](https://doi.org/10.5665/sleep.1400) .
 
 ## See also
 

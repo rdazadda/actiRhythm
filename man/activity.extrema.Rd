@@ -31,9 +31,5 @@ activity.extrema(ifelse(h >= 23 | h < 7, 5, 300), ts, windows = c(5, 8, 10))
 
 }
 \references{
-Van Someren EJW, Swaab DF, Colenda CC, Cohen W, McCall WV, Rosenquist PB
-(1999). Bright light therapy: improved sensitivity to its effects on
-rest-activity rhythms in Alzheimer patients by application of nonparametric
-methods. \emph{Chronobiology International}, 16(4):505-518.
-\doi{10.3109/07420529908998724}
+\insertRef{vansomeren1999}{actiRhythm}
 }

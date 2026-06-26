@@ -19,7 +19,7 @@
 #'   frame, and the agreement fraction.
 #'
 #' @references
-#' Fisher RA (1925). Statistical Methods for Research Workers. Oliver and Boyd.
+#' \insertRef{fisher1925}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 3 * 1440)

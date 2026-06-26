@@ -46,6 +46,7 @@ power, fraction) and the per-level wavelet variance. Never errors.
 Percival DB, Walden AT (2000). *Wavelet Methods for Time Series
 Analysis*. Cambridge University Press.
 [doi:10.1017/CBO9780511841040](https://doi.org/10.1017/CBO9780511841040)
+.
 
 ## Examples
 

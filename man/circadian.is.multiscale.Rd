@@ -26,5 +26,5 @@ higher-frequency day-to-day regularity. For each bin width,
 and \code{N} the total number of bins.
 }
 \references{
-Witting W, et al. (1990). Biol Psychiatry 27(6):563-572.
+\insertRef{witting1990}{actiRhythm}
 }

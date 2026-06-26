@@ -33,8 +33,5 @@ dichotomy.index(counts, ts, rest = h >= 23 | h < 7)
 
 }
 \references{
-Mormont MC, Waterhouse J, Bleuzen P, et al. (2000). Marked 24-h rest/activity
-rhythms are associated with better quality of life, better response, and longer
-survival in patients with metastatic colorectal cancer. \emph{Clinical Cancer
-Research}, 6(8):3038-3045.
+\insertRef{mormont2000}{actiRhythm}
 }

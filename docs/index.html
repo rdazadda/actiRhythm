@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="favicon.ico">
 <link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Circadian Rest-Activity Rhythm Analysis">
 <meta name="description" content="Quantifies the circadian rest-activity rhythm of a single subject from activity counts. Analyses run on an activity-count vector and its timestamps, and a built-in reader loads ActiGraph .agd files (an SQLite database) directly. Computes nonparametric metrics (interdaily stability (IS) and intradaily variability (IV) following Witting et al. (1990) &lt;doi:10.1016/0006-3223(90)90523-5&gt;; relative amplitude (RA), the least-active 5-hour window (L5), and the most-active 10-hour window (M10) following Van Someren et al. (1999) &lt;doi:10.3109/07420529908998724&gt;), cosinor models with a rhythmicity test and confidence ellipses (Cornelissen (2014) &lt;doi:10.1186/1742-4682-11-16&gt;; Marler et al. (2006) &lt;doi:10.1002/sim.2466&gt;), period estimation by Lomb-Scargle and chi-square periodograms (Sokolove and Bushell (1978) &lt;doi:10.1016/0022-5193(78)90022-X&gt;) with bootstrap confidence intervals and a sliding-window spectrogram, fractal and nonlinear measures (Peng et al. (1994) &lt;doi:10.1103/PhysRevE.49.1685&gt;; Kantelhardt et al. (2002) &lt;doi:10.1016/S0378-4371(02)01383-3&gt;), the Sleep Regularity Index (Phillips et al. (2017) &lt;doi:10.1038/s41598-017-03171-4&gt;), social jet lag, rest-activity state transitions, and locomotor inactivity during sleep (Winnebeck et al. (2018) &lt;doi:10.1016/j.cub.2017.11.063&gt;). It also reads raw accelerometer files (ActiGraph .gt3x, Axivity .cwa, GENEActiv .bin), auto-calibrates them (van Hees et al. (2014) &lt;doi:10.1152/japplphysiol.00421.2014&gt;), and derives the ENMO, MAD, and z-angle metrics with diary-free sleep-period detection (van Hees et al. (2018) &lt;doi:10.1038/s41598-018-31266-z&gt;), matching GGIR output. A batch mode runs the analysis over a folder of files and writes a multi-sheet Excel workbook. Developed by the Center for Alaska Native Health Research (CANHR).">
@@ -42,7 +42,24 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/nonstationary-rhythms.html">Nonstationary and complex rhythms</a></li>
+<li><a class="dropdown-item" href="articles/choosing-a-method.html">Choosing a method</a></li>
+    <li><a class="dropdown-item" href="articles/output-codebook.html">Output codebook (metrics data dictionary)</a></li>
+    <li><a class="dropdown-item" href="articles/validation.html">Validation against reference packages</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Method families</h6></li>
+    <li><a class="dropdown-item" href="articles/nonparametric.html">Nonparametric rhythm metrics</a></li>
+    <li><a class="dropdown-item" href="articles/cosinor.html">Cosinor models</a></li>
+    <li><a class="dropdown-item" href="articles/period-estimation.html">Period and spectral analysis</a></li>
+    <li><a class="dropdown-item" href="articles/fractal-nonlinear.html">Fractal and nonlinear dynamics</a></li>
+    <li><a class="dropdown-item" href="articles/sleep.html">Sleep and rest detection</a></li>
+    <li><a class="dropdown-item" href="articles/phase-regularity.html">Phase, regularity, and social jet lag</a></li>
+    <li><a class="dropdown-item" href="articles/beyond-the-basics.html">Beyond the basics: profile, decomposition, and finer metrics</a></li>
+    <li><a class="dropdown-item" href="articles/nonstationary-rhythms.html">Nonstationary and complex rhythms</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Data &amp; workflow</h6></li>
+    <li><a class="dropdown-item" href="articles/io-and-wear-time.html">Reading data and wear-time detection</a></li>
+    <li><a class="dropdown-item" href="articles/raw-pipeline.html">From raw acceleration</a></li>
+    <li><a class="dropdown-item" href="articles/batch-workflow.html">Batch processing and reporting</a></li>
   </ul>
 </li>
       </ul>

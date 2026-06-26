@@ -13,6 +13,8 @@ Useful links:
 
 - <https://github.com/rdazadda/actiRhythm>
 
+- <https://rdazadda.github.io/actiRhythm/>
+
 - Report bugs at <https://github.com/rdazadda/actiRhythm/issues>
 
 ## Author

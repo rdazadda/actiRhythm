@@ -6,29 +6,13 @@
 #' @name circadian-analysis
 #'
 #' @references
-#' \strong{Nonparametric metrics:}
-#' \itemize{
-#'   \item Witting W, Kwa IH, Eikelenboom P, Mirmiran M, Swaab DF (1990).
-#'     Alterations in the circadian rest-activity rhythm in aging and Alzheimer's
-#'     disease. Biological Psychiatry, 27(6):563-572. Source of interdaily
-#'     stability (IS) and intradaily variability (IV).
-#'     \doi{10.1016/0006-3223(90)90523-5}
-#'   \item Van Someren EJW, Swaab DF, Colenda CC, Cohen W, McCall WV, Rosenquist PB
-#'     (1999). Bright light therapy: improved sensitivity to its effects on
-#'     rest-activity rhythms in Alzheimer patients by application of nonparametric
-#'     methods. Chronobiology International, 16(4):505-518. Source of relative
-#'     amplitude (RA), L5, and M10. \doi{10.3109/07420529908998724}
-#' }
+#' \insertRef{witting1990}{actiRhythm}
 #'
-#' \strong{Sleep regularity and timing:}
-#' \itemize{
-#'   \item Phillips AJK, et al. (2017). Irregular sleep/wake patterns are associated
-#'     with poorer academic performance and delayed circadian and sleep/wake timing.
-#'     Scientific Reports, 7:3216. \doi{10.1038/s41598-017-03171-4}
-#'   \item Wittmann M, Dinich J, Merrow M, Roenneberg T (2006). Social jetlag:
-#'     misalignment of biological and social time. Chronobiology International,
-#'     23(1-2):497-509. \doi{10.1080/07420520500545979}
-#' }
+#' \insertRef{vansomeren1999}{actiRhythm}
+#'
+#' \insertRef{phillips2017}{actiRhythm}
+#'
+#' \insertRef{wittmann2006}{actiRhythm}
 NULL
 
 
@@ -439,9 +423,7 @@ circadian.rhythm <- function(counts,
 #' @return List with value, start_time, start_hour (decimal)
 #'
 #' @references
-#' van Someren EJ, et al. (1999). Bright light therapy: improved sensitivity to
-#' its effects on rest-activity rhythms in Alzheimer patients by application of
-#' nonparametric methods. Chronobiol Int, 16(4):505-518.
+#' \insertRef{vansomeren1999}{actiRhythm}
 #'
 #' @keywords internal
 .calculate.LX.sliding <- function(counts, timestamps, X, find_minimum = TRUE, epoch_length = 60) {
@@ -557,7 +539,7 @@ circadian.rhythm <- function(counts,
 #' @return Numeric. Relative amplitude (0-1)
 #'
 #' @references
-#' van Someren EJ, et al. (1999). Chronobiol Int, 16(4):505-518.
+#' \insertRef{vansomeren1999}{actiRhythm}
 #'
 #' @keywords internal
 .calculate.RA <- function(M10, L5) {
@@ -593,9 +575,7 @@ circadian.rhythm <- function(counts,
 #' IV = (n * sum((Xi - Xi-1)^2)) / ((n-1) * sum((Xi - Xmean)^2))
 #'
 #' @references
-#' Witting W, Kwa IH, Eikelenboom P, Mirmiran M, Swaab DF (1990). Alterations in
-#' the circadian rest-activity rhythm in aging and Alzheimer's disease. Biological
-#' Psychiatry, 27(6):563-572. \doi{10.1016/0006-3223(90)90523-5}
+#' \insertRef{witting1990}{actiRhythm}
 #'
 #' @keywords internal
 .calculate.IS.IV <- function(counts, timestamps, epoch_length = 60) {
@@ -769,9 +749,7 @@ circadian.rhythm <- function(counts,
 #' Perfectly anti-regular patterns (opposite states) score -100.
 #'
 #' @references
-#' Phillips AJK, et al. (2017). Irregular sleep/wake patterns are associated
-#' with poorer academic performance and delayed circadian and sleep/wake timing.
-#' Scientific Reports, 7(1):3216.
+#' \insertRef{phillips2017}{actiRhythm}
 #'
 #' @keywords internal
 .calculate.sri.fast <- function(sleep_state, timestamps, epoch_length = 60) {
@@ -824,7 +802,7 @@ circadian.rhythm <- function(counts,
 #' @return Numeric SRI value (-100 to 100)
 #'
 #' @references
-#' Phillips AJK, et al. (2017). Scientific Reports, 7(1):3216.
+#' \insertRef{phillips2017}{actiRhythm}
 #'
 #' @export
 sleep.regularity.index <- function(sleep_state, timestamps, epoch_length = 60) {
@@ -946,11 +924,9 @@ sleep.regularity.index <- function(sleep_state, timestamps, epoch_length = 60) {
 #' Values > 1 hour are associated with increased health risks.
 #'
 #' @references
-#' Wittmann M, et al. (2006). Social jetlag: misalignment of biological and
-#' social time. Chronobiology International, 23(1-2):497-509.
+#' \insertRef{wittmann2006}{actiRhythm}
 #'
-#' Roenneberg T, Allebrandt KV, Merrow M, Vetter C (2012). Social jetlag and
-#' obesity. Current Biology, 22(10):939-943. \doi{10.1016/j.cub.2012.03.038}
+#' \insertRef{roenneberg2012}{actiRhythm}
 #'
 #' @export
 social.jet.lag <- function(sleep_periods, work_days = NULL) {
@@ -1092,11 +1068,9 @@ social.jet.lag <- function(sleep_periods, work_days = NULL) {
 #' Y(t) = M + β₁·cos(2πt/T) + β₂·sin(2πt/T)
 #'
 #' @references
-#' Nelson W, et al. (1979). Methods for cosinor-rhythmometry.
-#' Chronobiologia, 6(4):305-323.
+#' \insertRef{nelson1979}{actiRhythm}
 #'
-#' Cornelissen G. (2014). Cosinor-based rhythmometry.
-#' Theoretical Biology and Medical Modelling, 11:16.
+#' \insertRef{cornelissen2014}{actiRhythm}
 #'
 #' @examples
 #' \donttest{
@@ -1380,8 +1354,9 @@ cosinor.analysis <- function(counts, timestamps, period = 24, wear_time = NULL,
 #' }
 #'
 #' @references
-#' Cornelissen G. (2014). Cosinor-based rhythmometry. Theor Biol Med Model, 11:16.
-#' Refinetti R, et al. (2007). Procedures for numerical analysis of circadian rhythms.
+#' \insertRef{cornelissen2014}{actiRhythm}
+#'
+#' \insertRef{refinetti2007}{actiRhythm}
 #'
 #' @examples
 #' \donttest{

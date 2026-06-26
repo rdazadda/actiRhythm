@@ -33,4 +33,8 @@ Data frame with columns `bin_minutes` and `IS`.
 
 ## References
 
-Witting W, et al. (1990). Biol Psychiatry 27(6):563-572.
+Witting W, Kwa IH, Eikelenboom P, Mirmiran M, Swaab DF (1990).
+“Alterations in the circadian rest-activity rhythm in aging and
+Alzheimer's disease.” *Biological Psychiatry*, **27**(6), 563–572.
+[doi:10.1016/0006-3223(90)90523-5](https://doi.org/10.1016/0006-3223%2890%2990523-5)
+.

@@ -48,9 +48,9 @@ R-squared, and the full model-comparison table. Never errors.
 
 ## References
 
-Cornelissen G (2014). Cosinor-based rhythmometry. *Theoretical Biology
-and Medical Modelling*, 11:16.
-[doi:10.1186/1742-4682-11-16](https://doi.org/10.1186/1742-4682-11-16)
+Cornelissen G (2014). “Cosinor-based rhythmometry.” *Theoretical Biology
+and Medical Modelling*, **11**, 16.
+[doi:10.1186/1742-4682-11-16](https://doi.org/10.1186/1742-4682-11-16) .
 
 ## Examples
 

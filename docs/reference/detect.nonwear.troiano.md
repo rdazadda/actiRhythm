@@ -49,9 +49,10 @@ Never errors.
 ## References
 
 Troiano RP, Berrigan D, Dodd KW, Masse LC, Tilert T, McDowell M (2008).
-Physical activity in the United States measured by accelerometer.
-*Medicine & Science in Sports & Exercise*, 40(1):181-188.
+“Physical activity in the United States measured by accelerometer.”
+*Medicine & Science in Sports & Exercise*, **40**(1), 181–188.
 [doi:10.1249/mss.0b013e31815a51b3](https://doi.org/10.1249/mss.0b013e31815a51b3)
+.
 
 ## See also
 

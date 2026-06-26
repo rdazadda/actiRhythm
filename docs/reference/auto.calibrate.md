@@ -57,10 +57,13 @@ too little non-movement data the identity correction is returned with
 
 ## References
 
-van Hees VT, et al. (2014). Autocalibration of accelerometer data for
-free-living physical activity assessment using local gravity and
-temperature. *Journal of Applied Physiology*, 117(7):738-744.
+van Hees VT, Fang Z, Langford J, Assah F, Mohammad A, da Silva ICM,
+Trenell MI, White T, Wareham NJ, Brage S (2014). “Autocalibration of
+accelerometer data for free-living physical activity assessment using
+local gravity and temperature: an evaluation on four continents.”
+*Journal of Applied Physiology*, **117**(7), 738–744.
 [doi:10.1152/japplphysiol.00421.2014](https://doi.org/10.1152/japplphysiol.00421.2014)
+.
 
 ## Examples
 

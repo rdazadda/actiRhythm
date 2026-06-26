@@ -46,9 +46,12 @@ by the SPT window and wear time).
 
 ## References
 
-van Hees VT, et al. (2015). A novel, open access method to assess sleep
-duration using a wrist-worn accelerometer. *PLoS ONE*, 10(11):e0142533.
+van Hees VT, Sabia S, Anderson KN, Denton SJ, Oliver J, Catt M, Abell
+JG, Kivimaki M, Trenell MI, Singh-Manoux A (2015). “A novel, open access
+method to assess sleep duration using a wrist-worn accelerometer.” *PLoS
+ONE*, **10**(11), e0142533.
 [doi:10.1371/journal.pone.0142533](https://doi.org/10.1371/journal.pone.0142533)
+.
 
 ## See also
 

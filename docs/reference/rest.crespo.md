@@ -69,15 +69,18 @@ with no resolvable bout it returns an empty `rest_periods`.
 
 ## References
 
-Crespo C, Aboy M, Fernandez JR, Mojon A (2012). Automatic identification
-of activity-rest periods based on actigraphy. *Medical & Biological
-Engineering & Computing*, 50(4):329-340.
+Crespo C, Aboy M, Fernandez JR, Mojon A (2012). “Automatic
+identification of activity-rest periods based on actigraphy.” *Medical &
+Biological Engineering & Computing*, **50**(4), 329–340.
 [doi:10.1007/s11517-012-0875-y](https://doi.org/10.1007/s11517-012-0875-y)
+.
 
-Hammad G, Reyt M, Beliy N, et al. (2021). pyActigraphy: open-source
-python package for actigraphy data visualization and analysis. *PLOS
-Computational Biology*, 17(10):e1009514.
+Hammad G, Reyt M, Beliy N, Baillet M, Deantoni M, Lesoinne A, Muto V,
+Schmidt C (2021). “pyActigraphy: open-source python package for
+actigraphy data visualization and analysis.” *PLOS Computational
+Biology*, **17**(10), e1009514.
 [doi:10.1371/journal.pcbi.1009514](https://doi.org/10.1371/journal.pcbi.1009514)
+.
 
 ## See also
 

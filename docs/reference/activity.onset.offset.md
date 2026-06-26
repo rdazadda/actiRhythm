@@ -35,10 +35,11 @@ hours) and the relative-difference profile. Never errors.
 
 ## References
 
-Roenneberg T, Wirz-Justice A, Merrow M (2003). Life between clocks:
-daily temporal patterns of human chronotypes. *Journal of Biological
-Rhythms*, 18(1):80-90.
+Roenneberg T, Wirz-Justice A, Merrow M (2003). “Life between clocks:
+daily temporal patterns of human chronotypes.” *Journal of Biological
+Rhythms*, **18**(1), 80–90.
 [doi:10.1177/0748730402239679](https://doi.org/10.1177/0748730402239679)
+.
 
 ## Examples
 

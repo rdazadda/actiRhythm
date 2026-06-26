@@ -42,6 +42,5 @@ cosinor.multicomponent(y, ts)
 
 }
 \references{
-Cornelissen G (2014). Cosinor-based rhythmometry. \emph{Theoretical Biology and
-Medical Modelling}, 11:16. \doi{10.1186/1742-4682-11-16}
+\insertRef{cornelissen2014}{actiRhythm}
 }

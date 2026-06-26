@@ -50,10 +50,11 @@ Never errors.
 
 ## References
 
-Choi L, Liu Z, Matthews CE, Buchowski MS (2011). Validation of
-accelerometer wear and nonwear time classification algorithm. *Medicine
-& Science in Sports & Exercise*, 43(2):357-364.
+Choi L, Liu Z, Matthews CE, Buchowski MS (2011). “Validation of
+accelerometer wear and nonwear time classification algorithm.” *Medicine
+& Science in Sports & Exercise*, **43**(2), 357–364.
 [doi:10.1249/MSS.0b013e3181ed61a3](https://doi.org/10.1249/MSS.0b013e3181ed61a3)
+.
 
 ## See also
 

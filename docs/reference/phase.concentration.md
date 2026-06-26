@@ -37,11 +37,13 @@ p-values. Never errors.
 Fisher NI (1993). *Statistical Analysis of Circular Data*. Cambridge
 University Press.
 [doi:10.1017/CBO9780511564345](https://doi.org/10.1017/CBO9780511564345)
+.
 
-Hermans M, Rasson JP (2017). A new Sobolev test for uniformity on the
-circle. (Landler L, Ruxton GD, Malkemper EP 2019, *BMC Ecology* 19:30,
+Landler L, Ruxton GD, Malkemper EP (2019). “The Hermans-Rasson test as a
+powerful alternative to the Rayleigh test for circular statistics in
+biology.” *BMC Ecology*, **19**, 30.
 [doi:10.1186/s12898-019-0246-8](https://doi.org/10.1186/s12898-019-0246-8)
-, recommend it over Rayleigh.)
+.
 
 ## Examples
 

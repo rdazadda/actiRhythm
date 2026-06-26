@@ -35,8 +35,12 @@ epoch.
 
 ## References
 
-Neishabouri A, et al. (2022). Quantification of acceleration as activity
-counts in ActiGraph wearable. *Scientific Reports*, 12:11958.
+Neishabouri A, Nguyen J, Samuelsson J, Guthrie T, Biggs M, Wyatt J,
+Cross D, Karas M, Migueles JH, Khan S, Guo CC (2022). “Quantification of
+acceleration as activity counts in ActiGraph wearable.” *Scientific
+Reports*, **12**, 11958.
+[doi:10.1038/s41598-022-16003-x](https://doi.org/10.1038/s41598-022-16003-x)
+.
 
 ## See also
 

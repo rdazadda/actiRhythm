@@ -11,6 +11,7 @@
 #' @importFrom grDevices colorRampPalette
 #' @importFrom scales squish
 #' @importFrom utils globalVariables
+#' @importFrom Rdpack reprompt
 #' @keywords internal
 "_PACKAGE"
 

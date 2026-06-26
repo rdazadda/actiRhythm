@@ -29,9 +29,7 @@
 #'   non-wear. Never errors.
 #'
 #' @references
-#' Choi L, Liu Z, Matthews CE, Buchowski MS (2011). Validation of accelerometer
-#' wear and nonwear time classification algorithm. \emph{Medicine & Science in
-#' Sports & Exercise}, 43(2):357-364. \doi{10.1249/MSS.0b013e3181ed61a3}
+#' \insertRef{choi2011}{actiRhythm}
 #'
 #' @seealso \code{\link{detect.nonwear.troiano}}
 #'
@@ -80,10 +78,7 @@ detect.nonwear.choi <- function(counts, epoch_length = 60, frame = 90,
 #'   non-wear. Never errors.
 #'
 #' @references
-#' Troiano RP, Berrigan D, Dodd KW, Masse LC, Tilert T, McDowell M (2008).
-#' Physical activity in the United States measured by accelerometer.
-#' \emph{Medicine & Science in Sports & Exercise}, 40(1):181-188.
-#' \doi{10.1249/mss.0b013e31815a51b3}
+#' \insertRef{troiano2008}{actiRhythm}
 #'
 #' @seealso \code{\link{detect.nonwear.choi}}
 #'

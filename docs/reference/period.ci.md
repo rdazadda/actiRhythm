@@ -71,13 +71,14 @@ number of valid replicates.
 
 ## References
 
-Kunsch HR (1989). The jackknife and the bootstrap for general stationary
-observations. *The Annals of Statistics*, 17(3):1217-1241.
-[doi:10.1214/aos/1176347265](https://doi.org/10.1214/aos/1176347265)
+Kunsch HR (1989). “The jackknife and the bootstrap for general
+stationary observations.” *The Annals of Statistics*, **17**(3),
+1217–1241.
+[doi:10.1214/aos/1176347265](https://doi.org/10.1214/aos/1176347265) .
 
-Politis DN, Romano JP (1992). A circular block-resampling procedure for
-stationary data. In: LePage R, Billard L (eds), Exploring the Limits of
-Bootstrap, 263-270. Wiley, New York.
+Politis DN, Romano JP (1992). “A circular block-resampling procedure for
+stationary data.” In LePage R, Billard L (eds.), *Exploring the Limits
+of Bootstrap*, 263–270. Wiley, New York.
 
 ## See also
 
@@ -93,7 +94,7 @@ counts <- 100 + 80 * cos(2 * pi * (t_hours - 8) / 24) + rnorm(length(t_hours), 0
 period.ci(counts, ts, n_boot = 50, seed = 1)
 #> Circadian Period with Bootstrap Confidence Interval
 #> 
-#>   tau:      24.104 h
+#>   tau:      24.103 h
 #>   95% CI:   [23.980, 24.064] h
 #>   SE:       0.022 h
 #>   Method:   circular block residual bootstrap (50/50 valid reps)

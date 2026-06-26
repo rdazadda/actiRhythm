@@ -60,11 +60,7 @@
 #'   }
 #'
 #' @references
-#' Phillips AJK, Clerx WM, O'Brien CS, Sano A, Barger LK, Picard RW,
-#' Lockley SW, Klerman EB, Czeisler CA (2017). Irregular sleep/wake patterns
-#' are associated with poorer academic performance and delayed circadian and
-#' sleep/wake timing. \emph{Scientific Reports}, 7(1):3216.
-#' \doi{10.1038/s41598-017-03171-4}
+#' \insertRef{phillips2017}{actiRhythm}
 #'
 #' @examples
 #' # A perfectly regular sleeper: same 8h sleep block every day -> SRI near 100

@@ -34,9 +34,7 @@ cut-points or to compare absolute counts across device brands.
 }
 
 \references{
-Brond JC, Andersen LB, Arvidsson D (2017). Generating ActiGraph counts from
-raw acceleration recorded by an alternative monitor. \emph{Medicine & Science
-in Sports & Exercise}, 49(11):2351-2360. \doi{10.1249/MSS.0000000000001344}
+\insertRef{brond2017}{actiRhythm}
 }
 \seealso{
 \code{\link{geneactiv.counts}}, \code{\link{gt3x.counts}},

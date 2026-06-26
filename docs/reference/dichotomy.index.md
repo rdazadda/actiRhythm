@@ -33,10 +33,12 @@ active-period median, and epoch counts. Never errors.
 
 ## References
 
-Mormont MC, Waterhouse J, Bleuzen P, et al. (2000). Marked 24-h
+Mormont MC, Waterhouse J, Bleuzen P, Giacchetti S, Jami A, Bogdan A,
+Lellouch J, Misset JL, Touitou Y, Levi F (2000). “Marked 24-h
 rest/activity rhythms are associated with better quality of life, better
 response, and longer survival in patients with metastatic colorectal
-cancer. *Clinical Cancer Research*, 6(8):3038-3045.
+cancer and good performance status.” *Clinical Cancer Research*,
+**6**(8), 3038–3045.
 
 ## Examples
 

@@ -53,8 +53,5 @@ auto.calibrate(data.frame(x = raw[, 1], y = raw[, 2], z = raw[, 3]), fs = 30)$sc
 
 }
 \references{
-van Hees VT, et al. (2014). Autocalibration of accelerometer data for
-free-living physical activity assessment using local gravity and temperature.
-\emph{Journal of Applied Physiology}, 117(7):738-744.
-\doi{10.1152/japplphysiol.00421.2014}
+\insertRef{vanhees2014}{actiRhythm}
 }

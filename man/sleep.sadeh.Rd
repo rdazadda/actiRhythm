@@ -44,9 +44,7 @@ table(state)
 
 }
 \references{
-Sadeh A, Sharkey KM, Carskadon MA (1994). Activity-based sleep-wake
-identification: an empirical test of methodological issues. \emph{Sleep},
-17(3):201-207. \doi{10.1093/sleep/17.3.201}
+\insertRef{sadeh1994}{actiRhythm}
 }
 \seealso{
 \code{\link{sleep.cole.kripke}}, \code{\link{sleep.regularity.index}}

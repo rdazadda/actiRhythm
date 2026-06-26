@@ -1,0 +1,271 @@
+---
+title: "Sleep and rest detection"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+bibliography: ../REFERENCES.bib
+csl: ../apa.csl
+link-citations: true
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7,
+                      fig.height = 4.5, dpi = 110)
+```
+
+```{r libs, message = FALSE, warning = FALSE}
+library(actiRhythm)
+library(ggplot2)
+```
+
+## The idea, and a rule to remember
+
+Sleep and rest detection turns a stream of activity counts into an answer to two
+different questions. The **epoch scorers** (Cole-Kripke and Sadeh) label every
+single minute as sleep or wake, giving a per-epoch state you can total into sleep
+time. The **bout detectors** (change-point, Roenneberg, Crespo, and the
+state-space model) step back and mark the *spans* of rest, the onset and offset
+clock times of each consolidated period. One tells you *how much* sleep, the other
+*when* it happened.
+
+The rule to carry through this article: **decide first whether you want one main
+sleep window per night or every rest bout the recording contains, because that
+choice, not the algorithm's accuracy, is what separates these functions.**
+`sleep.changepoints()` finds the single dominant rest bout of each circadian
+cycle; `rest.periods()` and `rest.crespo()` return *every* consolidated bout, naps
+included. Asking a one-bout method for naps, or a many-bout method for "the night",
+is the most common way to misread the output.
+
+## The math
+
+The two epoch scorers are weighted windows over the counts. **Cole-Kripke**
+[@cole1992] forms a sleep index from a seven-epoch window: four epochs before the
+current one (\(P_4 \dots P_1\)), the current epoch \(C\), and two after
+(\(N_1, N_2\)). Counts are scaled by 100 and capped:
+$$
+D = 0.001\,(106\,P_4 + 54\,P_3 + 58\,P_2 + 76\,P_1 + 230\,C + 74\,N_1 + 67\,N_2),
+$$
+and scores the epoch **sleep when \(D < 1\)**. Webster's rescoring rules
+[@webster1982] then re-label short sleep bouts bracketed by sustained wake.
+
+**Sadeh** [@sadeh1994] uses an eleven-epoch window (five each side) with counts
+capped at 300:
+$$
+SI = 7.601 - 0.065\,\overline{A} - 1.08\,\mathrm{NAT} - 0.056\,s - 0.703\,\log(C+1),
+$$
+where \(\overline{A}\) is the window mean, \(\mathrm{NAT}\) the count of epochs in
+\([50,100)\), \(s\) the standard deviation over the current and five preceding
+epochs, and \(C\) the current count. The epoch is scored **sleep when
+\(SI > -4\)**.
+
+The change-point detector [@chensun2024] is geometric rather than weighted: it
+fits a 24-hour cosinor to bound each rest and active span roughly, then places the
+exact transition inside each bound at the split \(k\) minimising the within-segment
+residual sum of squares,
+$$
+k^\* = \arg\min_k \;\sum_{i \le k}(x_i - \bar x_{\le k})^2 + \sum_{i > k}(x_i - \bar x_{>k})^2 .
+$$
+
+## Assumptions, and when they break
+
+- **One-minute epochs.** Cole-Kripke and Sadeh were validated on 60-second epochs
+  and their coefficients are tied to that resolution; both warn if `epoch_length`
+  differs. Re-bin to one minute before scoring.
+- **Counts, not raw acceleration.** The scorers expect ActiGraph-style activity
+  counts on the vertical axis; feed them counts (`agd$axis1`), not raw g.
+- **Non-wear is not sleep.** A taken-off device reads as deep rest. The scorers'
+  `na_action` argument governs this: the default `"na"` emits `NA` for
+  missing-count epochs so a device-off gap is not silently scored as sleep.
+- **A clear day-night contrast for the bout detectors.** `sleep.changepoints()`,
+  `rest.periods()`, and `rest.crespo()` all need enough rhythm to separate rest
+  from activity; on a flat or very short record they return an empty result rather
+  than erroring.
+
+## Recovering known truth
+
+Before trusting any of this on real data, plant an answer and check it comes back.
+We build a seven-day recording with a **known nightly sleep window from 23:00 to
+07:00** (near-zero activity at night, a busy day) and ask whether the epoch
+scorers label the window sleep and whether `sleep.changepoints()` recovers the
+23:00 onset and 07:00 wake.
+
+```{r known-truth}
+ts  <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 7 * 1440)
+hod <- as.numeric(format(ts, "%H")) + as.numeric(format(ts, "%M")) / 60
+set.seed(1)
+asleep <- hod >= 23 | hod < 7                       # the planted sleep window
+counts <- ifelse(asleep, 0, 250) + pmax(0, rnorm(length(ts), 0, 8))
+
+ck <- sleep.cole.kripke(counts)
+sd <- sleep.sadeh(counts)
+knitr::kable(
+  data.frame(
+    scorer        = c("Cole-Kripke", "Sadeh"),
+    sleep_recall  = c(mean(ck[asleep] == "S"),  mean(sd[asleep] == "S")),
+    wake_recall   = c(mean(ck[!asleep] == "W"), mean(sd[!asleep] == "W"))),
+  digits = 3,
+  caption = "Both scorers label the planted 23:00-07:00 window sleep and the day wake."
+)
+```
+
+Both scorers tag essentially all of the night as sleep and essentially all of the
+day as wake. Now the change-point detector, which should place onset near 23:00 and
+wake near 07:00 every night:
+
+```{r known-changepoints}
+cp <- sleep.changepoints(counts, ts)
+cps_h <- as.numeric(format(cp$changepoints$time, "%H")) +
+         as.numeric(format(cp$changepoints$time, "%M")) / 60
+knitr::kable(
+  data.frame(
+    transition = c("sleep onset", "wake onset"),
+    planted    = c(23, 7),
+    recovered  = c(mean(cps_h[cp$changepoints$type == "sleep onset"]),
+                   mean(cps_h[cp$changepoints$type == "wake onset"]))),
+  digits = 2,
+  caption = "Mean recovered transition time across the seven nights vs the planted values."
+)
+c(n_episodes = cp$n_episodes, mean_sleep_duration_h = cp$mean_sleep_duration)
+```
+
+The recovered onset and wake land within a minute of the planted 23:00 and 07:00,
+the detector finds exactly seven nightly episodes, and the mean duration is the
+eight hours we built in. The method recovers the truth we planted.
+
+## On a real recording
+
+The bundled recording runs the same calls. The two scorers return a per-epoch
+state vector; `sleep.changepoints()` returns a per-night episode table.
+
+```{r real}
+agd <- agd.counts(read.agd(example_agd(1), verbose = FALSE))
+table(cole_kripke = sleep.cole.kripke(agd$axis1))
+table(sadeh       = sleep.sadeh(agd$axis1))
+cp_real <- sleep.changepoints(agd$axis1, agd$timestamp)
+cp_real
+```
+
+The two scorers agree closely on the total sleep fraction, and the change-point
+detector resolves one main sleep episode per night with onset and wake clock times.
+
+## Reading the numbers
+
+- **`sleep_state` ("S"/"W")** from the scorers is a per-epoch label. Its useful
+  summaries are the *count* of sleep epochs (multiply by the epoch length for sleep
+  time) and the *runs* of consecutive sleep (sleep periods and their lengths).
+- **Onset and wake times** from `sleep.changepoints()` are clock times; read them
+  as "when did the main rest bout begin and end", and read `mean_sleep_duration` as
+  the average nightly rest length.
+- **Cole-Kripke vs Sadeh.** Cole-Kripke was validated for adults [@cole1992],
+  Sadeh for children and adolescents [@sadeh1994]; pick by population. They will
+  not agree epoch-for-epoch, and the disagreement is largest at the sleep-wake
+  boundary, not in the middle of the night.
+
+## One bout per night, or every bout? The rest detectors compared
+
+This is the rule in action, and it stands in for the usual "wrong-way" demo: there
+is no wrong algorithm here, only a wrong *question*. The same recording, run through
+four detectors, gives four different bout counts, because they answer different
+questions, not because three of them are wrong.
+
+```{r contrast}
+cp <- sleep.changepoints(agd$axis1, agd$timestamp)   # one main bout per night
+rp <- rest.periods(agd$axis1, agd$timestamp)         # every bout (Roenneberg/MASDA)
+rc <- rest.crespo(agd$axis1, agd$timestamp)          # every bout (Crespo morphology)
+hm <- rest.hmm(agd$axis1, agd$timestamp, seed = 1)   # state-space alternative
+
+knitr::kable(
+  data.frame(
+    detector = c("sleep.changepoints", "rest.periods", "rest.crespo", "rest.hmm"),
+    question = c("one main bout / night", "every bout (naps incl.)",
+                 "every bout (naps incl.)", "latent rest state"),
+    bouts    = c(cp$n_episodes, rp$n_bouts, rc$n_rest_periods, NA),
+    family   = c("CircaCP", "Roenneberg", "Crespo", "Gaussian HMM")),
+  caption = "Four detectors, four counts: the difference is the question, not the accuracy."
+)
+```
+
+`sleep.changepoints()` [@chensun2024] returns one episode per circadian cycle: the
+single dominant night-time rest bout. `rest.periods()` [@roenneberg2015; @loock2021]
+and `rest.crespo()` [@crespo2012] instead consolidate **every** rest bout, so a
+daytime nap or a fragmented night becomes its own row. They reach that result by
+two independent routes, Roenneberg's trend-and-correlation consolidation versus
+Crespo's median-filter-and-morphology pipeline, which is why their bout counts
+differ even though both aim to catch all rest. `rest.hmm()` [@huang2018hmm] is the
+state-space alternative: rather than thresholding each epoch, it fits a Gaussian
+hidden Markov model whose latent rest state *persists*, and reports a 24-hour
+rest-occupancy profile.
+
+```{r hmm-profile, fig.height = 3.4, fig.cap = "The HMM's probability of being in the rest state across the day. The state-space model infers the rest band, centred on the night, without a fixed count threshold."}
+ggplot(hm$tod_profile, aes(hour, p_rest)) +
+  geom_col(fill = "#236192") +
+  scale_x_continuous(breaks = seq(0, 24, 6)) +
+  labs(x = "Hour of day", y = "P(rest state)") +
+  theme_actiRhythm()
+```
+
+The lesson is the rule: if you report `sleep.changepoints()` you are reporting *the
+night*; if you report `rest.periods()` or `rest.crespo()` you are reporting *all
+rest*, naps and all. Choose the one whose question matches yours, rather than
+treating the differing bout counts as a contradiction.
+
+## The wider sleep-and-rest family
+
+**The state-space view in detail.** Beyond the occupancy profile above, `rest.hmm()`
+returns the per-state emission means, the transition matrix, and a decoded
+`state_path` with its own `sleep_state` vector, plus AIC/BIC for choosing between a
+two- and three-state model [@huang2018hmm].
+
+```{r hmm-detail}
+hm$emission[, c("state", "label", "mean_transformed")]
+c(time_at_rest = mean(hm$state_path == 1L),
+  rest_persistence = hm$transition[1, 1], AIC = hm$AIC)
+```
+
+**The ultradian structure within sleep.** Once you have sleep windows,
+`lids()` describes the sleep-cycle oscillation *inside* them. It needs a
+`sleep_periods` data frame with `in_bed_time` and `out_bed_time` columns (which we
+build directly from the change-point episodes), transforms activity to locomotor
+inactivity (\(100/(\text{activity}+1)\)), and fits an ultradian cosine, reporting
+the best period and its Munich Rhythmicity Index [@winnebeck2018].
+
+```{r lids}
+sleep_periods <- data.frame(
+  in_bed_time  = cp$sleep_episodes$sleep_onset,
+  out_bed_time = cp$sleep_episodes$wake_onset)
+li <- lids(agd$axis1, agd$timestamp, sleep_periods)
+li
+```
+
+The mean LIDS period lands in the ninety-minute-to-three-hour band expected of
+human sleep cycles, recovered from the inactivity signal alone.
+
+## Limitations
+
+- **Epoch length is fixed for the scorers.** Cole-Kripke and Sadeh are only valid
+  at one-minute epochs; do not port their coefficients to other resolutions.
+- **Bout counts are not comparable across detectors.** A larger bout count from
+  `rest.periods()` than from `sleep.changepoints()` is by design, not a sign one is
+  better; compare a detector only against itself or against its own reference
+  implementation.
+- **No in-bed truth.** None of these methods see a diary or a true lights-off; they
+  infer rest from movement, so a still-but-awake subject reads as rest and an active
+  sleeper as wake. Where a diary exists, gate on it.
+- **`lids()` depends on the supplied sleep windows.** Feeding it poorly placed
+  windows propagates straight into the period estimate; build the windows from a
+  detector you trust on the recording at hand.
+
+## Reference and validation
+
+The epoch scorers follow @cole1992 with the Webster rescoring
+rules [@webster1982] and @sadeh1994. The bout detectors
+implement the CircaCP change-point method of @chensun2024, the
+Roenneberg / MASDA consolidation [@roenneberg2015] with the open re-implementation of
+@loock2021, the @crespo2012 morphology pipeline, and the hidden-Markov rest-activity
+model of @huang2018hmm; `lids()` follows @winnebeck2018.
+actiRhythm's scorers and detectors are cross-checked against their reference
+implementations (to the printed precision) in the [Validation](validation.html)
+article and the package's test suite.
+
+## References

@@ -139,10 +139,19 @@ object you can theme and save with `save.circadian.plot()`.
 
 ## Documentation
 
-`vignette("actiRhythm")` walks through a full analysis, from reading a file to
-exporting the results. Each function's help page carries its method reference, so
-`?circadian.rhythm`, `?cosinor.analysis`, and `?circadian.period` are good places to
-read more. Questions and bug reports go to the issue tracker at
+The package website, <https://rdazadda.github.io/actiRhythm/>, collects the full
+documentation. `vignette("actiRhythm")` is the get-started walkthrough and
+`vignette("output-codebook")` is a data dictionary for every metric the package
+reports. A set of articles goes deeper: [Choosing a
+method](https://rdazadda.github.io/actiRhythm/articles/choosing-a-method.html) maps
+each question to the right function; [Validation against reference
+packages](https://rdazadda.github.io/actiRhythm/articles/validation.html)
+cross-checks the metrics live against nparACT, ActCR and the cosinor package; and the
+method-family articles (nonparametric, cosinor, period, fractal, sleep, phase, raw
+acceleration, batch) each work one family from the math to a worked example. Every
+function's help page also carries its method reference, so `?circadian.rhythm`,
+`?cosinor.analysis`, and `?circadian.period` are good places to read more. Questions
+and bug reports go to the issue tracker at
 <https://github.com/rdazadda/actiRhythm/issues>, and contributions are welcome.
 
 ## Citation

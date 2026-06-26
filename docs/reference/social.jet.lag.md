@@ -42,9 +42,13 @@ Values \> 1 hour are associated with increased health risks.
 
 ## References
 
-Wittmann M, et al. (2006). Social jetlag: misalignment of biological and
-social time. Chronobiology International, 23(1-2):497-509.
+Wittmann M, Dinich J, Merrow M, Roenneberg T (2006). “Social jetlag:
+misalignment of biological and social time.” *Chronobiology
+International*, **23**(1-2), 497–509.
+[doi:10.1080/07420520500545979](https://doi.org/10.1080/07420520500545979)
+.
 
-Roenneberg T, Allebrandt KV, Merrow M, Vetter C (2012). Social jetlag
-and obesity. Current Biology, 22(10):939-943.
+Roenneberg T, Allebrandt KV, Merrow M, Vetter C (2012). “Social jetlag
+and obesity.” *Current Biology*, **22**(10), 939–943.
 [doi:10.1016/j.cub.2012.03.038](https://doi.org/10.1016/j.cub.2012.03.038)
+.

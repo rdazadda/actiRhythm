@@ -44,13 +44,9 @@ plot_dfa(cumsum(rnorm(5000)))   # Brownian-like, alpha near 1.5
 
 }
 \references{
-Peng CK, Buldyrev SV, Havlin S, Simons M, Stanley HE, Goldberger AL (1994).
-Mosaic organization of DNA nucleotides. \emph{Physical Review E},
-49(2):1685-1689.
+\insertRef{peng1994}{actiRhythm}
 
-Hu K, Van Someren EJW, Shea SA, Scheer FAJL (2009). Reduction of scale
-invariance of activity fluctuations with aging and Alzheimer's disease.
-\emph{PNAS}, 106(8):2490-2494.
+\insertRef{hu2009}{actiRhythm}
 }
 \seealso{
 \code{\link{fractal.dfa}}, \code{\link{multiscale.entropy}}

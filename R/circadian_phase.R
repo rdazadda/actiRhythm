@@ -23,8 +23,8 @@
 #'   own mean phase, hours), \code{accuracy} (mean absolute deviation from the
 #'   reference, hours), \code{reference_phase}, and \code{n_days}.
 #'
-#' @references Fischer D, Vetter C, Roenneberg T (2016). A novel method to
-#'   visualise and quantify circadian misalignment. Scientific Reports 6:38601.
+#' @references
+#' \insertRef{fischer2016}{actiRhythm}
 #'
 #' @export
 composite.phase.deviation <- function(onset_hours, reference_phase = NULL) {
@@ -104,7 +104,8 @@ circadian.onset.ci <- function(onset_hours, level = 0.95, n_boot = 2000) {
 #'   \code{c(60, 30, 15)}).
 #'
 #' @return Data frame with columns \code{bin_minutes} and \code{IS}.
-#' @references Witting W, et al. (1990). Biol Psychiatry 27(6):563-572.
+#' @references
+#' \insertRef{witting1990}{actiRhythm}
 #' @export
 circadian.is.multiscale <- function(counts, timestamps, bin_minutes = c(60, 30, 15)) {
   if (length(counts) != length(timestamps)) {

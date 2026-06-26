@@ -53,14 +53,9 @@ head(m)
 
 }
 \references{
-van Hees VT, et al. (2013). Estimation of daily energy expenditure in pregnant
-and non-pregnant women using a wrist-worn tri-axial accelerometer.
-\emph{PLoS ONE}, 8(4):e61691. \doi{10.1371/journal.pone.0061691}
+\insertRef{vanhees2013}{actiRhythm}
 
-Vaha-Ypya H, et al. (2015). A universal, accurate intensity-based
-classification of different physical activities using raw data of
-accelerometer. \emph{Clinical Physiology and Functional Imaging}, 35(1):64-70.
-\doi{10.1111/cpf.12127}
+\insertRef{vahaypya2015}{actiRhythm}
 }
 \seealso{
 \code{\link{auto.calibrate}}, \code{\link{circadian.raw}},

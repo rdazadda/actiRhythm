@@ -19,9 +19,7 @@
 #'   transitions per day. Never errors.
 #'
 #' @references
-#' Lim ASP, Yu L, Costa MD, et al. (2011). Quantification of the fragmentation of
-#' rest-activity patterns in elderly individuals using a state transition
-#' analysis. \emph{Sleep}, 34(11):1569-1581. \doi{10.5665/sleep.1400}
+#' \insertRef{lim2011}{actiRhythm}
 #'
 #' @seealso \code{\link{state.transitions}}
 #'

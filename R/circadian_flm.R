@@ -30,17 +30,11 @@
 #'   on insufficient data it returns the same structure with \code{r_squared} NA.
 #'
 #' @references
-#' Wang J, Xian H, Licis A, et al. (2011). Measuring the impact of apnea and
-#' obesity on circadian activity patterns using functional linear modeling of
-#' actigraphy data. \emph{Journal of Circadian Rhythms}, 9:11.
-#' \doi{10.1186/1740-3391-9-11}
+#' \insertRef{wang2011flm}{actiRhythm}
 #'
-#' Ramsay JO, Silverman BW (2005). Functional Data Analysis, 2nd ed. Springer.
-#' \doi{10.1007/b98888}
+#' \insertRef{ramsay2005}{actiRhythm}
 #'
-#' Hammad G, Reyt M, Beliy N, et al. (2021). pyActigraphy: open-source python
-#' package for actigraphy data visualization and analysis. \emph{PLOS
-#' Computational Biology}, 17(10):e1009514. \doi{10.1371/journal.pcbi.1009514}
+#' \insertRef{hammad2021}{actiRhythm}
 #'
 #' @seealso \code{\link{cosinor.analysis}}, \code{\link{circadian.ssa}}
 #'

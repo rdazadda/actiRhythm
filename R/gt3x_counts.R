@@ -13,8 +13,7 @@
 #'   and \code{vm}, one row per epoch.
 #'
 #' @references
-#' Neishabouri A, et al. (2022). Quantification of acceleration as activity counts
-#' in ActiGraph wearable. \emph{Scientific Reports}, 12:11958.
+#' \insertRef{neishabouri2022}{actiRhythm}
 #'
 #' @seealso \code{\link{axivity.counts}}, \code{\link{geneactiv.counts}},
 #'   \code{\link{read.raw}}

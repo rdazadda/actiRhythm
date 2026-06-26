@@ -34,9 +34,7 @@ Positive values (most common) indicate later sleep timing on free days.
 Values > 1 hour are associated with increased health risks.
 }
 \references{
-Wittmann M, et al. (2006). Social jetlag: misalignment of biological and
-social time. Chronobiology International, 23(1-2):497-509.
+\insertRef{wittmann2006}{actiRhythm}
 
-Roenneberg T, Allebrandt KV, Merrow M, Vetter C (2012). Social jetlag and
-obesity. Current Biology, 22(10):939-943. \doi{10.1016/j.cub.2012.03.038}
+\insertRef{roenneberg2012}{actiRhythm}
 }

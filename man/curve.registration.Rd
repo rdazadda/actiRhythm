@@ -36,6 +36,5 @@ curve.registration(ifelse(h >= 23 | h < 7, 5, 300), ts)
 
 }
 \references{
-Ramsay JO, Silverman BW (2005). \emph{Functional Data Analysis}, 2nd ed.
-Springer. \doi{10.1007/b98888}
+\insertRef{ramsay2005}{actiRhythm}
 }

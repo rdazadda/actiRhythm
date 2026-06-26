@@ -68,9 +68,10 @@ low interdaily stability the next section puts a number on.
 [`circadian.rhythm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.rhythm.md)
 describes the rest-activity pattern without assuming a waveform. It
 returns interdaily stability (IS) and intradaily variability (IV),
-introduced by Witting et al. (1990), together with the relative
-amplitude (RA) and the least- and most-active windows L5 and M10 of van
-Someren et al. (1999), each with its onset time.
+introduced by Witting et al. ([1990](#ref-witting1990)), together with
+the relative amplitude (RA) and the least- and most-active windows L5
+and M10 of Van Someren et al. ([1999](#ref-vansomeren1999)), each with
+its onset time.
 
 ``` r
 
@@ -119,7 +120,8 @@ metrics.
 
 [`cosinor.analysis()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md)
 fits a 24-hour cosine and returns the MESOR (rhythm-adjusted mean),
-amplitude, and acrophase, the clock time of the peak (Cornelissen 2014).
+amplitude, and acrophase, the clock time of the peak ([Cornelissen,
+2014](#ref-cornelissen2014)).
 
 ``` r
 
@@ -134,8 +136,9 @@ The acrophase is **circular**: it is a clock time, so 23.5 and 0.5 are
 an hour apart, not 23 hours apart, and it is only interpretable once the
 amplitude is distinguishable from zero.
 [`rhythmicity.test()`](https://rdazadda.github.io/actiRhythm/reference/rhythmicity.test.md)
-is that check, the zero-amplitude F-test of Nelson et al. (1979),
-reported with the percent of variance the rhythm explains.
+is that check, the zero-amplitude F-test of Nelson et al.
+([1979](#ref-nelson1979)), reported with the percent of variance the
+rhythm explains.
 
 ``` r
 
@@ -177,9 +180,9 @@ Look where the fitted curve and the hourly points part company: the
 single cosine runs too smooth through the early hours, and that gap is
 the structure the percent-rhythm says one cosine leaves on the table.
 When you need the joint uncertainty in amplitude and acrophase together,
-`cosinor.confidence.ellipse(cos)` returns the Bingham et al. (1982)
-ellipse; an ellipse that encloses the origin is the geometric form of
-“no detectable rhythm”.
+`cosinor.confidence.ellipse(cos)` returns the Bingham et al.
+([1982](#ref-bingham1982)) ellipse; an ellipse that encloses the origin
+is the geometric form of “no detectable rhythm”.
 
 ## The period
 
@@ -187,7 +190,8 @@ A cosinor assumes exactly 24 hours.
 [`circadian.period()`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md)
 does not: it runs a Lomb-Scargle periodogram over the 18 to 30 hour band
 and returns the dominant period `tau`, with a false-alarm probability in
-`$p_value` (Lomb 1976; Scargle 1982; Baluev 2008).
+`$p_value` ([Baluev, 2008](#ref-baluev2008); [Lomb,
+1976](#ref-lomb1976); [Scargle, 1982](#ref-scargle1982)).
 
 ``` r
 
@@ -202,12 +206,13 @@ a solar day, and the false-alarm probability is essentially zero, so the
 cycle itself is not in doubt. Its exact length is less certain.
 [`period.ci()`](https://rdazadda.github.io/actiRhythm/reference/period.ci.md)
 refines that peak and bootstraps it with a circular block bootstrap
-(Kunsch 1989; Politis and Romano 1992), which respects the
-autocorrelation in activity data, and the interval it returns is wide
-enough to span 24 hours. On a single recording the period is clearly
-present but not pinned to the hour. Passing `seed = 1` makes the
-bootstrap reproducible; the 50 replicates here keep the vignette fast,
-and a real interval would use more.
+([Kunsch, 1989](#ref-kunsch1989); [Politis & Romano,
+1992](#ref-politis1992)), which respects the autocorrelation in activity
+data, and the interval it returns is wide enough to span 24 hours. On a
+single recording the period is clearly present but not pinned to the
+hour. Passing `seed = 1` makes the bootstrap reproducible; the 50
+replicates here keep the vignette fast, and a real interval would use
+more.
 
 ``` r
 
@@ -234,11 +239,11 @@ Lomb-Scargle spectral power across candidate periods; the tallest peak
 is the dominant rhythm, and a peak rising above the significance line
 rejects the no-rhythm null.
 
-The chi-square periodogram of Sokolove and Bushell (1978) asks the same
-question a different way, scoring each trial period by how much of the
-variance folds onto it. A second estimator that clears its own threshold
-at the same period is reassurance that the peak is real rather than an
-artifact of one method.
+The chi-square periodogram of Sokolove & Bushell
+([1978](#ref-sokolove1978)) asks the same question a different way,
+scoring each trial period by how much of the variance folds onto it. A
+second estimator that clears its own threshold at the same period is
+reassurance that the peak is real rather than an artifact of one method.
 
 ``` r
 
@@ -288,7 +293,8 @@ Two recordings can share the same IS and amplitude yet differ in their
 moment-to-moment dynamics.
 [`fractal.dfa()`](https://rdazadda.github.io/actiRhythm/reference/fractal.dfa.md)
 estimates the detrended-fluctuation exponent alpha, the long-range
-temporal correlation in the series (Peng et al. 1994; Hu et al. 2001).
+temporal correlation in the series ([Hu et al., 2001](#ref-hu2001);
+[Peng et al., 1994](#ref-peng1994)).
 
 ``` r
 
@@ -320,128 +326,22 @@ crossover between short- and long-range dynamics.
 Two further questions use the same series and a single call each.
 [`multiscale.entropy()`](https://rdazadda.github.io/actiRhythm/reference/multiscale.entropy.md)
 asks how the complexity of the signal changes as you coarse-grain it
-across time scales (Costa et al. 2002), and
+across time scales ([Costa et al., 2002](#ref-costa2002)), and
 [`mfdfa()`](https://rdazadda.github.io/actiRhythm/reference/mfdfa.md)
 asks whether one scaling exponent is enough or the series is genuinely
-multifractal (Kantelhardt et al. 2002). Their help pages carry the math;
-here it is enough to know they refine, not replace, the single alpha
-above.
-
-## A fuller profile, and a decomposition
-
-The cosinor fits one cosine to the day.
-[`circadian.flm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.flm.md)
-fits a functional model of the same 24-hour profile with several Fourier
-harmonics, so it follows the real, asymmetric shape of the day instead
-of forcing a symmetric curve (Wang et al. 2011); the single cosine is
-its one-harmonic special case.
-
-``` r
-
-flm <- circadian.flm(agd$axis1, agd$timestamp)
-flm
-#> Functional Linear Model (24-hour activity profile)
-#> 
-#>   Basis:        fourier (order 4, 9 terms)
-#>   Period:       24 hours
-#>   Days / profile points: 8 / 24
-#> 
-#>   Model fit:
-#>     R-squared:   0.7352
-#>     AIC:         406.84
-#>     F-statistic: 5.21 (p = 0.003)
-#> 
-#>   Dominant harmonic: H1, amplitude 303.40, acrophase 16.99 h
-#> 
-#>   Peak 956.3 at 19.2 h; trough -117.7 at 3.8 h
-#> 
-#>   Reference: Wang et al. (2011)
-```
-
-``` r
-
-ggplot(flm$smooth_curve, aes(t, activity)) +
-  geom_point(data = flm$fitted_profile, aes(t, observed), colour = "grey55") +
-  geom_line(colour = "#236192", linewidth = 1) +
-  labs(x = "Hour of day", y = "Activity") +
-  theme_actiRhythm()
-```
-
-![The functional fit (line) over the averaged hourly profile (points).
-The extra Fourier harmonics let the curve follow the asymmetric morning
-rise and evening decline that a single cosine smooths
-over.](actiRhythm_files/figure-html/flm-plot-1.png)
-
-The functional fit (line) over the averaged hourly profile (points). The
-extra Fourier harmonics let the curve follow the asymmetric morning rise
-and evening decline that a single cosine smooths over.
-
-The extra harmonics buy back the variance the single cosine left on the
-table, and the curve now bends through the morning rise the one cosine
-ran straight past.
-
-[`circadian.ssa()`](https://rdazadda.github.io/actiRhythm/reference/circadian.ssa.md)
-takes the opposite view. Instead of an average day it decomposes the
-whole recording with singular spectrum analysis into additive
-components: a slow trend, a circadian pair, and noise (Golyandina and
-Zhigljavsky 2013). The trajectory matrix grows with the series, so bin a
-long minute recording to a coarser epoch first.
-
-``` r
-
-bin      <- as.integer(as.numeric(agd$timestamp) %/% 600)   # 10-minute bins
-counts10 <- tapply(agd$axis1, bin, sum)
-t10      <- as.POSIXct(as.numeric(names(counts10)) * 600, origin = "1970-01-01", tz = "UTC")
-ssa <- circadian.ssa(as.numeric(counts10), t10)
-ssa
-#> Singular Spectrum Analysis (Basic SSA)
-#> 
-#>   Window length L:    144 epochs (24.0 h)
-#>   Series length n:    993 (K = 850, span 6.9 days)
-#>   Components kept:     10 of rank 144
-#> 
-#>   Variance explained (leading components):
-#>     ET1   lambda = 0.2929  (cumulative 0.2929)
-#>     ET2   lambda = 0.0814  (cumulative 0.3743)
-#>     ET3   lambda = 0.0578  (cumulative 0.4321)
-#>     ET4   lambda = 0.0295  (cumulative 0.4616)
-#>     ET5   lambda = 0.0293  (cumulative 0.4909)
-#> 
-#>   Grouping:
-#>     Trend:      components 1
-#>     Circadian:  components 2, 3 (13.9% of variance)
-#>     Fundamental period: 24.49 h
-#> 
-#>   Reference: Golyandina and Zhigljavsky (2013)
-```
-
-``` r
-
-ggplot(data.frame(time = t10, circadian = ssa$circadian), aes(time, circadian)) +
-  geom_line(colour = "#236192") +
-  labs(x = "Time", y = "Circadian component") +
-  theme_actiRhythm()
-```
-
-![The circadian component singular spectrum analysis pulls out of the
-whole recording: the daily rhythm separated from the slow trend and the
-noise.](actiRhythm_files/figure-html/ssa-plot-1.png)
-
-The circadian component singular spectrum analysis pulls out of the
-whole recording: the daily rhythm separated from the slow trend and the
-noise.
-
-For this recording the circadian pair carries about 14 percent of the
-variance with a fundamental period near 24.5 hours, the same
-slightly-long period the periodogram found earlier, now isolated as a
-clean component of the raw series.
+multifractal ([Kantelhardt et al., 2002](#ref-kantelhardt2002)). Their
+help pages carry the math, and the [Beyond the
+basics](https://rdazadda.github.io/actiRhythm/articles/beyond-the-basics.md)
+article runs them on this recording; here it is enough to know they
+refine, not replace, the single alpha above.
 
 ## Rest-activity transitions
 
 [`state.transitions()`](https://rdazadda.github.io/actiRhythm/reference/state.transitions.md)
 summarises how readily the subject switches between rest and activity,
 the kRA (rest-to-active) and kAR (active-to-rest) rates that capture
-fragmentation a single amplitude cannot (Lim et al. 2011).
+fragmentation a single amplitude cannot ([Lim et al.,
+2011](#ref-lim2011)).
 
 ``` r
 
@@ -463,7 +363,7 @@ gives one pair of rates for the whole recording.
 instead locates the sleep-onset and wake-onset of each night directly
 from the counts, with no scored sleep required: a 24-hour cosinor bounds
 each rest and active span roughly, and a change point inside each bound
-places the precise transition (Chen and Sun 2024).
+places the precise transition ([Chen & Sun, 2024](#ref-chensun2024)).
 
 ``` r
 
@@ -515,9 +415,9 @@ finds the one main rest bout of each cycle.
 [`rest.periods()`](https://rdazadda.github.io/actiRhythm/reference/rest.periods.md)
 takes the complementary view, consolidating every spell of low activity
 into a rest bout, however many a day holds, daytime naps and fragmented
-rest included (Roenneberg et al. 2015). Each epoch is compared to a
-fraction of its own 24-hour activity level, and runs that stay below it
-grow into consolidated bouts.
+rest included ([Roenneberg et al., 2015](#ref-roenneberg2015)). Each
+epoch is compared to a fraction of its own 24-hour activity level, and
+runs that stay below it grow into consolidated bouts.
 
 ``` r
 
@@ -560,10 +460,11 @@ than one a day, so a few days carry a second rest beyond the main night.
 
 [`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)
 reaches a comparable result by a different route, rank-order filtering
-and binary morphology rather than seed-and-grow consolidation (Crespo et
-al. 2012); running both gives an independent cross-check of where a
-recording’s rest bouts fall. Neither applies a wear-time filter, so gate
-the counts on valid wear first if a recording has device-off stretches.
+and binary morphology rather than seed-and-grow consolidation ([Crespo
+et al., 2012](#ref-crespo2012)); running both gives an independent
+cross-check of where a recording’s rest bouts fall. Neither applies a
+wear-time filter, so gate the counts on valid wear first if a recording
+has device-off stretches.
 
 ## Scoring sleep and its regularity
 
@@ -571,7 +472,7 @@ The metrics so far describe the rhythm; the next need a per-epoch sleep
 or wake label.
 [`sleep.cole.kripke()`](https://rdazadda.github.io/actiRhythm/reference/sleep.cole.kripke.md)
 produces that label directly from the counts, the standard count-based
-classifier for adults (Cole et al. 1992), with
+classifier for adults ([Cole et al., 1992](#ref-cole1992)), with
 [`sleep.sadeh()`](https://rdazadda.github.io/actiRhythm/reference/sleep.sadeh.md)
 as the children-and-adolescents alternative.
 
@@ -589,7 +490,7 @@ mostly sedentary recording scores a high sleep fraction; what matters
 downstream is how regular that label is from day to day.
 [`sleep.regularity.index()`](https://rdazadda.github.io/actiRhythm/reference/sleep.regularity.index.md)
 measures exactly that, the probability that two epochs 24 hours apart
-share the same state (Phillips et al. 2017).
+share the same state ([Phillips et al., 2017](#ref-phillips2017)).
 
 ``` r
 
@@ -599,362 +500,11 @@ sleep.regularity.index(state, agd$timestamp)
 
 When you also have explicit sleep periods,
 [`social.jet.lag()`](https://rdazadda.github.io/actiRhythm/reference/social.jet.lag.md)
-returns the work-day to free-day mid-sleep difference (Wittmann et
-al. 2006) and
+returns the work-day to free-day mid-sleep difference ([Wittmann et al.,
+2006](#ref-wittmann2006)) and
 [`lids()`](https://rdazadda.github.io/actiRhythm/reference/lids.md) the
 locomotor inactivity during sleep that tracks ultradian sleep structure
-(Winnebeck et al. 2018).
-
-## A wider set of methods
-
-The core above answers most questions. actiRhythm also carries a wider
-set of circadian methods for finer or more specialized work, shown here
-on the same recording.
-
-### Finer nonparametric metrics
-
-[`intradaily.variability.multiscale()`](https://rdazadda.github.io/actiRhythm/reference/intradaily.variability.multiscale.md)
-averages intradaily variability across bin sizes,
-[`activity.extrema()`](https://rdazadda.github.io/actiRhythm/reference/activity.extrema.md)
-generalizes L5 and M10 to any window with onset and midpoint times,
-[`dichotomy.index()`](https://rdazadda.github.io/actiRhythm/reference/dichotomy.index.md)
-measures how cleanly rest separates from the active day (Mormont et
-al. 2000), and
-[`circadian.daily()`](https://rdazadda.github.io/actiRhythm/reference/circadian.daily.md)
-reports each day on its own so within-recording drift shows.
-[`rest.activity.fragmentation()`](https://rdazadda.github.io/actiRhythm/reference/rest.activity.fragmentation.md)
-adds the rest and active bout-length view that complements the kRA/kAR
-rates above.
-
-``` r
-
-daily <- circadian.daily(agd$axis1, agd$timestamp)
-dichotomy.index(agd$axis1, agd$timestamp, rest = state == "S")
-#> Dichotomy Index (I<O)
-#> 
-#>   I<O:             100.0%
-#>   Active median:   652.0 counts
-#>   Rest / active epochs: 7646 / 2273
-```
-
-``` r
-
-ggplot(daily$daily, aes(date, M10_onset_h)) +
-  geom_line(colour = "grey60") + geom_point(colour = "#236192", size = 2) +
-  labs(x = NULL, y = "M10 onset (h)") +
-  theme_actiRhythm()
-```
-
-![The M10 onset (the start of the most active ten hours) for each day.
-Reporting it per day, rather than pooled, shows how steady the active
-phase is across the
-recording.](actiRhythm_files/figure-html/daily-plot-1.png)
-
-The M10 onset (the start of the most active ten hours) for each day.
-Reporting it per day, rather than pooled, shows how steady the active
-phase is across the recording.
-
-### The shape and phase of the day
-
-[`cosinor.multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.multicomponent.md)
-adds harmonics to the single cosine and picks how many by information
-criterion,
-[`activity.onset.offset()`](https://rdazadda.github.io/actiRhythm/reference/activity.onset.offset.md)
-marks the daily activity onset and offset by the relative-difference
-method (Roenneberg et al. 2003), and
-[`phase.concentration()`](https://rdazadda.github.io/actiRhythm/reference/phase.concentration.md)
-tests whether the daily phase markers cluster (Rayleigh and
-Hermans-Rasson).
-
-``` r
-
-cosinor.multicomponent(agd$axis1, agd$timestamp)
-#> Multicomponent Cosinor
-#> 
-#>   Selected harmonics: 3 (by AIC)   MESOR: 330.1   R-squared: 0.640
-#> 
-#>  harmonic amplitude acrophase_h
-#>         1    294.33       20.56
-#>         2    173.67       11.03
-#>         3     42.81        0.14
-phase.concentration(daily$daily$M10_onset_h)
-#> Phase Concentration Tests
-#> 
-#>   n days:          7
-#>   Mean direction:  13.86 h    R: 0.679
-#>   Rayleigh:        Z = 3.23, p = 0.0332
-#>   Hermans-Rasson:  T = 110.5, p = 0.0205
-```
-
-### Time-frequency and adaptive decomposition
-
-On the ten-minute series from earlier,
-[`circadian.wavelet()`](https://rdazadda.github.io/actiRhythm/reference/circadian.wavelet.md)
-gives the time-frequency power spectrum,
-[`ultradian.bandpower()`](https://rdazadda.github.io/actiRhythm/reference/ultradian.bandpower.md)
-splits the variance into ultradian bands, and
-[`circadian.emd()`](https://rdazadda.github.io/actiRhythm/reference/circadian.emd.md)
-with
-[`hilbert.huang()`](https://rdazadda.github.io/actiRhythm/reference/hilbert.huang.md)
-extracts the circadian component data-adaptively and tracks its
-instantaneous period.
-
-``` r
-
-wav <- circadian.wavelet(as.numeric(counts10), t10, epoch_length = 600)
-ggplot(data.frame(period = wav$period_hours, power = wav$global_power),
-       aes(period, power)) +
-  geom_line(colour = "#236192") +
-  geom_vline(xintercept = 24, linetype = 2, colour = "grey50") +
-  scale_x_continuous(trans = "log2") +
-  labs(x = "Period (h, log scale)", y = "Wavelet power") +
-  theme_actiRhythm()
-```
-
-![The global wavelet power spectrum. The peak sits at the circadian
-period (dashed line at 24 hours), recovered without assuming a fixed
-cosine shape.](actiRhythm_files/figure-html/wavelet-plot-1.png)
-
-The global wavelet power spectrum. The peak sits at the circadian period
-(dashed line at 24 hours), recovered without assuming a fixed cosine
-shape.
-
-``` r
-
-emd <- circadian.emd(as.numeric(counts10), t10, epoch_length = 600)
-hilbert.huang(emd)
-#> Hilbert-Huang Instantaneous Dynamics
-#> 
-#>   No circadian IMF to analyse
-```
-
-### Registration, residual structure, and states
-
-[`curve.registration()`](https://rdazadda.github.io/actiRhythm/reference/curve.registration.md)
-aligns the days on their active-phase landmark and reports a
-scale-invariant chronotype phase,
-[`residual.spectrum()`](https://rdazadda.github.io/actiRhythm/reference/residual.spectrum.md)
-examines what the cosinor leaves behind, and
-[`rest.hmm()`](https://rdazadda.github.io/actiRhythm/reference/rest.hmm.md)
-fits a state-space model whose decoded path gives the probability of
-rest across the day.
-
-``` r
-
-hmm <- rest.hmm(as.numeric(counts10), t10)
-ggplot(hmm$tod_profile, aes(hour, p_rest)) +
-  geom_col(fill = "#236192") +
-  labs(x = "Hour of day", y = "P(rest)") +
-  theme_actiRhythm()
-```
-
-![The 24-hour rest-probability profile from the state-space model: the
-share of each clock hour the decoded path spends in the rest
-state.](actiRhythm_files/figure-html/hmm-plot-1.png)
-
-The 24-hour rest-probability profile from the state-space model: the
-share of each clock hour the decoded path spends in the rest state.
-
-## From raw acceleration
-
-Everything so far runs on activity counts. Raw accelerometer files also
-record the gravity component, and with it body posture, which counts
-cannot carry. actiRhythm reads raw ActiGraph `.gt3x`, Axivity `.cwa`,
-and GENEActiv `.bin` files, auto-calibrates them, and derives the three
-raw metrics used across the field: ENMO, MAD, and the z-angle.
-
-[`raw.metrics()`](https://rdazadda.github.io/actiRhythm/reference/raw.metrics.md)
-takes a file path. Raw acceleration is far too large to bundle, so for a
-reproducible illustration
-[`example_raw()`](https://rdazadda.github.io/actiRhythm/reference/example_raw.md)
-synthesises a recording; a real file is read the same way, with
-`raw.metrics("recording.cwa")`.
-
-``` r
-
-raw <- example_raw(days = 2)        # synthetic 2-day recording (or a real file path)
-m <- raw.metrics(raw, epoch = 60)   # per-epoch ENMO (mg), MAD, and the z-angle
-head(m)
-#>                  time     ENMO      MAD    anglez
-#> 1 2024-01-01 12:00:00 43.95883 24.78791  8.280445
-#> 2 2024-01-01 12:01:00 43.13860 24.89003 14.666095
-#> 3 2024-01-01 12:02:00 44.56626 25.55921  8.287697
-#> 4 2024-01-01 12:03:00 44.25995 24.90778 14.705513
-#> 5 2024-01-01 12:04:00 44.79032 25.36485  8.292428
-#> 6 2024-01-01 12:05:00 44.17071 24.72920 14.755796
-```
-
-ENMO is the activity signal, and every method above takes it directly:
-pass it to
-[`circadian.rhythm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.rhythm.md),
-or let
-[`circadian.raw()`](https://rdazadda.github.io/actiRhythm/reference/circadian.raw.md)
-run the whole analysis from the file.
-
-``` r
-
-cr <- circadian.rhythm(m$ENMO, m$time)
-c(IS = cr$IS, IV = cr$IV, RA = cr$RA)
-#>     IS     IV     RA 
-#> 1.0000 0.3823 0.9873
-```
-
-Calibration is applied first inside
-[`raw.metrics()`](https://rdazadda.github.io/actiRhythm/reference/raw.metrics.md).
-[`auto.calibrate()`](https://rdazadda.github.io/actiRhythm/reference/auto.calibrate.md)
-finds the per-axis gain and offset that return still periods to the 1 g
-sphere (van Hees 2014); on data with a known distortion it returns the
-original gain and offset to within a fraction of a percent.
-
-``` r
-
-set.seed(1)
-u <- matrix(rnorm(40 * 3), 40, 3); u <- u / sqrt(rowSums(u^2))
-cal <- do.call(rbind, lapply(seq_len(40), function(i)
-  matrix(rep(u[i, ] / c(1.03, 0.97, 1.01) + c(0.04, -0.03, 0.02), each = 300),
-         300, 3) + rnorm(900, 0, 0.004)))
-auto.calibrate(data.frame(x = cal[, 1], y = cal[, 2], z = cal[, 3]),
-               fs = 30)[c("scale", "offset")]
-#> $scale
-#> [1] 1.0301368 0.9701036 1.0099054
-#> 
-#> $offset
-#> [1]  0.04000814 -0.02992012  0.01990532
-```
-
-The z-angle supports a sleep detector that needs no diary and works from
-posture, which the counts cannot do.
-[`rest.spt()`](https://rdazadda.github.io/actiRhythm/reference/rest.spt.md)
-finds the nightly sleep-period-time window from the distribution of
-angle change (HDCZA, van Hees 2018),
-[`sib.vanhees()`](https://rdazadda.github.io/actiRhythm/reference/sib.vanhees.md)
-scores sustained-inactivity bouts (van Hees 2015), and
-[`sleep.from.spt()`](https://rdazadda.github.io/actiRhythm/reference/sleep.from.spt.md)
-combines them into onset, wake and efficiency.
-[`detect.nonwear.raw()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.raw.md)
-flags a stationary, taken-off device (low standard deviation and range
-over the hour, van Hees 2011), and passing its mask as `wear` keeps a
-device-off stretch from being read as one long night. Computed here on
-the synthetic recording at a 5-second epoch, with the detected windows
-shaded.
-
-``` r
-
-m5    <- raw.metrics(raw, epoch = 5, metrics = "anglez")
-wear  <- detect.nonwear.raw(raw, epoch = 5)
-spt   <- rest.spt(m5$anglez, m5$time, epoch_length = 5, wear = wear)
-sib   <- sib.vanhees(m5$anglez, epoch_length = 5)
-sleep <- sleep.from.spt(spt, sib, m5$time, epoch_length = 5)
-thin <- seq(1, nrow(m5), by = 12)
-ggplot() +
-  geom_rect(data = spt, aes(xmin = onset, xmax = offset, ymin = -90, ymax = 90),
-            fill = "#236192", alpha = 0.18) +
-  geom_line(data = m5[thin, ], aes(time, anglez), linewidth = 0.2, colour = "grey30") +
-  labs(x = NULL, y = "z-angle (deg)") +
-  theme_actiRhythm()
-```
-
-![The z-angle of the synthetic recording at 5-second epochs, with the
-two nightly sleep-period-time windows detected from the angle alone
-(HDCZA), gated by raw non-wear,
-shaded.](actiRhythm_files/figure-html/spt-1.png)
-
-The z-angle of the synthetic recording at 5-second epochs, with the two
-nightly sleep-period-time windows detected from the angle alone (HDCZA),
-gated by raw non-wear, shaded.
-
-``` r
-
-sleep[, c("date", "onset", "offset", "tst", "efficiency")]
-#>         date               onset              offset      tst efficiency
-#> 1 2024-01-01 2024-01-01 23:00:00 2024-01-02 07:00:00 8.001389  0.9968853
-#> 2 2024-01-02 2024-01-02 23:00:00 2024-01-03 07:00:00 8.001389  0.9968853
-```
-
-Two more estimators measure fragmentation, and both run on the counts
-already loaded:
-[`activity.balance.index()`](https://rdazadda.github.io/actiRhythm/reference/activity.balance.index.md)
-maps a detrended-fluctuation exponent to a 0 to 1 score that peaks at
-the healthy 1/f balance (Danilevicz 2024), and
-[`transition.probability()`](https://rdazadda.github.io/actiRhythm/reference/transition.probability.md)
-gives the closed-form rest-to-active and active-to-rest transition
-probabilities.
-
-``` r
-
-activity.balance.index(fractal.dfa(agd$axis1))
-#> $ABI_overall
-#> [1] 0.9900827
-#> 
-#> $ABI_short
-#> [1] 0.9943423
-#> 
-#> $ABI_long
-#> [1] 0.9820051
-transition.probability(agd$axis1)[c("tp_ra_mle", "tp_ar_mle")]
-#> $tp_ra_mle
-#> [1] 0.04853705
-#> 
-#> $tp_ar_mle
-#> [1] 0.1366603
-```
-
-### Agreement with GGIR
-
-The raw metrics and the z-angle sleep detector reimplement the van Hees
-algorithms that GGIR established (Migueles et al. 2019), so the whole
-chain should reproduce GGIR’s output, not just be internally consistent:
-calibration, the raw metrics, and the z-angle sleep detection. Run side
-by side on the same real 7-day wrist recording (118,800 five-second
-epochs), they agree at every stage.
-
-Calibration matches to about three decimals, with scale 1.001 / 0.995 /
-0.999 and the same 0.006 g calibration error, and the offsets agree in
-magnitude once the two sign conventions are lined up: GGIR applies
-`scale * x + offset`, actiRhythm `(x - offset) * scale`. Per-epoch ENMO
-and z-angle both correlate at r = 0.99, with mean absolute differences
-of 3.6 mg and 2.2 degrees. The HDCZA sleep-period window lands within
-about five to ten seconds of GGIR each night, and total sleep time and
-WASO agree to about a minute on the valid nights. Non-wear matches to
-within 0.05 per worn day, and the wider gap between 0.41 and 0.52 is
-entirely the parked-device tail that both tools already exclude.
-
-The comparison is reproducible on your own file with GGIR installed:
-
-``` r
-
-library(GGIR)
-P <- load_params(); P$params_general$windowsizes <- c(5, 900, 3600)
-I <- g.inspectfile(file, params_rawdata = P$params_rawdata, params_general = P$params_general)
-ggir <- g.getmeta(file, params_rawdata = P$params_rawdata, params_general = P$params_general,
-                  params_cleaning = P$params_cleaning, inspectfileobject = I)$metashort
-acti <- raw.metrics(file, epoch = 5)
-
-# Align on wall-clock time: the .gt3x stores local time and the two tools anchor it
-# slightly differently, so match the clock label rather than absolute seconds.
-gkey <- gsub("T", " ", substr(as.character(ggir$timestamp), 1, 19))
-akey <- format(acti$time, "%Y-%m-%d %H:%M:%S")
-m <- merge(data.frame(k = gkey, ge = ggir$ENMO * 1000, ga = ggir$anglez),
-           data.frame(k = akey, ae = acti$ENMO,        aa = acti$anglez), by = "k")
-c(ENMO = cor(m$ge, m$ae), anglez = cor(m$ga, m$aa))
-```
-
-The sleep figures come from
-[`rest.spt()`](https://rdazadda.github.io/actiRhythm/reference/rest.spt.md)
-and
-[`sleep.from.spt()`](https://rdazadda.github.io/actiRhythm/reference/sleep.from.spt.md)
-run against GGIR’s full part 1 to 4 pipeline (`HASPT.algo = "HDCZA"`).
-On every clean night the window and the parameters match to seconds and
-to about a minute. They diverge only on nights GGIR flags as heavily
-invalid, 40 to 53% non-wear, where the two handle wear differently. That
-is an edge case on badly degraded data, not a difference in the
-algorithm.
-
-ActiGraph idle-sleep gaps are imputed as zeros by `read.gt3x`, which
-would otherwise collapse the z-angle to a constant during quiescent
-periods. Like GGIR, actiRhythm carries the last gravity vector forward
-through those gaps, so the angle stays correct through the still periods
-the sleep detector relies on.
+([Winnebeck et al., 2018](#ref-winnebeck2018)).
 
 ## Pooling the evidence
 
@@ -962,8 +512,8 @@ Each test above answers “is there a rhythm?” in its own language.
 [`consensus.rhythmicity()`](https://rdazadda.github.io/actiRhythm/reference/consensus.rhythmicity.md)
 runs four of them, the cosinor F-test, the Bingham ellipse, the
 Lomb-Scargle false-alarm probability, and the chi-square periodogram,
-and reports both a majority vote and a Fisher-combined p-value (Fisher
-1925).
+and reports both a majority vote and a Fisher-combined p-value ([Fisher,
+1925](#ref-fisher1925)).
 
 ``` r
 
@@ -983,6 +533,9 @@ consensus.rhythmicity(agd$axis1, agd$timestamp)
 For this recording three of the four tests agree that a rhythm is
 present and the Fisher-combined p-value is effectively zero, so the
 verdict is unambiguous even where one method on its own might hesitate.
+
+## A one-row summary
+
 A one-row summary is then easy to assemble and
 [`rbind()`](https://rdrr.io/r/base/cbind.html) across subjects.
 
@@ -1051,6 +604,16 @@ circadian.workbook(agd$axis1, agd$timestamp, file = "subject01.xlsx")
 
 ## Where next
 
+- Decomposition, the multi-harmonic profile, and the finer nonparametric
+  and phase metrics are demonstrated in [Beyond the
+  basics](https://rdazadda.github.io/actiRhythm/articles/beyond-the-basics.md).
+- Reading raw `.gt3x`/`.cwa`/`.bin` files, calibration, the
+  ENMO/MAD/z-angle metrics, and diary-free posture-based sleep are in
+  [From raw
+  acceleration](https://rdazadda.github.io/actiRhythm/articles/raw-pipeline.md).
+- When a rhythm drifts, shifts phase, or fragments across the recording,
+  see [Nonstationary and complex
+  rhythms](https://rdazadda.github.io/actiRhythm/articles/nonstationary-rhythms.md).
 - [`?circadian.rhythm`](https://rdazadda.github.io/actiRhythm/reference/circadian.rhythm.md),
   [`?cosinor.analysis`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md),
   [`?circadian.period`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md),
@@ -1077,125 +640,112 @@ circadian.workbook(agd$axis1, agd$timestamp, file = "subject01.xlsx")
 
 ## References
 
-Witting W, Kwa IH, Eikelenboom P, Mirmiran M, Swaab DF (1990).
-Alterations in the circadian rest-activity rhythm in aging and
-Alzheimer’s disease. Biological Psychiatry 27(6):563-572.
-<doi:10.1016/0006-3223(90)90523-5>
+Baluev, R. V. (2008). Assessing the statistical significance of
+periodogram peaks. *Monthly Notices of the Royal Astronomical Society*,
+*385*(3), 1279–1285. <https://doi.org/10.1111/j.1365-2966.2008.12689.x>
 
-Van Someren EJW, Swaab DF, Colenda CC, Cohen W, McCall WV, Rosenquist PB
-(1999). Bright light therapy: improved sensitivity to its effects on
-rest-activity rhythms in Alzheimer patients by application of
-nonparametric methods. Chronobiology International 16(4):505-518.
-<doi:10.3109/07420529908998724>
+Bingham, C., Arbogast, B., Cornelissen Guillaume, G., Lee, J. K., &
+Halberg, F. (1982). Inferential statistical methods for estimating and
+comparing cosinor parameters. *Chronobiologia*, *9*(4), 397–439.
 
-Nelson W, Tong YL, Lee JK, Halberg F (1979). Methods for
-cosinor-rhythmometry. Chronobiologia 6(4):305-323.
+Chen, S., & Sun, X. (2024). Validating CircaCP: A generic sleep-wake
+cycle detection algorithm for unlabelled actigraphy data. *Royal Society
+Open Science*, *11*(5), 231468. <https://doi.org/10.1098/rsos.231468>
 
-Cornelissen G (2014). Cosinor-based rhythmometry. Theoretical Biology
-and Medical Modelling 11:16. <doi:10.1186/1742-4682-11-16>
+Cole, R. J., Kripke, D. F., Gruen, W., Mullaney, D. J., & Gillin, J. C.
+(1992). Automatic sleep/wake identification from wrist activity.
+*Sleep*, *15*(5), 461–469. <https://doi.org/10.1093/sleep/15.5.461>
 
-Bingham C, Arbogast B, Cornelissen Guillaume G, Lee JK, Halberg F
-(1982). Inferential statistical methods for estimating and comparing
-cosinor parameters. Chronobiologia 9(4):397-439.
+Cornelissen, G. (2014). Cosinor-based rhythmometry. *Theoretical Biology
+and Medical Modelling*, *11*, 16.
+<https://doi.org/10.1186/1742-4682-11-16>
 
-Lomb NR (1976). Least-squares frequency analysis of unequally spaced
-data. Astrophysics and Space Science 39(2):447-462.
-<doi:10.1007/BF00648343>
+Costa, M., Goldberger, A. L., & Peng, C.-K. (2002). Multiscale entropy
+analysis of complex physiologic time series. *Physical Review Letters*,
+*89*(6), 068102. <https://doi.org/10.1103/PhysRevLett.89.068102>
 
-Scargle JD (1982). Studies in astronomical time series analysis. II.
-Statistical aspects of spectral analysis of unevenly spaced data. The
-Astrophysical Journal 263:835-853. <doi:10.1086/160554>
+Crespo, C., Aboy, M., Fernandez, J. R., & Mojon, A. (2012). Automatic
+identification of activity-rest periods based on actigraphy. *Medical &
+Biological Engineering & Computing*, *50*(4), 329–340.
+<https://doi.org/10.1007/s11517-012-0875-y>
 
-Baluev RV (2008). Assessing the statistical significance of periodogram
-peaks. Monthly Notices of the Royal Astronomical Society
-385(3):1279-1285. <doi:10.1111/j.1365-2966.2008.12689.x>
+Fisher, R. A. (1925). *Statistical methods for research workers*.
+Oliver; Boyd.
 
-Kunsch HR (1989). The jackknife and the bootstrap for general stationary
-observations. The Annals of Statistics 17(3):1217-1241.
-<doi:10.1214/aos/1176347265>
+Hu, K., Ivanov, P. C., Chen, Z., Carpena, P., & Stanley, H. E. (2001).
+Effect of trends on detrended fluctuation analysis. *Physical Review E*,
+*64*(1), 011114. <https://doi.org/10.1103/PhysRevE.64.011114>
 
-Politis DN, Romano JP (1992). A circular block-resampling procedure for
-stationary data. In: LePage R, Billard L (eds), Exploring the Limits of
-Bootstrap, 263-270. Wiley, New York.
+Kantelhardt, J. W., Zschiegner, S. A., Koscielny-Bunde, E., Havlin, S.,
+Bunde, A., & Stanley, H. E. (2002). Multifractal detrended fluctuation
+analysis of nonstationary time series. *Physica A: Statistical Mechanics
+and Its Applications*, *316*(1-4), 87–114.
+<https://doi.org/10.1016/S0378-4371(02)01383-3>
 
-Sokolove PG, Bushell WN (1978). The chi square periodogram: its utility
-for analysis of circadian rhythms. Journal of Theoretical Biology
-72(1):131-160. <doi:10.1016/0022-5193(78)90022-X>
+Kunsch, H. R. (1989). The jackknife and the bootstrap for general
+stationary observations. *The Annals of Statistics*, *17*(3), 1217–1241.
+<https://doi.org/10.1214/aos/1176347265>
 
-Peng C-K, Buldyrev SV, Havlin S, Simons M, Stanley HE, Goldberger AL
-(1994). Mosaic organization of DNA nucleotides. Physical Review E
-49(2):1685-1689. <doi:10.1103/PhysRevE.49.1685>
+Lim, A. S. P., Yu, L., Costa, M. D., Leurgans, S. E., Buchman, A. S.,
+Bennett, D. A., & Saper, C. B. (2011). Quantification of the
+fragmentation of rest-activity patterns in elderly individuals using a
+state transition analysis. *Sleep*, *34*(11), 1569–1581.
+<https://doi.org/10.5665/sleep.1400>
 
-Hu K, Ivanov PC, Chen Z, Carpena P, Stanley HE (2001). Effect of trends
-on detrended fluctuation analysis. Physical Review E 64(1):011114.
-<doi:10.1103/PhysRevE.64.011114>
+Lomb, N. R. (1976). Least-squares frequency analysis of unequally spaced
+data. *Astrophysics and Space Science*, *39*(2), 447–462.
+<https://doi.org/10.1007/BF00648343>
 
-Costa M, Goldberger AL, Peng C-K (2002). Multiscale entropy analysis of
-complex physiologic time series. Physical Review Letters 89(6):068102.
-<doi:10.1103/PhysRevLett.89.068102>
+Nelson, W., Tong, Y. L., Lee, J. K., & Halberg, F. (1979). Methods for
+cosinor-rhythmometry. *Chronobiologia*, *6*(4), 305–323.
 
-Kantelhardt JW, Zschiegner SA, Koscielny-Bunde E, Havlin S, Bunde A,
-Stanley HE (2002). Multifractal detrended fluctuation analysis of
-nonstationary time series. Physica A 316(1-4):87-114.
-<doi:10.1016/S0378-4371(02)01383-3>
+Peng, C. K., Buldyrev, S. V., Havlin, S., Simons, M., Stanley, H. E., &
+Goldberger, A. L. (1994). Mosaic organization of DNA nucleotides.
+*Physical Review E*, *49*(2), 1685–1689.
+<https://doi.org/10.1103/PhysRevE.49.1685>
 
-Lim ASP, Yu L, Costa MD, Buchman AS, Bennett DA, Leurgans SE, Saper CB
-(2011). Quantification of the fragmentation of rest-activity patterns in
-elderly individuals using a state transition analysis. Sleep
-34(11):1569-1581. <doi:10.5665/sleep.1400>
+Phillips, A. J. K., Clerx, W. M., O’Brien, C. S., Sano, A., Barger, L.
+K., Picard, R. W., Lockley, S. W., Klerman, E. B., & Czeisler, C. A.
+(2017). Irregular sleep/wake patterns are associated with poorer
+academic performance and delayed circadian and sleep/wake timing.
+*Scientific Reports*, *7*(1), 3216.
+<https://doi.org/10.1038/s41598-017-03171-4>
 
-Phillips AJK, Clerx WM, O’Brien CS, Sano A, Barger LK, Picard RW,
-Lockley SW, Klerman EB, Czeisler CA (2017). Irregular sleep/wake
-patterns are associated with poorer academic performance and delayed
-circadian and sleep/wake timing. Scientific Reports 7:3216.
-<doi:10.1038/s41598-017-03171-4>
+Politis, D. N., & Romano, J. P. (1992). A circular block-resampling
+procedure for stationary data. In R. LePage & L. Billard (Eds.),
+*Exploring the limits of bootstrap* (pp. 263–270). Wiley.
 
-Wittmann M, Dinich J, Merrow M, Roenneberg T (2006). Social jetlag:
-misalignment of biological and social time. Chronobiology International
-23(1-2):497-509. <doi:10.1080/07420520500545979>
+Roenneberg, T., Keller, L. K., Fischer, D., Matera, J. L., Vetter, C., &
+Winnebeck, E. C. (2015). Human activity and rest in situ. *Methods in
+Enzymology*, *552*, 257–283.
+<https://doi.org/10.1016/bs.mie.2014.11.028>
 
-Winnebeck EC, Fischer D, Leise T, Roenneberg T (2018). Dynamics and
-ultradian structure of human sleep in real life. Current Biology
-28(1):49-59.e5. <doi:10.1016/j.cub.2017.11.063>
+Scargle, J. D. (1982). Studies in astronomical time series analysis. II.
+Statistical aspects of spectral analysis of unevenly spaced data. *The
+Astrophysical Journal*, *263*, 835–853. <https://doi.org/10.1086/160554>
 
-Fisher RA (1925). Statistical Methods for Research Workers. Oliver and
-Boyd, Edinburgh.
+Sokolove, P. G., & Bushell, W. N. (1978). The chi square periodogram:
+Its utility for analysis of circadian rhythms. *Journal of Theoretical
+Biology*, *72*(1), 131–160.
+<https://doi.org/10.1016/0022-5193(78)90022-X>
 
-van Hees VT, Renstrom F, Wright A, et al. (2011). Estimation of daily
-energy expenditure in pregnant and non-pregnant women using a wrist-worn
-tri-axial accelerometer. PLoS ONE 6(7):e22922.
-<doi:10.1371/journal.pone.0022922>
+Van Someren, E. J. W., Swaab, D. F., Colenda, C. C., Cohen, W., McCall,
+W. V., & Rosenquist, P. B. (1999). Bright light therapy: Improved
+sensitivity to its effects on rest-activity rhythms in Alzheimer
+patients by application of nonparametric methods. *Chronobiology
+International*, *16*(4), 505–518.
+<https://doi.org/10.3109/07420529908998724>
 
-van Hees VT, Gorzelniak L, Dean Leon EC, et al. (2013). Separating
-movement and gravity components in an acceleration signal and
-implications for the assessment of human daily physical activity. PLoS
-ONE 8(4):e61691. <doi:10.1371/journal.pone.0061691>
+Winnebeck, E. C., Fischer, D., Leise, T., & Roenneberg, T. (2018).
+Dynamics and ultradian structure of human sleep in real life. *Current
+Biology*, *28*(1), 49–59. <https://doi.org/10.1016/j.cub.2017.11.063>
 
-van Hees VT, Fang Z, Langford J, et al. (2014). Autocalibration of
-accelerometer data for free-living physical activity assessment using
-local gravity and temperature. Journal of Applied Physiology
-117(7):738-744. <doi:10.1152/japplphysiol.00421.2014>
+Witting, W., Kwa, I. H., Eikelenboom, P., Mirmiran, M., & Swaab, D. F.
+(1990). Alterations in the circadian rest-activity rhythm in aging and
+Alzheimer’s disease. *Biological Psychiatry*, *27*(6), 563–572.
+<https://doi.org/10.1016/0006-3223(90)90523-5>
 
-Vaha-Ypya H, Vasankari T, Husu P, Suni J, Sievanen H (2015). A
-universal, accurate intensity-based classification of different physical
-activities using raw data of accelerometer. Clinical Physiology and
-Functional Imaging 35(1):64-70. <doi:10.1111/cpf.12127>
-
-van Hees VT, Sabia S, Anderson KN, et al. (2015). A novel, open access
-method to assess sleep duration using a wrist-worn accelerometer. PLoS
-ONE 10(11):e0142533. <doi:10.1371/journal.pone.0142533>
-
-van Hees VT, Sabia S, Jones SE, et al. (2018). Estimating sleep
-parameters using an accelerometer without sleep diary. Scientific
-Reports 8:12975. <doi:10.1038/s41598-018-31266-z>
-
-Migueles JH, Rowlands AV, Huber F, Sabia S, van Hees VT (2019). GGIR: a
-research community-driven open source R package for generating physical
-activity and sleep outcomes from multi-day raw accelerometer data.
-Journal for the Measurement of Physical Behaviour 2(3):188-196.
-<doi:10.1123/jmpb.2018-0063>
-
-Danilevicz IM, van Hees VT, van der Heide FCT, et al. (2024). Measures
-of fragmentation of rest activity patterns: mathematical properties and
-interpretability. BMC Medical Research Methodology 24:132.
-<doi:10.1186/s12874-024-02255-w>
+Wittmann, M., Dinich, J., Merrow, M., & Roenneberg, T. (2006). Social
+jetlag: Misalignment of biological and social time. *Chronobiology
+International*, *23*(1-2), 497–509.
+<https://doi.org/10.1080/07420520500545979>

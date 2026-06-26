@@ -72,20 +72,23 @@ maximising \\Q_P\\ within the search window.
 
 ## References
 
-Sokolove PG, Bushell WN (1978). The chi square periodogram: its utility
-for analysis of circadian rhythms. *Journal of Theoretical Biology*,
-72(1):131-160.
+Sokolove PG, Bushell WN (1978). “The chi square periodogram: its utility
+for analysis of circadian rhythms.” *Journal of Theoretical Biology*,
+**72**(1), 131–160.
 [doi:10.1016/0022-5193(78)90022-X](https://doi.org/10.1016/0022-5193%2878%2990022-X)
+.
 
-Refinetti R, Cornelissen G, Halberg F (2007). Procedures for numerical
-analysis of circadian rhythms. *Biological Rhythm Research*,
-38(4):275-325.
+Refinetti R, Cornelissen G, Halberg F (2007). “Procedures for numerical
+analysis of circadian rhythms.” *Biological Rhythm Research*, **38**(4),
+275–325.
 [doi:10.1080/09291010600903692](https://doi.org/10.1080/09291010600903692)
+.
 
-Sidak Z (1967). Rectangular confidence regions for the means of
-multivariate normal distributions. *Journal of the American Statistical
-Association*, 62(318):626-633.
+Sidak Z (1967). “Rectangular confidence regions for the means of
+multivariate normal distributions.” *Journal of the American Statistical
+Association*, **62**(318), 626–633.
 [doi:10.1080/01621459.1967.10482935](https://doi.org/10.1080/01621459.1967.10482935)
+.
 
 ## See also
 

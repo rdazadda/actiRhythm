@@ -81,18 +81,23 @@ decomposition fast.
 
 ## References
 
-Golyandina N, Zhigljavsky A (2013). Singular Spectrum Analysis for Time
-Series. Springer.
+Golyandina N, Zhigljavsky A (2013). “Singular Spectrum Analysis for Time
+Series.” *SpringerBriefs in Statistics*.
 [doi:10.1007/978-3-642-34913-3](https://doi.org/10.1007/978-3-642-34913-3)
+.
 
-Vautard R, Yiou P, Ghil M (1992). Singular-spectrum analysis: a toolkit
-for short, noisy chaotic signals. *Physica D*, 58(1-4):95-126.
+Vautard R, Yiou P, Ghil M (1992). “Singular-spectrum analysis: a toolkit
+for short, noisy chaotic signals.” *Physica D: Nonlinear Phenomena*,
+**58**(1-4), 95–126.
 [doi:10.1016/0167-2789(92)90103-T](https://doi.org/10.1016/0167-2789%2892%2990103-T)
+.
 
-Hammad G, Reyt M, Beliy N, et al. (2021). pyActigraphy: open-source
-python package for actigraphy data visualization and analysis. *PLOS
-Computational Biology*, 17(10):e1009514.
+Hammad G, Reyt M, Beliy N, Baillet M, Deantoni M, Lesoinne A, Muto V,
+Schmidt C (2021). “pyActigraphy: open-source python package for
+actigraphy data visualization and analysis.” *PLOS Computational
+Biology*, **17**(10), e1009514.
 [doi:10.1371/journal.pcbi.1009514](https://doi.org/10.1371/journal.pcbi.1009514)
+.
 
 ## See also
 

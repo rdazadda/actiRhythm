@@ -87,18 +87,21 @@ the same structure with `r_squared` NA.
 
 ## References
 
-Wang J, Xian H, Licis A, et al. (2011). Measuring the impact of apnea
-and obesity on circadian activity patterns using functional linear
-modeling of actigraphy data. *Journal of Circadian Rhythms*, 9:11.
-[doi:10.1186/1740-3391-9-11](https://doi.org/10.1186/1740-3391-9-11)
+Wang J, Xian H, Licis A, Deych E, Ding J, McLeland J, Toedebusch C, Li
+T, Duntley S, Shannon W (2011). “Measuring the impact of apnea and
+obesity on circadian activity patterns using functional linear modeling
+of actigraphy data.” *Journal of Circadian Rhythms*, **9**, 11.
+[doi:10.1186/1740-3391-9-11](https://doi.org/10.1186/1740-3391-9-11) .
 
-Ramsay JO, Silverman BW (2005). Functional Data Analysis, 2nd ed.
-Springer. [doi:10.1007/b98888](https://doi.org/10.1007/b98888)
+Ramsay JO, Silverman BW (2005). *Functional Data Analysis*, 2nd edition.
+Springer. [doi:10.1007/b98888](https://doi.org/10.1007/b98888) .
 
-Hammad G, Reyt M, Beliy N, et al. (2021). pyActigraphy: open-source
-python package for actigraphy data visualization and analysis. *PLOS
-Computational Biology*, 17(10):e1009514.
+Hammad G, Reyt M, Beliy N, Baillet M, Deantoni M, Lesoinne A, Muto V,
+Schmidt C (2021). “pyActigraphy: open-source python package for
+actigraphy data visualization and analysis.” *PLOS Computational
+Biology*, **17**(10), e1009514.
 [doi:10.1371/journal.pcbi.1009514](https://doi.org/10.1371/journal.pcbi.1009514)
+.
 
 ## See also
 

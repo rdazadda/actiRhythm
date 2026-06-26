@@ -19,9 +19,7 @@
 #'   1 / mean bout length), bout counts, and the two transition curves.
 #'
 #' @references
-#' Lim ASP, Yu L, Costa MD, et al. (2011). Quantification of the fragmentation of
-#' rest-activity patterns in elderly individuals using a state transition
-#' analysis. Sleep, 34(11):1569-1581.
+#' \insertRef{lim2011}{actiRhythm}
 #'
 #' @examples
 #' set.seed(1)
@@ -133,9 +131,7 @@ print.actiRhythm_transitions <- function(x, ...) {
 #'   bout length.
 #'
 #' @references
-#' Danilevicz IM, et al. (2024). Measures of fragmentation of rest activity
-#' patterns: mathematical properties and interpretability. \emph{BMC Medical
-#' Research Methodology}, 24:132. \doi{10.1186/s12874-024-02255-w}
+#' \insertRef{danilevicz2024}{actiRhythm}
 #'
 #' @seealso \code{\link{state.transitions}}, \code{\link{activity.balance.index}}
 #'

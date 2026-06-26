@@ -30,6 +30,5 @@ instability, and distinct from the circular SD reported by
 \code{onset_timing_variability}.
 }
 \references{
-Fischer D, Vetter C, Roenneberg T (2016). A novel method to
-visualise and quantify circadian misalignment. Scientific Reports 6:38601.
+\insertRef{fischer2016}{actiRhythm}
 }

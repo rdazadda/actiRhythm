@@ -58,18 +58,20 @@ errors; on insufficient data it returns the structure with
 
 ## References
 
-Chen S, Sun X (2024). Validating CircaCP: a generic sleep-wake cycle
-detection algorithm for unlabelled actigraphy data. *Royal Society Open
-Science*, 11(5):231468.
-[doi:10.1098/rsos.231468](https://doi.org/10.1098/rsos.231468)
+Chen S, Sun X (2024). “Validating CircaCP: a generic sleep-wake cycle
+detection algorithm for unlabelled actigraphy data.” *Royal Society Open
+Science*, **11**(5), 231468.
+[doi:10.1098/rsos.231468](https://doi.org/10.1098/rsos.231468) .
 
-Chen J, Gupta AK, Pan J (2006). Information criterion and change point
-problem for regular models. *Sankhya*, 68:252-282.
+Chen J, Gupta AK, Pan J (2006). “Information criterion and change point
+problem for regular models.” *Sankhya: The Indian Journal of
+Statistics*, **68**(2), 252–282.
 
-Killick R, Fearnhead P, Eckley IA (2012). Optimal detection of
-changepoints with a linear computational cost. *Journal of the American
-Statistical Association*, 107(500):1590-1598.
+Killick R, Fearnhead P, Eckley IA (2012). “Optimal detection of
+changepoints with a linear computational cost.” *Journal of the American
+Statistical Association*, **107**(500), 1590–1598.
 [doi:10.1080/01621459.2012.737745](https://doi.org/10.1080/01621459.2012.737745)
+.
 
 ## See also
 

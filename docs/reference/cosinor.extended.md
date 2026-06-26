@@ -86,9 +86,15 @@ Use it for:
 
 ## References
 
-Cornelissen G. (2014). Cosinor-based rhythmometry. Theor Biol Med Model,
-11:16. Refinetti R, et al. (2007). Procedures for numerical analysis of
-circadian rhythms.
+Cornelissen G (2014). “Cosinor-based rhythmometry.” *Theoretical Biology
+and Medical Modelling*, **11**, 16.
+[doi:10.1186/1742-4682-11-16](https://doi.org/10.1186/1742-4682-11-16) .
+
+Refinetti R, Cornelissen G, Halberg F (2007). “Procedures for numerical
+analysis of circadian rhythms.” *Biological Rhythm Research*, **38**(4),
+275–325.
+[doi:10.1080/09291010600903692](https://doi.org/10.1080/09291010600903692)
+.
 
 ## Examples
 

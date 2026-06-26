@@ -31,7 +31,5 @@ circadian.daily(ifelse(h >= 23 | h < 7, 5, 300), ts)
 
 }
 \references{
-Goncalves BSB, Cavalcanti PRA, Tavares GR, Campos TF, Araujo JF (2014).
-Nonparametric methods in actigraphy: an update. \emph{Sleep Science},
-7(3):158-164. \doi{10.1016/j.slsci.2014.09.013}
+\insertRef{goncalves2014}{actiRhythm}
 }

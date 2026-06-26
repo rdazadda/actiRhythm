@@ -1,12 +1,14 @@
 # actiRhythm
 
 **actiRhythm measures circadian rest-activity rhythms from activity
-counts.** It needs only a count vector and its timestamps, and it reads
-those counts straight out of an ActiGraph `.agd` file. From one
-recording it produces the metrics a chronobiology analysis reports, from
-the nonparametric measures through cosinor, periodograms, and fractal
-structure. Every analysis returns a typed object that prints its own
-metrics and plots with one call.
+counts or raw acceleration.** It works on a count vector and its
+timestamps and reads those counts straight out of an ActiGraph `.agd`
+file. It also reads raw `.gt3x`, `.cwa`, and `.bin` recordings,
+auto-calibrates them, and derives the ENMO, MAD, and z-angle signals
+that agree with GGIR. From one recording it produces the metrics a
+chronobiology analysis reports, from the nonparametric measures through
+cosinor, periodograms, and fractal structure. Every analysis returns a
+typed object that prints its own metrics and plots with one call.
 
 You can usually see the answer before computing it. Plot the recording
 as an actogram and a regular sleeper forms a single vertical band of
@@ -230,7 +232,7 @@ and
 [`?circadian.period`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md)
 are good places to read more. Questions and bug reports go to the issue
 tracker at <https://github.com/rdazadda/actiRhythm/issues>, and
-contributions are welcome (see `CONTRIBUTING.md`).
+contributions are welcome.
 
 ## Citation
 

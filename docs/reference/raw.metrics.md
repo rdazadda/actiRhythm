@@ -61,15 +61,19 @@ attached as the `"calibration"` attribute.
 
 ## References
 
-van Hees VT, et al. (2013). Estimation of daily energy expenditure in
-pregnant and non-pregnant women using a wrist-worn tri-axial
-accelerometer. *PLoS ONE*, 8(4):e61691.
+van Hees VT, Gorzelniak L, Dean Leon EC, Eder M, Pias M, Taherian S,
+Ekelund U, Renstrom F, Franks PW, Horsch A, Brage S (2013). “Separating
+movement and gravity components in an acceleration signal and
+implications for the assessment of human daily physical activity.” *PLoS
+ONE*, **8**(4), e61691.
 [doi:10.1371/journal.pone.0061691](https://doi.org/10.1371/journal.pone.0061691)
+.
 
-Vaha-Ypya H, et al. (2015). A universal, accurate intensity-based
-classification of different physical activities using raw data of
-accelerometer. *Clinical Physiology and Functional Imaging*,
-35(1):64-70. [doi:10.1111/cpf.12127](https://doi.org/10.1111/cpf.12127)
+Vaha-Ypya H, Vasankari T, Husu P, Suni J, Sievanen H (2015). “A
+universal, accurate intensity-based classification of different physical
+activities using raw data of accelerometer.” *Clinical Physiology and
+Functional Imaging*, **35**(1), 64–70.
+[doi:10.1111/cpf.12127](https://doi.org/10.1111/cpf.12127) .
 
 ## See also
 

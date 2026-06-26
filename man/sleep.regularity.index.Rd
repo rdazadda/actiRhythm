@@ -20,5 +20,5 @@ Numeric SRI value (-100 to 100)
 Calculate Sleep Regularity Index (SRI) - Exported Version
 }
 \references{
-Phillips AJK, et al. (2017). Scientific Reports, 7(1):3216.
+\insertRef{phillips2017}{actiRhythm}
 }

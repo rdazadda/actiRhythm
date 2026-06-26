@@ -63,6 +63,7 @@ print(result)
 
 }
 \references{
-Cornelissen G. (2014). Cosinor-based rhythmometry. Theor Biol Med Model, 11:16.
-Refinetti R, et al. (2007). Procedures for numerical analysis of circadian rhythms.
+\insertRef{cornelissen2014}{actiRhythm}
+
+\insertRef{refinetti2007}{actiRhythm}
 }

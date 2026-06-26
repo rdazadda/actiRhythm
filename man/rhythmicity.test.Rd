@@ -52,6 +52,5 @@ rhythmicity.test(counts, ts)
 
 }
 \references{
-Nelson W, Tong YL, Lee JK, Halberg F (1979). Methods for cosinor-rhythmometry.
-Chronobiologia, 6(4), 305-323.
+\insertRef{nelson1979}{actiRhythm}
 }

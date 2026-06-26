@@ -52,16 +52,11 @@ sleep.changepoints(counts, ts)
 
 }
 \references{
-Chen S, Sun X (2024). Validating CircaCP: a generic sleep-wake cycle detection
-algorithm for unlabelled actigraphy data. \emph{Royal Society Open Science},
-11(5):231468. \doi{10.1098/rsos.231468}
+\insertRef{chensun2024}{actiRhythm}
 
-Chen J, Gupta AK, Pan J (2006). Information criterion and change point problem
-for regular models. \emph{Sankhya}, 68:252-282.
+\insertRef{chen2006}{actiRhythm}
 
-Killick R, Fearnhead P, Eckley IA (2012). Optimal detection of changepoints
-with a linear computational cost. \emph{Journal of the American Statistical
-Association}, 107(500):1590-1598. \doi{10.1080/01621459.2012.737745}
+\insertRef{killick2012}{actiRhythm}
 }
 \seealso{
 \code{\link{state.transitions}}, \code{\link{sleep.regularity.index}}

@@ -58,6 +58,8 @@ across periods.
 
 ## References
 
-Winnebeck EC, Fischer D, Leise T, Roenneberg T (2018). Dynamics and
-ultradian structure of human sleep in real life. Current Biology,
-28(1):49-59.
+Winnebeck EC, Fischer D, Leise T, Roenneberg T (2018). “Dynamics and
+ultradian structure of human sleep in real life.” *Current Biology*,
+**28**(1), 49–59.
+[doi:10.1016/j.cub.2017.11.063](https://doi.org/10.1016/j.cub.2017.11.063)
+.

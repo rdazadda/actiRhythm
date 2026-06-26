@@ -40,8 +40,5 @@ residual.spectrum(100 + 80 * cos(2 * pi * th / 24) + 20 * sin(2 * pi * th / 4), 
 
 }
 \references{
-Krafty RT, Fu H, Graves JL, et al. (2019). Measuring variability in
-rest-activity rhythms from actigraphy with application to characterizing
-symptoms of depression. \emph{Statistics in Biosciences}, 11:314-333.
-\doi{10.1007/s12561-018-09230-2}
+\insertRef{krafty2019}{actiRhythm}
 }

@@ -35,10 +35,12 @@ hour. Never errors.
 ## References
 
 Van Someren EJW, Swaab DF, Colenda CC, Cohen W, McCall WV, Rosenquist PB
-(1999). Bright light therapy: improved sensitivity to its effects on
+(1999). “Bright light therapy: improved sensitivity to its effects on
 rest-activity rhythms in Alzheimer patients by application of
-nonparametric methods. *Chronobiology International*, 16(4):505-518.
+nonparametric methods.” *Chronobiology International*, **16**(4),
+505–518.
 [doi:10.3109/07420529908998724](https://doi.org/10.3109/07420529908998724)
+.
 
 ## Examples
 

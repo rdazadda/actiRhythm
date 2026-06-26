@@ -103,10 +103,10 @@ c(IS = rhythm$IS, IV = rhythm$IV, RA = rhythm$RA)
 
 [`circadian.spectrogram()`](https://rdazadda.github.io/actiRhythm/reference/circadian.spectrogram.md)
 slides a window across the recording and computes a chi-square
-periodogram in each, so the dominant period and its strength become a
-surface over time rather than a single estimate. The circadian band
-stays near 24 hours here, but its power tracks the regime change instead
-of averaging through it.
+periodogram ([Sokolove & Bushell, 1978](#ref-sokolove1978)) in each, so
+the dominant period and its strength become a surface over time rather
+than a single estimate. The circadian band stays near 24 hours here, but
+its power tracks the regime change instead of averaging through it.
 
 ``` r
 
@@ -130,9 +130,9 @@ the stable first week into the fragmented second.
 When the question is *when* the pattern changed rather than how,
 [`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md)
 finds the per-night rest onsets and wake times directly from the
-activity, anchored to a cosinor threshold. Because the active peak
-advances, the detected sleep onsets move earlier in the second half of
-the recording.
+activity, anchored to a cosinor threshold ([Chen & Sun,
+2024](#ref-chensun2024)). Because the active peak advances, the detected
+sleep onsets move earlier in the second half of the recording.
 
 ``` r
 
@@ -161,7 +161,8 @@ different angles.
 
 Singular spectrum analysis separates the series into additive pieces
 without assuming a shape: a slow trend, the circadian oscillation, and a
-residual.
+residual ([Golyandina & Zhigljavsky, 2013](#ref-golyandina2013);
+[Vautard et al., 1992](#ref-vautard1992)).
 [`circadian.ssa()`](https://rdazadda.github.io/actiRhythm/reference/circadian.ssa.md)
 returns each piece on the original time axis, so the circadian component
 can be read on its own while the trend and residual carry the parts the
@@ -193,7 +194,8 @@ slow drift in overall activity, and the residual collects the rising
 fragmentation.
 
 Empirical mode decomposition reaches the same idea from the other
-direction. It pulls out data-adaptive oscillatory modes, and
+direction ([Huang et al., 1998](#ref-huang1998)). It pulls out
+data-adaptive oscillatory modes, and
 [`hilbert.huang()`](https://rdazadda.github.io/actiRhythm/reference/hilbert.huang.md)
 turns the circadian mode into an instantaneous period, one value per
 epoch, so a period that wanders shows up as a moving line rather than a
@@ -227,9 +229,11 @@ leaves its mark on the cycle-by-cycle estimate.
 Fragmentation is a change in structure, not just in level, so it shows
 up in the multiscale measures. Splitting the recording into its clean
 first half and its broken second half, the late half carries more sample
-entropy and a narrower multifractal spectrum, both signs that its
-dynamics have simplified toward noise: less predictable from epoch to
-epoch, and less richly self-similar across scales.
+entropy ([Costa et al., 2002](#ref-costa2002)) and a narrower
+multifractal spectrum ([Kantelhardt et al.,
+2002](#ref-kantelhardt2002)), both signs that its dynamics have
+simplified toward noise: less predictable from epoch to epoch, and less
+richly self-similar across scales.
 
 ``` r
 
@@ -270,9 +274,9 @@ When the phase moves, the averaged acrophase is a poor summary of any
 single day.
 [`curve.registration()`](https://rdazadda.github.io/actiRhythm/reference/curve.registration.md)
 instead finds each day’s own activity landmark, aligns the days on it,
-and reports a chronotype phase plus how much that landmark varies. The
-variability is large here precisely because the phase advanced, which is
-the honest answer.
+and reports a chronotype phase plus how much that landmark varies
+([Krafty et al., 2019](#ref-krafty2019)). The variability is large here
+precisely because the phase advanced, which is the honest answer.
 
 ``` r
 
@@ -314,3 +318,45 @@ the noise, multiscale entropy and the multifractal spectrum to measure
 how the structure itself changes, and curve registration for a phase
 that does not blur when the days disagree. Each one answers a question
 that a single number cannot.
+
+## References
+
+Chen, S., & Sun, X. (2024). Validating CircaCP: A generic sleep-wake
+cycle detection algorithm for unlabelled actigraphy data. *Royal Society
+Open Science*, *11*(5), 231468. <https://doi.org/10.1098/rsos.231468>
+
+Costa, M., Goldberger, A. L., & Peng, C.-K. (2002). Multiscale entropy
+analysis of complex physiologic time series. *Physical Review Letters*,
+*89*(6), 068102. <https://doi.org/10.1103/PhysRevLett.89.068102>
+
+Golyandina, N., & Zhigljavsky, A. (2013). Singular spectrum analysis for
+time series. *SpringerBriefs in Statistics*.
+<https://doi.org/10.1007/978-3-642-34913-3>
+
+Huang, N. E., Shen, Z., Long, S. R., Wu, M. C., Shih, H. H., Zheng, Q.,
+Yen, N. C., Tung, C. C., & Liu, H. H. (1998). The empirical mode
+decomposition and the Hilbert spectrum for nonlinear and non-stationary
+time series analysis. *Proceedings of the Royal Society A*, *454*(1971),
+903–995. <https://doi.org/10.1098/rspa.1998.0193>
+
+Kantelhardt, J. W., Zschiegner, S. A., Koscielny-Bunde, E., Havlin, S.,
+Bunde, A., & Stanley, H. E. (2002). Multifractal detrended fluctuation
+analysis of nonstationary time series. *Physica A: Statistical Mechanics
+and Its Applications*, *316*(1-4), 87–114.
+<https://doi.org/10.1016/S0378-4371(02)01383-3>
+
+Krafty, R. T., Fu, H., Graves, J. L., Bruce, S. A., Hall, M. H., &
+Smagula, S. F. (2019). Measuring variability in rest-activity rhythms
+from actigraphy with application to characterizing symptoms of
+depression. *Statistics in Biosciences*, *11*, 314–333.
+<https://doi.org/10.1007/s12561-018-09230-2>
+
+Sokolove, P. G., & Bushell, W. N. (1978). The chi square periodogram:
+Its utility for analysis of circadian rhythms. *Journal of Theoretical
+Biology*, *72*(1), 131–160.
+<https://doi.org/10.1016/0022-5193(78)90022-X>
+
+Vautard, R., Yiou, P., & Ghil, M. (1992). Singular-spectrum analysis: A
+toolkit for short, noisy chaotic signals. *Physica D: Nonlinear
+Phenomena*, *58*(1-4), 95–126.
+<https://doi.org/10.1016/0167-2789(92)90103-T>

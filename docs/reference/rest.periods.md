@@ -85,19 +85,24 @@ returns an empty `rest_periods`.
 ## References
 
 Roenneberg T, Keller LK, Fischer D, Matera JL, Vetter C, Winnebeck EC
-(2015). Human activity and rest in situ. *Methods in Enzymology*,
-552:257-283.
+(2015). “Human activity and rest in situ.” *Methods in Enzymology*,
+**552**, 257–283.
 [doi:10.1016/bs.mie.2014.11.028](https://doi.org/10.1016/bs.mie.2014.11.028)
+.
 
-Loock A-S, Khan Sullivan A, Reis C, et al. (2021). Validation of the
-Munich Actimetry Sleep Detection Algorithm for estimating sleep-wake
-patterns from activity recordings. *Journal of Sleep Research*,
-30(6):e13371. [doi:10.1111/jsr.13371](https://doi.org/10.1111/jsr.13371)
+Loock A, Khan Sullivan A, Reis C, Paiva T, Ghotbi N, Pilz LK, Biller AM,
+Molenda C, Vuori-Brodowski MT, Roenneberg T, Winnebeck EC (2021).
+“Validation of the Munich Actimetry Sleep Detection Algorithm for
+estimating sleep-wake patterns from activity recordings.” *Journal of
+Sleep Research*, **30**(6), e13371.
+[doi:10.1111/jsr.13371](https://doi.org/10.1111/jsr.13371) .
 
-Hammad G, Reyt M, Beliy N, et al. (2021). pyActigraphy: open-source
-python package for actigraphy data visualization and analysis. *PLOS
-Computational Biology*, 17(10):e1009514.
+Hammad G, Reyt M, Beliy N, Baillet M, Deantoni M, Lesoinne A, Muto V,
+Schmidt C (2021). “pyActigraphy: open-source python package for
+actigraphy data visualization and analysis.” *PLOS Computational
+Biology*, **17**(10), e1009514.
 [doi:10.1371/journal.pcbi.1009514](https://doi.org/10.1371/journal.pcbi.1009514)
+.
 
 ## See also
 

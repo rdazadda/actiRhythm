@@ -225,24 +225,25 @@ circadian.batch <- function(files, file = NULL, metric = c("axis1", "vm"),
 }
 
 
-# Short column -> definition table for the workbook's Data Dictionary sheet.
+# The workbook's Data Dictionary sheet, rendered from the single-source metrics
+# dictionary (inst/extdata/metrics_dictionary.csv) so it never drifts from the
+# code or from the output-codebook vignette, which read the same file.
 .wb_dictionary <- function() {
-  rows <- list(
-    c("IS / IV / RA", "Interdaily stability, intradaily variability, relative amplitude"),
-    c("L5 / M10", "Least-active 5 h and most-active 10 h mean activity"),
-    c("cosinor_*", "Single-component cosinor MESOR, amplitude, acrophase, R-squared"),
-    c("rhythm_F / rhythm_p_value / percent_rhythm", "Halberg zero-amplitude F-test and percent rhythm"),
-    c("period_tau / period_ci_*", "Lomb-Scargle endogenous period and its bootstrap confidence interval"),
-    c("chisq_*", "Chi-square (Sokolove-Bushell) periodogram period, peak Q, and p-value"),
-    c("dfa_alpha* / mfdfa_*", "Detrended-fluctuation scaling exponent(s) and multifractal spectrum width"),
-    c("mse_*", "Multiscale entropy area and slope"),
-    c("kRA / kAR / pRA / pAR", "Rest-activity state transition rates"),
-    c("SRI", "Sleep Regularity Index (requires sleep_state)"),
-    c("social_jet_lag_* / MSW / MSF", "Social jet lag and mid-sleep on work/free days (requires sleep_periods)"),
-    c("lids_*", "Locomotor Inactivity During Sleep period and Munich Rhythmicity Index (requires sleep_periods)")
+  f <- system.file("extdata", "metrics_dictionary.csv", package = "actiRhythm")
+  if (!nzchar(f) || !file.exists(f)) {
+    return(data.frame(Note = "Metrics dictionary not found", stringsAsFactors = FALSE))
+  }
+  d <- utils::read.csv(f, stringsAsFactors = FALSE)
+  data.frame(
+    Metric                   = d$metric,
+    Family                   = d$family,
+    Definition               = d$definition,
+    `Formula / units`        = d$formula_units,
+    `Range / interpretation` = d$range_interpretation,
+    Reference                = d$reference,
+    `Output object`          = d$output_object,
+    check.names = FALSE, stringsAsFactors = FALSE
   )
-  data.frame(Column = vapply(rows, `[`, "", 1), Definition = vapply(rows, `[`, "", 2),
-             stringsAsFactors = FALSE)
 }
 
 

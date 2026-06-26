@@ -37,8 +37,6 @@ Follows the van Someren (1999) method:
 Matches GGIR, nparACT, and the original paper.
 }
 \references{
-van Someren EJ, et al. (1999). Bright light therapy: improved sensitivity to
-its effects on rest-activity rhythms in Alzheimer patients by application of
-nonparametric methods. Chronobiol Int, 16(4):505-518.
+\insertRef{vansomeren1999}{actiRhythm}
 }
 \keyword{internal}

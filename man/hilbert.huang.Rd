@@ -37,9 +37,7 @@ hilbert.huang(e)
 
 }
 \references{
-Huang NE, Shen Z, Long SR, et al. (1998). The empirical mode decomposition and
-the Hilbert spectrum. \emph{Proceedings of the Royal Society A}, 454:903-995.
-\doi{10.1098/rspa.1998.0193}
+\insertRef{huang1998}{actiRhythm}
 }
 \seealso{
 \code{\link{circadian.emd}}

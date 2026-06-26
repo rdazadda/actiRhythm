@@ -1,0 +1,125 @@
+---
+title: "Output codebook (metrics data dictionary)"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{Output codebook (metrics data dictionary)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: REFERENCES.bib
+csl: apa.csl
+link-citations: true
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+This is the lookup for every metric `actiRhythm` emits in its one-row summary:
+the columns of `circadian.batch()`, the **Summary** sheet of
+`circadian.workbook()`, and the slots of the individual result objects. Find any
+output here: what it is, its formula or units, the range you should expect, the
+defining reference, and where it lives in the result object.
+
+The table below, the workbook's *Data Dictionary* sheet, and the package's tests
+all read one file (`inst/extdata/metrics_dictionary.csv`), so the codebook can
+never drift from the code (a test checks that the documented metrics are exactly
+those `circadian.batch()` returns). Individual result objects carry further fields
+beyond this summary; see each function's help page (for example
+`?circadian.rhythm`) for the complete object.
+
+```{r load, echo = FALSE}
+dict <- read.csv(
+  system.file("extdata", "metrics_dictionary.csv", package = "actiRhythm"),
+  stringsAsFactors = FALSE
+)
+show_family <- function(fam) {
+  d <- dict[dict$family == fam, , drop = FALSE]
+  knitr::kable(
+    d[, c("metric", "definition", "formula_units", "range_interpretation",
+          "reference", "output_object")],
+    col.names = c("Metric", "Definition", "Formula / units",
+                  "Range / interpretation", "Reference", "Output object"),
+    row.names = FALSE
+  )
+}
+```
+
+## Reading this codebook
+
+Each metric is named exactly as it appears as a column of the `circadian.batch()`
+data frame and the workbook **Summary** sheet. The **Output object** column shows
+where the same value lives when you call the producing function directly:
+`circadian.rhythm()$IS`, `cosinor.analysis()$mesor`, and so on. The **Reference**
+column gives the citation key for the method; full references are listed at the
+end. A metric whose **Range** notes "requires `sleep_state`" or "requires
+`sleep_periods`" is `NA` unless that input is supplied.
+
+## Recording descriptors
+
+```{r io, echo = FALSE}
+show_family("io")
+```
+
+## Nonparametric metrics
+
+Shape-free descriptors of the rest-activity rhythm, computed with no assumed
+waveform [@witting1990; @vansomeren1999].
+
+```{r nonparametric, echo = FALSE}
+show_family("nonparametric")
+```
+
+## Cosinor and rhythmicity
+
+The single-component cosinor and its zero-amplitude rhythmicity test
+[@cornelissen2014; @nelson1979].
+
+```{r cosinor, echo = FALSE}
+show_family("cosinor")
+```
+
+## Period and spectral
+
+The endogenous period from the Lomb-Scargle and chi-square periodograms, with a
+bootstrap confidence interval [@lomb1976; @sokolove1978].
+
+```{r period, echo = FALSE}
+show_family("period")
+```
+
+## Fractal and nonlinear
+
+Long-range correlation and complexity of the activity series
+[@peng1994; @kantelhardt2002; @costa2002].
+
+```{r fractal, echo = FALSE}
+show_family("fractal")
+```
+
+## Rest-activity transitions
+
+State-transition rates and probabilities that capture fragmentation a single
+amplitude cannot [@lim2011].
+
+```{r phase, echo = FALSE}
+show_family("phase")
+```
+
+## Sleep timing and regularity
+
+Metrics that need a sleep label or sleep periods: the Sleep Regularity Index,
+social jet lag, and LIDS [@phillips2017; @wittmann2006; @winnebeck2018].
+
+```{r sleep, echo = FALSE}
+show_family("sleep")
+```
+
+## References
+
+Full citations for the method keys in the table above:
+[@vansomeren1999; @witting1990; @cornelissen2014; @nelson1979; @lomb1976;
+@baluev2008; @politis1992; @sokolove1978; @peng1994; @kantelhardt2002;
+@costa2002; @lim2011; @phillips2017; @wittmann2006; @winnebeck2018].

@@ -69,9 +69,7 @@ rest.spt(anglez, ts, epoch_length = 5)
 
 }
 \references{
-van Hees VT, et al. (2018). Estimating sleep parameters using an accelerometer
-without sleep diary. \emph{Scientific Reports}, 8:12975.
-\doi{10.1038/s41598-018-31266-z}
+\insertRef{vanhees2018}{actiRhythm}
 }
 \seealso{
 \code{\link{sib.vanhees}}, \code{\link{sleep.from.spt}},

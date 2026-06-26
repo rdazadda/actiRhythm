@@ -26,10 +26,7 @@
 #'   returned with \code{calibrated = FALSE}.
 #'
 #' @references
-#' van Hees VT, et al. (2014). Autocalibration of accelerometer data for
-#' free-living physical activity assessment using local gravity and temperature.
-#' \emph{Journal of Applied Physiology}, 117(7):738-744.
-#' \doi{10.1152/japplphysiol.00421.2014}
+#' \insertRef{vanhees2014}{actiRhythm}
 #'
 #' @examples
 #' # Recover a known per-axis gain and offset from non-movement windows
@@ -135,14 +132,9 @@ auto.calibrate <- function(xyz, fs, sphere_crit = 0.3, sd_crit = 0.013,
 #'   attached as the \code{"calibration"} attribute.
 #'
 #' @references
-#' van Hees VT, et al. (2013). Estimation of daily energy expenditure in pregnant
-#' and non-pregnant women using a wrist-worn tri-axial accelerometer.
-#' \emph{PLoS ONE}, 8(4):e61691. \doi{10.1371/journal.pone.0061691}
+#' \insertRef{vanhees2013}{actiRhythm}
 #'
-#' Vaha-Ypya H, et al. (2015). A universal, accurate intensity-based
-#' classification of different physical activities using raw data of
-#' accelerometer. \emph{Clinical Physiology and Functional Imaging}, 35(1):64-70.
-#' \doi{10.1111/cpf.12127}
+#' \insertRef{vahaypya2015}{actiRhythm}
 #'
 #' @seealso \code{\link{auto.calibrate}}, \code{\link{circadian.raw}},
 #'   \code{\link{rest.spt}}, \code{\link{example_raw}}

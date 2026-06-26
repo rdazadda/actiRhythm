@@ -70,10 +70,13 @@ Never errors.
 
 ## References
 
-van Hees VT, et al. (2011). Estimation of daily energy expenditure in
-pregnant and non-pregnant women using a wrist-worn tri-axial
-accelerometer. *PLoS ONE*, 6(7):e22922.
+van Hees VT, Renstrom F, Wright A, Gradmark A, Catt M, Chen KY, Lof M,
+Bluck L, Pomeroy J, Wareham NJ, Ekelund U, Brage S, Franks PW (2011).
+“Estimation of daily energy expenditure in pregnant and non-pregnant
+women using a wrist-worn tri-axial accelerometer.” *PLoS ONE*, **6**(7),
+e22922.
 [doi:10.1371/journal.pone.0022922](https://doi.org/10.1371/journal.pone.0022922)
+.
 
 ## See also
 

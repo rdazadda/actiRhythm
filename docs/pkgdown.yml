@@ -3,8 +3,21 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   actiRhythm: actiRhythm.html
-  nonstationary-rhythms: nonstationary-rhythms.html
-last_built: 2026-06-24T00:00Z
+  articles/batch-workflow: batch-workflow.html
+  articles/beyond-the-basics: beyond-the-basics.html
+  articles/choosing-a-method: choosing-a-method.html
+  articles/cosinor: cosinor.html
+  articles/fractal-nonlinear: fractal-nonlinear.html
+  articles/io-and-wear-time: io-and-wear-time.html
+  articles/nonparametric: nonparametric.html
+  articles/nonstationary-rhythms: nonstationary-rhythms.html
+  output-codebook: output-codebook.html
+  articles/period-estimation: period-estimation.html
+  articles/phase-regularity: phase-regularity.html
+  articles/raw-pipeline: raw-pipeline.html
+  articles/sleep: sleep.html
+  articles/validation: validation.html
+last_built: 2026-06-25T23:36Z
 urls:
   reference: https://rdazadda.github.io/actiRhythm/reference
   article: https://rdazadda.github.io/actiRhythm/articles

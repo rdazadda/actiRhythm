@@ -25,8 +25,7 @@ using the agcounts implementation of the ActiGraph count algorithm (Neishabouri
 2022). Requires the \pkg{agcounts} and \pkg{read.gt3x} packages.
 }
 \references{
-Neishabouri A, et al. (2022). Quantification of acceleration as activity counts
-in ActiGraph wearable. \emph{Scientific Reports}, 12:11958.
+\insertRef{neishabouri2022}{actiRhythm}
 }
 \seealso{
 \code{\link{axivity.counts}}, \code{\link{geneactiv.counts}},

@@ -147,20 +147,13 @@ NULL
 #' irregular sampling.
 #'
 #' @references
-#' Lomb NR (1976). Least-squares frequency analysis of unequally spaced data.
-#' \emph{Astrophysics and Space Science}, 39(2):447-462.
+#' \insertRef{lomb1976}{actiRhythm}
 #'
-#' Scargle JD (1982). Studies in astronomical time series analysis. II.
-#' Statistical aspects of spectral analysis of unevenly spaced data.
-#' \emph{The Astrophysical Journal}, 263:835-853.
+#' \insertRef{scargle1982}{actiRhythm}
 #'
-#' Ruf T (1999). The Lomb-Scargle periodogram in biological rhythm research:
-#' analysis of incomplete and unequally spaced time-series.
-#' \emph{Biological Rhythm Research}, 30(2):178-201.
+#' \insertRef{ruf1999}{actiRhythm}
 #'
-#' Refinetti R, Cornelissen G, Halberg F (2007). Procedures for numerical
-#' analysis of circadian rhythms. \emph{Biological Rhythm Research},
-#' 38(4):275-325.
+#' \insertRef{refinetti2007}{actiRhythm}
 #'
 #' @seealso \code{\link{cosinor.analysis}} for parametric (fixed-period) rhythm
 #'   estimation, \code{\link{circadian.rhythm}} for non-parametric L5/M10/IS/IV
@@ -326,13 +319,9 @@ circadian.period <- function(counts, timestamps, from = 18, to = 30, ofac = 4) {
 #'   \code{level}, and the number of valid replicates.
 #'
 #' @references
-#' Kunsch HR (1989). The jackknife and the bootstrap for general stationary
-#' observations. \emph{The Annals of Statistics}, 17(3):1217-1241.
-#' \doi{10.1214/aos/1176347265}
+#' \insertRef{kunsch1989}{actiRhythm}
 #'
-#' Politis DN, Romano JP (1992). A circular block-resampling procedure for
-#' stationary data. In: LePage R, Billard L (eds), Exploring the Limits of
-#' Bootstrap, 263-270. Wiley, New York.
+#' \insertRef{politis1992}{actiRhythm}
 #'
 #' @seealso \code{\link{circadian.period}}
 #'

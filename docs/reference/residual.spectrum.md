@@ -43,10 +43,12 @@ power table, and the spectrum. Never errors.
 
 ## References
 
-Krafty RT, Fu H, Graves JL, et al. (2019). Measuring variability in
-rest-activity rhythms from actigraphy with application to characterizing
-symptoms of depression. *Statistics in Biosciences*, 11:314-333.
+Krafty RT, Fu H, Graves JL, Bruce SA, Hall MH, Smagula SF (2019).
+“Measuring variability in rest-activity rhythms from actigraphy with
+application to characterizing symptoms of depression.” *Statistics in
+Biosciences*, **11**, 314–333.
 [doi:10.1007/s12561-018-09230-2](https://doi.org/10.1007/s12561-018-09230-2)
+.
 
 ## Examples
 

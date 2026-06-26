@@ -51,13 +51,9 @@ table(state)
 
 }
 \references{
-Cole RJ, Kripke DF, Gruen W, Mullaney DJ, Gillin JC (1992). Automatic
-sleep/wake identification from wrist activity. \emph{Sleep}, 15(5):461-469.
-\doi{10.1093/sleep/15.5.461}
+\insertRef{cole1992}{actiRhythm}
 
-Webster JB, Kripke DF, Messin S, Mullaney DJ, Wyborney G (1982). An activity
-based sleep monitor system for ambulatory use. \emph{Sleep}, 5(4):389-399.
-\doi{10.1093/sleep/5.4.389}
+\insertRef{webster1982}{actiRhythm}
 }
 \seealso{
 \code{\link{sleep.sadeh}}, \code{\link{sleep.regularity.index}}

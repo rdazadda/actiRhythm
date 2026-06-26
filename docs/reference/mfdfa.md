@@ -55,8 +55,11 @@ An object of class `actiRhythm_mfdfa`: a list with `q_values`, `h_q`
 ## References
 
 Kantelhardt JW, Zschiegner SA, Koscielny-Bunde E, Havlin S, Bunde A,
-Stanley HE (2002). Multifractal detrended fluctuation analysis of
-nonstationary time series. Physica A, 316(1-4):87-114.
+Stanley HE (2002). “Multifractal detrended fluctuation analysis of
+nonstationary time series.” *Physica A: Statistical Mechanics and its
+Applications*, **316**(1-4), 87–114.
+[doi:10.1016/S0378-4371(02)01383-3](https://doi.org/10.1016/S0378-4371%2802%2901383-3)
+.
 
 ## See also
 

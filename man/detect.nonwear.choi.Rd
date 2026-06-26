@@ -44,9 +44,7 @@ table(detect.nonwear.choi(counts))
 
 }
 \references{
-Choi L, Liu Z, Matthews CE, Buchowski MS (2011). Validation of accelerometer
-wear and nonwear time classification algorithm. \emph{Medicine & Science in
-Sports & Exercise}, 43(2):357-364. \doi{10.1249/MSS.0b013e3181ed61a3}
+\insertRef{choi2011}{actiRhythm}
 }
 \seealso{
 \code{\link{detect.nonwear.troiano}}

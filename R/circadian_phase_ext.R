@@ -16,8 +16,7 @@
 #'   and the full model-comparison table. Never errors.
 #'
 #' @references
-#' Cornelissen G (2014). Cosinor-based rhythmometry. \emph{Theoretical Biology and
-#' Medical Modelling}, 11:16. \doi{10.1186/1742-4682-11-16}
+#' \insertRef{cornelissen2014}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 4 * 1440)
@@ -114,9 +113,7 @@ print.actiRhythm_multicosinor <- function(x, ...) {
 #'   \code{offset_h} (clock hours) and the relative-difference profile. Never errors.
 #'
 #' @references
-#' Roenneberg T, Wirz-Justice A, Merrow M (2003). Life between clocks: daily
-#' temporal patterns of human chronotypes. \emph{Journal of Biological Rhythms},
-#' 18(1):80-90. \doi{10.1177/0748730402239679}
+#' \insertRef{roenneberg2003}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 4 * 1440)
@@ -173,12 +170,9 @@ print.actiRhythm_aont <- function(x, ...) {
 #'   p-values. Never errors.
 #'
 #' @references
-#' Fisher NI (1993). \emph{Statistical Analysis of Circular Data}. Cambridge
-#' University Press. \doi{10.1017/CBO9780511564345}
+#' \insertRef{fisher1993}{actiRhythm}
 #'
-#' Hermans M, Rasson JP (2017). A new Sobolev test for uniformity on the circle.
-#' (Landler L, Ruxton GD, Malkemper EP 2019, \emph{BMC Ecology} 19:30,
-#' \doi{10.1186/s12898-019-0246-8}, recommend it over Rayleigh.)
+#' \insertRef{landler2019}{actiRhythm}
 #'
 #' @examples
 #' set.seed(1)

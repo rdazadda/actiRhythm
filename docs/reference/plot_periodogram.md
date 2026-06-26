@@ -66,15 +66,20 @@ appropriate for gappy actigraphy data, which an FFT cannot accommodate.
 
 ## References
 
-Lomb NR (1976). Least-squares frequency analysis of unequally spaced
-data. *Astrophysics and Space Science*, 39(2):447-462.
+Lomb NR (1976). “Least-squares frequency analysis of unequally spaced
+data.” *Astrophysics and Space Science*, **39**(2), 447–462.
+[doi:10.1007/BF00648343](https://doi.org/10.1007/BF00648343) .
 
-Scargle JD (1982). Studies in astronomical time series analysis. II.
-Statistical aspects of spectral analysis of unevenly spaced data. *The
-Astrophysical Journal*, 263:835-853.
+Scargle JD (1982). “Studies in astronomical time series analysis. II.
+Statistical aspects of spectral analysis of unevenly spaced data.” *The
+Astrophysical Journal*, **263**, 835–853.
+[doi:10.1086/160554](https://doi.org/10.1086/160554) .
 
-Ruf T (1999). The Lomb-Scargle periodogram in biological rhythm
-research. *Biological Rhythm Research*, 30(2):178-201.
+Ruf T (1999). “The Lomb-Scargle periodogram in biological rhythm
+research: analysis of incomplete and unequally spaced time-series.”
+*Biological Rhythm Research*, **30**(2), 178–201.
+[doi:10.1076/brhm.30.2.178.1422](https://doi.org/10.1076/brhm.30.2.178.1422)
+.
 
 ## See also
 

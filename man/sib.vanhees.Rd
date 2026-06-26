@@ -37,9 +37,7 @@ table(sib.vanhees(anglez, epoch_length = 5))
 
 }
 \references{
-van Hees VT, et al. (2015). A novel, open access method to assess sleep
-duration using a wrist-worn accelerometer. \emph{PLoS ONE}, 10(11):e0142533.
-\doi{10.1371/journal.pone.0142533}
+\insertRef{vanhees2015}{actiRhythm}
 }
 \seealso{
 \code{\link{rest.spt}}, \code{\link{sleep.from.spt}}

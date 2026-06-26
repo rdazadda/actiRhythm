@@ -1,4 +1,4 @@
 # License
 
-    YEAR: 2025
+    YEAR: 2026
     COPYRIGHT HOLDER: Raymond Dacosta Azadda, Center for Alaska Native Health Research

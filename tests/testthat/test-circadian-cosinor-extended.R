@@ -144,10 +144,9 @@ test_that("cosinor.antilogistic agrees end-to-end with ActExtendCosinor", {
     prof <- profile_1440(d$counts, d$timestamps)
     ref <- ActCR::ActExtendCosinor(prof, window = 1)$params
 
-    expect_equal(fit$minimum,   ref$minimum,   tolerance = 0.02,  scale = ref$amp,
-                 label = paste0("minimum seed ", seed))
-    expect_equal(fit$amplitude, ref$amp,       tolerance = 0.02,  scale = ref$amp,
-                 label = paste0("amplitude seed ", seed))
+    # within 2% of the amplitude scale (testthat 3e dropped expect_equal's `scale`)
+    expect_lt(abs(fit$minimum   - ref$minimum), 0.02 * ref$amp)
+    expect_lt(abs(fit$amplitude - ref$amp),     0.02 * ref$amp)
     expect_equal(fit$alpha,     ref$alpha,     tolerance = 0.02,
                  label = paste0("alpha seed ", seed))
     expect_equal(fit$beta,      ref$beta,      tolerance = 0.1,

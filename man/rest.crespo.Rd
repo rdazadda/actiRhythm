@@ -63,13 +63,9 @@ rest.crespo(counts, ts)
 
 }
 \references{
-Crespo C, Aboy M, Fernandez JR, Mojon A (2012). Automatic identification of
-activity-rest periods based on actigraphy. \emph{Medical & Biological
-Engineering & Computing}, 50(4):329-340. \doi{10.1007/s11517-012-0875-y}
+\insertRef{crespo2012}{actiRhythm}
 
-Hammad G, Reyt M, Beliy N, et al. (2021). pyActigraphy: open-source python
-package for actigraphy data visualization and analysis. \emph{PLOS
-Computational Biology}, 17(10):e1009514. \doi{10.1371/journal.pcbi.1009514}
+\insertRef{hammad2021}{actiRhythm}
 }
 \seealso{
 \code{\link{rest.periods}}, \code{\link{sleep.changepoints}}

@@ -21,8 +21,7 @@
 #'   MRI across periods.
 #'
 #' @references
-#' Winnebeck EC, Fischer D, Leise T, Roenneberg T (2018). Dynamics and ultradian
-#' structure of human sleep in real life. Current Biology, 28(1):49-59.
+#' \insertRef{winnebeck2018}{actiRhythm}
 #'
 #' @export
 lids <- function(counts, timestamps, sleep_periods, epoch_length = 60,

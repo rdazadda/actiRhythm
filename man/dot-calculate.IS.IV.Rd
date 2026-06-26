@@ -36,8 +36,6 @@ Where:
 IV = (n * sum((Xi - Xi-1)^2)) / ((n-1) * sum((Xi - Xmean)^2))
 }
 \references{
-Witting W, Kwa IH, Eikelenboom P, Mirmiran M, Swaab DF (1990). Alterations in
-the circadian rest-activity rhythm in aging and Alzheimer's disease. Biological
-Psychiatry, 27(6):563-572. \doi{10.1016/0006-3223(90)90523-5}
+\insertRef{witting1990}{actiRhythm}
 }
 \keyword{internal}

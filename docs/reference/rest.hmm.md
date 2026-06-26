@@ -63,10 +63,11 @@ log-likelihood with AIC/BIC. Never errors.
 
 ## References
 
-Huang Q, Cohen D, Komarzynski S, et al. (2018). Hidden Markov models for
-monitoring circadian rhythmicity in telemetric activity data. *Journal
-of the Royal Society Interface*, 15(139):20170885.
-[doi:10.1098/rsif.2017.0885](https://doi.org/10.1098/rsif.2017.0885)
+Huang Q, Cohen D, Komarzynski S, Li X, Innominato P, Levi F, Finkenstadt
+B (2018). “Hidden Markov models for monitoring circadian rhythmicity in
+telemetric activity data.” *Journal of the Royal Society Interface*,
+**15**(139), 20170885.
+[doi:10.1098/rsif.2017.0885](https://doi.org/10.1098/rsif.2017.0885) .
 
 ## See also
 
@@ -82,10 +83,10 @@ counts <- ifelse(h >= 23 | h < 7, 2, 250) + pmax(0, stats::rnorm(length(ts), 0, 
 rest.hmm(counts, ts)
 #> State-Space Rest-Activity Model (Gaussian HMM)
 #> 
-#>   States: 2   log-likelihood: -345.5   AIC: 703.1
+#>   States: 2   log-likelihood: -349.0   AIC: 710.1
 #> 
 #>  state mean_transformed sd_transformed  label
-#>      1             2.28           1.07   rest
+#>      1             2.26           1.07   rest
 #>      2            15.94           0.19 active
 #> 
 #>   Time at rest: 33%   persistence (rest self-transition): 0.98

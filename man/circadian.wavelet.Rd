@@ -44,10 +44,7 @@ circadian.wavelet(100 + 80 * cos(2 * pi * th / 24), ts, epoch_length = 600)
 
 }
 \references{
-Torrence C, Compo GP (1998). A practical guide to wavelet analysis.
-\emph{Bulletin of the American Meteorological Society}, 79(1):61-78.
-\doi{10.1175/1520-0477(1998)079<0061:APGTWA>2.0.CO;2}
+\insertRef{torrence1998}{actiRhythm}
 
-Leise TL (2013). Wavelet analysis of circadian and ultradian behavioral
-rhythms. \emph{Journal of Circadian Rhythms}, 11:5. \doi{10.1186/1740-3391-11-5}
+\insertRef{leise2013}{actiRhythm}
 }

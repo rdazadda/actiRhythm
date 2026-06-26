@@ -82,9 +82,7 @@
 #'   the log-likelihood with AIC/BIC. Never errors.
 #'
 #' @references
-#' Huang Q, Cohen D, Komarzynski S, et al. (2018). Hidden Markov models for
-#' monitoring circadian rhythmicity in telemetric activity data. \emph{Journal of
-#' the Royal Society Interface}, 15(139):20170885. \doi{10.1098/rsif.2017.0885}
+#' \insertRef{huang2018hmm}{actiRhythm}
 #'
 #' @seealso \code{\link{sleep.changepoints}}, \code{\link{sleep.cole.kripke}}
 #'

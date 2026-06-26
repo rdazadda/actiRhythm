@@ -92,20 +92,13 @@ circadian.period(counts, ts)$tau   # about 24.0
 
 }
 \references{
-Lomb NR (1976). Least-squares frequency analysis of unequally spaced data.
-\emph{Astrophysics and Space Science}, 39(2):447-462.
+\insertRef{lomb1976}{actiRhythm}
 
-Scargle JD (1982). Studies in astronomical time series analysis. II.
-Statistical aspects of spectral analysis of unevenly spaced data.
-\emph{The Astrophysical Journal}, 263:835-853.
+\insertRef{scargle1982}{actiRhythm}
 
-Ruf T (1999). The Lomb-Scargle periodogram in biological rhythm research:
-analysis of incomplete and unequally spaced time-series.
-\emph{Biological Rhythm Research}, 30(2):178-201.
+\insertRef{ruf1999}{actiRhythm}
 
-Refinetti R, Cornelissen G, Halberg F (2007). Procedures for numerical
-analysis of circadian rhythms. \emph{Biological Rhythm Research},
-38(4):275-325.
+\insertRef{refinetti2007}{actiRhythm}
 }
 \seealso{
 \code{\link{cosinor.analysis}} for parametric (fixed-period) rhythm

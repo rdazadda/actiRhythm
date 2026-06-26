@@ -54,8 +54,8 @@ the agreement fraction.
 
 ## References
 
-Fisher RA (1925). Statistical Methods for Research Workers. Oliver and
-Boyd.
+Fisher RA (1925). *Statistical Methods for Research Workers*. Oliver and
+Boyd, Edinburgh.
 
 ## Examples
 

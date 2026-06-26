@@ -41,9 +41,12 @@ night (`date`, sleep `onset`, `offset`, `tst` hours, `waso` minutes,
 
 ## References
 
-van Hees VT, et al. (2018). Estimating sleep parameters using an
-accelerometer without sleep diary. *Scientific Reports*, 8:12975.
+van Hees VT, Sabia S, Jones SE, Wood AR, Anderson KN, Kivimaki M,
+Frayling TM, Pack AI, Bucan M, Trenell MI, Mazzotti DR, Gehrman PR,
+Singh-Manoux BA, Weedon MN (2018). “Estimating sleep parameters using an
+accelerometer without sleep diary.” *Scientific Reports*, **8**, 12975.
 [doi:10.1038/s41598-018-31266-z](https://doi.org/10.1038/s41598-018-31266-z)
+.
 
 ## See also
 

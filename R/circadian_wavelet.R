@@ -56,12 +56,9 @@
 #'   separates a real rhythm from background. Never errors.
 #'
 #' @references
-#' Torrence C, Compo GP (1998). A practical guide to wavelet analysis.
-#' \emph{Bulletin of the American Meteorological Society}, 79(1):61-78.
-#' \doi{10.1175/1520-0477(1998)079<0061:APGTWA>2.0.CO;2}
+#' \insertRef{torrence1998}{actiRhythm}
 #'
-#' Leise TL (2013). Wavelet analysis of circadian and ultradian behavioral
-#' rhythms. \emph{Journal of Circadian Rhythms}, 11:5. \doi{10.1186/1740-3391-11-5}
+#' \insertRef{leise2013}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 600, length.out = 6 * 144)
@@ -143,9 +140,7 @@ print.actiRhythm_wavelet <- function(x, ...) {
 #' @return Numeric vector, one per epoch, of the maximum reliable period (hours).
 #'
 #' @references
-#' Torrence C, Compo GP (1998). A practical guide to wavelet analysis.
-#' \emph{Bulletin of the American Meteorological Society}, 79(1):61-78.
-#' \doi{10.1175/1520-0477(1998)079<0061:APGTWA>2.0.CO;2}
+#' \insertRef{torrence1998}{actiRhythm}
 #'
 #' @seealso \code{\link{circadian.wavelet}}
 #'
@@ -185,8 +180,7 @@ wavelet.coi <- function(timestamps, omega0 = 6, epoch_length = 60) {
 #'   (energy, power, fraction) and the per-level wavelet variance. Never errors.
 #'
 #' @references
-#' Percival DB, Walden AT (2000). \emph{Wavelet Methods for Time Series Analysis}.
-#' Cambridge University Press. \doi{10.1017/CBO9780511841040}
+#' \insertRef{percival2000}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 2 * 1440)

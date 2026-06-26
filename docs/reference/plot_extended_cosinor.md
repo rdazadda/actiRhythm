@@ -64,13 +64,15 @@ width-asymmetry and the `beta` steepness when the fit converged.
 
 ## References
 
-Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). The sigmoidally
-transformed cosine curve: a mathematical model for circadian rhythms
-with symmetric non-sinusoidal shapes. *Statistics in Medicine*,
-25(22):3893-3904.
+Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). “The
+sigmoidally transformed cosine curve: a mathematical model for circadian
+rhythms with symmetric non-sinusoidal shapes.” *Statistics in Medicine*,
+**25**(22), 3893–3904.
+[doi:10.1002/sim.2466](https://doi.org/10.1002/sim.2466) .
 
-Cornelissen G (2014). Cosinor-based rhythmometry. *Theoretical Biology
-and Medical Modelling*, 11:16.
+Cornelissen G (2014). “Cosinor-based rhythmometry.” *Theoretical Biology
+and Medical Modelling*, **11**, 16.
+[doi:10.1186/1742-4682-11-16](https://doi.org/10.1186/1742-4682-11-16) .
 
 ## See also
 

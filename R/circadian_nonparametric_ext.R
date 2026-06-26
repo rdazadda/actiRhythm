@@ -32,9 +32,7 @@
 #'   the averaged \code{IVm}. Never errors; returns \code{NA} on insufficient data.
 #'
 #' @references
-#' Goncalves BSB, Cavalcanti PRA, Tavares GR, Campos TF, Araujo JF (2014).
-#' Nonparametric methods in actigraphy: an update. \emph{Sleep Science},
-#' 7(3):158-164. \doi{10.1016/j.slsci.2014.09.013}
+#' \insertRef{goncalves2014}{actiRhythm}
 #'
 #' @seealso \code{\link{circadian.is.multiscale}}
 #'
@@ -83,11 +81,7 @@ print.actiRhythm_ivm <- function(x, ...) {
 #'   Never errors.
 #'
 #' @references
-#' Van Someren EJW, Swaab DF, Colenda CC, Cohen W, McCall WV, Rosenquist PB
-#' (1999). Bright light therapy: improved sensitivity to its effects on
-#' rest-activity rhythms in Alzheimer patients by application of nonparametric
-#' methods. \emph{Chronobiology International}, 16(4):505-518.
-#' \doi{10.3109/07420529908998724}
+#' \insertRef{vansomeren1999}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 4 * 1440)
@@ -159,10 +153,7 @@ print.actiRhythm_mxlx <- function(x, ...) {
 #'   (percent), the active-period median, and epoch counts. Never errors.
 #'
 #' @references
-#' Mormont MC, Waterhouse J, Bleuzen P, et al. (2000). Marked 24-h rest/activity
-#' rhythms are associated with better quality of life, better response, and longer
-#' survival in patients with metastatic colorectal cancer. \emph{Clinical Cancer
-#' Research}, 6(8):3038-3045.
+#' \insertRef{mormont2000}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 2 * 1440)
@@ -215,9 +206,7 @@ print.actiRhythm_dichotomy <- function(x, ...) {
 #'   one row per day. Never errors.
 #'
 #' @references
-#' Goncalves BSB, Cavalcanti PRA, Tavares GR, Campos TF, Araujo JF (2014).
-#' Nonparametric methods in actigraphy: an update. \emph{Sleep Science},
-#' 7(3):158-164. \doi{10.1016/j.slsci.2014.09.013}
+#' \insertRef{goncalves2014}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 4 * 1440)

@@ -32,7 +32,5 @@ activity.onset.offset(ifelse(h >= 23 | h < 7, 5, 300), ts)
 
 }
 \references{
-Roenneberg T, Wirz-Justice A, Merrow M (2003). Life between clocks: daily
-temporal patterns of human chronotypes. \emph{Journal of Biological Rhythms},
-18(1):80-90. \doi{10.1177/0748730402239679}
+\insertRef{roenneberg2003}{actiRhythm}
 }

@@ -37,7 +37,5 @@ state.transitions(counts)
 
 }
 \references{
-Lim ASP, Yu L, Costa MD, et al. (2011). Quantification of the fragmentation of
-rest-activity patterns in elderly individuals using a state transition
-analysis. Sleep, 34(11):1569-1581.
+\insertRef{lim2011}{actiRhythm}
 }

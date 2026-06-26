@@ -28,8 +28,7 @@
 #'   profile. Never errors.
 #'
 #' @references
-#' Ramsay JO, Silverman BW (2005). \emph{Functional Data Analysis}, 2nd ed.
-#' Springer. \doi{10.1007/b98888}
+#' \insertRef{ramsay2005}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 5 * 1440)
@@ -116,10 +115,7 @@ print.actiRhythm_registration <- function(x, ...) {
 #'   per-band power table, and the spectrum. Never errors.
 #'
 #' @references
-#' Krafty RT, Fu H, Graves JL, et al. (2019). Measuring variability in
-#' rest-activity rhythms from actigraphy with application to characterizing
-#' symptoms of depression. \emph{Statistics in Biosciences}, 11:314-333.
-#' \doi{10.1007/s12561-018-09230-2}
+#' \insertRef{krafty2019}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 600, length.out = 6 * 144)

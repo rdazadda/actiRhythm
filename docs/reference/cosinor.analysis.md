@@ -97,11 +97,12 @@ The model is fit using linear least squares on the linearized form: Y(t)
 
 ## References
 
-Nelson W, et al. (1979). Methods for cosinor-rhythmometry.
-Chronobiologia, 6(4):305-323.
+Nelson W, Tong YL, Lee JK, Halberg F (1979). “Methods for
+cosinor-rhythmometry.” *Chronobiologia*, **6**(4), 305–323.
 
-Cornelissen G. (2014). Cosinor-based rhythmometry. Theoretical Biology
-and Medical Modelling, 11:16.
+Cornelissen G (2014). “Cosinor-based rhythmometry.” *Theoretical Biology
+and Medical Modelling*, **11**, 16.
+[doi:10.1186/1742-4682-11-16](https://doi.org/10.1186/1742-4682-11-16) .
 
 ## Examples
 

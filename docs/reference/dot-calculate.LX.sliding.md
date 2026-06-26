@@ -50,7 +50,10 @@ Matches GGIR, nparACT, and the original paper.
 
 ## References
 
-van Someren EJ, et al. (1999). Bright light therapy: improved
-sensitivity to its effects on rest-activity rhythms in Alzheimer
-patients by application of nonparametric methods. Chronobiol Int,
-16(4):505-518.
+Van Someren EJW, Swaab DF, Colenda CC, Cohen W, McCall WV, Rosenquist PB
+(1999). “Bright light therapy: improved sensitivity to its effects on
+rest-activity rhythms in Alzheimer patients by application of
+nonparametric methods.” *Chronobiology International*, **16**(4),
+505–518.
+[doi:10.3109/07420529908998724](https://doi.org/10.3109/07420529908998724)
+.

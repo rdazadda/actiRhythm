@@ -59,13 +59,9 @@ plot_extended_cosinor(counts, ts)
 
 }
 \references{
-Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). The sigmoidally
-transformed cosine curve: a mathematical model for circadian rhythms with
-symmetric non-sinusoidal shapes. \emph{Statistics in Medicine},
-25(22):3893-3904.
+\insertRef{marler2006}{actiRhythm}
 
-Cornelissen G (2014). Cosinor-based rhythmometry. \emph{Theoretical Biology
-and Medical Modelling}, 11:16.
+\insertRef{cornelissen2014}{actiRhythm}
 }
 \seealso{
 \code{\link{cosinor.antilogistic}}, \code{\link{cosinor.analysis}}

@@ -56,14 +56,15 @@ sustained wake as wake.
 
 ## References
 
-Cole RJ, Kripke DF, Gruen W, Mullaney DJ, Gillin JC (1992). Automatic
-sleep/wake identification from wrist activity. *Sleep*, 15(5):461-469.
-[doi:10.1093/sleep/15.5.461](https://doi.org/10.1093/sleep/15.5.461)
+Cole RJ, Kripke DF, Gruen W, Mullaney DJ, Gillin JC (1992). “Automatic
+sleep/wake identification from wrist activity.” *Sleep*, **15**(5),
+461–469.
+[doi:10.1093/sleep/15.5.461](https://doi.org/10.1093/sleep/15.5.461) .
 
-Webster JB, Kripke DF, Messin S, Mullaney DJ, Wyborney G (1982). An
-activity based sleep monitor system for ambulatory use. *Sleep*,
-5(4):389-399.
-[doi:10.1093/sleep/5.4.389](https://doi.org/10.1093/sleep/5.4.389)
+Webster JB, Kripke DF, Messin S, Mullaney DJ, Wyborney G (1982). “An
+activity based sleep monitor system for ambulatory use.” *Sleep*,
+**5**(4), 389–399.
+[doi:10.1093/sleep/5.4.389](https://doi.org/10.1093/sleep/5.4.389) .
 
 ## See also
 

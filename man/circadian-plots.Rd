@@ -25,19 +25,11 @@ back to \code{ggplot2::theme_minimal()} when the package theme helpers are
 unavailable.
 }
 \references{
-Lomb NR (1976). Least-squares frequency analysis of unequally spaced data.
-\emph{Astrophysics and Space Science}, 39(2):447-462.
+\insertRef{lomb1976}{actiRhythm}
 
-Scargle JD (1982). Studies in astronomical time series analysis. II.
-Statistical aspects of spectral analysis of unevenly spaced data.
-\emph{The Astrophysical Journal}, 263:835-853.
+\insertRef{scargle1982}{actiRhythm}
 
-Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). The sigmoidally
-transformed cosine curve: a mathematical model for circadian rhythms with
-symmetric non-sinusoidal shapes. \emph{Statistics in Medicine},
-25(22):3893-3904.
+\insertRef{marler2006}{actiRhythm}
 
-Peng CK, Buldyrev SV, Havlin S, Simons M, Stanley HE, Goldberger AL (1994).
-Mosaic organization of DNA nucleotides. \emph{Physical Review E},
-49(2):1685-1689.
+\insertRef{peng1994}{actiRhythm}
 }

@@ -28,8 +28,6 @@ Random sleep/wake patterns score about 0.
 Perfectly anti-regular patterns (opposite states) score -100.
 }
 \references{
-Phillips AJK, et al. (2017). Irregular sleep/wake patterns are associated
-with poorer academic performance and delayed circadian and sleep/wake timing.
-Scientific Reports, 7(1):3216.
+\insertRef{phillips2017}{actiRhythm}
 }
 \keyword{internal}

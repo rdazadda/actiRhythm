@@ -69,9 +69,7 @@ print(result)
 
 }
 \references{
-Nelson W, et al. (1979). Methods for cosinor-rhythmometry.
-Chronobiologia, 6(4):305-323.
+\insertRef{nelson1979}{actiRhythm}
 
-Cornelissen G. (2014). Cosinor-based rhythmometry.
-Theoretical Biology and Medical Modelling, 11:16.
+\insertRef{cornelissen2014}{actiRhythm}
 }

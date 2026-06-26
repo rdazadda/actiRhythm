@@ -16,6 +16,7 @@ a built-in reader loads 'ActiGraph' '.agd' files directly.
 Useful links:
 \itemize{
   \item \url{https://github.com/rdazadda/actiRhythm}
+  \item \url{https://rdazadda.github.io/actiRhythm/}
   \item Report bugs at \url{https://github.com/rdazadda/actiRhythm/issues}
 }
 

@@ -72,18 +72,11 @@ rest.periods(counts, ts)
 
 }
 \references{
-Roenneberg T, Keller LK, Fischer D, Matera JL, Vetter C, Winnebeck EC (2015).
-Human activity and rest in situ. \emph{Methods in Enzymology}, 552:257-283.
-\doi{10.1016/bs.mie.2014.11.028}
+\insertRef{roenneberg2015}{actiRhythm}
 
-Loock A-S, Khan Sullivan A, Reis C, et al. (2021). Validation of the Munich
-Actimetry Sleep Detection Algorithm for estimating sleep-wake patterns from
-activity recordings. \emph{Journal of Sleep Research}, 30(6):e13371.
-\doi{10.1111/jsr.13371}
+\insertRef{loock2021}{actiRhythm}
 
-Hammad G, Reyt M, Beliy N, et al. (2021). pyActigraphy: open-source python
-package for actigraphy data visualization and analysis. \emph{PLOS
-Computational Biology}, 17(10):e1009514. \doi{10.1371/journal.pcbi.1009514}
+\insertRef{hammad2021}{actiRhythm}
 }
 \seealso{
 \code{\link{sleep.changepoints}}, \code{\link{sleep.cole.kripke}}

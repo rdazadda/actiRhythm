@@ -36,5 +36,6 @@ hours), `reference_phase`, and `n_days`.
 
 ## References
 
-Fischer D, Vetter C, Roenneberg T (2016). A novel method to visualise
-and quantify circadian misalignment. Scientific Reports 6:38601.
+Fischer D, Vetter C, Roenneberg T (2016). “A novel method to visualise
+and quantify circadian misalignment.” *Scientific Reports*, **6**,
+38601. [doi:10.1038/srep38601](https://doi.org/10.1038/srep38601) .

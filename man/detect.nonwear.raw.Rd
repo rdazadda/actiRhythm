@@ -55,9 +55,7 @@ mean(detect.nonwear.raw(raw, epoch = 60))       # fraction of epochs worn
 
 }
 \references{
-van Hees VT, et al. (2011). Estimation of daily energy expenditure in pregnant
-and non-pregnant women using a wrist-worn tri-axial accelerometer. \emph{PLoS
-ONE}, 6(7):e22922. \doi{10.1371/journal.pone.0022922}
+\insertRef{vanhees2011}{actiRhythm}
 }
 \seealso{
 \code{\link{rest.spt}}, \code{\link{raw.metrics}}

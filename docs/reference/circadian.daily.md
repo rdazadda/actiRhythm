@@ -34,9 +34,10 @@ day. Never errors.
 ## References
 
 Goncalves BSB, Cavalcanti PRA, Tavares GR, Campos TF, Araujo JF (2014).
-Nonparametric methods in actigraphy: an update. *Sleep Science*,
-7(3):158-164.
+“Nonparametric methods in actigraphy: an update.” *Sleep Science*,
+**7**(3), 158–164.
 [doi:10.1016/j.slsci.2014.09.013](https://doi.org/10.1016/j.slsci.2014.09.013)
+.
 
 ## Examples
 

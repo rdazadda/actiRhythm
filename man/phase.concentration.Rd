@@ -32,10 +32,7 @@ phase.concentration(onsets \%\% 24)
 
 }
 \references{
-Fisher NI (1993). \emph{Statistical Analysis of Circular Data}. Cambridge
-University Press. \doi{10.1017/CBO9780511564345}
+\insertRef{fisher1993}{actiRhythm}
 
-Hermans M, Rasson JP (2017). A new Sobolev test for uniformity on the circle.
-(Landler L, Ruxton GD, Malkemper EP 2019, \emph{BMC Ecology} 19:30,
-\doi{10.1186/s12898-019-0246-8}, recommend it over Rayleigh.)
+\insertRef{landler2019}{actiRhythm}
 }

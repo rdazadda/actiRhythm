@@ -1,0 +1,213 @@
+---
+title: "Nonparametric rhythm metrics"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+bibliography: ../REFERENCES.bib
+csl: ../apa.csl
+link-citations: true
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 7,
+                      fig.height = 4.5, dpi = 110)
+```
+
+```{r libs, message = FALSE, warning = FALSE}
+library(actiRhythm)
+library(ggplot2)
+```
+
+## The idea, and a rule to remember
+
+The nonparametric metrics describe a rest-activity rhythm **without assuming it
+has any particular shape**. Where the cosinor asks "how well does a cosine fit?",
+interdaily stability, intradaily variability, and relative amplitude ask only "how
+regular, how fragmented, and how deep is the rhythm?", questions you can answer
+even when the daily profile is asymmetric, bimodal, or squared-off, which real
+rest-activity data usually is.
+
+The rule to carry through this article: **nonparametric metrics make no shape
+assumption, but they are sensitive to epoch length and to missing data.** Two
+recordings binned to different epochs are not directly comparable, and a few
+device-off days can move the numbers as much as a real change in the rhythm.
+
+## The math
+
+Write the recording as activity values \(x_1, \dots, x_n\) at a fixed epoch, with
+overall mean \(\bar x\). Bin them to hourly means and let \(\bar x_h\) be the mean
+across all days at hour-of-day \(h\), over \(p = 24\) hours.
+
+**Interdaily stability (IS)**, how tightly the pattern repeats from one day to
+the next [@witting1990]:
+$$
+\mathrm{IS} = \frac{n \sum_{h=1}^{p}(\bar x_h - \bar x)^2}{p \sum_{i=1}^{n}(x_i - \bar x)^2}.
+$$
+
+**Intradaily variability (IV)**, how fragmented the rhythm is, from the squared
+hour-to-hour differences [@witting1990]:
+$$
+\mathrm{IV} = \frac{n \sum_{i=2}^{n}(x_i - x_{i-1})^2}{(n-1)\sum_{i=1}^{n}(x_i - \bar x)^2}.
+$$
+
+**Relative amplitude (RA)**, the day-night contrast, from the most-active 10-hour
+window M10 and the least-active 5-hour window L5 of the average day
+[@vansomeren1999]:
+$$
+\mathrm{RA} = \frac{\mathrm{M10} - \mathrm{L5}}{\mathrm{M10} + \mathrm{L5}}, \qquad
+\mathrm{M10} = \max_s \overline{x}_{[s,\,s+10\text{h}]}, \quad
+\mathrm{L5} = \min_s \overline{x}_{[s,\,s+5\text{h}]} .
+$$
+
+`circadian.rhythm()` returns all of these, plus the 1-hour extremes L1 and M1, the
+autocorrelation predictability \(\phi\), and the onset times of each window.
+
+## Assumptions, and when they break
+
+- **Evenly spaced epochs.** IS and IV are defined on a regular grid; gaps must be
+  handled (the package works on the valid epochs and reports coverage).
+- **Enough whole days.** IS is a between-day quantity, so a one- or two-day record
+  gives an unstable estimate. `circadian.rhythm()` sets aside days with too little
+  valid recording before computing.
+- **A fixed epoch length.** IV in particular rises as the epoch shortens (finer
+  sampling exposes more hour-to-hour change), so only compare IV computed at the
+  same epoch. The multiscale tools below make that dependence explicit.
+- **Wear time.** A stationary, taken-off device reads as deep rest; gate the counts
+  on valid wear first if the recording has device-off stretches.
+
+## Recovering known truth
+
+Before trusting these numbers on real data, it is worth seeing them behave on data
+whose answer we know. We build three seven-day recordings: one whose day repeats
+**exactly**, one whose peak **wanders** a few hours from day to day, and one that
+is **pure noise**. IS should fall from near 1 toward 0 across the three, and IV
+should rise toward its noise ceiling of about 2.
+
+```{r known-truth}
+ts  <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 7 * 1440)
+hod <- as.numeric(format(ts, "%H")) + as.numeric(format(ts, "%M")) / 60
+day <- (seq_along(ts) - 1) %/% 1440
+set.seed(1)
+
+regular  <- pmax(0, 100 + 80 * cos(2 * pi * (hod - 14) / 24)) + rnorm(length(ts), 0, 5)
+acro_jit <- (14 + rnorm(7, 0, 4))[day + 1]                      # acrophase wanders by day
+jittered <- pmax(0, 100 + 80 * cos(2 * pi * (hod - acro_jit) / 24)) + rnorm(length(ts), 0, 5)
+noise    <- pmax(0, rnorm(length(ts), 100, 80))
+
+recover <- function(x) {
+  r <- circadian.rhythm(x, ts)
+  c(IS = r$IS, IV = r$IV, RA = r$RA)
+}
+knitr::kable(
+  rbind(regular = recover(regular), jittered = recover(jittered), noise = recover(noise)),
+  digits = 3,
+  caption = "IS falls and IV rises as a planted rhythm is made irregular, then noise."
+)
+```
+
+A rhythm that repeats exactly returns IS at its ceiling of 1 with a near-zero IV;
+day-to-day phase jitter pulls IS down to a third of that while RA shrinks; pure
+noise leaves IS near 0 and IV at its ceiling near 2. The metrics report exactly the
+regularity we put in.
+
+## On a real recording
+
+The recording bundled with the package runs the same way. `circadian.rhythm()`
+returns a typed object that prints its own metrics.
+
+```{r real}
+agd <- agd.counts(read.agd(example_agd(1), verbose = FALSE))
+cr  <- circadian.rhythm(agd$axis1, agd$timestamp)
+cr
+```
+
+```{r actogram, fig.height = 5, fig.cap = "Double-plotted actogram of the bundled recording. The active rows do not stack into one vertical band; they drift, which is the low interdaily stability the metrics report."}
+plot_actogram(agd$axis1, agd$timestamp)
+```
+
+## Reading the numbers
+
+State each metric in human terms:
+
+- **IS** runs 0 to 1; near 1 is a highly stable 24-hour pattern, below about 0.3 is
+  weak. Here it is low: the days do not land at the same clock time.
+- **IV** runs from about 0 (a smooth sine) to about 2 (noisy or split into ultradian
+  bouts).
+- **RA** runs 0 to 1; higher is a stronger day-night contrast.
+
+The most informative reading is often the **combination**. This recording pairs a
+high RA (near 0.98) with a low IS (near 0.23): the days are strongly active, but the
+pattern does not repeat at the same clock time, a strong rhythm carried on
+irregular timing, which neither number says on its own.
+
+## The wider nonparametric family
+
+The same averaged-profile idea generates a family of related descriptors.
+
+**Generalising L5/M10 to any window.** `activity.extrema()` reports the least- and
+most-active window of any length, with onset and midpoint times. L1/M1 and L5/M10
+are special cases.
+
+```{r extrema}
+activity.extrema(agd$axis1, agd$timestamp, windows = c(1, 5, 10))$table
+```
+
+**Making the epoch dependence explicit.** Because IV and IS depend on the bin size,
+`intradaily.variability.multiscale()` and `circadian.is.multiscale()` recompute them
+across a range of epochs, so you can see (and report) how the value moves with
+resolution rather than pinning it to one choice [@goncalves2014].
+
+```{r multiscale}
+intradaily.variability.multiscale(agd$axis1, agd$timestamp)
+circadian.is.multiscale(agd$axis1, agd$timestamp)
+```
+
+**How cleanly rest separates from activity.** `dichotomy.index()` compares activity
+during a defined rest span against the active day [@mormont2000]; here we mark the
+night hours as rest.
+
+```{r dichotomy}
+h <- as.numeric(format(agd$timestamp, "%H"))
+dichotomy.index(agd$axis1, agd$timestamp, rest = h >= 23 | h < 7)
+```
+
+**Fragmentation.** `state.transitions()` and `transition.probability()` summarise
+how readily the subject switches between rest and activity (the kRA/kAR rates and
+the closed-form transition probabilities), capturing fragmentation a single
+amplitude cannot [@lim2011].
+
+```{r fragmentation}
+state.transitions(agd$axis1)
+transition.probability(agd$axis1)[c("tp_ra_mle", "tp_ar_mle")]
+```
+
+**Per day, to see drift.** `circadian.daily()` reports each day on its own, so
+within-recording change shows instead of being averaged away.
+
+```{r daily, fig.height = 3, fig.cap = "The most-active-window onset for each day. Reporting it per day, rather than pooled, shows how steady the active phase is."}
+daily <- circadian.daily(agd$axis1, agd$timestamp)$daily
+ggplot(daily, aes(date, M10_onset_h)) +
+  geom_line(colour = "grey60") + geom_point(colour = "#236192", size = 2) +
+  labs(x = NULL, y = "M10 onset (h)") +
+  theme_actiRhythm()
+```
+
+## Limitations
+
+- **Missing data moves the numbers.** A few device-off days can shift IS as much as
+  a real change; always check coverage and gate on wear time.
+- **Epoch dependence.** Compare IV (and to a lesser extent IS) only across records
+  binned to the same epoch; use the multiscale view when epochs differ.
+- **A minimum of valid days.** Very short records give unstable IS; the function
+  enforces a per-day validity threshold and reports how many days qualified.
+
+## Reference and validation
+
+The nonparametric battery follows @witting1990 and @vansomeren1999, with the
+multiscale and dichotomy extensions of @goncalves2014 and @mormont2000.
+actiRhythm's IS, IV, RA, L5, and M10 are cross-checked against the
+`nparACT` and `ActCR` reference implementations (to the printed precision) in
+the [Validation](validation.html) article and the package's test suite.
+
+## References

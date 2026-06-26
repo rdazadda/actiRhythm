@@ -64,8 +64,8 @@ flag, and the cosinor parameters.
 
 ## References
 
-Nelson W, Tong YL, Lee JK, Halberg F (1979). Methods for
-cosinor-rhythmometry. Chronobiologia, 6(4), 305-323.
+Nelson W, Tong YL, Lee JK, Halberg F (1979). “Methods for
+cosinor-rhythmometry.” *Chronobiologia*, **6**(4), 305–323.
 
 ## Examples
 

@@ -41,8 +41,8 @@ profile. Never errors.
 
 ## References
 
-Ramsay JO, Silverman BW (2005). *Functional Data Analysis*, 2nd ed.
-Springer. [doi:10.1007/b98888](https://doi.org/10.1007/b98888)
+Ramsay JO, Silverman BW (2005). *Functional Data Analysis*, 2nd edition.
+Springer. [doi:10.1007/b98888](https://doi.org/10.1007/b98888) .
 
 ## Examples
 

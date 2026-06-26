@@ -24,21 +24,13 @@
 #' @name circadian-plots
 #'
 #' @references
-#' Lomb NR (1976). Least-squares frequency analysis of unequally spaced data.
-#' \emph{Astrophysics and Space Science}, 39(2):447-462.
+#' \insertRef{lomb1976}{actiRhythm}
 #'
-#' Scargle JD (1982). Studies in astronomical time series analysis. II.
-#' Statistical aspects of spectral analysis of unevenly spaced data.
-#' \emph{The Astrophysical Journal}, 263:835-853.
+#' \insertRef{scargle1982}{actiRhythm}
 #'
-#' Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). The sigmoidally
-#' transformed cosine curve: a mathematical model for circadian rhythms with
-#' symmetric non-sinusoidal shapes. \emph{Statistics in Medicine},
-#' 25(22):3893-3904.
+#' \insertRef{marler2006}{actiRhythm}
 #'
-#' Peng CK, Buldyrev SV, Havlin S, Simons M, Stanley HE, Goldberger AL (1994).
-#' Mosaic organization of DNA nucleotides. \emph{Physical Review E},
-#' 49(2):1685-1689.
+#' \insertRef{peng1994}{actiRhythm}
 NULL
 
 
@@ -146,15 +138,11 @@ NULL
 #' data, which an FFT cannot accommodate.
 #'
 #' @references
-#' Lomb NR (1976). Least-squares frequency analysis of unequally spaced data.
-#' \emph{Astrophysics and Space Science}, 39(2):447-462.
+#' \insertRef{lomb1976}{actiRhythm}
 #'
-#' Scargle JD (1982). Studies in astronomical time series analysis. II.
-#' Statistical aspects of spectral analysis of unevenly spaced data.
-#' \emph{The Astrophysical Journal}, 263:835-853.
+#' \insertRef{scargle1982}{actiRhythm}
 #'
-#' Ruf T (1999). The Lomb-Scargle periodogram in biological rhythm research.
-#' \emph{Biological Rhythm Research}, 30(2):178-201.
+#' \insertRef{ruf1999}{actiRhythm}
 #'
 #' @seealso \code{\link{circadian.period}}, \code{\link{plot_extended_cosinor}}
 #'
@@ -622,13 +610,9 @@ plot_chisq <- function(counts, timestamps, from = 18, to = 30,
 #' width-asymmetry and the \code{beta} steepness when the fit converged.
 #'
 #' @references
-#' Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). The sigmoidally
-#' transformed cosine curve: a mathematical model for circadian rhythms with
-#' symmetric non-sinusoidal shapes. \emph{Statistics in Medicine},
-#' 25(22):3893-3904.
+#' \insertRef{marler2006}{actiRhythm}
 #'
-#' Cornelissen G (2014). Cosinor-based rhythmometry. \emph{Theoretical Biology
-#' and Medical Modelling}, 11:16.
+#' \insertRef{cornelissen2014}{actiRhythm}
 #'
 #' @seealso \code{\link{cosinor.antilogistic}}, \code{\link{cosinor.analysis}}
 #'
@@ -790,13 +774,9 @@ plot_extended_cosinor <- function(counts, timestamps, period = 24) {
 #' \code{fractal.dfa()} drive the plot directly.
 #'
 #' @references
-#' Peng CK, Buldyrev SV, Havlin S, Simons M, Stanley HE, Goldberger AL (1994).
-#' Mosaic organization of DNA nucleotides. \emph{Physical Review E},
-#' 49(2):1685-1689.
+#' \insertRef{peng1994}{actiRhythm}
 #'
-#' Hu K, Van Someren EJW, Shea SA, Scheer FAJL (2009). Reduction of scale
-#' invariance of activity fluctuations with aging and Alzheimer's disease.
-#' \emph{PNAS}, 106(8):2490-2494.
+#' \insertRef{hu2009}{actiRhythm}
 #'
 #' @seealso \code{\link{fractal.dfa}}, \code{\link{multiscale.entropy}}
 #'

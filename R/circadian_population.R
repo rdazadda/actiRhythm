@@ -23,9 +23,7 @@
 #'   \code{actiRhythm_population_cosinor_list}) when \code{group} is supplied.
 #'
 #' @references
-#' Bingham C, Arbogast B, Cornelissen Guillaume G, Lee JK, Halberg F (1982).
-#' Inferential statistical methods for estimating and comparing cosinor
-#' parameters. Chronobiologia, 9(4):397-439.
+#' \insertRef{bingham1982}{actiRhythm}
 #'
 #' @examples
 #' set.seed(1)
@@ -205,9 +203,7 @@ print.actiRhythm_population_cosinor_list <- function(x, ...) {
 #'   p-value and CI), and the per-subject coefficients.
 #'
 #' @references
-#' Bingham C, Arbogast B, Cornelissen Guillaume G, Lee JK, Halberg F (1982).
-#' Inferential statistical methods for estimating and comparing cosinor
-#' parameters. Chronobiologia, 9(4):397-439.
+#' \insertRef{bingham1982}{actiRhythm}
 #'
 #' @seealso \code{\link{population.cosinor}}
 #'

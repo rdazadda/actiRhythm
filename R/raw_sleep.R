@@ -44,9 +44,7 @@
 #'   non-wear. Never errors.
 #'
 #' @references
-#' van Hees VT, et al. (2011). Estimation of daily energy expenditure in pregnant
-#' and non-pregnant women using a wrist-worn tri-axial accelerometer. \emph{PLoS
-#' ONE}, 6(7):e22922. \doi{10.1371/journal.pone.0022922}
+#' \insertRef{vanhees2011}{actiRhythm}
 #'
 #' @seealso \code{\link{rest.spt}}, \code{\link{raw.metrics}}
 #'
@@ -132,9 +130,7 @@ detect.nonwear.raw <- function(x, device = "auto", epoch = 5, block = 300,
 #'   detectable window.
 #'
 #' @references
-#' van Hees VT, et al. (2018). Estimating sleep parameters using an accelerometer
-#' without sleep diary. \emph{Scientific Reports}, 8:12975.
-#' \doi{10.1038/s41598-018-31266-z}
+#' \insertRef{vanhees2018}{actiRhythm}
 #'
 #' @seealso \code{\link{sib.vanhees}}, \code{\link{sleep.from.spt}},
 #'   \code{\link{raw.metrics}}
@@ -209,9 +205,7 @@ rest.spt <- function(anglez, timestamps, epoch_length = 5, pct = 10, mult = 15,
 #'   inactivity, to be gated by the SPT window and wear time).
 #'
 #' @references
-#' van Hees VT, et al. (2015). A novel, open access method to assess sleep
-#' duration using a wrist-worn accelerometer. \emph{PLoS ONE}, 10(11):e0142533.
-#' \doi{10.1371/journal.pone.0142533}
+#' \insertRef{vanhees2015}{actiRhythm}
 #'
 #' @seealso \code{\link{rest.spt}}, \code{\link{sleep.from.spt}}
 #'
@@ -251,9 +245,7 @@ sib.vanhees <- function(anglez, angle_thresh = 5, time_thresh = 5, epoch_length 
 #'   \code{waso} minutes, \code{efficiency}, \code{n_awakenings}, \code{mid_sleep}).
 #'
 #' @references
-#' van Hees VT, et al. (2018). Estimating sleep parameters using an accelerometer
-#' without sleep diary. \emph{Scientific Reports}, 8:12975.
-#' \doi{10.1038/s41598-018-31266-z}
+#' \insertRef{vanhees2018}{actiRhythm}
 #'
 #' @seealso \code{\link{rest.spt}}, \code{\link{sib.vanhees}}
 #'

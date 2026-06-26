@@ -39,6 +39,5 @@ circadian.quotient(cos)
 
 }
 \references{
-Nelson W, Tong YL, Lee JK, Halberg F (1979). Methods for cosinor-rhythmometry.
-\emph{Chronobiologia}, 6(4):305-323.
+\insertRef{nelson1979}{actiRhythm}
 }

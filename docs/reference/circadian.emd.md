@@ -64,15 +64,17 @@ reconstruction error. Never errors.
 
 ## References
 
-Huang NE, Shen Z, Long SR, et al. (1998). The empirical mode
-decomposition and the Hilbert spectrum for nonlinear and non-stationary
-time series analysis. *Proceedings of the Royal Society A*,
-454(1971):903-995.
-[doi:10.1098/rspa.1998.0193](https://doi.org/10.1098/rspa.1998.0193)
+Huang NE, Shen Z, Long SR, Wu MC, Shih HH, Zheng Q, Yen NC, Tung CC, Liu
+HH (1998). “The empirical mode decomposition and the Hilbert spectrum
+for nonlinear and non-stationary time series analysis.” *Proceedings of
+the Royal Society A*, **454**(1971), 903–995.
+[doi:10.1098/rspa.1998.0193](https://doi.org/10.1098/rspa.1998.0193) .
 
-Wu Z, Huang NE (2009). Ensemble empirical mode decomposition. *Advances
-in Adaptive Data Analysis*, 1(1):1-41.
+Wu Z, Huang NE (2009). “Ensemble empirical mode decomposition: a
+noise-assisted data analysis method.” *Advances in Adaptive Data
+Analysis*, **1**(1), 1–41.
 [doi:10.1142/S1793536909000047](https://doi.org/10.1142/S1793536909000047)
+.
 
 ## See also
 

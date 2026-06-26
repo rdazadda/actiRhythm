@@ -41,10 +41,7 @@ table(detect.nonwear.troiano(counts))
 
 }
 \references{
-Troiano RP, Berrigan D, Dodd KW, Masse LC, Tilert T, McDowell M (2008).
-Physical activity in the United States measured by accelerometer.
-\emph{Medicine & Science in Sports & Exercise}, 40(1):181-188.
-\doi{10.1249/mss.0b013e31815a51b3}
+\insertRef{troiano2008}{actiRhythm}
 }
 \seealso{
 \code{\link{detect.nonwear.choi}}

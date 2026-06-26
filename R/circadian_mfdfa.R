@@ -22,9 +22,7 @@
 #'   insufficient data; never errors.
 #'
 #' @references
-#' Kantelhardt JW, Zschiegner SA, Koscielny-Bunde E, Havlin S, Bunde A,
-#' Stanley HE (2002). Multifractal detrended fluctuation analysis of
-#' nonstationary time series. Physica A, 316(1-4):87-114.
+#' \insertRef{kantelhardt2002}{actiRhythm}
 #'
 #' @seealso \code{\link{fractal.dfa}}
 #'

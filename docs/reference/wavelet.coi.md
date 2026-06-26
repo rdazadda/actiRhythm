@@ -34,9 +34,10 @@ Numeric vector, one per epoch, of the maximum reliable period (hours).
 
 ## References
 
-Torrence C, Compo GP (1998). A practical guide to wavelet analysis.
-*Bulletin of the American Meteorological Society*, 79(1):61-78.
+Torrence C, Compo GP (1998). “A practical guide to wavelet analysis.”
+*Bulletin of the American Meteorological Society*, **79**(1), 61–78.
 [doi:10.1175/1520-0477(1998)079\<0061:APGTWA\>2.0.CO;2](https://doi.org/10.1175/1520-0477%281998%29079%3C0061%3AAPGTWA%3E2.0.CO%3B2)
+.
 
 ## See also
 

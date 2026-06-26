@@ -125,13 +125,14 @@ dependency is required.
 
 ## References
 
-Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). The sigmoidally
-transformed cosine curve: a mathematical model for circadian rhythms
-with symmetric non-sinusoidal shapes. *Statistics in Medicine*,
-25(22):3893-3904.
+Marler MR, Gehrman P, Martin JL, Ancoli-Israel S (2006). “The
+sigmoidally transformed cosine curve: a mathematical model for circadian
+rhythms with symmetric non-sinusoidal shapes.” *Statistics in Medicine*,
+**25**(22), 3893–3904.
+[doi:10.1002/sim.2466](https://doi.org/10.1002/sim.2466) .
 
-Wang J, et al. (2021). ActCR: Extract Circadian Rhythms Metrics from
-Actigraphy Data. R package.
+Wang J, Xian H, Di J, Zipunnikov V (2021). *ActCR: Extract Circadian
+Rhythms Metrics from Actigraphy Data*. R package.
 
 ## Examples
 

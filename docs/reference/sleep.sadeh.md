@@ -45,10 +45,10 @@ ActiGraph implementations).
 
 ## References
 
-Sadeh A, Sharkey KM, Carskadon MA (1994). Activity-based sleep-wake
-identification: an empirical test of methodological issues. *Sleep*,
-17(3):201-207.
-[doi:10.1093/sleep/17.3.201](https://doi.org/10.1093/sleep/17.3.201)
+Sadeh A, Sharkey KM, Carskadon MA (1994). “Activity-based sleep-wake
+identification: an empirical test of methodological issues.” *Sleep*,
+**17**(3), 201–207.
+[doi:10.1093/sleep/17.3.201](https://doi.org/10.1093/sleep/17.3.201) .
 
 ## See also
 

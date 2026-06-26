@@ -18,6 +18,6 @@ Numeric. Relative amplitude (0-1)
 RA = (M10 - L5) / (M10 + L5)
 }
 \references{
-van Someren EJ, et al. (1999). Chronobiol Int, 16(4):505-518.
+\insertRef{vansomeren1999}{actiRhythm}
 }
 \keyword{internal}

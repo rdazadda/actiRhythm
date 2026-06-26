@@ -45,12 +45,16 @@ drive the plot directly.
 ## References
 
 Peng CK, Buldyrev SV, Havlin S, Simons M, Stanley HE, Goldberger AL
-(1994). Mosaic organization of DNA nucleotides. *Physical Review E*,
-49(2):1685-1689.
+(1994). “Mosaic organization of DNA nucleotides.” *Physical Review E*,
+**49**(2), 1685–1689.
+[doi:10.1103/PhysRevE.49.1685](https://doi.org/10.1103/PhysRevE.49.1685)
+.
 
-Hu K, Van Someren EJW, Shea SA, Scheer FAJL (2009). Reduction of scale
-invariance of activity fluctuations with aging and Alzheimer's disease.
-*PNAS*, 106(8):2490-2494.
+Hu K, Van Someren EJW, Shea SA, Scheer FAJL (2009). “Reduction of scale
+invariance of activity fluctuations with aging and Alzheimer's disease.”
+*Proceedings of the National Academy of Sciences*, **106**(8),
+2490–2494.
+[doi:10.1073/pnas.0806087106](https://doi.org/10.1073/pnas.0806087106) .
 
 ## See also
 

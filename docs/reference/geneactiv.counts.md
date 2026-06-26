@@ -45,10 +45,11 @@ absolute counts across brands.
 
 ## References
 
-Brond JC, Andersen LB, Arvidsson D (2017). Generating ActiGraph counts
-from raw acceleration recorded by an alternative monitor. *Medicine &
-Science in Sports & Exercise*, 49(11):2351-2360.
+Brond JC, Andersen LB, Arvidsson D (2017). “Generating ActiGraph counts
+from raw acceleration recorded by an alternative monitor.” *Medicine &
+Science in Sports & Exercise*, **49**(11), 2351–2360.
 [doi:10.1249/MSS.0000000000001344](https://doi.org/10.1249/MSS.0000000000001344)
+.
 
 ## See also
 

@@ -22,8 +22,7 @@
 #'   \code{rhythmic} flag, and the cosinor parameters.
 #'
 #' @references
-#' Nelson W, Tong YL, Lee JK, Halberg F (1979). Methods for cosinor-rhythmometry.
-#' Chronobiologia, 6(4), 305-323.
+#' \insertRef{nelson1979}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 1440)

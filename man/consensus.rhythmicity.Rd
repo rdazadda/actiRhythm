@@ -45,5 +45,5 @@ consensus.rhythmicity(counts, ts)
 
 }
 \references{
-Fisher RA (1925). Statistical Methods for Research Workers. Oliver and Boyd.
+\insertRef{fisher1925}{actiRhythm}
 }

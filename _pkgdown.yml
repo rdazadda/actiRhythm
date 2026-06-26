@@ -9,6 +9,9 @@ template:
     navbar-fg: "#ffffff"
     link-color: "#2c5282"
     headings-color: "#1e3a5f"
+    base_font: {google: "Inter"}
+    heading_font: {google: "Inter"}
+    code_font: {google: "JetBrains Mono"}
 
 navbar:
   structure:

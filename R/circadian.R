@@ -928,6 +928,8 @@ sleep.regularity.index <- function(sleep_state, timestamps, epoch_length = 60) {
 #'
 #' \insertRef{roenneberg2012}{actiRhythm}
 #'
+#' \insertRef{roenneberg2003}{actiRhythm}
+#'
 #' @export
 social.jet.lag <- function(sleep_periods, work_days = NULL) {
 

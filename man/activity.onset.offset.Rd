@@ -19,18 +19,16 @@ An object of class \code{actiRhythm_aont}: \code{onset_h} and
 \code{offset_h} (clock hours) and the relative-difference profile. Never errors.
 }
 \description{
-Finds the daily activity onset and offset by the relative-difference method.
-On the averaged 24-hour profile, the onset is where mean activity rises most
+Finds the daily activity onset and offset by a relative-difference contrast on
+the averaged 24-hour profile: the onset is where mean activity rises most
 sharply (the relative difference of the window after versus before is largest)
-and the offset is where it falls most sharply (Roenneberg et al. 2003). These
-are non-cosinor, non-changepoint phase markers.
+and the offset is where it falls most sharply. These are non-cosinor,
+non-changepoint phase markers, a normalized-contrast edge detector on the daily
+profile rather than a published actigraphy algorithm.
 }
 \examples{
 ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 4 * 1440)
 h  <- as.numeric(format(ts, "\%H"))
 activity.onset.offset(ifelse(h >= 23 | h < 7, 5, 300), ts)
 
-}
-\references{
-\insertRef{roenneberg2003}{actiRhythm}
 }

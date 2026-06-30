@@ -56,7 +56,9 @@ NULL
 #' noise, alpha approximately 1.0 indicates 1/f (pink) noise, and alpha
 #' approximately 1.5 indicates Brownian (random-walk / brown) noise. Healthy
 #' human activity fluctuations typically show alpha in the 0.9 to 1.0 range, with
-#' reductions reported in aging and Alzheimer's disease (Hu et al., 2009).
+#' reductions reported in aging and Alzheimer's disease (Hu et al., 2009); those
+#' reference values were obtained with quadratic DFA-2 (\code{detrend_order = 2}),
+#' which can differ from the default linear DFA-1 on trend-carrying data.
 #'
 #' @param x Numeric vector of activity counts (minute-level recommended).
 #'   Internally analyzed on the longest continuous non-NA segment.
@@ -65,11 +67,16 @@ NULL
 #'   freedom. Default 4.
 #' @param scale_max Integer or NULL. Largest window size in samples. If NULL
 #'   (default) it is set to floor(N / 4) where N is the length of the analyzed
-#'   segment, ensuring at least four windows at the largest scale.
+#'   segment, ensuring at least four windows at the largest scale. The top scales
+#'   then have only about four windows and are somewhat undersampled; Hu et al.
+#'   (2001) suggest a maximum nearer N / 10 for well-sampled fluctuations.
 #' @param breakpoint_min Numeric. Window-size boundary (in samples / minutes for
 #'   minute-level data) separating the short-timescale exponent \code{alpha1}
 #'   (scales < breakpoint_min) from the long-timescale exponent \code{alpha2}
 #'   (scales >= breakpoint_min). Default 90.
+#' @param detrend_order Integer order of the within-window polynomial detrend: 1
+#'   (default) is linear DFA-1 (Peng et al. 1994); 2 is quadratic DFA-2, the
+#'   convention Hu et al. (2009) used for activity data.
 #'
 #' @return A list with class \code{"actiRhythm_dfa"} containing:
 #'   \describe{
@@ -89,14 +96,16 @@ NULL
 #'   outputs are returned as NA with the same structure (never an error).
 #'
 #' @details
-#' Algorithm (integrated, non-overlapping, linear DFA):
+#' Algorithm (integrated, non-overlapping DFA, polynomial detrend of order
+#' \code{detrend_order}):
 #' \enumerate{
 #'   \item Extract the longest continuous non-NA segment of \code{x}.
 #'   \item Integrate the mean-centred signal: \code{y = cumsum(x - mean(x))}.
 #'   \item For each window size n (log-spaced from \code{scale_min} to
 #'     \code{scale_max}), split y into floor(N / n) non-overlapping windows of
-#'     length n, fit and remove a least-squares line within each window, and
-#'     pool the residuals. The fluctuation is
+#'     length n, fit and remove a least-squares polynomial of order
+#'     \code{detrend_order} within each window, and pool the residuals. The
+#'     fluctuation is
 #'     \code{F(n) = sqrt(mean(residuals^2))} over all pooled residuals.
 #'   \item The scaling exponent is the slope of
 #'     \code{log10(F(n))} regressed on \code{log10(n)}.
@@ -118,7 +127,7 @@ NULL
 #'
 #' @export
 fractal.dfa <- function(x, scale_min = 4, scale_max = NULL,
-                        breakpoint_min = 90) {
+                        breakpoint_min = 90, detrend_order = 1L) {
 
   # Graceful empty/edge result builder
   empty_result <- function(n_used = 0L) {
@@ -136,7 +145,8 @@ fractal.dfa <- function(x, scale_min = 4, scale_max = NULL,
     )
   }
 
-  scale_min <- max(4L, as.integer(round(scale_min)))
+  detrend_order <- max(1L, as.integer(round(detrend_order)))
+  scale_min <- max(4L, as.integer(round(scale_min)), detrend_order + 2L)
 
   # Work on the longest gap-free segment.
   seg <- .longest_non_na_run(x)
@@ -186,19 +196,13 @@ fractal.dfa <- function(x, scale_min = 4, scale_max = NULL,
     used <- n_win * n
     # Reshape the first used points into an n x n_win matrix (column = window).
     ymat <- matrix(y[seq_len(used)], nrow = n, ncol = n_win)
-    tt <- seq_len(n)
-    # Least-squares line fit per column via centred normal equations.
-    tbar <- mean(tt)
-    tc <- tt - tbar                                  # centred predictor, sum(tc)=0
-    denom <- sum(tc * tc)
-    cmean <- colMeans(ymat)                          # per-window mean (intercept)
-    # Because sum(tc) = 0, crossprod(tc, ymat)[, j] = sum(tc_i * y_ij), which is
-    # exactly the numerator of the least-squares slope for window j.
-    slope <- as.numeric(crossprod(tc, ymat)) / denom
-    # Fitted values: cmean_j + slope_j * tc_i
-    fitted <- outer(tc, slope) + matrix(cmean, nrow = n, ncol = n_win,
-                                        byrow = TRUE)
-    resid <- ymat - fitted
+    # Least-squares polynomial detrend of order detrend_order per window. The
+    # predictor is centred for conditioning and the design is shared across
+    # windows, so every column is fit at once.
+    tc <- seq_len(n) - (n + 1) / 2
+    X  <- outer(tc, 0:detrend_order, `^`)
+    beta <- solve(crossprod(X), crossprod(X, ymat))
+    resid <- ymat - X %*% beta
     sqrt(mean(resid^2))
   }, numeric(1))
 
@@ -245,12 +249,11 @@ fractal.dfa <- function(x, scale_min = 4, scale_max = NULL,
 
 
 # Internal helper: Richman-Moorman Sample Entropy
-# SampEn(m, r) = -log(A / B) where
-#   B = number of template pairs of length m that match within Chebyshev r,
-#   A = number of template pairs of length m+1 that match within r,
-# self-matches excluded, no distinction between A/B normalisation constants
-# (they cancel in the ratio). Returns NA if no length-m matches (B == 0) or no
-# length-(m+1) matches (A == 0), as the estimator is then undefined.
+# SampEn(m, r) = -log(A / B) where B and A count matching template pairs of
+# length m and m+1 within Chebyshev distance r, over the same N-m templates (the
+# length-m templates that can be extended to length m+1), self-matches excluded.
+# Returns NA if no length-m matches (B == 0) or no length-(m+1) matches (A == 0),
+# as the estimator is then undefined.
 .sample_entropy <- function(x, m = 2L, r = 0.15) {
   x <- as.numeric(x)
   N <- length(x)
@@ -259,9 +262,10 @@ fractal.dfa <- function(x, scale_min = 4, scale_max = NULL,
     return(NA_real_)
   }
 
-  # Count matched template pairs of a given embedding dimension mm.
+  # Count matched template pairs of a given embedding dimension mm, over the same
+  # N-m templates for both m and m+1 (strict Richman-Moorman / pracma convention).
   count_matches <- function(mm) {
-    n_templates <- N - mm + 1L
+    n_templates <- N - m
     if (n_templates < 2L) {
       return(0)
     }

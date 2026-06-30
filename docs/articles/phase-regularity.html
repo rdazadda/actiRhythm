@@ -143,15 +143,18 @@ independent (coin-flip) days score about
 and a perfectly inverted pattern scores
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>100</mn></mrow><annotation encoding="application/x-tex">-100</annotation></semantics></math>.</p>
 <p><strong>Social jet lag</strong> compares the mid-point of sleep on
-free days (MSF) with that on work days (MSW) <span class="citation">(<a href="#ref-wittmann2006">Wittmann et al., 2006</a>)</span>:</p>
+free days (MSF) with that on work days (MSW). Wittmann et al. introduced
+it as the absolute difference
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mrow><mi mathvariant="normal">M</mi><mi mathvariant="normal">S</mi><mi mathvariant="normal">F</mi></mrow><mo>−</mo><mrow><mi mathvariant="normal">M</mi><mi mathvariant="normal">S</mi><mi mathvariant="normal">W</mi></mrow><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|\mathrm{MSF} - \mathrm{MSW}|</annotation></semantics></math><span class="citation">(<a href="#ref-wittmann2006">Wittmann et al.,
+2006</a>)</span>; the package reports the signed form <span class="citation">(<a href="#ref-roenneberg2012">Roenneberg et al.,
+2012</a>)</span>:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">S</mi><mi mathvariant="normal">J</mi><mi mathvariant="normal">L</mi></mrow><mo>=</mo><mrow><mi mathvariant="normal">M</mi><mi mathvariant="normal">S</mi><mi mathvariant="normal">F</mi></mrow><mo>−</mo><mrow><mi mathvariant="normal">M</mi><mi mathvariant="normal">S</mi><mi mathvariant="normal">W</mi></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \mathrm{SJL} = \mathrm{MSF} - \mathrm{MSW}.
 </annotation></semantics></math></p>
 <p>Because free-day sleep is often longer (catch-up sleep), the
 chronotype is read from the <strong>sleep-debt-corrected</strong>
 mid-sleep MSFsc, which shifts the free-day mid-point back by half the
-excess of free-day sleep over the weekly average <span class="citation">(<a href="#ref-roenneberg2003">Roenneberg et al.,
-2003</a>; <a href="#ref-roenneberg2012">Roenneberg et al.,
+excess of free-day sleep over the weekly average <span class="citation">(<a href="#ref-roenneberg2012">Roenneberg et al.,
 2012</a>)</span>:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">M</mi><mi mathvariant="normal">S</mi><msub><mi mathvariant="normal">F</mi><mrow><mi mathvariant="normal">s</mi><mi mathvariant="normal">c</mi></mrow></msub></mrow><mo>=</mo><mrow><mi mathvariant="normal">M</mi><mi mathvariant="normal">S</mi><mi mathvariant="normal">F</mi></mrow><mo>−</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mn>2</mn></mfrac></mstyle><mspace width="-0.167em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi mathvariant="normal">S</mi><msub><mi mathvariant="normal">D</mi><mi mathvariant="normal">f</mi></msub></mrow><mo>−</mo><mrow><mi mathvariant="normal">S</mi><msub><mi mathvariant="normal">D</mi><mrow><mi mathvariant="normal">w</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">e</mi><mi mathvariant="normal">k</mi></mrow></msub></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="1.0em"></mspace><mrow><mtext mathvariant="normal">when </mtext><mspace width="0.333em"></mspace></mrow><mrow><mi mathvariant="normal">S</mi><msub><mi mathvariant="normal">D</mi><mi mathvariant="normal">f</mi></msub></mrow><mo>&gt;</mo><mrow><mi mathvariant="normal">S</mi><msub><mi mathvariant="normal">D</mi><mi mathvariant="normal">w</mi></msub></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \mathrm{MSF_{sc}} = \mathrm{MSF} - \tfrac{1}{2}\!\left(\mathrm{SD_f} - \mathrm{SD_{week}}\right)
@@ -165,9 +168,9 @@ The mean resultant length
 measures clustering, and the Rayleigh statistic
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>=</mo><mi>N</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">Z = N R^2</annotation></semantics></math>
 tests it against uniformity <span class="citation">(<a href="#ref-fisher1993">Fisher, 1993</a>)</span>. The <strong>composite
-phase deviation</strong> combines each day’s precision (deviation from
-the person’s own mean phase) and accuracy (deviation from a reference)
-as
+phase deviation</strong> combines each day’s precision (the deviation
+from the previous day) and accuracy (the deviation from the chronotype
+reference) as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">D</mi></mrow><mo>=</mo><mover><msqrt><mrow><msup><mtext mathvariant="normal">precision</mtext><mn>2</mn></msup><mo>+</mo><msup><mtext mathvariant="normal">accuracy</mtext><mn>2</mn></msup></mrow></msqrt><mo accent="true">¯</mo></mover></mrow><annotation encoding="application/x-tex">\mathrm{CPD} = \overline{\sqrt{\text{precision}^2 + \text{accuracy}^2}}</annotation></semantics></math><span class="citation">(<a href="#ref-fischer2016">Fischer et al.,
 2016</a>)</span>.</p>
 </div>
@@ -252,7 +255,7 @@ made irregular, then random.</caption>
 </tr>
 <tr class="odd">
 <td align="left">random</td>
-<td align="right">6.13</td>
+<td align="right">6.00</td>
 </tr>
 </tbody>
 </table>
@@ -275,7 +278,7 @@ epoch-by-day matrix.</p>
 <span><span class="va">state</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sleep.cole.kripke.html">sleep.cole.kripke</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/sri.matrix.html">sri.matrix</a></span><span class="op">(</span><span class="va">state</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $SRI</span></span>
-<span><span class="co">#&gt; [1] 58.46</span></span>
+<span><span class="co">#&gt; [1] 58.27</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $n_days</span></span>
 <span><span class="co">#&gt; [1] 8</span></span>
@@ -290,12 +293,12 @@ lighter return: it calls <code><a href="../reference/sri.matrix.html">sri.matrix
 two always agree.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sleep.regularity.index.html">sleep.regularity.index</a></span><span class="op">(</span><span class="va">state</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 58.46</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 58.27</span></span></code></pre></div>
 <p>The phase markers run on the raw counts.
 <code><a href="../reference/activity.onset.offset.html">activity.onset.offset()</a></code> finds, on the averaged day, the
 clock time where activity rises most sharply (onset) and falls most
-sharply (offset) by the relative-difference method <span class="citation">(<a href="#ref-roenneberg2003">Roenneberg et al.,
-2003</a>)</span>.</p>
+sharply (offset) by a relative-difference contrast on the daily
+profile.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/activity.onset.offset.html">activity.onset.offset</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Activity Onset / Offset</span></span>
@@ -385,8 +388,17 @@ p-value is evidence the onsets cluster at a preferred time.</p>
 <span><span class="co">#&gt;   n days:          7</span></span>
 <span><span class="co">#&gt;   Mean direction:  06.61 h    R: 0.986</span></span>
 <span><span class="co">#&gt;   Rayleigh:        Z = 6.81, p = 0.0000</span></span>
-<span><span class="co">#&gt;   Hermans-Rasson:  T = 34.4, p = 0.0005</span></span></code></pre></div>
+<span><span class="co">#&gt;   Hermans-Rasson:  V = 17.08, p = 0.0005</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_phase_rose.html">plot_phase_rose</a></span><span class="op">(</span><span class="va">onsets</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="phase-regularity_files/figure-html/phase-rose-1.png" class="r-plt" alt="The activity onsets as a rose around the 24-hour clock, with the mean resultant vector (orange) and the two test p-values. Sector area encodes the count, so a wide sector is not read as a tall one." width="770"><p class="caption">
+The activity onsets as a rose around the 24-hour clock, with the mean
+resultant vector (orange) and the two test p-values. Sector area encodes
+the count, so a wide sector is not read as a tall one.
+</p>
+</div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">onsets</span><span class="op">)</span><span class="op">)</span>, onset <span class="op">=</span> <span class="va">onsets</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">onsets</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"grey70"</span>, linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
@@ -406,7 +418,7 @@ single instability score: the precision (scatter around the person’s own
 mean phase) and accuracy (distance from a reference) combined day by day
 <span class="citation">(<a href="#ref-fischer2016">Fischer et al.,
 2016</a>)</span>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/composite.phase.deviation.html">composite.phase.deviation</a></span><span class="op">(</span><span class="va">onsets</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $CPD</span></span>
 <span><span class="co">#&gt; [1] 0.693</span></span>
@@ -426,16 +438,16 @@ mean phase) and accuracy (distance from a reference) combined day by day
 <code><a href="../reference/circadian.onset.ci.html">circadian.onset.ci()</a></code> gives a bootstrap confidence interval
 for the mean onset time, resampling the per-day onsets on the circle so
 the interval is correct even near midnight.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/circadian.onset.ci.html">circadian.onset.ci</a></span><span class="op">(</span><span class="va">onsets</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $mean_onset</span></span>
 <span><span class="co">#&gt; [1] 6.615</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $ci_lower</span></span>
-<span><span class="co">#&gt; [1] 6.177</span></span>
+<span><span class="co">#&gt; [1] 6.14</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $ci_upper</span></span>
-<span><span class="co">#&gt; [1] 7.133</span></span>
+<span><span class="co">#&gt; [1] 7.157</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $n_days</span></span>
 <span><span class="co">#&gt; [1] 7</span></span></code></pre></div>
@@ -469,11 +481,10 @@ handful.</li>
 </h2>
 <p>The Sleep Regularity Index follows <span class="citation">Phillips et
 al. (<a href="#ref-phillips2017">2017</a>)</span> in its full
-epoch-by-day concordance form; social jet lag and the sleep-debt
-correction follow <span class="citation">Wittmann et al. (<a href="#ref-wittmann2006">2006</a>)</span> and <span class="citation">(<a href="#ref-roenneberg2003">2003</a>; Roenneberg et al.; <a href="#ref-roenneberg2012">2012</a>)</span>. The phase markers use the
-relative-difference onset of <span class="citation">Roenneberg et al.
-(<a href="#ref-roenneberg2003">2003</a>)</span>, the composite phase
-deviation of <span class="citation">Fischer et al. (<a href="#ref-fischer2016">2016</a>)</span>, and the circular tests of
+epoch-by-day concordance form; social jet lag follows <span class="citation">Wittmann et al. (<a href="#ref-wittmann2006">2006</a>)</span> (the absolute difference) and
+<span class="citation">Roenneberg et al. (<a href="#ref-roenneberg2012">2012</a>)</span> (the signed form and the
+sleep-debt correction). The phase markers use a relative-difference
+onset contrast, the composite phase deviation of <span class="citation">Fischer et al. (<a href="#ref-fischer2016">2016</a>)</span>, and the circular tests of
 <span class="citation">Fisher (<a href="#ref-fisher1993">1993</a>)</span> and <span class="citation">Landler et al. (<a href="#ref-landler2019">2019</a>)</span>. actiRhythm’s SRI and phase
 metrics are cross-checked against their reference definitions in the <a href="validation.html">Validation</a> article and the package’s test
 suite.</p>
@@ -508,11 +519,6 @@ academic performance and delayed circadian and sleep/wake timing.
 Roenneberg, T., Allebrandt, K. V., Merrow, M., &amp; Vetter, C. (2012).
 Social jetlag and obesity. <em>Current Biology</em>, <em>22</em>(10),
 939–943. <a href="https://doi.org/10.1016/j.cub.2012.03.038" class="external-link">https://doi.org/10.1016/j.cub.2012.03.038</a>
-</div>
-<div id="ref-roenneberg2003" class="csl-entry">
-Roenneberg, T., Wirz-Justice, A., &amp; Merrow, M. (2003). Life between
-clocks: Daily temporal patterns of human chronotypes. <em>Journal of
-Biological Rhythms</em>, <em>18</em>(1), 80–90. <a href="https://doi.org/10.1177/0748730402239679" class="external-link">https://doi.org/10.1177/0748730402239679</a>
 </div>
 <div id="ref-wittmann2006" class="csl-entry">
 Wittmann, M., Dinich, J., Merrow, M., &amp; Roenneberg, T. (2006).

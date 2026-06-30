@@ -31,10 +31,11 @@ segments (defaults 15, 30, 2). Longer zero runs are treated as non-wear.}
 0.33).}
 
 \item{alpha}{Expected daily rest length, in seconds (default 28800, 8 hours);
-sets the threshold percentile (alpha / 24 h) and the minimum data required.}
+sets the rank-order smoothing window (Eq 4), the threshold percentile
+(alpha / 24 h), and the minimum data required.}
 
-\item{beta}{Filter and morphology scale, in seconds (default 3600, 1 hour);
-sets the rank-order filter window and the structuring-element size.}
+\item{beta}{Morphology scale, in seconds (default 3600, 1 hour); sets the
+structuring-element size that consolidates the thresholded series.}
 }
 \value{
 An object of class \code{actiRhythm_crespo}: a \code{rest_periods}
@@ -44,13 +45,13 @@ never errors; with no resolvable bout it returns an empty
 \code{rest_periods}.
 }
 \description{
-Detects all consolidated rest bouts across a recording with the Crespo
-algorithm (Crespo et al. 2012): a two-pass rank-order (median) filter and
-mathematical-morphology pipeline that turns activity counts into a binary
-rest/activity series and reads every rest bout from its transitions. Like
-\code{\link{rest.periods}} it returns any number of bouts, naps and
-fragmented rest included; it reaches that result by morphological filtering
-rather than by Roenneberg-style consolidation, so the two differ in method.
+Detects the main rest and activity periods across a recording with the Crespo
+algorithm (Crespo et al. 2012): a rank-order (median) filter at the \code{alpha}
+(~rest-length) scale, an \code{alpha}/24h percentile threshold, and a separate
+minutes-scale morphology pass that turn activity counts into a binary
+rest/activity series read bout by bout from its transitions. The wide smoothing
+window suppresses short within-period transitions, so it reports the main daily
+rest rather than every nap.
 }
 \examples{
 # Two nights of rest with a daytime nap between them

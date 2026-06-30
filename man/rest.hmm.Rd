@@ -9,6 +9,7 @@ rest.hmm(
   timestamps,
   states = 2L,
   transform = c("sqrt", "log", "none"),
+  decode = c("posterior", "viterbi"),
   max_iter = 200L,
   tol = 1e-06,
   n_starts = 5L,
@@ -21,10 +22,15 @@ rest.hmm(
 \item{timestamps}{POSIXct timestamps, one per value.}
 
 \item{states}{Number of hidden states (default 2 = rest/active; 3 adds a
-moderate state).}
+moderate state). Huang et al. (2018) fix three states; the BIC reported here
+can guide the choice.}
 
 \item{transform}{Variance-stabilizing transform of the counts: \code{"sqrt"}
-(default), \code{"log"}, or \code{"none"}.}
+(default), \code{"log"}, or \code{"none"}. Huang et al. fit on 5-minute
+averaged counts, so a coarse epoch is recommended.}
+
+\item{decode}{State decoding: \code{"posterior"} (default, the local decoding
+of Huang et al. 2018) or \code{"viterbi"} (the global most-likely path).}
 
 \item{max_iter, tol}{EM iteration cap and log-likelihood tolerance.}
 
@@ -35,8 +41,8 @@ moderate state).}
 \value{
 An object of class \code{actiRhythm_hmm}: the per-state emission means
 and SDs, the transition matrix, the decoded \code{state_path} and a
-\code{sleep_state} ("S"/"W") vector, a 24-hour state-occupancy profile, and
-the log-likelihood with AIC/BIC. Never errors.
+\code{sleep_state} ("S"/"W") vector, a 24-hour profile of the mean posterior
+rest probability, and the log-likelihood with AIC/BIC. Never errors.
 }
 \description{
 Fits an unsupervised Gaussian hidden Markov model to the activity counts,

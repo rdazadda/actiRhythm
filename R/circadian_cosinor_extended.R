@@ -55,7 +55,7 @@
   beta1 <- b[2]
   beta2 <- b[3]
   amplitude <- sqrt(beta1^2 + beta2^2)
-  phi <- atan2(beta2, beta1)              # acrophase angle (Cornelissen 2014)
+  phi <- atan2(beta2, beta1)              # peak angle for M + A*cos(wt - phi)
   acrophase <- (phi / omega) %% period    # clock hours
   list(
     mesor = as.numeric(mesor),
@@ -86,8 +86,9 @@
 #' @return A list with class \code{"actiRhythm_cosinor_ext"} containing:
 #'   \describe{
 #'     \item{minimum}{Lower asymptote of the fitted curve (rest-phase level).}
-#'     \item{amplitude}{Vertical span of the sigmoidal transition
-#'       (\code{amp}); peak level is \code{minimum + amplitude}.}
+#'     \item{amplitude}{Vertical span of the sigmoidal transition (\code{amp}); the
+#'       asymptotic ceiling is \code{minimum + amplitude}, with the fitted-curve
+#'       maximum slightly below it at a finite steepness.}
 #'     \item{alpha}{Width-asymmetry parameter in \eqn{[-1, 1]}.}
 #'     \item{beta}{Steepness parameter (\eqn{\ge 0}).}
 #'     \item{acrophase}{Time of peak activity in clock hours (\code{acrotime}).}
@@ -325,9 +326,9 @@ cosinor.antilogistic <- function(counts, timestamps, period = 24) {
 #' \eqn{df} the residual degrees of freedom. The averaged-profile cosinor design
 #' used by \code{cosinor.analysis()} has orthogonal cosine and sine columns, so
 #' \eqn{\Sigma} is (very nearly) diagonal with equal variances
-#' \eqn{\sigma^2}; in that case \code{se_amplitude} (delta method) equals
-#' \eqn{\sigma}, which is how \eqn{\Sigma} is reconstructed when it is not
-#' supplied explicitly. The point estimate is recovered from amplitude and
+#' \eqn{\sigma^2}; in that case \code{se_amplitude} equals the standard error of each
+#' coefficient \eqn{\sqrt{\mathrm{Var}(\beta)}}, which is how \eqn{\Sigma} is
+#' reconstructed when it is not supplied explicitly. The point estimate is recovered from amplitude and
 #' acrophase as \eqn{\beta_1 = A cos(\phi)}, \eqn{\beta_2 = A sin(\phi)} with
 #' \eqn{\phi = acrophase \cdot 2\pi / T}.
 #'

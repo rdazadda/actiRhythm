@@ -126,45 +126,12 @@ input is supplied.</p>
 </h2>
 <table class="table">
 <colgroup>
-<col width="11%">
-<col width="33%">
 <col width="12%">
+<col width="32%">
+<col width="11%">
 <col width="17%">
 <col width="7%">
-<col width="17%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">Metric</th>
-<th align="left">Definition</th>
-<th align="left">Formula / units</th>
-<th align="left">Range / interpretation</th>
-<th align="left">Reference</th>
-<th align="left">Output object</th>
-</tr></thead>
-<tbody><tr class="odd">
-<td align="left">n_epochs</td>
-<td align="left">Number of epochs analysed in the recording</td>
-<td align="left">count</td>
-<td align="left">non-negative integer</td>
-<td align="left"></td>
-<td align="left">summary<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>n</mi><mi>e</mi></msub><mi>p</mi><mi>o</mi><mi>c</mi><mi>h</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>e</mi><mi>p</mi><mi>o</mi><mi>c</mi><msub><mi>h</mi><mi>l</mi></msub><mi>e</mi><mi>n</mi><mi>g</mi><mi>t</mi><msub><mi>h</mi><mi>s</mi></msub><mo stretchy="false" form="prefix">|</mo><mi>E</mi><mi>p</mi><mi>o</mi><mi>c</mi><mi>h</mi><mi>l</mi><mi>e</mi><mi>n</mi><mi>g</mi><mi>t</mi><mi>h</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>d</mi><mi>i</mi><mi>n</mi><mi>g</mi><mo stretchy="false" form="prefix">|</mo><mi>s</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>d</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>t</mi><mi>y</mi><mi>p</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>l</mi><mi>l</mi><mi>y</mi><mn>15</mn><mo>−</mo><mn>60</mn><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>s</mi><mi>u</mi><mi>m</mi><mi>m</mi><mi>a</mi><mi>r</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">n_epochs       |
-|epoch_length_s |Epoch length of the recording              |seconds         |typically 15-60 s      |          |summary</annotation></semantics></math>epoch_length_s</td>
-</tr></tbody>
-</table>
-</div>
-<div class="section level2">
-<h2 id="nonparametric-metrics">Nonparametric metrics<a class="anchor" aria-label="anchor" href="#nonparametric-metrics"></a>
-</h2>
-<p>Shape-free descriptors of the rest-activity rhythm, computed with no
-assumed waveform <span class="citation">(<a href="#ref-vansomeren1999">Van Someren et al., 1999</a>; <a href="#ref-witting1990">Witting et al., 1990</a>)</span>.</p>
-<table class="table">
-<colgroup>
-<col width="3%">
-<col width="31%">
-<col width="28%">
-<col width="21%">
-<col width="6%">
-<col width="9%">
+<col width="18%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Metric</th>
@@ -176,34 +143,101 @@ assumed waveform <span class="citation">(<a href="#ref-vansomeren1999">Van Somer
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">L5</td>
+<td align="left"><code>n_epochs</code></td>
+<td align="left">Number of epochs analysed in the recording</td>
+<td align="left">count</td>
+<td align="left">non-negative integer</td>
+<td align="left"></td>
+<td align="left"><code>summary$n_epochs</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>epoch_length_s</code></td>
+<td align="left">Epoch length of the recording</td>
+<td align="left">seconds</td>
+<td align="left">typically 15-60 s</td>
+<td align="left"></td>
+<td align="left"><code>summary$epoch_length_s</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="nonparametric-metrics">Nonparametric metrics<a class="anchor" aria-label="anchor" href="#nonparametric-metrics"></a>
+</h2>
+<p>Shape-free descriptors of the rest-activity rhythm, computed with no
+assumed waveform <span class="citation">(<a href="#ref-vansomeren1999">Van Someren et al., 1999</a>; <a href="#ref-witting1990">Witting et al., 1990</a>)</span>.</p>
+<table class="table">
+<colgroup>
+<col width="2%">
+<col width="30%">
+<col width="29%">
+<col width="20%">
+<col width="6%">
+<col width="10%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Metric</th>
+<th align="left">Definition</th>
+<th align="left">Formula / units</th>
+<th align="left">Range / interpretation</th>
+<th align="left">Reference</th>
+<th align="left">Output object</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>L5</code></td>
 <td align="left">Mean activity over the least-active 5 hours of the
 average day</td>
 <td align="left">activity counts per min</td>
 <td align="left">non-negative; lower = deeper rest</td>
 <td align="left">vansomeren1999</td>
-<td align="left">circadian.rhythm()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mn>5</mn><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>M</mi><mn>10</mn><mo stretchy="false" form="prefix">|</mo><mi>M</mi><mi>e</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>o</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>m</mi><mi>o</mi><mi>s</mi><mi>t</mi><mo>−</mo><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mn>10</mn><mi>h</mi><mi>o</mi><mi>u</mi><mi>r</mi><mi>s</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>a</mi><mi>v</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>g</mi><mi>e</mi><mi>d</mi><mi>a</mi><mi>y</mi><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mi>s</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mi>o</mi><mi>n</mi><mo>−</mo><mi>n</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mo>;</mo><mi>h</mi><mi>i</mi><mi>g</mi><mi>h</mi><mi>e</mi><mi>r</mi><mo>=</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>n</mi><mi>g</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mi>p</mi><mi>h</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mi>v</mi><mi>a</mi><mi>n</mi><mi>s</mi><mi>o</mi><mi>m</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>n</mi><mn>1999</mn><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>i</mi><mi>r</mi><mi>c</mi><mi>a</mi><mi>d</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>.</mi><mi>r</mi><mi>h</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>m</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">L5  |
-|M10    |Mean activity over the most-active 10 hours of the average day           |activity counts per min                                          |non-negative; higher = stronger active phase     |vansomeren1999 |circadian.rhythm()</annotation></semantics></math>M10</td>
+<td align="left"><code>circadian.rhythm()$L5</code></td>
 </tr>
 <tr class="even">
-<td align="left">RA</td>
+<td align="left"><code>M10</code></td>
+<td align="left">Mean activity over the most-active 10 hours of the
+average day</td>
+<td align="left">activity counts per min</td>
+<td align="left">non-negative; higher = stronger active phase</td>
+<td align="left">vansomeren1999</td>
+<td align="left"><code>circadian.rhythm()$M10</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>RA</code></td>
 <td align="left">Relative amplitude of the rest-activity rhythm</td>
 <td align="left">(M10 - L5) / (M10 + L5); unitless</td>
 <td align="left">0 to 1; higher = stronger rhythm</td>
 <td align="left">vansomeren1999</td>
-<td align="left">circadian.rhythm()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>R</mi><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>I</mi><mi>S</mi><mo stretchy="false" form="prefix">|</mo><mi>I</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>d</mi><mi>a</mi><mi>i</mi><mi>l</mi><mi>y</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>b</mi><mi>i</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>:</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>e</mi><mi>n</mi><mi>g</mi><mi>t</mi><mi>h</mi><mi>o</mi><mi>f</mi><mi>c</mi><mi>o</mi><mi>u</mi><mi>p</mi><mi>l</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>m</mi><mi>t</mi><mi>o</mi><mi>t</mi><mi>h</mi><mi>e</mi><mn>24</mn><mi>h</mi><mi>d</mi><mi>a</mi><mi>y</mi><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mo>*</mo><mi>s</mi><mi>u</mi><mi>m</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">(</mo><mi>x</mi><mi>b</mi><mi>a</mi><msub><mi>r</mi><mi>h</mi></msub><mo>−</mo><mi>x</mi><mi>b</mi><mi>a</mi><mi>r</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mi>p</mi><mo>*</mo><mi>s</mi><mi>u</mi><mi>m</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mi>x</mi><mi>b</mi><mi>a</mi><mi>r</mi><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">)</mo><mo>;</mo><mi>u</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mi>t</mi><mi>o</mi><mn>1</mn><mo>;</mo><mi>n</mi><mi>e</mi><mi>a</mi><mi>r</mi><mn>1</mn><mo>=</mo><mi>h</mi><mi>i</mi><mi>g</mi><mi>h</mi><mi>l</mi><mi>y</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi><mo>,</mo><mo>&lt;</mo><mn>0.3</mn><mo>=</mo><mi>w</mi><mi>e</mi><mi>a</mi><mi>k</mi><mo stretchy="false" form="prefix">|</mo><mi>w</mi><mi>i</mi><mi>t</mi><mi>t</mi><mi>i</mi><mi>n</mi><mi>g</mi><mn>1990</mn><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>i</mi><mi>r</mi><mi>c</mi><mi>a</mi><mi>d</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>.</mi><mi>r</mi><mi>h</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>m</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">RA  |
-|IS     |Interdaily stability: strength of coupling of the rhythm to the 24 h day |n*sum((xbar_h - xbar)^2) / (p*sum((x_i - xbar)^2)); unitless     |0 to 1; near 1 = highly stable, &lt; 0.3 = weak     |witting1990    |circadian.rhythm()</annotation></semantics></math>IS</td>
+<td align="left"><code>circadian.rhythm()$RA</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>IS</code></td>
+<td align="left">Interdaily stability: strength of coupling of the
+rhythm to the 24 h day</td>
+<td align="left">n*sum((xbar_h - xbar)^2) / (p*sum((x_i - xbar)^2));
+unitless</td>
+<td align="left">0 to 1; near 1 = highly stable, &lt; 0.3 = weak</td>
+<td align="left">witting1990</td>
+<td align="left"><code>circadian.rhythm()$IS</code></td>
 </tr>
 <tr class="odd">
-<td align="left">IV</td>
+<td align="left"><code>IV</code></td>
 <td align="left">Intradaily variability: fragmentation of the
 rest-activity rhythm</td>
-<td align="left">n<em>sum((x_i - x_{i-1})^2) / ((n-1)</em>sum((x_i -
-xbar)^2)); unitless</td>
+<td align="left">n*sum((x_i - x_{i-1})^2) / ((n-1)*sum((x_i - xbar)^2));
+unitless</td>
 <td align="left">0 to ~2; ~0 = smooth sine, ~2 = noisy/fragmented</td>
 <td align="left">witting1990</td>
-<td align="left">circadian.rhythm()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mi>V</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>h</mi><mi>i</mi><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mi>u</mi><mi>t</mi><mi>o</mi><mi>c</mi><mi>o</mi><mi>r</mi><mi>r</mi><mi>e</mi><mi>l</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mo>−</mo><mi>b</mi><mi>a</mi><mi>s</mi><mi>e</mi><mi>d</mi><mi>p</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>t</mi><mi>a</mi><mi>b</mi><mi>i</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>m</mi><mi>a</mi><mi>t</mi><mi>t</mi><mi>h</mi><mi>e</mi><mn>24</mn><mi>h</mi><mi>l</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>h</mi><mi>i</mi><mi>g</mi><mi>h</mi><mi>e</mi><mi>r</mi><mo>=</mo><mi>m</mi><mi>o</mi><mi>r</mi><mi>e</mi><mi>p</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>t</mi><mi>a</mi><mi>b</mi><mi>l</mi><mi>e</mi><mi>d</mi><mi>a</mi><mi>y</mi><mo>−</mo><mi>t</mi><mi>o</mi><mo>−</mo><mi>d</mi><mi>a</mi><mi>y</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>i</mi><mi>r</mi><mi>c</mi><mi>a</mi><mi>d</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>.</mi><mi>r</mi><mi>h</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>m</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">IV  |
-|phi    |Autocorrelation-based predictability of the rhythm at the 24 h lag       |unitless                                                         |higher = more predictable day-to-day             |               |circadian.rhythm()</annotation></semantics></math>phi</td>
+<td align="left"><code>circadian.rhythm()$IV</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>phi</code></td>
+<td align="left">Autocorrelation-based predictability of the rhythm at
+the 24 h lag</td>
+<td align="left">unitless</td>
+<td align="left">higher = more predictable day-to-day</td>
+<td align="left"></td>
+<td align="left"><code>circadian.rhythm()$phi</code></td>
 </tr>
 </tbody>
 </table>
@@ -216,11 +250,117 @@ xbar)^2)); unitless</td>
 2014</a>; <a href="#ref-nelson1979">Nelson et al., 1979</a>)</span>.</p>
 <table class="table">
 <colgroup>
-<col width="8%">
+<col width="9%">
 <col width="31%">
 <col width="9%">
 <col width="25%">
 <col width="7%">
+<col width="17%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Metric</th>
+<th align="left">Definition</th>
+<th align="left">Formula / units</th>
+<th align="left">Range / interpretation</th>
+<th align="left">Reference</th>
+<th align="left">Output object</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>cosinor_mesor</code></td>
+<td align="left">MESOR: the rhythm-adjusted mean of the fitted 24 h
+cosine</td>
+<td align="left">activity counts</td>
+<td align="left">non-negative</td>
+<td align="left">cornelissen2014</td>
+<td align="left"><code>cosinor.analysis()$mesor</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>cosinor_amplitude</code></td>
+<td align="left">Amplitude: half the peak-to-trough extent of the fitted
+cosine</td>
+<td align="left">activity counts</td>
+<td align="left">non-negative; larger = stronger sinusoidal
+component</td>
+<td align="left">cornelissen2014</td>
+<td align="left"><code>cosinor.analysis()$amplitude</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>cosinor_acrophase</code></td>
+<td align="left">Acrophase: clock time of the cosine peak
+(circular)</td>
+<td align="left">clock hours (0-24)</td>
+<td align="left">0 to 24</td>
+<td align="left">cornelissen2014</td>
+<td align="left"><code>cosinor.analysis()$acrophase</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>cosinor_r_squared</code></td>
+<td align="left">Proportion of variance explained by the single
+cosine</td>
+<td align="left">unitless</td>
+<td align="left">0 to 1</td>
+<td align="left">cornelissen2014</td>
+<td align="left"><code>cosinor.analysis()$r_squared</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>rhythm_F</code></td>
+<td align="left">F statistic of the zero-amplitude (no-rhythm) test</td>
+<td align="left">unitless</td>
+<td align="left">non-negative; larger = stronger evidence of a
+rhythm</td>
+<td align="left">nelson1979</td>
+<td align="left"><code>rhythmicity.test()$F</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>rhythm_df2</code></td>
+<td align="left">Denominator degrees of freedom of the rhythmicity
+F-test</td>
+<td align="left">count</td>
+<td align="left">non-negative</td>
+<td align="left">nelson1979</td>
+<td align="left"><code>rhythmicity.test()$df2</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>rhythm_p_value</code></td>
+<td align="left">p-value of the zero-amplitude F-test</td>
+<td align="left">unitless</td>
+<td align="left">0 to 1; &lt; 0.05 = detectable rhythm</td>
+<td align="left">nelson1979</td>
+<td align="left"><code>rhythmicity.test()$p_value</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>percent_rhythm</code></td>
+<td align="left">Percent of variance the single cosine explains (100 *
+R-squared)</td>
+<td align="left">percent</td>
+<td align="left">0 to 100</td>
+<td align="left">cornelissen2014</td>
+<td align="left"><code>rhythmicity.test()$percent_rhythm</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>rhythmic</code></td>
+<td align="left">Whether a rhythm is detected at the 0.05 level</td>
+<td align="left">logical</td>
+<td align="left">TRUE / FALSE</td>
+<td align="left">nelson1979</td>
+<td align="left"><code>rhythmicity.test()$rhythmic</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="period-and-spectral">Period and spectral<a class="anchor" aria-label="anchor" href="#period-and-spectral"></a>
+</h2>
+<p>The endogenous period from the Lomb-Scargle and chi-square
+periodograms, with a bootstrap confidence interval <span class="citation">(<a href="#ref-lomb1976">Lomb, 1976</a>; <a href="#ref-sokolove1978">Sokolove &amp; Bushell, 1978</a>)</span>.</p>
+<table class="table">
+<colgroup>
+<col width="10%">
+<col width="34%">
+<col width="8%">
+<col width="22%">
+<col width="6%">
 <col width="16%">
 </colgroup>
 <thead><tr class="header">
@@ -233,126 +373,82 @@ xbar)^2)); unitless</td>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">cosinor_mesor</td>
-<td align="left">MESOR: the rhythm-adjusted mean of the fitted 24 h
-cosine</td>
-<td align="left">activity counts</td>
-<td align="left">non-negative</td>
-<td align="left">cornelissen2014</td>
-<td align="left">cosinor.analysis()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>e</mi><mi>s</mi><mi>o</mi><mi>r</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>o</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>o</mi><msub><mi>r</mi><mi>a</mi></msub><mi>m</mi><mi>p</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>u</mi><mi>d</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>u</mi><mi>d</mi><mi>e</mi><mo>:</mo><mi>h</mi><mi>a</mi><mi>l</mi><mi>f</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>p</mi><mi>e</mi><mi>a</mi><mi>k</mi><mo>−</mo><mi>t</mi><mi>o</mi><mo>−</mo><mi>t</mi><mi>r</mi><mi>o</mi><mi>u</mi><mi>g</mi><mi>h</mi><mi>e</mi><mi>x</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>f</mi><mi>i</mi><mi>t</mi><mi>t</mi><mi>e</mi><mi>d</mi><mi>c</mi><mi>o</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mi>o</mi><mi>n</mi><mo>−</mo><mi>n</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mo>;</mo><mi>l</mi><mi>a</mi><mi>r</mi><mi>g</mi><mi>e</mi><mi>r</mi><mo>=</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>n</mi><mi>g</mi><mi>e</mi><mi>r</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>u</mi><mi>s</mi><mi>o</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>l</mi><mi>c</mi><mi>o</mi><mi>m</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>o</mi><mi>r</mi><mi>n</mi><mi>e</mi><mi>l</mi><mi>i</mi><mi>s</mi><mi>s</mi><mi>e</mi><mi>n</mi><mn>2014</mn><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>o</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>o</mi><mi>r</mi><mi>.</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi>y</mi><mi>s</mi><mi>i</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">mesor          |
-|cosinor_amplitude |Amplitude: half the peak-to-trough extent of the fitted cosine   |activity counts    |non-negative; larger = stronger sinusoidal component |cornelissen2014 |cosinor.analysis()</annotation></semantics></math>amplitude</td>
-</tr>
-<tr class="even">
-<td align="left">cosinor_acrophase</td>
-<td align="left">Acrophase: clock time of the cosine peak
-(circular)</td>
-<td align="left">clock hours (0-24)</td>
-<td align="left">0 to 24</td>
-<td align="left">cornelissen2014</td>
-<td align="left">cosinor.analysis()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>c</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi>h</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>o</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>o</mi><msub><mi>r</mi><msub><mi>r</mi><mi>s</mi></msub></msub><mi>q</mi><mi>u</mi><mi>a</mi><mi>r</mi><mi>e</mi><mi>d</mi><mo stretchy="false" form="prefix">|</mo><mi>P</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi>o</mi><mi>r</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>o</mi><mi>f</mi><mi>v</mi><mi>a</mi><mi>r</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi><mi>e</mi><mi>x</mi><mi>p</mi><mi>l</mi><mi>a</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>d</mi><mi>b</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>l</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mi>t</mi><mi>o</mi><mn>1</mn><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>o</mi><mi>r</mi><mi>n</mi><mi>e</mi><mi>l</mi><mi>i</mi><mi>s</mi><mi>s</mi><mi>e</mi><mi>n</mi><mn>2014</mn><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>o</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>o</mi><mi>r</mi><mi>.</mi><mi>a</mi><mi>n</mi><mi>a</mi><mi>l</mi><mi>y</mi><mi>s</mi><mi>i</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">acrophase      |
-|cosinor_r_squared |Proportion of variance explained by the single cosine            |unitless           |0 to 1                                               |cornelissen2014 |cosinor.analysis()</annotation></semantics></math>r_squared</td>
-</tr>
-<tr class="odd">
-<td align="left">rhythm_F</td>
-<td align="left">F statistic of the zero-amplitude (no-rhythm) test</td>
-<td align="left">unitless</td>
-<td align="left">non-negative; larger = stronger evidence of a
-rhythm</td>
-<td align="left">nelson1979</td>
-<td align="left">rhythmicity.test()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>r</mi><mi>h</mi><mi>y</mi><mi>t</mi><mi>h</mi><msub><mi>m</mi><mi>d</mi></msub><mi>f</mi><mn>2</mn><mo stretchy="false" form="prefix">|</mo><mi>D</mi><mi>e</mi><mi>n</mi><mi>o</mi><mi>m</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mi>d</mi><mi>e</mi><mi>g</mi><mi>r</mi><mi>e</mi><mi>e</mi><mi>s</mi><mi>o</mi><mi>f</mi><mi>f</mi><mi>r</mi><mi>e</mi><mi>e</mi><mi>d</mi><mi>o</mi><mi>m</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>r</mi><mi>h</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>m</mi><mi>i</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>F</mi><mo>−</mo><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mi>o</mi><mi>n</mi><mo>−</mo><mi>n</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mi>e</mi><mi>l</mi><mi>s</mi><mi>o</mi><mi>n</mi><mn>1979</mn><mo stretchy="false" form="prefix">|</mo><mi>r</mi><mi>h</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>m</mi><mi>i</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>.</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">F              |
-|rhythm_df2        |Denominator degrees of freedom of the rhythmicity F-test         |count              |non-negative                                         |nelson1979      |rhythmicity.test()</annotation></semantics></math>df2</td>
-</tr>
-<tr class="even">
-<td align="left">rhythm_p_value</td>
-<td align="left">p-value of the zero-amplitude F-test</td>
-<td align="left">unitless</td>
-<td align="left">0 to 1; &lt; 0.05 = detectable rhythm</td>
-<td align="left">nelson1979</td>
-<td align="left">rhythmicity.test()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>v</mi></msub><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>c</mi><mi>e</mi><mi>n</mi><msub><mi>t</mi><mi>r</mi></msub><mi>h</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>m</mi><mo stretchy="false" form="prefix">|</mo><mi>P</mi><mi>e</mi><mi>r</mi><mi>c</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>o</mi><mi>f</mi><mi>v</mi><mi>a</mi><mi>r</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>c</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>l</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>s</mi><mi>i</mi><mi>n</mi><mi>e</mi><mi>e</mi><mi>x</mi><mi>p</mi><mi>l</mi><mi>a</mi><mi>i</mi><mi>n</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mn>100</mn><mo>*</mo><mi>R</mi><mo>−</mo><mi>s</mi><mi>q</mi><mi>u</mi><mi>a</mi><mi>r</mi><mi>e</mi><mi>d</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>c</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mi>t</mi><mi>o</mi><mn>100</mn><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mi>e</mi><mi>l</mi><mi>s</mi><mi>o</mi><mi>n</mi><mn>1979</mn><mo stretchy="false" form="prefix">|</mo><mi>r</mi><mi>h</mi><mi>y</mi><mi>t</mi><mi>h</mi><mi>m</mi><mi>i</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>.</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">p_value        |
-|percent_rhythm    |Percent of variance the single cosine explains (100 * R-squared) |percent            |0 to 100                                             |nelson1979      |rhythmicity.test()</annotation></semantics></math>percent_rhythm</td>
-</tr>
-<tr class="odd">
-<td align="left">rhythmic</td>
-<td align="left">Whether a rhythm is detected at the 0.05 level</td>
-<td align="left">logical</td>
-<td align="left">TRUE / FALSE</td>
-<td align="left">nelson1979</td>
-<td align="left">rhythmicity.test()$rhythmic</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section level2">
-<h2 id="period-and-spectral">Period and spectral<a class="anchor" aria-label="anchor" href="#period-and-spectral"></a>
-</h2>
-<p>The endogenous period from the Lomb-Scargle and chi-square
-periodograms, with a bootstrap confidence interval <span class="citation">(<a href="#ref-lomb1976">Lomb, 1976</a>; <a href="#ref-sokolove1978">Sokolove &amp; Bushell, 1978</a>)</span>.</p>
-<table class="table">
-<colgroup>
-<col width="9%">
-<col width="35%">
-<col width="8%">
-<col width="23%">
-<col width="6%">
-<col width="15%">
-</colgroup>
-<thead><tr class="header">
-<th align="left">Metric</th>
-<th align="left">Definition</th>
-<th align="left">Formula / units</th>
-<th align="left">Range / interpretation</th>
-<th align="left">Reference</th>
-<th align="left">Output object</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left">period_tau</td>
+<td align="left"><code>period_tau</code></td>
 <td align="left">Dominant free-running period from the Lomb-Scargle
 periodogram</td>
 <td align="left">hours</td>
 <td align="left">within the search band (default 18-30 h)</td>
 <td align="left">lomb1976</td>
-<td align="left">circadian.period()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mi>a</mi><mi>u</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><msub><mi>d</mi><mi>p</mi></msub><mi>e</mi><mi>a</mi><msub><mi>k</mi><mi>p</mi></msub><mi>o</mi><mi>w</mi><mi>e</mi><mi>r</mi><mo stretchy="false" form="prefix">|</mo><mi>L</mi><mi>o</mi><mi>m</mi><mi>b</mi><mo>−</mo><mi>S</mi><mi>c</mi><mi>a</mi><mi>r</mi><mi>g</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>p</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>l</mi><mi>p</mi><mi>o</mi><mi>w</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>d</mi><mi>o</mi><mi>m</mi><mi>i</mi><mi>n</mi><mi>a</mi><mi>n</mi><mi>t</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mi>o</mi><mi>n</mi><mo>−</mo><mi>n</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mo>;</mo><mi>h</mi><mi>i</mi><mi>g</mi><mi>h</mi><mi>e</mi><mi>r</mi><mo>=</mo><mi>s</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>n</mi><mi>g</mi><mi>e</mi><mi>r</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo stretchy="false" form="prefix">|</mo><mi>l</mi><mi>o</mi><mi>m</mi><mi>b</mi><mn>1976</mn><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>i</mi><mi>r</mi><mi>c</mi><mi>a</mi><mi>d</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>.</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">tau        |
-|period_peak_power |Lomb-Scargle spectral power at the dominant period                 |unitless        |non-negative; higher = stronger periodicity |lomb1976     |circadian.period()</annotation></semantics></math>peak_power</td>
+<td align="left"><code>circadian.period()$tau</code></td>
 </tr>
 <tr class="even">
-<td align="left">period_p_value</td>
+<td align="left"><code>period_peak_power</code></td>
+<td align="left">Lomb-Scargle spectral power at the dominant period</td>
+<td align="left">unitless</td>
+<td align="left">0 to 1; higher = stronger periodicity</td>
+<td align="left">lomb1976</td>
+<td align="left"><code>circadian.period()$peak_power</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>period_p_value</code></td>
 <td align="left">False-alarm probability of the periodogram peak
 (Baluev)</td>
 <td align="left">unitless</td>
 <td align="left">0 to 1; &lt; 0.05 = significant period</td>
 <td align="left">baluev2008</td>
-<td align="left">circadian.period()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>v</mi></msub><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><msub><mi>d</mi><mi>c</mi></msub><msub><mi>i</mi><mi>l</mi></msub><mi>o</mi><mi>w</mi><mi>e</mi><mi>r</mi><mo stretchy="false" form="prefix">|</mo><mi>L</mi><mi>o</mi><mi>w</mi><mi>e</mi><mi>r</mi><mi>b</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>d</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>b</mi><mi>o</mi><mi>o</mi><mi>t</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>f</mi><mi>i</mi><mi>d</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>e</mi><mi>i</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>v</mi><mi>a</mi><mi>l</mi><mo stretchy="false" form="prefix">|</mo><mi>h</mi><mi>o</mi><mi>u</mi><mi>r</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mo>&lt;</mo><mo>=</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><msub><mi>d</mi><mi>t</mi></msub><mi>a</mi><mi>u</mi><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>o</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>s</mi><mn>1992</mn><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mi>.</mi><mi>c</mi><mi>i</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">p_value    |
-|period_ci_lower   |Lower bound of the bootstrap period confidence interval            |hours           |&lt;= period_tau                               |politis1992  |period.ci()</annotation></semantics></math>ci_lower</td>
+<td align="left"><code>circadian.period()$p_value</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>period_ci_lower</code></td>
+<td align="left">Lower bound of the bootstrap period confidence
+interval</td>
+<td align="left">hours</td>
+<td align="left">typically &lt;= period_tau</td>
+<td align="left">politis1992</td>
+<td align="left"><code>period.ci()$ci_lower</code></td>
 </tr>
 <tr class="odd">
-<td align="left">period_ci_upper</td>
+<td align="left"><code>period_ci_upper</code></td>
 <td align="left">Upper bound of the bootstrap period confidence
 interval</td>
 <td align="left">hours</td>
-<td align="left">&gt;= period_tau</td>
+<td align="left">typically &gt;= period_tau</td>
 <td align="left">politis1992</td>
-<td align="left">period.ci()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><msub><mi>i</mi><mi>u</mi></msub><mi>p</mi><mi>p</mi><mi>e</mi><mi>r</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><msub><mi>d</mi><mi>c</mi></msub><msub><mi>i</mi><mi>s</mi></msub><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mi>B</mi><mi>o</mi><mi>o</mi><mi>t</mi><mi>s</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>p</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>n</mi><mi>d</mi><mi>a</mi><mi>r</mi><mi>d</mi><mi>e</mi><mi>r</mi><mi>r</mi><mi>o</mi><mi>r</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>t</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mi>h</mi><mi>o</mi><mi>u</mi><mi>r</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mi>o</mi><mi>n</mi><mo>−</mo><mi>n</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>o</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>s</mi><mn>1992</mn><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mi>.</mi><mi>c</mi><mi>i</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">ci_upper          |
-|period_ci_se      |Bootstrap standard error of the period estimate                    |hours           |non-negative                                |politis1992  |period.ci()</annotation></semantics></math>se</td>
+<td align="left"><code>period.ci()$ci_upper</code></td>
 </tr>
 <tr class="even">
-<td align="left">chisq_period</td>
+<td align="left"><code>period_ci_se</code></td>
+<td align="left">Bootstrap standard error of the period estimate</td>
+<td align="left">hours</td>
+<td align="left">non-negative</td>
+<td align="left">politis1992</td>
+<td align="left"><code>period.ci()$se</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>chisq_period</code></td>
 <td align="left">Dominant period from the chi-square (Sokolove-Bushell)
 periodogram</td>
 <td align="left">hours</td>
 <td align="left">within the search band</td>
 <td align="left">sokolove1978</td>
-<td align="left">chi.sq.periodogram()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>h</mi><mi>i</mi><mi>s</mi><msub><mi>q</mi><mi>Q</mi></msub><msub><mi>p</mi><mi>p</mi></msub><mi>e</mi><mi>a</mi><mi>k</mi><mo stretchy="false" form="prefix">|</mo><mi>P</mi><mi>e</mi><mi>a</mi><mi>k</mi><mi>Q</mi><mi>p</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>t</mi><mi>i</mi><mi>c</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>c</mi><mi>h</mi><mi>i</mi><mo>−</mo><mi>s</mi><mi>q</mi><mi>u</mi><mi>a</mi><mi>r</mi><mi>e</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mi>o</mi><mi>g</mi><mi>r</mi><mi>a</mi><mi>m</mi><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mi>o</mi><mi>n</mi><mo>−</mo><mi>n</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mo>;</mo><mi>a</mi><mi>b</mi><mi>o</mi><mi>v</mi><mi>e</mi><mi>t</mi><mi>h</mi><mi>r</mi><mi>e</mi><mi>s</mi><mi>h</mi><mi>o</mi><mi>l</mi><mi>d</mi><mo>=</mo><mi>s</mi><mi>i</mi><mi>g</mi><mi>n</mi><mi>i</mi><mi>f</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>n</mi><mi>t</mi><mo stretchy="false" form="prefix">|</mo><mi>s</mi><mi>o</mi><mi>k</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>v</mi><mi>e</mi><mn>1978</mn><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>h</mi><mi>i</mi><mi>.</mi><mi>s</mi><mi>q</mi><mi>.</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mi>o</mi><mi>g</mi><mi>r</mi><mi>a</mi><mi>m</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">period   |
-|chisq_Qp_peak     |Peak Qp statistic of the chi-square periodogram                    |unitless        |non-negative; above threshold = significant |sokolove1978 |chi.sq.periodogram()</annotation></semantics></math>Qp_peak</td>
+<td align="left"><code>chi.sq.periodogram()$period</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>chisq_Qp_peak</code></td>
+<td align="left">Peak Qp statistic of the chi-square periodogram</td>
+<td align="left">unitless</td>
+<td align="left">non-negative; above threshold = significant</td>
+<td align="left">sokolove1978</td>
+<td align="left"><code>chi.sq.periodogram()$Qp_peak</code></td>
 </tr>
 <tr class="odd">
-<td align="left">chisq_p_value</td>
+<td align="left"><code>chisq_p_value</code></td>
 <td align="left">Significance of the chi-square periodogram peak
 (Sidak-corrected)</td>
 <td align="left">unitless</td>
 <td align="left">0 to 1</td>
 <td align="left">sokolove1978</td>
-<td align="left">chi.sq.periodogram()$p_value</td>
+<td align="left"><code>chi.sq.periodogram()$p_value</code></td>
 </tr>
 </tbody>
 </table>
@@ -361,14 +457,14 @@ periodogram</td>
 <h2 id="fractal-and-nonlinear">Fractal and nonlinear<a class="anchor" aria-label="anchor" href="#fractal-and-nonlinear"></a>
 </h2>
 <p>Long-range correlation and complexity of the activity series <span class="citation">(<a href="#ref-costa2002">Costa et al., 2002</a>; <a href="#ref-kantelhardt2002">Kantelhardt et al., 2002</a>; <a href="#ref-peng1994">Peng et al., 1994</a>)</span>.</p>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="6%">
-<col width="34%">
-<col width="8%">
-<col width="28%">
-<col width="8%">
-<col width="14%">
+<col width="37%">
+<col width="7%">
+<col width="26%">
+<col width="7%">
+<col width="13%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Metric</th>
@@ -380,41 +476,66 @@ periodogram</td>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">dfa_alpha</td>
+<td align="left"><code>dfa_alpha</code></td>
 <td align="left">Overall detrended-fluctuation scaling exponent</td>
 <td align="left">unitless</td>
 <td align="left">~0.5 = noise, ~1 = 1/f, &gt; 1 = random-walk-like</td>
 <td align="left">peng1994</td>
-<td align="left">fractal.dfa()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>l</mi><mi>p</mi><mi>h</mi><mi>a</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>d</mi><mi>f</mi><msub><mi>a</mi><mi>a</mi></msub><mi>l</mi><mi>p</mi><mi>h</mi><mi>a</mi><mn>1</mn><mo stretchy="false" form="prefix">|</mo><mi>S</mi><mi>h</mi><mi>o</mi><mi>r</mi><mi>t</mi><mo>−</mo><mi>t</mi><mi>i</mi><mi>m</mi><mi>e</mi><mo>−</mo><mi>s</mi><mi>c</mi><mi>a</mi><mi>l</mi><mi>e</mi><mi>D</mi><mi>F</mi><mi>A</mi><mi>e</mi><mi>x</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo stretchy="false" form="prefix">(</mo><mi>b</mi><mi>e</mi><mi>l</mi><mi>o</mi><mi>w</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>c</mi><mi>r</mi><mi>o</mi><mi>s</mi><mi>s</mi><mi>o</mi><mi>v</mi><mi>e</mi><mi>r</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>i</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>p</mi><mi>r</mi><mi>e</mi><mi>t</mi><mi>e</mi><mi>d</mi><mi>a</mi><mi>s</mi><mi>f</mi><mi>o</mi><mi>r</mi><mi>d</mi><mi>f</mi><msub><mi>a</mi><mi>a</mi></msub><mi>l</mi><mi>p</mi><mi>h</mi><mi>a</mi><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>e</mi><mi>n</mi><mi>g</mi><mn>1994</mn><mo stretchy="false" form="prefix">|</mo><mi>f</mi><mi>r</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>a</mi><mi>l</mi><mi>.</mi><mi>d</mi><mi>f</mi><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">alpha        |
-|dfa_alpha1  |Short-time-scale DFA exponent (below the crossover)               |unitless        |interpreted as for dfa_alpha                           |peng1994        |fractal.dfa()</annotation></semantics></math>alpha1</td>
+<td align="left"><code>fractal.dfa()$alpha</code></td>
 </tr>
 <tr class="even">
-<td align="left">dfa_alpha2</td>
-<td align="left">Long-time-scale DFA exponent (above the crossover)</td>
+<td align="left"><code>dfa_alpha1</code></td>
+<td align="left">Short-time-scale DFA exponent (scales below the fixed
+breakpoint, default 90)</td>
 <td align="left">unitless</td>
 <td align="left">interpreted as for dfa_alpha</td>
 <td align="left">peng1994</td>
-<td align="left">fractal.dfa()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>l</mi><mi>p</mi><mi>h</mi><mi>a</mi><mn>2</mn><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>m</mi><mi>f</mi><mi>d</mi><mi>f</mi><msub><mi>a</mi><mi>h</mi></msub><mn>2</mn><mo stretchy="false" form="prefix">|</mo><mi>G</mi><mi>e</mi><mi>n</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>l</mi><mi>i</mi><mi>z</mi><mi>e</mi><mi>d</mi><mi>H</mi><mi>u</mi><mi>r</mi><mi>s</mi><mi>t</mi><mi>e</mi><mi>x</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>a</mi><mi>t</mi><mi>q</mi><mo>=</mo><mn>2</mn><mo stretchy="false" form="prefix">(</mo><mi>e</mi><mi>q</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>D</mi><mi>F</mi><mi>A</mi><mi>e</mi><mi>x</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>t</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mspace width="0.222em"></mspace><mn>0.5</mn><mi>t</mi><mi>o</mi><mn>1.5</mn><mo stretchy="false" form="prefix">|</mo><mi>k</mi><mi>a</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>l</mi><mi>h</mi><mi>a</mi><mi>r</mi><mi>d</mi><mi>t</mi><mn>2002</mn><mo stretchy="false" form="prefix">|</mo><mi>m</mi><mi>f</mi><mi>d</mi><mi>f</mi><mi>a</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">alpha2       |
-|mfdfa_h2    |Generalized Hurst exponent at q = 2 (equals the DFA exponent)     |unitless        |~0.5 to 1.5                                            |kantelhardt2002 |mfdfa()</annotation></semantics></math>alpha_dfa</td>
+<td align="left"><code>fractal.dfa()$alpha1</code></td>
 </tr>
 <tr class="odd">
-<td align="left">mfdfa_width</td>
+<td align="left"><code>dfa_alpha2</code></td>
+<td align="left">Long-time-scale DFA exponent (scales above the fixed
+breakpoint, default 90)</td>
+<td align="left">unitless</td>
+<td align="left">interpreted as for dfa_alpha</td>
+<td align="left">peng1994</td>
+<td align="left"><code>fractal.dfa()$alpha2</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>mfdfa_h2</code></td>
+<td align="left">Generalized Hurst exponent at q = 2 (equals the DFA
+exponent)</td>
+<td align="left">unitless</td>
+<td align="left">~0.5 to 1.5</td>
+<td align="left">kantelhardt2002</td>
+<td align="left"><code>mfdfa()$alpha_dfa</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>mfdfa_width</code></td>
 <td align="left">Width of the multifractal singularity spectrum</td>
 <td align="left">unitless</td>
 <td align="left">non-negative; wider = more multifractal</td>
 <td align="left">kantelhardt2002</td>
-<td align="left">mfdfa()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mi>i</mi><mi>d</mi><mi>t</mi><mi>h</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>m</mi><mi>s</mi><msub><mi>e</mi><mi>a</mi></msub><mi>r</mi><mi>e</mi><mi>a</mi><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mi>r</mi><mi>e</mi><mi>a</mi><mi>u</mi><mi>n</mi><mi>d</mi><mi>e</mi><mi>r</mi><mi>t</mi><mi>h</mi><mi>e</mi><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>c</mi><mi>a</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mo>−</mo><mi>e</mi><mi>n</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi>y</mi><mi>c</mi><mi>u</mi><mi>r</mi><mi>v</mi><mi>e</mi><mo stretchy="false" form="prefix">(</mo><mi>c</mi><mi>o</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mi>x</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>i</mi><mi>n</mi><mi>d</mi><mi>e</mi><mi>x</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mi>o</mi><mi>n</mi><mo>−</mo><mi>n</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mo>;</mo><mi>h</mi><mi>i</mi><mi>g</mi><mi>h</mi><mi>e</mi><mi>r</mi><mo>=</mo><mi>m</mi><mi>o</mi><mi>r</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mi>x</mi><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>o</mi><mi>s</mi><mi>t</mi><mi>a</mi><mn>2002</mn><mo stretchy="false" form="prefix">|</mo><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>c</mi><mi>a</mi><mi>l</mi><mi>e</mi><mi>.</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi>y</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">width              |
-|mse_area    |Area under the multiscale sample-entropy curve (complexity index) |unitless        |non-negative; higher = more complex                    |costa2002       |multiscale.entropy()</annotation></semantics></math>area</td>
+<td align="left"><code>mfdfa()$width</code></td>
 </tr>
 <tr class="even">
-<td align="left">mse_slope</td>
-<td align="left">Slope of sample entropy across coarse-graining
-scales</td>
+<td align="left"><code>mse_area</code></td>
+<td align="left">Sum of sample entropy across scales (complexity
+index)</td>
+<td align="left">unitless</td>
+<td align="left">non-negative; higher = more complex</td>
+<td align="left">costa2002</td>
+<td align="left"><code>multiscale.entropy()$area</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>mse_slope</code></td>
+<td align="left">Least-squares slope of sample entropy across scales
+(package trend summary)</td>
 <td align="left">unitless</td>
 <td align="left">sign indicates rising or falling complexity with
 scale</td>
-<td align="left">costa2002</td>
-<td align="left">multiscale.entropy()$slope</td>
+<td align="left"></td>
+<td align="left"><code>multiscale.entropy()$slope</code></td>
 </tr>
 </tbody>
 </table>
@@ -426,12 +547,12 @@ scale</td>
 single amplitude cannot <span class="citation">(<a href="#ref-lim2011">Lim et al., 2011</a>)</span>.</p>
 <table class="table">
 <colgroup>
-<col width="5%">
-<col width="35%">
-<col width="12%">
-<col width="18%">
+<col width="3%">
+<col width="34%">
 <col width="8%">
-<col width="19%">
+<col width="32%">
+<col width="7%">
+<col width="13%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Metric</th>
@@ -443,22 +564,42 @@ single amplitude cannot <span class="citation">(<a href="#ref-lim2011">Lim et al
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">kRA</td>
-<td align="left">Rest-to-active state transition rate</td>
+<td align="left"><code>kRA</code></td>
+<td align="left">Rest-to-active transition rate over the LOWESS
+plateau</td>
 <td align="left">per epoch</td>
-<td align="left">non-negative</td>
+<td align="left">0 to 1; typically &lt; 0.5; higher = more fragmented
+rest</td>
 <td align="left">lim2011</td>
-<td align="left">state.transitions()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mi>R</mi><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>k</mi><mi>A</mi><mi>R</mi><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mo>−</mo><mi>t</mi><mi>o</mi><mo>−</mo><mi>r</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>s</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>e</mi><mi>r</mi><mi>e</mi><mi>p</mi><mi>o</mi><mi>c</mi><mi>h</mi><mo stretchy="false" form="prefix">|</mo><mi>n</mi><mi>o</mi><mi>n</mi><mo>−</mo><mi>n</mi><mi>e</mi><mi>g</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mo stretchy="false" form="prefix">|</mo><mi>l</mi><mi>i</mi><mi>m</mi><mn>2011</mn><mo stretchy="false" form="prefix">|</mo><mi>s</mi><mi>t</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>.</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>s</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">kRA |
-|kAR    |Active-to-rest state transition rate        |per epoch       |non-negative           |lim2011   |state.transitions()</annotation></semantics></math>kAR</td>
+<td align="left"><code>state.transitions()$kRA</code></td>
 </tr>
 <tr class="even">
-<td align="left">pRA</td>
-<td align="left">Rest-to-active state transition probability</td>
+<td align="left"><code>kAR</code></td>
+<td align="left">Active-to-rest transition rate over the LOWESS
+plateau</td>
+<td align="left">per epoch</td>
+<td align="left">0 to 1; typically &lt; 0.5; higher = more fragmented
+activity</td>
+<td align="left">lim2011</td>
+<td align="left"><code>state.transitions()$kAR</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>pRA</code></td>
+<td align="left">Overall rest-to-active rate (reciprocal mean rest-bout
+length)</td>
 <td align="left">unitless</td>
 <td align="left">0 to 1</td>
-<td align="left">lim2011</td>
-<td align="left">state.transitions()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mi>R</mi><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>p</mi><mi>A</mi><mi>R</mi><mo stretchy="false" form="prefix">|</mo><mi>A</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>e</mi><mo>−</mo><mi>t</mi><mi>o</mi><mo>−</mo><mi>r</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>s</mi><mi>t</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>s</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>p</mi><mi>r</mi><mi>o</mi><mi>b</mi><mi>a</mi><mi>b</mi><mi>i</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo stretchy="false" form="prefix">|</mo><mi>u</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>l</mi><mi>e</mi><mi>s</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mi>t</mi><mi>o</mi><mn>1</mn><mo stretchy="false" form="prefix">|</mo><mi>l</mi><mi>i</mi><mi>m</mi><mn>2011</mn><mo stretchy="false" form="prefix">|</mo><mi>s</mi><mi>t</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>.</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>s</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">pRA |
-|pAR    |Active-to-rest state transition probability |unitless        |0 to 1                 |lim2011   |state.transitions()</annotation></semantics></math>pAR</td>
+<td align="left">danilevicz2024</td>
+<td align="left"><code>state.transitions()$pRA</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>pAR</code></td>
+<td align="left">Overall active-to-rest rate (reciprocal mean
+active-bout length)</td>
+<td align="left">unitless</td>
+<td align="left">0 to 1</td>
+<td align="left">danilevicz2024</td>
+<td align="left"><code>state.transitions()$pAR</code></td>
 </tr>
 </tbody>
 </table>
@@ -471,7 +612,7 @@ Regularity Index, social jet lag, and LIDS <span class="citation">(<a href="#ref
 <table class="table">
 <colgroup>
 <col width="6%">
-<col width="30%">
+<col width="29%">
 <col width="27%">
 <col width="20%">
 <col width="4%">
@@ -487,7 +628,7 @@ Regularity Index, social jet lag, and LIDS <span class="citation">(<a href="#ref
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">SRI</td>
+<td align="left"><code>SRI</code></td>
 <td align="left">Sleep Regularity Index: how consistently the sleep/wake
 state repeats 24 h apart (requires sleep_state)</td>
 <td align="left">200*P - 100, where P is the fraction of epoch pairs 24
@@ -495,35 +636,51 @@ h apart in the same state; index points</td>
 <td align="left">-100 to 100; 100 = perfectly regular, 0 = random,
 higher = more regular</td>
 <td align="left">phillips2017</td>
-<td align="left">sleep.regularity.index()</td>
+<td align="left"><code><a href="../reference/sleep.regularity.index.html">sleep.regularity.index()</a></code></td>
 </tr>
 <tr class="even">
-<td align="left">social_jet_lag_hours</td>
+<td align="left"><code>social_jet_lag_hours</code></td>
 <td align="left">Social jet lag: mid-sleep difference between free and
 work days (requires sleep_periods)</td>
 <td align="left">hours</td>
 <td align="left">typically 0 to 3; larger = greater misalignment</td>
-<td align="left">wittmann2006</td>
-<td align="left">social.jet.lag()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>a</mi><msub><mi>l</mi><mi>j</mi></msub><mi>e</mi><msub><mi>t</mi><mi>l</mi></msub><mi>a</mi><msub><mi>g</mi><mi>h</mi></msub><mi>o</mi><mi>u</mi><mi>r</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>M</mi><mi>S</mi><mi>W</mi><mo stretchy="false" form="prefix">|</mo><mi>M</mi><mi>i</mi><mi>d</mi><mo>−</mo><mi>s</mi><mi>l</mi><mi>e</mi><mi>e</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>w</mi><mi>o</mi><mi>r</mi><mi>k</mi><mi>d</mi><mi>a</mi><mi>y</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>c</mi><mi>l</mi><mi>o</mi><mi>c</mi><mi>k</mi><mi>h</mi><mi>o</mi><mi>u</mi><mi>r</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mn>0</mn><mo>−</mo><mn>24</mn><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mn>0</mn><mi>t</mi><mi>o</mi><mn>24</mn><mo stretchy="false" form="prefix">|</mo><mi>w</mi><mi>i</mi><mi>t</mi><mi>t</mi><mi>m</mi><mi>a</mi><mi>n</mi><mi>n</mi><mn>2006</mn><mo stretchy="false" form="prefix">|</mo><mi>s</mi><mi>o</mi><mi>c</mi><mi>i</mi><mi>a</mi><mi>l</mi><mi>.</mi><mi>j</mi><mi>e</mi><mi>t</mi><mi>.</mi><mi>l</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">social_jet_lag_hours |
-|MSW                  |Mid-sleep on work days                                                                                  |clock hours (0-24)                                                                             |0 to 24                                                                 |wittmann2006  |social.jet.lag()</annotation></semantics></math>MSW</td>
+<td align="left">roenneberg2012</td>
+<td align="left"><code>social.jet.lag()$social_jet_lag_hours</code></td>
 </tr>
 <tr class="odd">
-<td align="left">MSF</td>
+<td align="left"><code>MSW</code></td>
+<td align="left">Mid-sleep on work days</td>
+<td align="left">clock hours (0-24)</td>
+<td align="left">0 to 24</td>
+<td align="left">wittmann2006</td>
+<td align="left"><code>social.jet.lag()$MSW</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>MSF</code></td>
 <td align="left">Mid-sleep on free days</td>
 <td align="left">clock hours (0-24)</td>
 <td align="left">0 to 24</td>
 <td align="left">wittmann2006</td>
-<td align="left">social.jet.lag()<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>S</mi><mi>F</mi><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi>l</mi><mi>i</mi><mi>d</mi><msub><mi>s</mi><mi>p</mi></msub><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><msub><mi>d</mi><mi>m</mi></msub><mi>i</mi><mi>n</mi><mo stretchy="false" form="prefix">|</mo><mi>M</mi><mi>e</mi><mi>a</mi><mi>n</mi><mi>L</mi><mi>o</mi><mi>c</mi><mi>o</mi><mi>m</mi><mi>o</mi><mi>t</mi><mi>o</mi><mi>r</mi><mi>I</mi><mi>n</mi><mi>a</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>i</mi><mi>t</mi><mi>y</mi><mi>D</mi><mi>u</mi><mi>r</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>S</mi><mi>l</mi><mi>e</mi><mi>e</mi><mi>p</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>r</mi><mi>a</mi><mi>d</mi><mi>i</mi><mi>a</mi><mi>n</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mo stretchy="false" form="prefix">(</mo><mi>r</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>i</mi><mi>r</mi><mi>e</mi><mi>s</mi><mi>s</mi><mi>l</mi><mi>e</mi><mi>e</mi><msub><mi>p</mi><mi>p</mi></msub><mi>e</mi><mi>r</mi><mi>i</mi><mi>o</mi><mi>d</mi><mi>s</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mi>m</mi><mi>i</mi><mi>n</mi><mi>u</mi><mi>t</mi><mi>e</mi><mi>s</mi><mo stretchy="false" form="prefix">|</mo><mi>t</mi><mi>y</mi><mi>p</mi><mi>i</mi><mi>c</mi><mi>a</mi><mi>l</mi><mi>l</mi><mi>y</mi><mn>60</mn><mi>t</mi><mi>o</mi><mn>120</mn><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false" form="prefix">|</mo><mi>w</mi><mi>i</mi><mi>n</mi><mi>n</mi><mi>e</mi><mi>b</mi><mi>e</mi><mi>c</mi><mi>k</mi><mn>2018</mn><mo stretchy="false" form="prefix">|</mo><mi>l</mi><mi>i</mi><mi>d</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">MSF                  |
-|lids_period_min      |Mean Locomotor Inactivity During Sleep ultradian period (requires sleep_periods)                        |minutes                                                                                        |typically 60 to 120 min                                                 |winnebeck2018 |lids()</annotation></semantics></math>mean_period_min</td>
+<td align="left"><code>social.jet.lag()$MSF</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>lids_period_min</code></td>
+<td align="left">Mean Locomotor Inactivity During Sleep ultradian period
+(requires sleep_periods)</td>
+<td align="left">minutes</td>
+<td align="left">typically ~95 to 130 min (median ~110)</td>
+<td align="left">winnebeck2018</td>
+<td align="left"><code>lids()$mean_period_min</code></td>
 </tr>
 <tr class="even">
-<td align="left">lids_MRI</td>
+<td align="left"><code>lids_MRI</code></td>
 <td align="left">Mean Munich Rhythmicity Index of the LIDS cycles
 (requires sleep_periods)</td>
 <td align="left">unitless</td>
-<td align="left">0 to 1; higher = stronger ultradian rhythm</td>
+<td align="left">&gt;=0 on the 0-100 LIDS scale; higher = stronger
+ultradian rhythm</td>
 <td align="left">winnebeck2018</td>
-<td align="left">lids()$mean_MRI</td>
+<td align="left"><code>lids()$mean_MRI</code></td>
 </tr>
 </tbody>
 </table>

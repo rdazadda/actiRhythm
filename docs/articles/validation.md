@@ -13,8 +13,8 @@ they are exercised on every build.
 Each comparison guards its reference package with
 [`requireNamespace()`](https://rdrr.io/r/base/ns-load.html): a chunk
 whose package is not installed shows its code but no output, so the
-article builds either way. `ActCR` and the `cosinor` package are used
-live below; `nparACT` is shown for you to run.
+article builds either way. `ActCR`, the `cosinor` package, and
+`cosinor2` are used live below; `nparACT` is shown for you to run.
 
 ``` r
 
@@ -123,6 +123,54 @@ knitr::kable(cmp, digits = 5, caption = "Single cosinor: actiRhythm vs the cosin
 
 Single cosinor: actiRhythm vs the cosinor package. {.table}
 
+## Population cosinor versus cosinor2
+
+[`population.cosinor()`](https://rdazadda.github.io/actiRhythm/reference/population.cosinor.md)
+pools per-subject cosinors into the Bingham et al.
+([1982](#ref-bingham1982)) population-mean rhythm with confidence
+intervals, and
+[`cosinor2::population.cosinor.lm()`](https://rdrr.io/pkg/cosinor2/man/population.cosinor.lm.html)
+implements the same framework. On a synthetic group the population
+MESOR, amplitude, and acrophase and all three confidence intervals match
+(cosinor2 reports the acrophase in negative radians, converted to clock
+hours here, with its time reference set to the hourly bin centres).
+
+``` r
+
+set.seed(11); K <- 8; hrs <- 0:23
+mat <- t(vapply(seq_len(K), function(i) {
+  M <- 100 + stats::rnorm(1, 0, 5); A <- 40 + stats::rnorm(1, 0, 5)
+  phi <- 8 + stats::rnorm(1, 0, 1)
+  M + A * cos(2 * pi * (hrs - phi) / 24) + stats::rnorm(24, 0, 3)
+}, numeric(24)))
+
+base <- as.POSIXct("2024-01-01", tz = "UTC")
+pcts <- rep(base + hrs * 3600, times = K)
+ours <- population.cosinor(as.vector(t(mat)), pcts, rep(paste0("S", seq_len(K)), each = 24))
+
+invisible(utils::capture.output(
+  ref <- cosinor2::population.cosinor.lm(as.data.frame(mat), time = hrs + 0.5,
+                                         period = 24, plot = FALSE)))
+rad2h <- function(r) ((-r) * 24 / (2 * pi)) %% 24
+
+cmp <- data.frame(
+  parameter  = c("MESOR", "amplitude", "acrophase"),
+  actiRhythm = c(ours$mesor, ours$amplitude, ours$acrophase),
+  cosinor2   = c(ref$coefficients[["MESOR"]], ref$coefficients[["Amplitude"]],
+                 rad2h(ref$coefficients[["Acrophase"]]))
+)
+cmp$abs_diff <- abs(cmp$actiRhythm - cmp$cosinor2)
+knitr::kable(cmp, digits = 5, caption = "Population cosinor: actiRhythm vs cosinor2.")
+```
+
+| parameter | actiRhythm |  cosinor2 | abs_diff |
+|:----------|-----------:|----------:|---------:|
+| MESOR     |  100.85718 | 100.85718 |        0 |
+| amplitude |   39.34469 |  39.34469 |        0 |
+| acrophase |    7.72310 |   7.72310 |        0 |
+
+Population cosinor: actiRhythm vs cosinor2. {.table}
+
 ## Extended (anti-logistic) cosinor versus ActCR
 
 [`cosinor.antilogistic()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.antilogistic.md)
@@ -204,6 +252,10 @@ build. The methods behind them are Witting et al.
 and Marler et al. ([2006](#ref-marler2006)).
 
 ## References
+
+Bingham, C., Arbogast, B., Cornelissen Guillaume, G., Lee, J. K., &
+Halberg, F. (1982). Inferential statistical methods for estimating and
+comparing cosinor parameters. *Chronobiologia*, *9*(4), 397–439.
 
 Cornelissen, G. (2014). Cosinor-based rhythmometry. *Theoretical Biology
 and Medical Modelling*, *11*, 16.

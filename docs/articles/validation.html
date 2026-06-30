@@ -105,8 +105,9 @@ on every build.</p>
 <p>Each comparison guards its reference package with
 <code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace()</a></code>: a chunk whose package is not installed
 shows its code but no output, so the article builds either way.
-<code>ActCR</code> and the <code>cosinor</code> package are used live
-below; <code>nparACT</code> is shown for you to run.</p>
+<code>ActCR</code>, the <code>cosinor</code> package, and
+<code>cosinor2</code> are used live below; <code>nparACT</code> is shown
+for you to run.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rdazadda/actiRhythm" class="external-link">actiRhythm</a></span><span class="op">)</span></span>
 <span></span>
@@ -239,6 +240,71 @@ same averaged daily profile, the MESOR and amplitude match exactly.</p>
 </table>
 </div>
 <div class="section level2">
+<h2 id="population-cosinor-versus-cosinor2">Population cosinor versus cosinor2<a class="anchor" aria-label="anchor" href="#population-cosinor-versus-cosinor2"></a>
+</h2>
+<p><code><a href="../reference/population.cosinor.html">population.cosinor()</a></code> pools per-subject cosinors into the
+<span class="citation">Bingham et al. (<a href="#ref-bingham1982">1982</a>)</span> population-mean rhythm with
+confidence intervals, and <code><a href="https://rdrr.io/pkg/cosinor2/man/population.cosinor.lm.html" class="external-link">cosinor2::population.cosinor.lm()</a></code>
+implements the same framework. On a synthetic group the population
+MESOR, amplitude, and acrophase and all three confidence intervals match
+(cosinor2 reports the acrophase in negative radians, converted to clock
+hours here, with its time reference set to the hourly bin centres).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span>; <span class="va">K</span> <span class="op">&lt;-</span> <span class="fl">8</span>; <span class="va">hrs</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">23</span></span>
+<span><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">vapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">K</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">M</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="op">+</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span>; <span class="va">A</span> <span class="op">&lt;-</span> <span class="fl">40</span> <span class="op">+</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span>  <span class="va">phi</span> <span class="op">&lt;-</span> <span class="fl">8</span> <span class="op">+</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="va">M</span> <span class="op">+</span> <span class="va">A</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="op">(</span><span class="va">hrs</span> <span class="op">-</span> <span class="va">phi</span><span class="op">)</span> <span class="op">/</span> <span class="fl">24</span><span class="op">)</span> <span class="op">+</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">24</span>, <span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="op">}</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">24</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2024-01-01"</span>, tz <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span></span>
+<span><span class="va">pcts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">base</span> <span class="op">+</span> <span class="va">hrs</span> <span class="op">*</span> <span class="fl">3600</span>, times <span class="op">=</span> <span class="va">K</span><span class="op">)</span></span>
+<span><span class="va">ours</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/population.cosinor.html">population.cosinor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span><span class="op">)</span>, <span class="va">pcts</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"S"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">K</span><span class="op">)</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">24</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/capture.output.html" class="external-link">capture.output</a></span><span class="op">(</span></span>
+<span>  <span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu">cosinor2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cosinor2/man/population.cosinor.lm.html" class="external-link">population.cosinor.lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">mat</span><span class="op">)</span>, time <span class="op">=</span> <span class="va">hrs</span> <span class="op">+</span> <span class="fl">0.5</span>,</span>
+<span>                                         period <span class="op">=</span> <span class="fl">24</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">rad2h</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">(</span><span class="op">(</span><span class="op">-</span><span class="va">r</span><span class="op">)</span> <span class="op">*</span> <span class="fl">24</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">24</span></span>
+<span></span>
+<span><span class="va">cmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  parameter  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MESOR"</span>, <span class="st">"amplitude"</span>, <span class="st">"acrophase"</span><span class="op">)</span>,</span>
+<span>  actiRhythm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ours</span><span class="op">$</span><span class="va">mesor</span>, <span class="va">ours</span><span class="op">$</span><span class="va">amplitude</span>, <span class="va">ours</span><span class="op">$</span><span class="va">acrophase</span><span class="op">)</span>,</span>
+<span>  cosinor2   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ref</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[[</span><span class="st">"MESOR"</span><span class="op">]</span><span class="op">]</span>, <span class="va">ref</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[[</span><span class="st">"Amplitude"</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>                 <span class="fu">rad2h</span><span class="op">(</span><span class="va">ref</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[[</span><span class="st">"Acrophase"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">cmp</span><span class="op">$</span><span class="va">abs_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">cmp</span><span class="op">$</span><span class="va">actiRhythm</span> <span class="op">-</span> <span class="va">cmp</span><span class="op">$</span><span class="va">cosinor2</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">cmp</span>, digits <span class="op">=</span> <span class="fl">5</span>, caption <span class="op">=</span> <span class="st">"Population cosinor: actiRhythm vs cosinor2."</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Population cosinor: actiRhythm vs cosinor2.</caption>
+<thead><tr class="header">
+<th align="left">parameter</th>
+<th align="right">actiRhythm</th>
+<th align="right">cosinor2</th>
+<th align="right">abs_diff</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">MESOR</td>
+<td align="right">100.85718</td>
+<td align="right">100.85718</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">amplitude</td>
+<td align="right">39.34469</td>
+<td align="right">39.34469</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">acrophase</td>
+<td align="right">7.72310</td>
+<td align="right">7.72310</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
 <h2 id="extended-anti-logistic-cosinor-versus-actcr">Extended (anti-logistic) cosinor versus ActCR<a class="anchor" aria-label="anchor" href="#extended-anti-logistic-cosinor-versus-actcr"></a>
 </h2>
 <p><code><a href="../reference/cosinor.antilogistic.html">cosinor.antilogistic()</a></code> fits the sigmoidally transformed
@@ -251,7 +317,7 @@ transition is sharp, because the likelihood is then nearly flat in
 <code>beta</code>; the other parameters still agree closely while
 <code>beta</code> itself is not pinned down, so we show the well-posed
 case here.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># A 3-day synthetic recording whose average day is a moderate sigmoid.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">n</span>   <span class="op">&lt;-</span> <span class="fl">1440</span> <span class="op">*</span> <span class="fl">3</span></span>
@@ -351,6 +417,12 @@ et al. (<a href="#ref-witting1990">1990</a>)</span>, <span class="citation">Van 
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+<div id="ref-bingham1982" class="csl-entry">
+Bingham, C., Arbogast, B., Cornelissen Guillaume, G., Lee, J. K., &amp;
+Halberg, F. (1982). Inferential statistical methods for estimating and
+comparing cosinor parameters. <em>Chronobiologia</em>, <em>9</em>(4),
+397–439.
+</div>
 <div id="ref-cornelissen2014" class="csl-entry">
 Cornelissen, G. (2014). Cosinor-based rhythmometry. <em>Theoretical
 Biology and Medical Modelling</em>, <em>11</em>, 16. <a href="https://doi.org/10.1186/1742-4682-11-16" class="external-link">https://doi.org/10.1186/1742-4682-11-16</a>

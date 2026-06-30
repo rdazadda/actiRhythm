@@ -132,9 +132,9 @@ ci <- period.ci(counts, ts, n_boot = 200, seed = 1)
 ci
 #> Circadian Period with Bootstrap Confidence Interval
 #> 
-#>   tau:      25.038 h
-#>   95% CI:   [24.981, 25.015] h
-#>   SE:       0.009 h
+#>   tau:      25.027 h
+#>   95% CI:   [24.987, 25.012] h
+#>   SE:       0.006 h
 #>   Method:   circular block residual bootstrap (200/200 valid reps)
 tau_true >= ci$ci_lower && tau_true <= ci$ci_upper   # the interval brackets the truth
 #> [1] TRUE
@@ -154,30 +154,46 @@ ls  <- circadian.period(agd$axis1, agd$timestamp)
 c(tau = ls$tau, peak_power = ls$peak_power, p_value = ls$p_value,
   n_used = ls$n_used, span_days = round(ls$span_days, 2))
 #>          tau   peak_power      p_value       n_used    span_days 
-#> 2.543077e+01 4.361705e-02 9.388299e-97 9.919000e+03 6.890000e+00
+#> 2.448889e+01 4.418582e-02 4.916458e-98 9.919000e+03 6.890000e+00
 ```
 
 ``` r
 
-ls_df <- data.frame(period = ls$scanned, power = ls$power)
-ggplot(ls_df, aes(period, power)) +
-  geom_line(colour = "grey60") +
-  geom_vline(xintercept = ls$tau, colour = "#236192", linewidth = 0.8) +
-  geom_vline(xintercept = 24, linetype = "dashed", colour = "grey40") +
-  labs(x = "Period (hours)", y = "Lomb-Scargle power") +
-  theme_actiRhythm()
+plot_periodogram(agd$axis1, agd$timestamp)
 ```
 
 ![The Lomb-Scargle periodogram of the bundled recording over the 18-30 h
-window. The vertical line marks the dominant period; the dashed line is
-the conventional 24 hours. The peak sits to the right of 24, a
-longer-than-day dominant cycle in this
-recording.](period-estimation_files/figure-html/ls-plot-1.png)
+window. The orange line marks the dominant period, the grey dashed line
+is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm
+threshold, which is flat across periods (unlike the chi-square critical
+curve below). The peak sits to the right of 24, a longer-than-day
+dominant cycle.](period-estimation_files/figure-html/ls-plot-1.png)
 
 The Lomb-Scargle periodogram of the bundled recording over the 18-30 h
-window. The vertical line marks the dominant period; the dashed line is
-the conventional 24 hours. The peak sits to the right of 24, a
-longer-than-day dominant cycle in this recording.
+window. The orange line marks the dominant period, the grey dashed line
+is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm
+threshold, which is flat across periods (unlike the chi-square critical
+curve below). The peak sits to the right of 24, a longer-than-day
+dominant cycle.
+
+The bootstrap interval shows how firmly that period is pinned down. On
+this recording the replicate periods spread widely across the search
+window, so the interval spans several hours: a single tau on a noisy
+free-running record carries real uncertainty.
+
+``` r
+
+plot_period_ci(agd$axis1, agd$timestamp, n_boot = 200, seed = 1)
+```
+
+![Bootstrap replicate periods (histogram) with the point estimate
+(orange) and the 95% confidence-interval band. A broad spread means the
+dominant period is only weakly
+determined.](period-estimation_files/figure-html/ci-plot-1.png)
+
+Bootstrap replicate periods (histogram) with the point estimate (orange)
+and the 95% confidence-interval band. A broad spread means the dominant
+period is only weakly determined.
 
 ## Reading the numbers
 
@@ -257,14 +273,16 @@ sg <- circadian.spectrogram(agd$axis1, agd$timestamp, step_hours = 12)
 sg$plot
 ```
 
-![Sliding-window chi-square spectrogram of the bundled recording. The
-dashed line is 24 h; bright bands show where power concentrates and how
-the dominant period wanders across the
-days.](period-estimation_files/figure-html/spectrogram-1.png)
+![Sliding-window chi-square spectrogram of the bundled recording,
+coloured by Qp relative to its per-period significance threshold so
+equal colour means equal significance across periods. The white line
+traces the per-window peak period and the dashed line is 24
+h.](period-estimation_files/figure-html/spectrogram-1.png)
 
-Sliding-window chi-square spectrogram of the bundled recording. The
-dashed line is 24 h; bright bands show where power concentrates and how
-the dominant period wanders across the days.
+Sliding-window chi-square spectrogram of the bundled recording, coloured
+by Qp relative to its per-period significance threshold so equal colour
+means equal significance across periods. The white line traces the
+per-window peak period and the dashed line is 24 h.
 
 **Ultradian band power.** Rhythms faster than a day (the roughly
 90-minute, 4-hour, and 8-hour bands) carry real physiology.
@@ -325,12 +343,12 @@ application of Ruf ([1999](#ref-ruf1999)); the chi-square periodogram is
 that of Sokolove & Bushell ([1978](#ref-sokolove1978)). The period
 confidence interval uses the moving-block bootstrap of Kunsch
 ([1989](#ref-kunsch1989)) in its circular form ([Politis & Romano,
-1992](#ref-politis1992)). actiRhythm’s Lomb-Scargle power and the
-chi-square $`Q_P`$ statistic are cross-checked against the `lomb` and
-`zeitgebr`/`periodogram` reference implementations (to the printed
-precision) in the
-[Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
-article and the package’s test suite.
+1992](#ref-politis1992)). actiRhythm’s Lomb-Scargle power is
+cross-checked against a direct least-squares periodogram (the exact
+estimator: it uses the double-angle time offset of Scargle
+([1982](#ref-scargle1982)), where the `lomb` package uses a single-angle
+offset), and the chi-square $`Q_P`$ statistic is validated against its
+chi-square null, in the package’s test suite.
 
 ## References
 

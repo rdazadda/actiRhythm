@@ -37,7 +37,7 @@ sleep.from.spt(spt, sib, timestamps, epoch_length = 5)
 
 An object of class `actiRhythm_sleep`: a data frame with one row per
 night (`date`, sleep `onset`, `offset`, `tst` hours, `waso` minutes,
-`efficiency`, `n_awakenings`, `mid_sleep`).
+`efficiency` as a 0-1 fraction (TST/SPT), `n_awakenings`, `mid_sleep`).
 
 ## References
 

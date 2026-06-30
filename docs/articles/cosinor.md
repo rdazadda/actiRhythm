@@ -46,9 +46,25 @@ A = \sqrt{\beta_1^2 + \beta_2^2}, \qquad
 \phi = \operatorname{atan2}(-\beta_2,\, \beta_1).
 ```
 
-Whether the rhythm is real is the **zero-amplitude F-test** of
-$`H_0\!: A = 0`$([Nelson et al., 1979](#ref-nelson1979)), and the share
-of variance the cosine explains is the **percent-rhythm**, $`100\,R^2`$.
+The reported acrophase is the clock time of the peak,
+$`-\phi\,\tau/(2\pi)`$ reduced to $`[0, \tau)`$. The fit uses the
+averaged hour-of-day profile, so the zero-amplitude **F-test** of
+$`H_0\!: A = 0`$([Nelson et al., 1979](#ref-nelson1979)) and the
+**percent-rhythm** $`100\,R^2`$([Cornelissen,
+2014](#ref-cornelissen2014)) are computed on the profile hours present
+(the F-test denominator is hours $`- 3`$, not the raw epoch count).
+
+``` r
+
+plot_cosinor_schematic()
+```
+
+![The cosinor parameters: the MESOR midline, the amplitude A and double
+amplitude 2A, and the acrophase as the clock time of the
+peak.](cosinor_files/figure-html/schematic-1.png)
+
+The cosinor parameters: the MESOR midline, the amplitude A and double
+amplitude 2A, and the acrophase as the clock time of the peak.
 
 ## Assumptions, and when they break
 
@@ -149,7 +165,7 @@ curve is the acrophase; its height above the MESOR line is the
 amplitude. Where the points leave the curve is the structure a single
 cosine cannot follow.
 
-For the joint uncertainty in amplitude and acrophase together,
+For the joint uncertainty in amplitude and acrophase,
 [`cosinor.confidence.ellipse()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.confidence.ellipse.md)
 returns the Bingham et al. ([1982](#ref-bingham1982)) ellipse; an
 ellipse that excludes the origin is the geometric form of “a detectable
@@ -162,6 +178,20 @@ c(excludes_origin = el$excludes_origin, rhythm_detected = el$rhythm_detected)
 #> excludes_origin rhythm_detected 
 #>            TRUE            TRUE
 ```
+
+``` r
+
+plot_cosinor_ellipse(agd$axis1, agd$timestamp)
+```
+
+![The amplitude-acrophase confidence ellipse on the clock plane. The
+arrow is the (amplitude, acrophase) estimate measured from the origin;
+because the ellipse excludes the origin, the rhythm is
+detectable.](cosinor_files/figure-html/ellipse-plot-1.png)
+
+The amplitude-acrophase confidence ellipse on the clock plane. The arrow
+is the (amplitude, acrophase) estimate measured from the origin; because
+the ellipse excludes the origin, the rhythm is detectable.
 
 ## Reading the numbers
 
@@ -215,16 +245,25 @@ mc$harmonics
 #> x4        2  54.41006    2.011788
 ```
 
+``` r
+
+plot_multicomponent(siesta, ts)
+```
+
+![The single cosine (orange) misses the midday dip; the two-harmonic fit
+(blue) recovers it.](cosinor_files/figure-html/multicomp-plot-1.png)
+
+The single cosine (orange) misses the midday dip; the two-harmonic fit
+(blue) recovers it.
+
 So in practice, let the low percent-rhythm, not the significant p-value,
 send you to a richer model rather than a misleading single acrophase.
 
 ## The wider cosinor family
 
 - **Asymmetric and squared-off days**:
-  [`cosinor.extended()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.extended.md)
-  and
   [`cosinor.antilogistic()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.antilogistic.md)
-  fit the sigmoidally transformed cosine of Marler et al.
+  fits the sigmoidally transformed cosine of Marler et al.
   ([2006](#ref-marler2006)), adding shape parameters (steepness, up- and
   down-mesor times) the single cosinor lacks.
 
@@ -237,26 +276,31 @@ c(MESOR = fit$MESOR, amplitude = fit$amplitude, acrophase = fit$acrophase,
 #> 372.95566 488.79342  16.59496  11.60451  21.58541
 ```
 
-- **Several harmonics, chosen objectively**:
+- **Several harmonics**:
+  [`cosinor.extended()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.extended.md)
+  and
   [`cosinor.multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.multicomponent.md)
-  adds components and picks how many by AIC or BIC, as in the siesta
-  example above.
+  fit the multi-component (harmonic) cosinor of Cornelissen
+  ([2014](#ref-cornelissen2014)) for non-sinusoidal days;
+  [`cosinor.multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.multicomponent.md)
+  chooses the number of components by AIC or BIC.
 - **The parametric amplitude as a ratio**:
   [`circadian.quotient()`](https://rdazadda.github.io/actiRhythm/reference/circadian.quotient.md)
   turns the cosinor amplitude and MESOR into the circadian quotient
   (amplitude / MESOR).
 - **Pooling the evidence**:
   [`consensus.rhythmicity()`](https://rdazadda.github.io/actiRhythm/reference/consensus.rhythmicity.md)
-  runs the cosinor F-test, the Bingham ellipse, the Lomb-Scargle
-  false-alarm probability, and the chi-square periodogram together, and
-  reports a majority vote with a combined p-value.
+  runs the cosinor F-test, the Lomb-Scargle false-alarm probability, and
+  the chi-square periodogram, and reports a majority vote with a
+  Cauchy-combined p-value (valid although the tests share one series).
 - **From one subject to a group**:
   [`population.cosinor()`](https://rdazadda.github.io/actiRhythm/reference/population.cosinor.md)
   pools per-subject fits into a Bingham population-mean rhythm with
   confidence intervals, and
   [`cosinor.compare()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.compare.md)
-  tests whether the rhythm differs between two groups with an omnibus
-  Hotelling $`T^2`$ and per-parameter tests ([Bingham et al.,
+  tests whether the rhythm differs between two groups with the Bingham
+  amplitude-acrophase Hotelling $`T^2`$, a separate MESOR test, and
+  auxiliary per-parameter comparisons ([Bingham et al.,
   1982](#ref-bingham1982)). See [Choosing a
   method](https://rdazadda.github.io/actiRhythm/articles/choosing-a-method.md)
   for when to reach for each.

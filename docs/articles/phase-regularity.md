@@ -42,8 +42,10 @@ Perfect repetition scores $`+100`$, independent (coin-flip) days score
 about $`0`$, and a perfectly inverted pattern scores $`-100`$.
 
 **Social jet lag** compares the mid-point of sleep on free days (MSF)
-with that on work days (MSW) ([Wittmann et al.,
-2006](#ref-wittmann2006)):
+with that on work days (MSW). Wittmann et al. introduced it as the
+absolute difference $`|\mathrm{MSF} - \mathrm{MSW}|`$([Wittmann et al.,
+2006](#ref-wittmann2006)); the package reports the signed form
+([Roenneberg et al., 2012](#ref-roenneberg2012)):
 
 ``` math
 \mathrm{SJL} = \mathrm{MSF} - \mathrm{MSW}.
@@ -52,8 +54,7 @@ with that on work days (MSW) ([Wittmann et al.,
 Because free-day sleep is often longer (catch-up sleep), the chronotype
 is read from the **sleep-debt-corrected** mid-sleep MSFsc, which shifts
 the free-day mid-point back by half the excess of free-day sleep over
-the weekly average ([Roenneberg et al., 2003](#ref-roenneberg2003);
-[Roenneberg et al., 2012](#ref-roenneberg2012)):
+the weekly average ([Roenneberg et al., 2012](#ref-roenneberg2012)):
 
 ``` math
 \mathrm{MSF_{sc}} = \mathrm{MSF} - \tfrac{1}{2}\!\left(\mathrm{SD_f} - \mathrm{SD_{week}}\right)
@@ -65,8 +66,8 @@ angle $`\theta_j = 2\pi t_j / 24`$. The mean resultant length
 $`R = \lVert N^{-1}\sum_j e^{i\theta_j} \rVert`$ measures clustering,
 and the Rayleigh statistic $`Z = N R^2`$ tests it against uniformity
 ([Fisher, 1993](#ref-fisher1993)). The **composite phase deviation**
-combines each day’s precision (deviation from the person’s own mean
-phase) and accuracy (deviation from a reference) as
+combines each day’s precision (the deviation from the previous day) and
+accuracy (the deviation from the chronotype reference) as
 $`\mathrm{CPD} = \overline{\sqrt{\text{precision}^2 + \text{accuracy}^2}}`$([Fischer
 et al., 2016](#ref-fischer2016)).
 
@@ -127,7 +128,7 @@ knitr::kable(
 |:---------|-------:|
 | regular  | 100.00 |
 | jittered |  17.15 |
-| random   |   6.13 |
+| random   |   6.00 |
 
 The SRI falls from its ceiling as a planted sleep pattern is made
 irregular, then random. {.table}
@@ -149,7 +150,7 @@ agd   <- agd.counts(read.agd(example_agd(1), verbose = FALSE))
 state <- sleep.cole.kripke(agd$axis1)
 sri.matrix(state, agd$timestamp)
 #> $SRI
-#> [1] 58.46
+#> [1] 58.27
 #> 
 #> $n_days
 #> [1] 8
@@ -169,15 +170,14 @@ internally, so the two always agree.
 ``` r
 
 sleep.regularity.index(state, agd$timestamp)
-#> [1] 58.46
+#> [1] 58.27
 ```
 
 The phase markers run on the raw counts.
 [`activity.onset.offset()`](https://rdazadda.github.io/actiRhythm/reference/activity.onset.offset.md)
 finds, on the averaged day, the clock time where activity rises most
-sharply (onset) and falls most sharply (offset) by the
-relative-difference method ([Roenneberg et al.,
-2003](#ref-roenneberg2003)).
+sharply (onset) and falls most sharply (offset) by a relative-difference
+contrast on the daily profile.
 
 ``` r
 
@@ -267,8 +267,22 @@ phase.concentration(onsets)
 #>   n days:          7
 #>   Mean direction:  06.61 h    R: 0.986
 #>   Rayleigh:        Z = 6.81, p = 0.0000
-#>   Hermans-Rasson:  T = 34.4, p = 0.0005
+#>   Hermans-Rasson:  V = 17.08, p = 0.0005
 ```
+
+``` r
+
+plot_phase_rose(onsets)
+```
+
+![The activity onsets as a rose around the 24-hour clock, with the mean
+resultant vector (orange) and the two test p-values. Sector area encodes
+the count, so a wide sector is not read as a tall
+one.](phase-regularity_files/figure-html/phase-rose-1.png)
+
+The activity onsets as a rose around the 24-hour clock, with the mean
+resultant vector (orange) and the two test p-values. Sector area encodes
+the count, so a wide sector is not read as a tall one.
 
 ``` r
 
@@ -327,10 +341,10 @@ circadian.onset.ci(onsets)
 #> [1] 6.615
 #> 
 #> $ci_lower
-#> [1] 6.177
+#> [1] 6.14
 #> 
 #> $ci_upper
-#> [1] 7.133
+#> [1] 7.157
 #> 
 #> $n_days
 #> [1] 7
@@ -355,15 +369,14 @@ circadian.onset.ci(onsets)
 
 The Sleep Regularity Index follows Phillips et al.
 ([2017](#ref-phillips2017)) in its full epoch-by-day concordance form;
-social jet lag and the sleep-debt correction follow Wittmann et al.
-([2006](#ref-wittmann2006)) and ([2003](#ref-roenneberg2003); Roenneberg
-et al.; [2012](#ref-roenneberg2012)). The phase markers use the
-relative-difference onset of Roenneberg et al.
-([2003](#ref-roenneberg2003)), the composite phase deviation of Fischer
-et al. ([2016](#ref-fischer2016)), and the circular tests of Fisher
-([1993](#ref-fisher1993)) and Landler et al. ([2019](#ref-landler2019)).
-actiRhythm’s SRI and phase metrics are cross-checked against their
-reference definitions in the
+social jet lag follows Wittmann et al. ([2006](#ref-wittmann2006)) (the
+absolute difference) and Roenneberg et al. ([2012](#ref-roenneberg2012))
+(the signed form and the sleep-debt correction). The phase markers use a
+relative-difference onset contrast, the composite phase deviation of
+Fischer et al. ([2016](#ref-fischer2016)), and the circular tests of
+Fisher ([1993](#ref-fisher1993)) and Landler et al.
+([2019](#ref-landler2019)). actiRhythm’s SRI and phase metrics are
+cross-checked against their reference definitions in the
 [Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
 article and the package’s test suite.
 
@@ -391,11 +404,6 @@ academic performance and delayed circadian and sleep/wake timing.
 Roenneberg, T., Allebrandt, K. V., Merrow, M., & Vetter, C. (2012).
 Social jetlag and obesity. *Current Biology*, *22*(10), 939–943.
 <https://doi.org/10.1016/j.cub.2012.03.038>
-
-Roenneberg, T., Wirz-Justice, A., & Merrow, M. (2003). Life between
-clocks: Daily temporal patterns of human chronotypes. *Journal of
-Biological Rhythms*, *18*(1), 80–90.
-<https://doi.org/10.1177/0748730402239679>
 
 Wittmann, M., Dinich, J., Merrow, M., & Roenneberg, T. (2006). Social
 jetlag: Misalignment of biological and social time. *Chronobiology

@@ -26,8 +26,8 @@ Aligns each day's 24-hour activity profile on its active-phase landmark (the
 M10 centre), separating the horizontal phase variation (how the timing shifts
 day to day) from the vertical amplitude variation (the registered mean profile,
 sharper than the plain average because phase jitter no longer blurs it). The
-per-day landmark times are a scale-invariant chronotype phase, unchanged by any
-rescaling of the counts (Ramsay and Silverman 2005).
+per-day landmark times are a scale-invariant phase marker (the M10-window
+centre), unchanged by any rescaling of the counts (Ramsay and Silverman 2005).
 }
 \examples{
 ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 5 * 1440)
@@ -37,4 +37,6 @@ curve.registration(ifelse(h >= 23 | h < 7, 5, 300), ts)
 }
 \references{
 \insertRef{ramsay2005}{actiRhythm}
+
+\insertRef{vansomeren1999}{actiRhythm}
 }

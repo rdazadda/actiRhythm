@@ -56,6 +56,8 @@ head(m)
 \insertRef{vanhees2013}{actiRhythm}
 
 \insertRef{vahaypya2015}{actiRhythm}
+
+\insertRef{vanhees2015}{actiRhythm}
 }
 \seealso{
 \code{\link{auto.calibrate}}, \code{\link{circadian.raw}},

@@ -37,7 +37,8 @@ reproducible bootstrap draws.}
 \value{
 An object of class \code{actiRhythm_period_ci}: a list with \code{tau}
 (the point estimate, hours), \code{ci_lower}/\code{ci_upper}, \code{se}, the
-\code{level}, and the number of valid replicates.
+\code{level}, the number of valid replicates, and \code{tau_boot} (the vector
+of bootstrap replicate periods).
 }
 \description{
 Attaches a bootstrap confidence interval (and standard error) to the

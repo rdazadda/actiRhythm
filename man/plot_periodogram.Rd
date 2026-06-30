@@ -20,8 +20,8 @@ timestamps before estimation.}
 \item{to}{Numeric. Upper bound of the period search window, in hours
 (default \code{30}).}
 
-\item{ofac}{Integer oversampling factor passed to \code{lomb::lsp}. Higher
-values give a finer period grid (default \code{4}).}
+\item{ofac}{Integer oversampling factor for the period grid. Higher values give
+a finer grid (default \code{4}).}
 }
 \value{
 A \code{ggplot} object: Lomb-Scargle power (y) versus period in hours
@@ -39,15 +39,14 @@ dashed reference line is drawn at 24 hours so the deviation of the biological
 clock from exactly one solar day is visible.
 }
 \details{
-The full spectrum is obtained from
-\code{lomb::lsp(x, times, from, to, type = "period", ofac, plot = FALSE)},
-whose \code{$scanned} component holds the trial periods (hours) and
-\code{$power} the corresponding normalized Lomb-Scargle power. The peak period
-\code{tau} and its \code{p_value} come from \code{\link{circadian.period}} so
-that the highlighted peak is exactly the value reported by the analytic
-function. The Lomb-Scargle periodogram is the least-squares spectral estimator
-for unevenly sampled series and is therefore appropriate for gappy actigraphy
-data, which an FFT cannot accommodate.
+The full standard-normalized Lomb-Scargle spectrum over the period window is
+computed by the package's own estimator (the same one behind
+\code{\link{circadian.period}}); the peak period \code{tau}, its Baluev
+\code{p_value}, and the 0.05 false-alarm threshold line all come from that
+function, so the highlighted peak and threshold match the reported values. The
+Lomb-Scargle periodogram is the least-squares spectral estimator for unevenly
+sampled series and is therefore appropriate for gappy actigraphy data, which an
+FFT cannot accommodate.
 }
 \examples{
 \donttest{

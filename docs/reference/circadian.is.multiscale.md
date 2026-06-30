@@ -10,7 +10,11 @@ total number of bins.
 ## Usage
 
 ``` r
-circadian.is.multiscale(counts, timestamps, bin_minutes = c(60, 30, 15))
+circadian.is.multiscale(
+  counts,
+  timestamps,
+  bin_minutes = (1:60)[1440L%%(1:60) == 0L]
+)
 ```
 
 ## Arguments
@@ -25,11 +29,13 @@ circadian.is.multiscale(counts, timestamps, bin_minutes = c(60, 30, 15))
 
 - bin_minutes:
 
-  Integer vector of bin widths in minutes (default `c(60, 30, 15)`).
+  Integer bin widths in minutes that divide 1440 (default the divisors
+  of 1440 from 1 to 60 min, per Goncalves et al. 2014).
 
 ## Value
 
-Data frame with columns `bin_minutes` and `IS`.
+An object of class `actiRhythm_ism`: a per-bin `IS` table and the
+averaged `ISm`.
 
 ## References
 
@@ -37,4 +43,10 @@ Witting W, Kwa IH, Eikelenboom P, Mirmiran M, Swaab DF (1990).
 “Alterations in the circadian rest-activity rhythm in aging and
 Alzheimer's disease.” *Biological Psychiatry*, **27**(6), 563–572.
 [doi:10.1016/0006-3223(90)90523-5](https://doi.org/10.1016/0006-3223%2890%2990523-5)
+.
+
+Goncalves BSB, Cavalcanti PRA, Tavares GR, Campos TF, Araujo JF (2014).
+“Nonparametric methods in actigraphy: an update.” *Sleep Science*,
+**7**(3), 158–164.
+[doi:10.1016/j.slsci.2014.09.013](https://doi.org/10.1016/j.slsci.2014.09.013)
 .

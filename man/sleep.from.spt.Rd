@@ -18,7 +18,8 @@ sleep.from.spt(spt, sib, timestamps, epoch_length = 5)
 \value{
 An object of class \code{actiRhythm_sleep}: a data frame with one row
 per night (\code{date}, sleep \code{onset}, \code{offset}, \code{tst} hours,
-\code{waso} minutes, \code{efficiency}, \code{n_awakenings}, \code{mid_sleep}).
+\code{waso} minutes, \code{efficiency} as a 0-1 fraction (TST/SPT),
+\code{n_awakenings}, \code{mid_sleep}).
 }
 \description{
 Intersects the per-epoch sustained-inactivity sleep score

@@ -9,7 +9,8 @@ mfdfa(
   scale_min = 8L,
   scale_max = NULL,
   q_values = seq(-5, 5, by = 0.5),
-  both_ends = TRUE
+  both_ends = TRUE,
+  detrend_order = 1L
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ analysed.}
 \item{both_ends}{If \code{TRUE} (default) windows are taken from both ends so
 the tail of the profile is not discarded; \code{FALSE} reproduces the
 start-only convention of \code{\link{fractal.dfa}}.}
+
+\item{detrend_order}{Integer order of the within-window polynomial detrend
+(default 1, linear MF-DFA1; 2 gives MF-DFA2, matching DFA-2).}
 }
 \value{
 An object of class \code{actiRhythm_mfdfa}: a list with \code{q_values},

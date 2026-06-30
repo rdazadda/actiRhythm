@@ -78,7 +78,11 @@ and <code>N</code> the total number of bins.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">circadian.is.multiscale</span><span class="op">(</span><span class="va">counts</span>, <span class="va">timestamps</span>, bin_minutes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>, <span class="fl">30</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">circadian.is.multiscale</span><span class="op">(</span></span>
+<span>  <span class="va">counts</span>,</span>
+<span>  <span class="va">timestamps</span>,</span>
+<span>  bin_minutes <span class="op">=</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">60</span><span class="op">)</span><span class="op">[</span><span class="fl">1440L</span><span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">60</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0L</span><span class="op">]</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -94,13 +98,14 @@ and <code>N</code> the total number of bins.</p>
 
 
 <dt id="arg-bin-minutes">bin_minutes<a class="anchor" aria-label="anchor" href="#arg-bin-minutes"></a></dt>
-<dd><p>Integer vector of bin widths in minutes (default
-<code>c(60, 30, 15)</code>).</p></dd>
+<dd><p>Integer bin widths in minutes that divide 1440 (default the
+divisors of 1440 from 1 to 60 min, per Goncalves et al. 2014).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Data frame with columns <code>bin_minutes</code> and <code>IS</code>.</p>
+    <p>An object of class <code>actiRhythm_ism</code>: a per-bin <code>IS</code> table and
+the averaged <code>ISm</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -108,6 +113,11 @@ and <code>N</code> the total number of bins.</p>
 “Alterations in the circadian rest-activity rhythm in aging and Alzheimer's disease.”
 <em>Biological Psychiatry</em>, <b>27</b>(6), 563–572.
 <a href="https://doi.org/10.1016/0006-3223%2890%2990523-5" class="external-link">doi:10.1016/0006-3223(90)90523-5</a>
+.</p>
+<p>Goncalves BSB, Cavalcanti PRA, Tavares GR, Campos TF, Araujo JF (2014).
+“Nonparametric methods in actigraphy: an update.”
+<em>Sleep Science</em>, <b>7</b>(3), 158–164.
+<a href="https://doi.org/10.1016/j.slsci.2014.09.013" class="external-link">doi:10.1016/j.slsci.2014.09.013</a>
 .</p>
     </div>
 

@@ -130,6 +130,7 @@ circadian.flm(counts, ts)
 #> 
 #>   Peak 165.0 at 16.5 h; trough 20.5 at 0.8 h
 #> 
-#>   Reference: Wang et al. (2011)
+#>   Basis fit follows Wang et al. (2011); F/p are ordinary regression
+#>   statistics (not Wang's between-subject permutation test).
 #> 
 ```

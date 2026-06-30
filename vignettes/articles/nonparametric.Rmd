@@ -35,9 +35,11 @@ device-off days can move the numbers as much as a real change in the rhythm.
 
 ## The math
 
-Write the recording as activity values \(x_1, \dots, x_n\) at a fixed epoch, with
-overall mean \(\bar x\). Bin them to hourly means and let \(\bar x_h\) be the mean
-across all days at hour-of-day \(h\), over \(p = 24\) hours.
+Bin the recording to hourly means: let \(x_1, \dots, x_n\) be the \(n\) hourly
+values with overall mean \(\bar x\), and let \(\bar x_h\) be the mean across all
+days at hour-of-day \(h\), over \(p = 24\) hours. The IS and IV formulas below are
+computed on this hourly series; the raw-epoch series is used separately for the
+multiscale and fractal measures.
 
 **Interdaily stability (IS)**, how tightly the pattern repeats from one day to
 the next [@witting1990]:
@@ -62,6 +64,11 @@ $$
 
 `circadian.rhythm()` returns all of these, plus the 1-hour extremes L1 and M1, the
 autocorrelation predictability \(\phi\), and the onset times of each window.
+
+The L5 and M10 windows are placed on a minute-resolution average day and reported in
+counts per minute, the sliding-window convention also used by nparACT and GGIR. These
+values track but are not identical to the original hourly counts-per-hour of
+@witting1990, and they depend on epoch length.
 
 ## Assumptions, and when they break
 
@@ -126,14 +133,22 @@ cr
 plot_actogram(agd$axis1, agd$timestamp)
 ```
 
+The average day makes the L5 and M10 windows concrete: the least-active 5-hour block
+and the most-active 10-hour block of the folded profile.
+
+```{r profile, fig.height = 3.5, fig.cap = "The averaged 24-hour profile (mean with a one-SD band), shading the least-active 5-hour window L5 and the most-active 10-hour window M10."}
+plot_profile(agd$axis1, agd$timestamp)
+```
+
 ## Reading the numbers
 
 State each metric in human terms:
 
 - **IS** runs 0 to 1; near 1 is a highly stable 24-hour pattern, below about 0.3 is
   weak. Here it is low: the days do not land at the same clock time.
-- **IV** runs from about 0 (a smooth sine) to about 2 (noisy or split into ultradian
-  bouts).
+- **IV** runs from about 0 (a smooth sine) to about 2 (noise); above 2 flags a strong
+  ultradian component or a too-short record. The denominator is the data's own
+  variance, so IV is amplitude-independent.
 - **RA** runs 0 to 1; higher is a stronger day-night contrast.
 
 The most informative reading is often the **combination**. This recording pairs a
@@ -155,31 +170,50 @@ activity.extrema(agd$axis1, agd$timestamp, windows = c(1, 5, 10))$table
 
 **Making the epoch dependence explicit.** Because IV and IS depend on the bin size,
 `intradaily.variability.multiscale()` and `circadian.is.multiscale()` recompute them
-across a range of epochs, so you can see (and report) how the value moves with
-resolution rather than pinning it to one choice [@goncalves2014].
+across a range of epochs and average them into a single IVm and ISm, which vary less
+across recordings than the hourly values [@goncalves2014]. IVm spans 1 to 60-minute
+bins; ISm uses the bin sizes that divide 1440, so each day splits into whole bins.
 
 ```{r multiscale}
 intradaily.variability.multiscale(agd$axis1, agd$timestamp)
 circadian.is.multiscale(agd$axis1, agd$timestamp)
 ```
 
-**How cleanly rest separates from activity.** `dichotomy.index()` compares activity
-during a defined rest span against the active day [@mormont2000]; here we mark the
-night hours as rest.
+```{r multiscale-plot, fig.height = 3, fig.cap = "IS and IV across epoch lengths, with the averaged ISm and IVm (dashed). Both vary less across recordings than a single hourly value."}
+plot_multiscale(agd$axis1, agd$timestamp)
+```
+
+**How cleanly rest separates from activity.** The dichotomy index I<O is the
+percentage of rest-span counts that fall below the median of the active-span counts
+[@mormont2000]:
+$$
+I{<}O = 100 \times \frac{\#\{\, x_i < \tilde{x}_{\text{active}} : i \in \text{rest} \,\}}{N_{\text{rest}}},
+$$
+where \(\tilde{x}_{\text{active}}\) is the median active-span count. A high I<O means
+rest is quiet relative to the active day. Here we mark the night hours as rest.
 
 ```{r dichotomy}
 h <- as.numeric(format(agd$timestamp, "%H"))
-dichotomy.index(agd$axis1, agd$timestamp, rest = h >= 23 | h < 7)
+dichotomy.index(agd$axis1, rest = h >= 23 | h < 7)
 ```
 
-**Fragmentation.** `state.transitions()` and `transition.probability()` summarise
-how readily the subject switches between rest and activity (the kRA/kAR rates and
-the closed-form transition probabilities), capturing fragmentation a single
-amplitude cannot [@lim2011].
+```{r dichotomy-plot, fig.height = 3.5, fig.cap = "Rest-span and active-span count distributions. A high I<O means most rest-span counts fall below the active-span median (dashed)."}
+plot_dichotomy(agd$axis1, rest = h >= 23 | h < 7)
+```
+
+**Fragmentation.** `state.transitions()` gives the kRA and kAR rates, the
+rest-to-active and active-to-rest probabilities read off the plateau of the
+bout-length survival curve [@lim2011]. `transition.probability()` gives the
+maximum-likelihood and Bayesian transition probabilities of @danilevicz2024, taken
+straight from the bout counts. Both capture fragmentation a single amplitude cannot.
 
 ```{r fragmentation}
 state.transitions(agd$axis1)
 transition.probability(agd$axis1)[c("tp_ra_mle", "tp_ar_mle")]
+```
+
+```{r fragmentation-plot, fig.height = 3.5, fig.cap = "Transition hazards versus bout length, with a LOWESS fit and the sustained rates kRA and kAR (dashed)."}
+plot_transitions(agd$axis1)
 ```
 
 **Per day, to see drift.** `circadian.daily()` reports each day on its own, so
@@ -205,7 +239,8 @@ ggplot(daily, aes(date, M10_onset_h)) +
 ## Reference and validation
 
 The nonparametric battery follows @witting1990 and @vansomeren1999, with the
-multiscale and dichotomy extensions of @goncalves2014 and @mormont2000.
+multiscale and dichotomy extensions of @goncalves2014 and @mormont2000, and the
+fragmentation rates of @lim2011 and @danilevicz2024.
 actiRhythm's IS, IV, RA, L5, and M10 are cross-checked against the
 `nparACT` and `ActCR` reference implementations (to the printed precision) in
 the [Validation](validation.html) article and the package's test suite.

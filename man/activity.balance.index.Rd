@@ -18,7 +18,7 @@ object, a list with \code{ABI_overall}, \code{ABI_short}, \code{ABI_long}.
 \description{
 The Activity Balance Index (Danilevicz et al. 2024), a 0 to 1 transform of a
 detrended fluctuation analysis scaling exponent that peaks at the healthy
-\eqn{\alpha = 1} (1/f) balance: \eqn{ABI(\alpha) = \exp(-|\alpha - 1|\,e^{-2})}.
+\eqn{\alpha = 1} (1/f) balance: \eqn{ABI(\alpha) = \exp(-|\alpha - 1| / e^{-2}) = \exp(-e^{2}\,|\alpha - 1|)}.
 }
 \examples{
 activity.balance.index(1.0)   # perfect 1/f balance -> 1

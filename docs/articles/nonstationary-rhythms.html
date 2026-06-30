@@ -224,6 +224,15 @@ phase advances, which the spectrogram and the actogram show from
 different angles.
 </p>
 </div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_changepoints.html">plot_changepoints</a></span><span class="op">(</span><span class="va">counts</span>, <span class="va">t</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="nonstationary-rhythms_files/figure-html/changepoint-track-1.png" class="r-plt" alt="The same detection as a track: the activity series with each sleep onset (navy) and wake onset (orange) marked and the rest episodes shaded. The rest band slides earlier across the recording." width="770"><p class="caption">
+The same detection as a track: the activity series with each sleep onset
+(navy) and wake onset (orange) marked and the rest episodes shaded. The
+rest band slides earlier across the recording.
+</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="decomposing-the-signal">Decomposing the signal<a class="anchor" aria-label="anchor" href="#decomposing-the-signal"></a>
@@ -235,7 +244,7 @@ residual <span class="citation">(<a href="#ref-golyandina2013">Golyandina &amp; 
 axis, so the circadian component can be read on its own while the trend
 and residual carry the parts the cosinor would have forced into one
 curve.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ssa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/circadian.ssa.html">circadian.ssa</a></span><span class="op">(</span><span class="va">counts10</span>, <span class="va">t10</span><span class="op">)</span></span>
 <span><span class="va">parts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>t <span class="op">=</span> <span class="va">t10</span>, value <span class="op">=</span> <span class="va">ssa</span><span class="op">$</span><span class="va">circadian</span>, part <span class="op">=</span> <span class="st">"circadian"</span><span class="op">)</span>,</span>
@@ -255,13 +264,22 @@ slow drift in overall activity, and the residual collects the rising
 fragmentation.
 </p>
 </div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_ssa_wcor.html">plot_ssa_wcor</a></span><span class="op">(</span><span class="va">counts10</span>, <span class="va">t10</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="nonstationary-rhythms_files/figure-html/ssa-wcor-1.png" class="r-plt" alt="The SSA w-correlation matrix that justifies the grouping above: bright off-diagonal 2x2 blocks are oscillatory pairs (the circadian rhythm), a single bright cell is the trend, and the diffuse tail is noise." width="770"><p class="caption">
+The SSA w-correlation matrix that justifies the grouping above: bright
+off-diagonal 2x2 blocks are oscillatory pairs (the circadian rhythm), a
+single bright cell is the trend, and the diffuse tail is noise.
+</p>
+</div>
 <p>Empirical mode decomposition reaches the same idea from the other
 direction <span class="citation">(<a href="#ref-huang1998">Huang et al.,
 1998</a>)</span>. It pulls out data-adaptive oscillatory modes, and
 <code><a href="../reference/hilbert.huang.html">hilbert.huang()</a></code> turns the circadian mode into an
 instantaneous period, one value per epoch, so a period that wanders
 shows up as a moving line rather than a single number.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">emd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/circadian.emd.html">circadian.emd</a></span><span class="op">(</span><span class="va">counts</span>, <span class="va">t</span><span class="op">)</span></span>
 <span><span class="va">hht</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/hilbert.huang.html">hilbert.huang</a></span><span class="op">(</span><span class="va">emd</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>t <span class="op">=</span> <span class="va">emd</span><span class="op">$</span><span class="va">times</span>, period <span class="op">=</span> <span class="va">hht</span><span class="op">$</span><span class="va">period</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">period</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -270,7 +288,7 @@ shows up as a moving line rather than a single number.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">18</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Instantaneous period (h)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_actiRhythm.html">theme_actiRhythm</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; Warning: Removed 108 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
 <div class="figure">
 <img src="nonstationary-rhythms_files/figure-html/emd-1.png" class="r-plt" alt="Instantaneous period of the circadian mode from the Hilbert-Huang transform. It stays near 24 hours but is not flat: the phase advance leaves its mark on the cycle-by-cycle estimate." width="770"><p class="caption">
@@ -291,18 +309,18 @@ al., 2002</a>)</span> and a narrower multifractal spectrum <span class="citation
 2002</a>)</span>, both signs that its dynamics have simplified toward
 noise: less predictable from epoch to epoch, and less richly
 self-similar across scales.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">half</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">counts10</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%/%</a></span> <span class="fl">2</span></span>
 <span><span class="va">early</span> <span class="op">&lt;-</span> <span class="va">counts10</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">half</span><span class="op">]</span>; <span class="va">late</span> <span class="op">&lt;-</span> <span class="va">counts10</span><span class="op">[</span><span class="op">(</span><span class="va">half</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">counts10</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">mse_e</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiscale.entropy.html">multiscale.entropy</a></span><span class="op">(</span><span class="va">early</span>, scales <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">mse_l</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiscale.entropy.html">multiscale.entropy</a></span><span class="op">(</span><span class="va">late</span>,  scales <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>early_complexity <span class="op">=</span> <span class="va">mse_e</span><span class="op">$</span><span class="va">area</span>, late_complexity <span class="op">=</span> <span class="va">mse_l</span><span class="op">$</span><span class="va">area</span><span class="op">)</span></span>
 <span><span class="co">#&gt; early_complexity  late_complexity </span></span>
-<span><span class="co">#&gt;         2.937170         3.327456</span></span>
+<span><span class="co">#&gt;         2.905382         3.170657</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>early_mf_width <span class="op">=</span> <span class="fu"><a href="../reference/mfdfa.html">mfdfa</a></span><span class="op">(</span><span class="va">early</span><span class="op">)</span><span class="op">$</span><span class="va">width</span>, late_mf_width <span class="op">=</span> <span class="fu"><a href="../reference/mfdfa.html">mfdfa</a></span><span class="op">(</span><span class="va">late</span><span class="op">)</span><span class="op">$</span><span class="va">width</span><span class="op">)</span></span>
 <span><span class="co">#&gt; early_mf_width  late_mf_width </span></span>
 <span><span class="co">#&gt;       1.654179       1.084617</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="va">mse_e</span><span class="op">$</span><span class="va">scales</span>, sampen <span class="op">=</span> <span class="va">mse_e</span><span class="op">$</span><span class="va">mse</span>, half <span class="op">=</span> <span class="st">"first half"</span><span class="op">)</span>,</span>
 <span>             <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="va">mse_l</span><span class="op">$</span><span class="va">scales</span>, sampen <span class="op">=</span> <span class="va">mse_l</span><span class="op">$</span><span class="va">mse</span>, half <span class="op">=</span> <span class="st">"second half"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mse</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">scale</span>, <span class="va">sampen</span>, colour <span class="op">=</span> <span class="va">half</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -323,16 +341,16 @@ broken rhythm.
 </h2>
 <p>When the phase moves, the averaged acrophase is a poor summary of any
 single day. <code><a href="../reference/curve.registration.html">curve.registration()</a></code> instead finds each day’s
-own activity landmark, aligns the days on it, and reports a chronotype
-phase plus how much that landmark varies <span class="citation">(<a href="#ref-krafty2019">Krafty et al., 2019</a>)</span>. The variability
-is large here precisely because the phase advanced, which is the honest
-answer.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+own activity landmark, aligns the days on it, and reports a phase marker
+plus how much that landmark varies <span class="citation">(<a href="#ref-ramsay2005">Ramsay &amp; Silverman, 2005</a>)</span>. The
+variability is large here precisely because the phase advanced, which is
+the honest answer.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">reg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/curve.registration.html">curve.registration</a></span><span class="op">(</span><span class="va">counts</span>, <span class="va">t</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mean_M10_hour <span class="op">=</span> <span class="va">reg</span><span class="op">$</span><span class="va">mean_M10</span>, phase_variability_h <span class="op">=</span> <span class="va">reg</span><span class="op">$</span><span class="va">phase_sd</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       mean_M10_hour phase_variability_h </span></span>
 <span><span class="co">#&gt;           13.797765            1.213938</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">landmarks</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">M10_center_h</span><span class="op">)</span>, <span class="va">M10_center_h</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"grey60"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#236192"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Day"</span>, y <span class="op">=</span> <span class="st">"M10 centre (clock hour)"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -393,11 +411,9 @@ fluctuation analysis of nonstationary time series. <em>Physica A:
 Statistical Mechanics and Its Applications</em>, <em>316</em>(1-4),
 87–114. <a href="https://doi.org/10.1016/S0378-4371(02)01383-3" class="external-link">https://doi.org/10.1016/S0378-4371(02)01383-3</a>
 </div>
-<div id="ref-krafty2019" class="csl-entry">
-Krafty, R. T., Fu, H., Graves, J. L., Bruce, S. A., Hall, M. H., &amp;
-Smagula, S. F. (2019). Measuring variability in rest-activity rhythms
-from actigraphy with application to characterizing symptoms of
-depression. <em>Statistics in Biosciences</em>, <em>11</em>, 314–333. <a href="https://doi.org/10.1007/s12561-018-09230-2" class="external-link">https://doi.org/10.1007/s12561-018-09230-2</a>
+<div id="ref-ramsay2005" class="csl-entry">
+Ramsay, J. O., &amp; Silverman, B. W. (2005). <em>Functional data
+analysis</em> (2nd ed.). Springer. <a href="https://doi.org/10.1007/b98888" class="external-link">https://doi.org/10.1007/b98888</a>
 </div>
 <div id="ref-sokolove1978" class="csl-entry">
 Sokolove, P. G., &amp; Bushell, W. N. (1978). The chi square

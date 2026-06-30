@@ -10,14 +10,17 @@ test_that("rest.crespo detects multiple consolidated rest bouts", {
   expect_gt(stats::median(rp$rest_periods$duration_min), 300)   # about 8 h nightly rest
 })
 
-test_that("rest.crespo finds more than one bout per day with a daytime rest", {
-  ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 4 * 1440)
+test_that("rest.crespo consolidates a short daytime rest into the main period", {
+  ts <- seq(as.POSIXct("2024-01-01 08:00", tz = "UTC"), by = 60, length.out = 4 * 1440)
   h  <- as.numeric(format(ts, "%H")) + as.numeric(format(ts, "%M")) / 60
   doy <- as.integer(format(ts, "%j"))
   counts <- ifelse(h >= 23 | h < 7, 5, 300)
-  counts[h >= 13 & h < 16 & doy == (min(doy) + 1L)] <- 5   # a 3 h daytime rest, day 2
+  counts[h >= 13 & h < 16 & doy == sort(unique(doy))[2]] <- 5   # a 3 h daytime rest
   rp <- rest.crespo(counts, ts)
-  expect_gt(rp$mean_bouts_per_day, 1)
+  # Crespo detects MAIN rest periods (Eq 4 ~8 h smoothing), so the short daytime
+  # rest is suppressed rather than reported as its own bout.
+  expect_lte(rp$mean_bouts_per_day, 1.25)
+  expect_true(all(rp$rest_periods$duration_min > 180))
 })
 
 test_that("rest.crespo endpoints are active and the table is well formed", {

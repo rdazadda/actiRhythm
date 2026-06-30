@@ -14,11 +14,12 @@
 
 #' Change-Point Detection of Sleep and Wake Onsets
 #'
-#' Locates the sleep-onset and wake-onset time of each circadian cycle by the
-#' cosinor-anchored change-point method of CircaCP (Chen and Sun 2024). A fixed
-#' 24-hour cosinor is fitted to bound each rest and active span roughly, and the
-#' precise transition inside each bound is then placed with a single change point
-#' on the raw counts. The result is a per-night sleep-onset / wake-onset table.
+#' Locates the sleep-onset and wake-onset time of each circadian cycle with a
+#' cosinor-anchored mean-shift change point. A fixed 24-hour cosinor bounds each
+#' rest and active span roughly (the cosinor anchoring follows CircaCP, Chen and
+#' Sun 2024), and the precise transition inside each bound is then placed with a
+#' single least-squares mean-shift change point on the raw counts. The result is a
+#' per-night sleep-onset / wake-onset table.
 #' A single rest-activity transition rate (such as
 #' \code{\link{state.transitions}}) cannot localise this timing.
 #'
@@ -26,8 +27,9 @@
 #' @param timestamps POSIXct timestamps, one per value.
 #' @param period Cosinor period in minutes (default 1440, one day).
 #' @param thr Dichotomisation threshold on the range-scaled cosine, in
-#'   \eqn{[0, 1]} (default 0.2): the fitted curve above \code{thr} is the rough
-#'   active span, below it the rough rest span.
+#'   \eqn{[0, 1]} (default 0.2, approximating CircaCP's lower-20\% sleep cut): the
+#'   fitted curve above \code{thr} is the rough active span, below it the rough
+#'   rest span.
 #' @param window_minutes Half-width of the search window, in minutes, in which
 #'   each rough boundary is refined to a change point (default 240).
 #'
@@ -40,10 +42,6 @@
 #'
 #' @references
 #' \insertRef{chensun2024}{actiRhythm}
-#'
-#' \insertRef{chen2006}{actiRhythm}
-#'
-#' \insertRef{killick2012}{actiRhythm}
 #'
 #' @seealso \code{\link{state.transitions}}, \code{\link{sleep.regularity.index}}
 #'
@@ -101,11 +99,10 @@ sleep.changepoints <- function(counts, timestamps, period = 1440, thr = 0.2,
   B <- which(E != 0)                 # rough cosinor boundaries
   if (length(B) < 2L) return(na_out())
 
-  yp <- y + 0.1
   refined <- integer(length(B)); types <- character(length(B))
   for (i in seq_along(B)) {
     lo <- max(1L, B[i] - window_minutes); hi <- min(n, B[i] + window_minutes)
-    k <- .circa_cp_detect(yp[lo:hi])
+    k <- .circa_cp_detect(y[lo:hi])
     refined[i] <- if (is.na(k)) B[i] else lo + k - 1L
     types[i] <- if (E[B[i]] == 1L) "wake onset" else "sleep onset"
   }
@@ -144,7 +141,7 @@ sleep.changepoints <- function(counts, timestamps, period = 1440, thr = 0.2,
 
 #' @export
 print.actiRhythm_changepoints <- function(x, ...) {
-  cat("Change-Point Sleep/Wake Detection (CircaCP)\n\n")
+  cat("Change-Point Sleep/Wake Detection\n\n")
   if (isTRUE(x$insufficient)) { cat("  Insufficient data for detection\n\n"); return(invisible(x)) }
   cat(sprintf("  Span:           %.1f days (%d epochs)\n", x$span_days, x$n))
   cat(sprintf("  Cosinor acrophase: %.1f h\n", x$cosinor["acrophase_hours"]))

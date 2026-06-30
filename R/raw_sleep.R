@@ -21,7 +21,7 @@
 
 #' Non-Wear Detection from Raw Acceleration
 #'
-#' Flags non-wear time from raw acceleration by the van Hees et al. (2011)
+#' Flags non-wear time from raw acceleration by the van Hees et al. (2013) / GGIR
 #' standard-deviation-and-range rule: a block is non-wear when, over a window
 #' centred on it (default 60 minutes), at least two of the three axes have both a
 #' standard deviation below \code{sd_crit} and a value range below
@@ -34,7 +34,9 @@
 #' @param device Device brand or \code{"auto"} (file input only).
 #' @param epoch Output epoch length in seconds for the returned mask (default 5,
 #'   matching \code{\link{rest.spt}}).
-#' @param block Internal classification block length in seconds (default 300).
+#' @param block Internal classification block length in seconds (default 300;
+#'   GGIR steps the 60-minute window in 15-minute blocks, so boundaries can differ
+#'   by a few minutes from GGIR's grid).
 #' @param window Window in seconds over which the SD and range are taken (default 3600).
 #' @param sd_crit Per-axis SD threshold in g (default 0.013).
 #' @param range_crit Per-axis range threshold in g (default 0.050).
@@ -44,7 +46,7 @@
 #'   non-wear. Never errors.
 #'
 #' @references
-#' \insertRef{vanhees2011}{actiRhythm}
+#' \insertRef{vanhees2013}{actiRhythm}
 #'
 #' @seealso \code{\link{rest.spt}}, \code{\link{raw.metrics}}
 #'
@@ -242,7 +244,8 @@ sib.vanhees <- function(anglez, angle_thresh = 5, time_thresh = 5, epoch_length 
 #'
 #' @return An object of class \code{actiRhythm_sleep}: a data frame with one row
 #'   per night (\code{date}, sleep \code{onset}, \code{offset}, \code{tst} hours,
-#'   \code{waso} minutes, \code{efficiency}, \code{n_awakenings}, \code{mid_sleep}).
+#'   \code{waso} minutes, \code{efficiency} as a 0-1 fraction (TST/SPT),
+#'   \code{n_awakenings}, \code{mid_sleep}).
 #'
 #' @references
 #' \insertRef{vanhees2018}{actiRhythm}

@@ -53,9 +53,9 @@ where \eqn{\Sigma} is the covariance of the estimated coefficients and
 \eqn{df} the residual degrees of freedom. The averaged-profile cosinor design
 used by \code{cosinor.analysis()} has orthogonal cosine and sine columns, so
 \eqn{\Sigma} is (very nearly) diagonal with equal variances
-\eqn{\sigma^2}; in that case \code{se_amplitude} (delta method) equals
-\eqn{\sigma}, which is how \eqn{\Sigma} is reconstructed when it is not
-supplied explicitly. The point estimate is recovered from amplitude and
+\eqn{\sigma^2}; in that case \code{se_amplitude} equals the standard error of each
+coefficient \eqn{\sqrt{\mathrm{Var}(\beta)}}, which is how \eqn{\Sigma} is
+reconstructed when it is not supplied explicitly. The point estimate is recovered from amplitude and
 acrophase as \eqn{\beta_1 = A cos(\phi)}, \eqn{\beta_2 = A sin(\phi)} with
 \eqn{\phi = acrophase \cdot 2\pi / T}.
 }

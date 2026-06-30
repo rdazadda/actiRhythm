@@ -54,14 +54,17 @@ circadian.spectrogram <- function(counts, timestamps, window_hours = 72,
     if (is.null(pg) || length(pg$scanned) == 0L) return(NULL)
     data.frame(center_time = t0 + (s + window_hours / 2) * 3600,
                window_start_h = s, period_h = pg$scanned, power = pg$Qp,
-               stringsAsFactors = FALSE)
+               rel = pg$Qp / pg$critical, stringsAsFactors = FALSE)
   })
   long <- do.call(rbind, rows)
   if (is.null(long) || nrow(long) == 0L) return(insuf())
 
-  p <- ggplot2::ggplot(long, ggplot2::aes(.data$center_time, .data$period_h, fill = .data$power)) +
+  peak <- do.call(rbind, by(long, long$center_time, function(d) d[which.max(d$rel), ]))
+  p <- ggplot2::ggplot(long, ggplot2::aes(.data$center_time, .data$period_h, fill = .data$rel)) +
     ggplot2::geom_tile() +
-    ggplot2::scale_fill_viridis_c(name = "Power") +
+    ggplot2::scale_fill_viridis_c(name = "Qp / threshold") +
+    ggplot2::geom_line(data = peak, ggplot2::aes(.data$center_time, .data$period_h),
+                       colour = "white", linewidth = 0.4, inherit.aes = FALSE) +
     ggplot2::geom_hline(yintercept = 24, linetype = "dashed", colour = "white", linewidth = 0.3) +
     ggplot2::labs(x = "Time", y = "Period (hours)",
                   title = "Circadian Spectrogram (period over time)") +

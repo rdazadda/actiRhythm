@@ -252,7 +252,7 @@ probability in <code>$p_value</code> <span class="citation">(<a href="#ref-balue
 <code class="sourceCode R"><span><span class="va">per</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/circadian.period.html">circadian.period</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>tau <span class="op">=</span> <span class="va">per</span><span class="op">$</span><span class="va">tau</span>, p_value <span class="op">=</span> <span class="va">per</span><span class="op">$</span><span class="va">p_value</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          tau      p_value </span></span>
-<span><span class="co">#&gt; 2.543077e+01 9.388299e-97</span></span></code></pre></div>
+<span><span class="co">#&gt; 2.448889e+01 4.916458e-98</span></span></code></pre></div>
 <p>The strongest cycle here sits near 25.4 hours, meaningfully longer
 than a solar day, and the false-alarm probability is essentially zero,
 so the cycle itself is not in doubt. Its exact length is less certain.
@@ -268,9 +268,9 @@ more.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/period.ci.html">period.ci</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, n_boot <span class="op">=</span> <span class="fl">50</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Circadian Period with Bootstrap Confidence Interval</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   tau:      24.980 h</span></span>
-<span><span class="co">#&gt;   95% CI:   [23.484, 26.342] h</span></span>
-<span><span class="co">#&gt;   SE:       1.220 h</span></span>
+<span><span class="co">#&gt;   tau:      24.895 h</span></span>
+<span><span class="co">#&gt;   95% CI:   [23.373, 26.193] h</span></span>
+<span><span class="co">#&gt;   SE:       1.195 h</span></span>
 <span><span class="co">#&gt;   Method:   circular block residual bootstrap (50/50 valid reps)</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_periodogram.html">plot_periodogram</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span></code></pre></div>
@@ -384,7 +384,7 @@ Sun, 2024</a>)</span>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sleep.changepoints.html">sleep.changepoints</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="va">cp</span></span>
-<span><span class="co">#&gt; Change-Point Sleep/Wake Detection (CircaCP)</span></span>
+<span><span class="co">#&gt; Change-Point Sleep/Wake Detection</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Span:           6.9 days (9919 epochs)</span></span>
 <span><span class="co">#&gt;   Cosinor acrophase: 20.5 h</span></span>
@@ -479,7 +479,7 @@ children-and-adolescents alternative.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span></span>
 <span><span class="co">#&gt; state</span></span>
 <span><span class="co">#&gt;    S    W </span></span>
-<span><span class="co">#&gt; 7646 2273</span></span></code></pre></div>
+<span><span class="co">#&gt; 7641 2278</span></span></code></pre></div>
 <p>Count-based scoring labels every low-activity epoch as sleep, so a
 mostly sedentary recording scores a high sleep fraction; what matters
 downstream is how regular that label is from day to day.
@@ -488,7 +488,7 @@ probability that two epochs 24 hours apart share the same state <span class="cit
 2017</a>)</span>.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/sleep.regularity.index.html">sleep.regularity.index</a></span><span class="op">(</span><span class="va">state</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 58.46</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 58.27</span></span></code></pre></div>
 <p>When you also have explicit sleep periods,
 <code><a href="../reference/social.jet.lag.html">social.jet.lag()</a></code> returns the work-day to free-day mid-sleep
 difference <span class="citation">(<a href="#ref-wittmann2006">Wittmann
@@ -500,28 +500,28 @@ inactivity during sleep that tracks ultradian sleep structure <span class="citat
 <h2 id="pooling-the-evidence">Pooling the evidence<a class="anchor" aria-label="anchor" href="#pooling-the-evidence"></a>
 </h2>
 <p>Each test above answers “is there a rhythm?” in its own language.
-<code><a href="../reference/consensus.rhythmicity.html">consensus.rhythmicity()</a></code> runs four of them, the cosinor
-F-test, the Bingham ellipse, the Lomb-Scargle false-alarm probability,
-and the chi-square periodogram, and reports both a majority vote and a
-Fisher-combined p-value <span class="citation">(<a href="#ref-fisher1925">Fisher, 1925</a>)</span>.</p>
+<code><a href="../reference/consensus.rhythmicity.html">consensus.rhythmicity()</a></code> runs three of them, the cosinor
+F-test, the Lomb-Scargle false-alarm probability, and the chi-square
+periodogram, and reports both a majority vote and a Cauchy-combined
+p-value <span class="citation">(<a href="#ref-liu2020">Liu &amp; Xie,
+2020</a>)</span>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/consensus.rhythmicity.html">consensus.rhythmicity</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Consensus Rhythmicity (multi-method)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   cosinor F-test         p=0.0024  rhythmic</span></span>
-<span><span class="co">#&gt;   Bingham ellipse                  rhythmic</span></span>
 <span><span class="co">#&gt;   Lomb-Scargle FAP       p=&lt;2e-16  rhythmic</span></span>
 <span><span class="co">#&gt;   chi-square periodogram p=1       no</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Votes:        3 / 4 methods</span></span>
-<span><span class="co">#&gt;   Fisher p:     &lt;2e-16</span></span>
+<span><span class="co">#&gt;   Votes:        2 / 3 methods</span></span>
+<span><span class="co">#&gt;   Combined p:   &lt;2e-16</span></span>
 <span><span class="co">#&gt;   Consensus:    RHYTHMIC (alpha = 0.05)</span></span></code></pre></div>
-<p>For this recording three of the four tests agree that a rhythm is
-present and the Fisher-combined p-value is effectively zero, so the
-evidence leans firmly toward a real rhythm even where one method on its
-own might hesitate. Read that combined p-value as indicative rather than
-exact, though: the four tests run on the same series, so they are not
-independent, which is the assumption Fisher’s method rests on.</p>
+<p>For this recording the tests agree that a rhythm is present and the
+combined p-value is effectively zero, so the evidence leans firmly
+toward a real rhythm even where one method on its own might hesitate.
+The three tests run on the same series, so they are not independent; the
+Cauchy combination stays valid under that dependence, where Fisher’s
+method would not.</p>
 </div>
 <div class="section level2">
 <h2 id="a-one-row-summary">A one-row summary<a class="anchor" aria-label="anchor" href="#a-one-row-summary"></a>
@@ -539,7 +539,7 @@ across subjects.</p>
 <span>  dfa_alpha <span class="op">=</span> <span class="fu"><a href="../reference/fractal.dfa.html">fractal.dfa</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span><span class="op">$</span><span class="va">alpha</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;              IS     IV   RA      tau amplitude acrophase dfa_alpha</span></span>
-<span><span class="co">#&gt; cos_term 0.2279 1.0008 0.98 25.43077    295.63     16.92 0.9263546</span></span></code></pre></div>
+<span><span class="co">#&gt; cos_term 0.2279 1.0008 0.98 24.48889    295.63     16.92 0.9263546</span></span></code></pre></div>
 <p>Read across, this row is one person: a strongly amplitude-modulated
 rhythm whose timing is irregular from day to day, running on a period a
 little over 24 hours.</p>
@@ -562,7 +562,7 @@ two recordings, so this runs as a real, if small, batch.</p>
 <span><span class="op">)</span></span>
 <span><span class="va">batch</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"file"</span>, <span class="st">"IS"</span>, <span class="st">"IV"</span>, <span class="st">"RA"</span>, <span class="st">"period_tau"</span>, <span class="st">"rhythm_p_value"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                      file     IS     IV     RA period_tau rhythm_p_value</span></span>
-<span><span class="co">#&gt; 1 MOS2E39230594_60sec.agd 0.2279 1.0008 0.9800   25.43077    0.002396228</span></span>
+<span><span class="co">#&gt; 1 MOS2E39230594_60sec.agd 0.2279 1.0008 0.9800   24.48889    0.002396228</span></span>
 <span><span class="co">#&gt; 2  MOS2E3923063660sec.agd 0.4230 1.2687 0.7706   24.09425    0.050151893</span></span></code></pre></div>
 <p>Each row is one subject, described by the same metrics as the
 walkthrough above, and already the two differ: the second is steadier
@@ -652,10 +652,6 @@ Automatic identification of activity-rest periods based on actigraphy.
 <em>Medical &amp; Biological Engineering &amp; Computing</em>,
 <em>50</em>(4), 329–340. <a href="https://doi.org/10.1007/s11517-012-0875-y" class="external-link">https://doi.org/10.1007/s11517-012-0875-y</a>
 </div>
-<div id="ref-fisher1925" class="csl-entry">
-Fisher, R. A. (1925). <em>Statistical methods for research workers</em>.
-Oliver; Boyd.
-</div>
 <div id="ref-hu2001" class="csl-entry">
 Hu, K., Ivanov, P. C., Chen, Z., Carpena, P., &amp; Stanley, H. E.
 (2001). Effect of trends on detrended fluctuation analysis. <em>Physical
@@ -679,6 +675,12 @@ Bennett, D. A., &amp; Saper, C. B. (2011). Quantification of the
 fragmentation of rest-activity patterns in elderly individuals using a
 state transition analysis. <em>Sleep</em>, <em>34</em>(11), 1569–1581.
 <a href="https://doi.org/10.5665/sleep.1400" class="external-link">https://doi.org/10.5665/sleep.1400</a>
+</div>
+<div id="ref-liu2020" class="csl-entry">
+Liu, Y., &amp; Xie, J. (2020). Cauchy combination test: A powerful test
+with analytic p-value calculation under arbitrary dependency structures.
+<em>Journal of the American Statistical Association</em>,
+<em>115</em>(529), 393–402. <a href="https://doi.org/10.1080/01621459.2018.1554485" class="external-link">https://doi.org/10.1080/01621459.2018.1554485</a>
 </div>
 <div id="ref-lomb1976" class="csl-entry">
 Lomb, N. R. (1976). Least-squares frequency analysis of unequally spaced

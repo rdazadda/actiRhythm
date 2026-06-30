@@ -36,7 +36,8 @@ The two epoch scorers are weighted windows over the counts.
 **Cole-Kripke** ([Cole et al., 1992](#ref-cole1992)) forms a sleep index
 from a seven-epoch window: four epochs before the current one
 ($`P_4 \dots P_1`$), the current epoch $`C`$, and two after
-($`N_1, N_2`$). Counts are scaled by 100 and capped:
+($`N_1, N_2`$). The weights are Cole’s mean-activity variant (Table 6);
+the $`/100`$ scaling and cap are implementation conventions:
 ``` math
 D = 0.001\,(106\,P_4 + 54\,P_3 + 58\,P_2 + 76\,P_1 + 230\,C + 74\,N_1 + 67\,N_2),
 ```
@@ -45,14 +46,15 @@ and scores the epoch **sleep when $`D < 1`$**. Webster’s rescoring rules
 bouts bracketed by sustained wake.
 
 **Sadeh** ([Sadeh et al., 1994](#ref-sadeh1994)) uses an eleven-epoch
-window (five each side) with counts capped at 300:
+window (five each side):
 ``` math
 SI = 7.601 - 0.065\,\overline{A} - 1.08\,\mathrm{NAT} - 0.056\,s - 0.703\,\log(C+1),
 ```
 where $`\overline{A}`$ is the window mean, $`\mathrm{NAT}`$ the count of
 epochs in $`[50,100)`$, $`s`$ the standard deviation over the current
 and five preceding epochs, and $`C`$ the current count. The epoch is
-scored **sleep when $`SI > -4`$**.
+scored **sleep when $`SI \ge 0`$**; set `wake_threshold = -4` and
+`clip = 300` for ActiLife parity.
 
 The change-point detector ([Chen & Sun, 2024](#ref-chensun2024)) is
 geometric rather than weighted: it fits a 24-hour cosinor to bound each
@@ -114,7 +116,7 @@ knitr::kable(
 | scorer      | sleep_recall | wake_recall |
 |:------------|-------------:|------------:|
 | Cole-Kripke |        0.992 |       0.999 |
-| Sadeh       |        0.993 |       1.000 |
+| Sadeh       |        0.988 |       1.000 |
 
 Both scorers label the planted 23:00-07:00 window sleep and the day
 wake. {.table}
@@ -172,14 +174,14 @@ agd <- agd.counts(read.agd(example_agd(1), verbose = FALSE))
 table(cole_kripke = sleep.cole.kripke(agd$axis1))
 #> cole_kripke
 #>    S    W 
-#> 7646 2273
+#> 7641 2278
 table(sadeh       = sleep.sadeh(agd$axis1))
 #> sadeh
 #>    S    W 
-#> 7190 2729
+#> 6757 3162
 cp_real <- sleep.changepoints(agd$axis1, agd$timestamp)
 cp_real
-#> Change-Point Sleep/Wake Detection (CircaCP)
+#> Change-Point Sleep/Wake Detection
 #> 
 #>   Span:           6.9 days (9919 epochs)
 #>   Cosinor acrophase: 20.5 h
@@ -227,14 +229,14 @@ them are wrong.
 
 cp <- sleep.changepoints(agd$axis1, agd$timestamp)   # one main bout per night
 rp <- rest.periods(agd$axis1, agd$timestamp)         # every bout (Roenneberg/MASDA)
-rc <- rest.crespo(agd$axis1, agd$timestamp)          # every bout (Crespo morphology)
+rc <- rest.crespo(agd$axis1, agd$timestamp)          # main rest periods (Crespo morphology)
 hm <- rest.hmm(agd$axis1, agd$timestamp, seed = 1)   # state-space alternative
 
 knitr::kable(
   data.frame(
     detector = c("sleep.changepoints", "rest.periods", "rest.crespo", "rest.hmm"),
     question = c("one main bout / night", "every bout (naps incl.)",
-                 "every bout (naps incl.)", "latent rest state"),
+                 "main rest periods", "latent rest state"),
     bouts    = c(cp$n_episodes, rp$n_bouts, rc$n_rest_periods, NA),
     family   = c("CircaCP", "Roenneberg", "Crespo", "Gaussian HMM")),
   caption = "Four detectors, four counts: the difference is the question, not the accuracy."
@@ -245,30 +247,44 @@ knitr::kable(
 |:-------------------|:------------------------|------:|:-------------|
 | sleep.changepoints | one main bout / night   |     7 | CircaCP      |
 | rest.periods       | every bout (naps incl.) |     9 | Roenneberg   |
-| rest.crespo        | every bout (naps incl.) |     4 | Crespo       |
+| rest.crespo        | main rest periods       |     4 | Crespo       |
 | rest.hmm           | latent rest state       |    NA | Gaussian HMM |
 
 Four detectors, four counts: the difference is the question, not the
 accuracy. {.table}
 
+``` r
+
+plot_rest_comparison(agd$axis1, agd$timestamp)
+```
+
+![The four detectors as a strip: the activity series on top, then each
+detector's rest bands on a shared time axis. sleep.changepoints and
+rest.crespo report the main night, while rest.periods and rest.hmm also
+catch the daytime nap.](sleep_files/figure-html/rest-comparison-1.png)
+
+The four detectors as a strip: the activity series on top, then each
+detector’s rest bands on a shared time axis. sleep.changepoints and
+rest.crespo report the main night, while rest.periods and rest.hmm also
+catch the daytime nap.
+
 [`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md)
 ([Chen & Sun, 2024](#ref-chensun2024)) returns one episode per circadian
-cycle: the single dominant night-time rest bout.
+cycle: the single dominant night-time rest bout, and
+[`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)
+([Crespo et al., 2012](#ref-crespo2012)) likewise reports the **main**
+rest and activity periods, its roughly eight-hour median window (Eq 4)
+suppressing short within-period transitions.
 [`rest.periods()`](https://rdazadda.github.io/actiRhythm/reference/rest.periods.md)
 ([Loock et al., 2021](#ref-loock2021); [Roenneberg et al.,
-2015](#ref-roenneberg2015)) and
-[`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)
-([Crespo et al., 2012](#ref-crespo2012)) instead consolidate **every**
-rest bout, so a daytime nap or a fragmented night becomes its own row.
-They reach that result by two independent routes, Roenneberg’s
-trend-and-correlation consolidation versus Crespo’s
-median-filter-and-morphology pipeline, which is why their bout counts
-differ even though both aim to catch all rest.
+2015](#ref-roenneberg2015)) instead returns **every** consolidated bout,
+so a daytime nap or a fragmented night becomes its own row, by
+Roenneberg’s trend-and-correlation route.
 [`rest.hmm()`](https://rdazadda.github.io/actiRhythm/reference/rest.hmm.md)
 ([Huang et al., 2018](#ref-huang2018hmm)) is the state-space
 alternative: rather than thresholding each epoch, it fits a Gaussian
 hidden Markov model whose latent rest state *persists*, and reports a
-24-hour rest-occupancy profile.
+24-hour rest-probability profile.
 
 ``` r
 
@@ -287,15 +303,17 @@ The HMM’s probability of being in the rest state across the day. The
 state-space model infers the rest band, centred on the night, without a
 fixed count threshold.
 
-The lesson is the rule: if you report
+The lesson is the rule:
 [`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md)
-you are reporting *the night*; if you report
-[`rest.periods()`](https://rdazadda.github.io/actiRhythm/reference/rest.periods.md)
-or
+and
 [`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)
-you are reporting *all rest*, naps and all. Choose the one whose
-question matches yours, rather than treating the differing bout counts
-as a contradiction.
+report *the main rest period*;
+[`rest.periods()`](https://rdazadda.github.io/actiRhythm/reference/rest.periods.md)
+reports *all rest*, naps and all;
+[`rest.hmm()`](https://rdazadda.github.io/actiRhythm/reference/rest.hmm.md)
+reports a *latent-state probability*. Choose the one whose question
+matches yours, rather than treating the differing bout counts as a
+contradiction.
 
 ## The wider sleep-and-rest family
 
@@ -315,7 +333,7 @@ hm$emission[, c("state", "label", "mean_transformed")]
 c(time_at_rest = mean(hm$state_path == 1L),
   rest_persistence = hm$transition[1, 1], AIC = hm$AIC)
 #>     time_at_rest rest_persistence              AIC 
-#>     7.373727e-01     9.514564e-01    -1.604721e+05
+#>     7.373727e-01     9.514564e-01    -1.604701e+05
 ```
 
 **The ultradian structure within sleep.** Once you have sleep windows,
@@ -337,13 +355,26 @@ li
 #> Locomotor Inactivity During Sleep (LIDS)
 #> 
 #>   Sleep periods:    7
-#>   Mean LIDS period: 167.9 min
-#>   Mean MRI:         2.844
+#>   Mean LIDS period: 115.7 min
+#>   Mean MRI:         5.474
 ```
 
-The mean LIDS period lands in the ninety-minute-to-three-hour band
-expected of human sleep cycles, recovered from the inactivity signal
-alone.
+``` r
+
+plot_lids(agd$axis1, agd$timestamp, sleep_periods)
+```
+
+![The LIDS ultradian cycle across one sleep period: smoothed inactivity
+(navy) with the best-fit cosine (orange). The roughly 90-to-130-minute
+oscillation is the sleep-cycle rhythm read from movement
+alone.](sleep_files/figure-html/lids-plot-1.png)
+
+The LIDS ultradian cycle across one sleep period: smoothed inactivity
+(navy) with the best-fit cosine (orange). The roughly 90-to-130-minute
+oscillation is the sleep-cycle rhythm read from movement alone.
+
+The mean LIDS period lands in the roughly 90-to-130-minute band, near
+Winnebeck’s ~110 min median, recovered from the inactivity signal alone.
 
 ## Limitations
 

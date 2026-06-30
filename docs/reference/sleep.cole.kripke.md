@@ -48,11 +48,12 @@ length as `counts`.
 ## Details
 
 The sleep index uses a seven-epoch window (four before, the current
-epoch, and two after), with counts divided by 100 and capped at 300:
-\$\$D = 0.001 (106 P_4 + 54 P_3 + 58 P_2 + 76 P_1 + 230 C + 74 N_1 + 67
-N_2)\$\$ An epoch is scored sleep when \\D \< 1\\. Webster's rescoring
-then re-labels short sleep bouts that follow or are surrounded by
-sustained wake as wake.
+epoch, and two after): \$\$D = 0.001 (106 P_4 + 54 P_3 + 58 P_2 + 76
+P_1 + 230 C + 74 N_1 + 67 N_2)\$\$ These are Cole's
+mean-activity-per-minute weights (Table 6, p.466); the \\/100\\ count
+scaling and the 300 cap are implementation conventions. An epoch is
+scored sleep when \\D \< 1\\. Webster's rescoring then re-labels short
+sleep bouts that follow or are surrounded by sustained wake as wake.
 
 ## References
 
@@ -80,6 +81,6 @@ state <- sleep.cole.kripke(agd$axis1)
 table(state)
 #> state
 #>    S    W 
-#> 7646 2273 
+#> 7641 2278 
 # }
 ```

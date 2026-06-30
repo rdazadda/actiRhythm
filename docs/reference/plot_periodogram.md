@@ -39,9 +39,8 @@ plot_periodogram(counts, timestamps, from = 18, to = 30, ofac = 4)
 
 - ofac:
 
-  Integer oversampling factor passed to
-  [`lomb::lsp`](https://rdrr.io/pkg/lomb/man/lsp.html). Higher values
-  give a finer period grid (default `4`).
+  Integer oversampling factor for the period grid. Higher values give a
+  finer grid (default `4`).
 
 ## Value
 
@@ -53,16 +52,15 @@ returned instead; the function never errors.
 
 ## Details
 
-The full spectrum is obtained from
-`lomb::lsp(x, times, from, to, type = "period", ofac, plot = FALSE)`,
-whose `$scanned` component holds the trial periods (hours) and `$power`
-the corresponding normalized Lomb-Scargle power. The peak period `tau`
-and its `p_value` come from
-[`circadian.period`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md)
-so that the highlighted peak is exactly the value reported by the
-analytic function. The Lomb-Scargle periodogram is the least-squares
-spectral estimator for unevenly sampled series and is therefore
-appropriate for gappy actigraphy data, which an FFT cannot accommodate.
+The full standard-normalized Lomb-Scargle spectrum over the period
+window is computed by the package's own estimator (the same one behind
+[`circadian.period`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md));
+the peak period `tau`, its Baluev `p_value`, and the 0.05 false-alarm
+threshold line all come from that function, so the highlighted peak and
+threshold match the reported values. The Lomb-Scargle periodogram is the
+least-squares spectral estimator for unevenly sampled series and is
+therefore appropriate for gappy actigraphy data, which an FFT cannot
+accommodate.
 
 ## References
 

@@ -35,14 +35,28 @@ dict <- read.csv(
   system.file("extdata", "metrics_dictionary.csv", package = "actiRhythm"),
   stringsAsFactors = FALSE
 )
+# Render identifiers and object slots as code (monospace, literal), and the
+# free-text columns with their *, _, < and > shown literally rather than read as
+# Markdown emphasis, math, or tags.
+.code <- function(x) ifelse(nzchar(x), paste0("`", x, "`"), "")
+.txt  <- function(x) {
+  x <- gsub("([*_])", "\\\\\\1", x)
+  x <- gsub("<", "&lt;", x, fixed = TRUE)
+  gsub(">", "&gt;", x, fixed = TRUE)
+}
 show_family <- function(fam) {
   d <- dict[dict$family == fam, , drop = FALSE]
   knitr::kable(
-    d[, c("metric", "definition", "formula_units", "range_interpretation",
-          "reference", "output_object")],
-    col.names = c("Metric", "Definition", "Formula / units",
-                  "Range / interpretation", "Reference", "Output object"),
-    row.names = FALSE
+    data.frame(
+      Metric                   = .code(d$metric),
+      Definition               = .txt(d$definition),
+      `Formula / units`        = .txt(d$formula_units),
+      `Range / interpretation` = .txt(d$range_interpretation),
+      Reference                = d$reference,
+      `Output object`          = .code(d$output_object),
+      check.names = FALSE, stringsAsFactors = FALSE
+    ),
+    escape = FALSE, row.names = FALSE
   )
 }
 ```

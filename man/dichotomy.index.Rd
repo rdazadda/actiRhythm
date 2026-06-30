@@ -4,12 +4,10 @@
 \alias{dichotomy.index}
 \title{Dichotomy Index (I < O)}
 \usage{
-dichotomy.index(counts, timestamps, rest)
+dichotomy.index(counts, rest)
 }
 \arguments{
 \item{counts}{Numeric activity vector.}
-
-\item{timestamps}{POSIXct timestamps, one per value.}
 
 \item{rest}{A logical vector (TRUE = rest / in-bed), or a character vector of
 states where \code{"R"}/\code{"S"}/\code{"sleep"} mark rest. Same length as
@@ -29,7 +27,7 @@ to the active day, marking a well-separated rhythm.
 ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 2 * 1440)
 h  <- as.numeric(format(ts, "\%H"))
 counts <- ifelse(h >= 23 | h < 7, 5, 300)
-dichotomy.index(counts, ts, rest = h >= 23 | h < 7)
+dichotomy.index(counts, rest = h >= 23 | h < 7)
 
 }
 \references{

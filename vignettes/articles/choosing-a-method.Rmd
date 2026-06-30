@@ -44,9 +44,9 @@ Use the nonparametric route when you do not want to assume a sinusoid, and the
 cosinor route when you want interpretable parameters. They complement rather
 than compete: a high RA with a low IS, for instance, is a strong rhythm carried on
 irregular timing, something neither number says alone. To pool every test into
-one verdict, `consensus.rhythmicity()` runs the cosinor F-test, the Bingham
-ellipse, the Lomb-Scargle false-alarm probability, and the chi-square periodogram,
-and reports a majority vote and a Fisher-combined p-value [@fisher1925].
+one verdict, `consensus.rhythmicity()` runs the cosinor F-test, the Lomb-Scargle
+false-alarm probability, and the chi-square periodogram, and reports a majority vote
+and a Cauchy-combined p-value [@liu2020].
 
 ## What is the period, and is it really 24 hours?
 
@@ -94,8 +94,8 @@ away. Switch to the time-resolved tools:
   period [@huang1998].
 - `circadian.wavelet()`: the full time-frequency power surface.
 - `sleep.changepoints()`: dates a regime change directly from the counts.
-- `curve.registration()`: a chronotype phase that does not blur when the days
-  disagree [@krafty2019].
+- `curve.registration()`: a phase marker that does not blur when the days
+  disagree [@ramsay2005].
 
 These have their own walkthrough in the *Nonstationary and complex rhythms*
 article.

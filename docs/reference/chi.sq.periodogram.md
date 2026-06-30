@@ -61,14 +61,14 @@ periods in hours), `Qp` (the periodogram aligned to `scanned`),
 
 For each trial period \\P\\ (an integer number of epochs) the series is
 folded into \\P\\ phase bins over \\K = \lfloor N/P \rfloor\\ complete
-cycles and the statistic \$\$Q_P = \frac{N \sum\_{h=1}^{P}(\bar{A}\_h -
-\bar{A})^2}{\sum\_{i=1}^{N}(A_i - \bar{A})^2}\$\$ is computed, where
-\\\bar{A}\_h\\ is the mean at phase \\h\\ and \\\bar{A}\\ the grand mean
-over the \\N = KP\\ retained points. Under the null hypothesis of no
-rhythm at \\P\\, \\Q_P\\ follows a chi-square distribution with \\P-1\\
-degrees of freedom, giving the significance line
-\\\chi^2\_{P-1,\\1-\alpha}\\. The estimated period is the \\P\\
-maximising \\Q_P\\ within the search window.
+cycles and the statistic \$\$Q_P = \frac{K\\N
+\sum\_{h=1}^{P}(\bar{A}\_h - \bar{A})^2}{\sum\_{i=1}^{N}(A_i -
+\bar{A})^2}\$\$ is computed, where \\\bar{A}\_h\\ is the mean at phase
+\\h\\ and \\\bar{A}\\ the grand mean over the \\N = KP\\ retained
+points. Under the null hypothesis of no rhythm at \\P\\, \\Q_P\\ follows
+a chi-square distribution with \\P-1\\ degrees of freedom, giving the
+significance line \\\chi^2\_{P-1,\\1-\alpha}\\. The estimated period is
+the \\P\\ maximising \\Q_P\\ within the search window.
 
 ## References
 

@@ -81,7 +81,7 @@ window means onto the closest point of the unit sphere. Apply as
 <span>  sphere_crit <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  sd_crit <span class="op">=</span> <span class="fl">0.013</span>,</span>
 <span>  max_iter <span class="op">=</span> <span class="fl">1000</span>,</span>
-<span>  tol <span class="op">=</span> <span class="fl">1e-09</span></span>
+<span>  tol <span class="op">=</span> <span class="fl">1e-10</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -103,8 +103,8 @@ zero for a stable fit (default 0.3).</p></dd>
 
 
 <dt id="arg-sd-crit">sd_crit<a class="anchor" aria-label="anchor" href="#arg-sd-crit"></a></dt>
-<dd><p>Per-axis rolling SD (g) below which a 10-second window counts as
-non-movement (default 0.013).</p></dd>
+<dd><p>Per-axis SD (g) over consecutive (non-overlapping) 10-second
+windows below which a window counts as non-movement (default 0.013).</p></dd>
 
 
 <dt id="arg-max-iter">max_iter<a class="anchor" aria-label="anchor" href="#arg-max-iter"></a></dt>
@@ -112,7 +112,7 @@ non-movement (default 0.013).</p></dd>
 
 
 <dt id="arg-tol">tol<a class="anchor" aria-label="anchor" href="#arg-tol"></a></dt>
-<dd><p>Convergence tolerance on the calibration error (default 1e-9).</p></dd>
+<dd><p>Convergence tolerance on the calibration error (default 1e-10).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -141,7 +141,7 @@ returned with <code>calibrated = FALSE</code>.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">u</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.03</span>, <span class="fl">0.97</span>, <span class="fl">1.01</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.04</span>, <span class="op">-</span><span class="fl">0.03</span>, <span class="fl">0.02</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">300</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>         <span class="fl">300</span>, <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">900</span>, <span class="fl">0</span>, <span class="fl">0.004</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">auto.calibrate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">raw</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">raw</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, z <span class="op">=</span> <span class="va">raw</span><span class="op">[</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span>, fs <span class="op">=</span> <span class="fl">30</span><span class="op">)</span><span class="op">$</span><span class="va">scale</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.0301368 0.9701036 1.0099054</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.0301368 0.9701036 1.0099053</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

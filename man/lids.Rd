@@ -38,10 +38,10 @@ MRI across periods.
 \description{
 Quantifies the ultradian (sleep-cycle) oscillation of inactivity during sleep,
 following Winnebeck et al. (2018). Within each sleep period the activity is
-transformed to LIDS (\code{100 / (activity + 1)}), smoothed with a centered
-30-minute moving average, and fit with an ultradian cosine over a scan of
-candidate periods; the best period is the one maximising the Munich
-Rhythmicity Index (MRI).
+summed into 10-minute bins, transformed to LIDS (\code{100 / (activity + 1)}),
+smoothed with a centered 30-minute moving average, and fit with an ultradian
+cosine over a scan of candidate periods; the best period is the interior peak
+that maximises the Munich Rhythmicity Index (MRI).
 }
 \references{
 \insertRef{winnebeck2018}{actiRhythm}

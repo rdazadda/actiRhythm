@@ -39,8 +39,9 @@ A list with class `"actiRhythm_cosinor_ext"` containing:
 
 - amplitude:
 
-  Vertical span of the sigmoidal transition (`amp`); peak level is
-  `minimum + amplitude`.
+  Vertical span of the sigmoidal transition (`amp`); the asymptotic
+  ceiling is `minimum + amplitude`, with the fitted-curve maximum
+  slightly below it at a finite steepness.
 
 - alpha:
 

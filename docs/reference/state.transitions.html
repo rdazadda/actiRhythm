@@ -105,9 +105,11 @@ bout-length survival curve, and takes a single rate over the LOWESS
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An object of class <code>actiRhythm_transitions</code>: a list with
-<code>kRA</code>/<code>kAR</code> (sustained rest-to-active / active-to-rest rates),
-<code>pRA</code>/<code>pAR</code> (overall per-epoch transition probabilities,
-1 / mean bout length), bout counts, and the two transition curves.</p>
+<code>kRA</code>/<code>kAR</code> (sustained rest-to-active / active-to-rest rates over
+the LOWESS plateau), <code>pRA</code>/<code>pAR</code> (overall rest-to-active /
+active-to-rest rate, the reciprocal mean bout length), bout counts, and the
+two transition curves. The plateau search follows the pyActigraphy
+implementation of Lim et al. (2011).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

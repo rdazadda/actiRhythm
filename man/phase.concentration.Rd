@@ -11,7 +11,8 @@ phase.concentration(times_h, period = 24, n_perm = 2000)
 
 \item{period}{Period the times wrap on, in hours (default 24).}
 
-\item{n_perm}{Permutations for the Hermans-Rasson p-value (default 2000).}
+\item{n_perm}{Permutations for the Hermans-Rasson p-value (default 2000, a
+speed tradeoff; Landler et al. 2019 use 9999 for a finer minimum p-value).}
 }
 \value{
 An object of class \code{actiRhythm_phasetest}: mean direction, mean
@@ -22,7 +23,7 @@ p-values. Never errors.
 Tests whether a set of daily phase markers (acrophases, onsets, L5/M10 times)
 are concentrated rather than scattered around the clock. Reports the mean
 resultant vector, the Rayleigh test of uniformity (Fisher 1993), and the
-Hermans-Rasson test (Hermans and Rasson 2017), which catches multimodal
+Hermans-Rasson test (Landler et al. 2019), which catches multimodal
 clustering that Rayleigh misses.
 }
 \examples{

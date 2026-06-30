@@ -83,6 +83,7 @@ across the day.</p>
 <span>  <span class="va">timestamps</span>,</span>
 <span>  states <span class="op">=</span> <span class="fl">2L</span>,</span>
 <span>  transform <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sqrt"</span>, <span class="st">"log"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  decode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"posterior"</span>, <span class="st">"viterbi"</span><span class="op">)</span>,</span>
 <span>  max_iter <span class="op">=</span> <span class="fl">200L</span>,</span>
 <span>  tol <span class="op">=</span> <span class="fl">1e-06</span>,</span>
 <span>  n_starts <span class="op">=</span> <span class="fl">5L</span>,</span>
@@ -104,12 +105,19 @@ across the day.</p>
 
 <dt id="arg-states">states<a class="anchor" aria-label="anchor" href="#arg-states"></a></dt>
 <dd><p>Number of hidden states (default 2 = rest/active; 3 adds a
-moderate state).</p></dd>
+moderate state). Huang et al. (2018) fix three states; the BIC reported here
+can guide the choice.</p></dd>
 
 
 <dt id="arg-transform">transform<a class="anchor" aria-label="anchor" href="#arg-transform"></a></dt>
 <dd><p>Variance-stabilizing transform of the counts: <code>"sqrt"</code>
-(default), <code>"log"</code>, or <code>"none"</code>.</p></dd>
+(default), <code>"log"</code>, or <code>"none"</code>. Huang et al. fit on 5-minute
+averaged counts, so a coarse epoch is recommended.</p></dd>
+
+
+<dt id="arg-decode">decode<a class="anchor" aria-label="anchor" href="#arg-decode"></a></dt>
+<dd><p>State decoding: <code>"posterior"</code> (default, the local decoding
+of Huang et al. 2018) or <code>"viterbi"</code> (the global most-likely path).</p></dd>
 
 
 <dt id="arg-max-iter-tol">max_iter, tol<a class="anchor" aria-label="anchor" href="#arg-max-iter-tol"></a></dt>
@@ -128,8 +136,8 @@ moderate state).</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An object of class <code>actiRhythm_hmm</code>: the per-state emission means
 and SDs, the transition matrix, the decoded <code>state_path</code> and a
-<code>sleep_state</code> ("S"/"W") vector, a 24-hour state-occupancy profile, and
-the log-likelihood with AIC/BIC. Never errors.</p>
+<code>sleep_state</code> ("S"/"W") vector, a 24-hour profile of the mean posterior
+rest probability, and the log-likelihood with AIC/BIC. Never errors.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -152,7 +160,7 @@ the log-likelihood with AIC/BIC. Never errors.</p>
 <span class="r-in"><span><span class="fu">rest.hmm</span><span class="op">(</span><span class="va">counts</span>, <span class="va">ts</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> State-Space Rest-Activity Model (Gaussian HMM)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   States: 2   log-likelihood: -349.0   AIC: 710.1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   States: 2   log-likelihood: -349.0   AIC: 712.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  state mean_transformed sd_transformed  label</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1             2.26           1.07   rest</span>

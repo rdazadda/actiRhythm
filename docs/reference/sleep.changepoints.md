@@ -1,12 +1,12 @@
 # Change-Point Detection of Sleep and Wake Onsets
 
-Locates the sleep-onset and wake-onset time of each circadian cycle by
-the cosinor-anchored change-point method of CircaCP (Chen and Sun 2024).
-A fixed 24-hour cosinor is fitted to bound each rest and active span
-roughly, and the precise transition inside each bound is then placed
-with a single change point on the raw counts. The result is a per-night
-sleep-onset / wake-onset table. A single rest-activity transition rate
-(such as
+Locates the sleep-onset and wake-onset time of each circadian cycle with
+a cosinor-anchored mean-shift change point. A fixed 24-hour cosinor
+bounds each rest and active span roughly (the cosinor anchoring follows
+CircaCP, Chen and Sun 2024), and the precise transition inside each
+bound is then placed with a single least-squares mean-shift change point
+on the raw counts. The result is a per-night sleep-onset / wake-onset
+table. A single rest-activity transition rate (such as
 [`state.transitions`](https://rdazadda.github.io/actiRhythm/reference/state.transitions.md))
 cannot localise this timing.
 
@@ -39,8 +39,8 @@ sleep.changepoints(
 - thr:
 
   Dichotomisation threshold on the range-scaled cosine, in \\\[0, 1\]\\
-  (default 0.2): the fitted curve above `thr` is the rough active span,
-  below it the rough rest span.
+  (default 0.2, approximating CircaCP's lower-20\\ fitted curve above
+  `thr` is the rough active span, below it the rough rest span.
 
 - window_minutes:
 
@@ -63,16 +63,6 @@ detection algorithm for unlabelled actigraphy data.” *Royal Society Open
 Science*, **11**(5), 231468.
 [doi:10.1098/rsos.231468](https://doi.org/10.1098/rsos.231468) .
 
-Chen J, Gupta AK, Pan J (2006). “Information criterion and change point
-problem for regular models.” *Sankhya: The Indian Journal of
-Statistics*, **68**(2), 252–282.
-
-Killick R, Fearnhead P, Eckley IA (2012). “Optimal detection of
-changepoints with a linear computational cost.” *Journal of the American
-Statistical Association*, **107**(500), 1590–1598.
-[doi:10.1080/01621459.2012.737745](https://doi.org/10.1080/01621459.2012.737745)
-.
-
 ## See also
 
 [`state.transitions`](https://rdazadda.github.io/actiRhythm/reference/state.transitions.md),
@@ -86,7 +76,7 @@ ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 5 * 1440)
 h  <- as.numeric(format(ts, "%H"))
 counts <- ifelse(h >= 8 & h < 23, 300, 5) + pmax(0, stats::rnorm(length(ts), 0, 5))
 sleep.changepoints(counts, ts)
-#> Change-Point Sleep/Wake Detection (CircaCP)
+#> Change-Point Sleep/Wake Detection
 #> 
 #>   Span:           5.0 days (7200 epochs)
 #>   Cosinor acrophase: 15.5 h

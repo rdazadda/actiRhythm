@@ -3,14 +3,13 @@
 Tests whether the rest-activity rhythm differs between two groups. Fits
 each subject's cosinor with the same engine as
 [`cosinor.analysis`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md).
-An overall multivariate test (Hotelling's \\T^2\\ on the joint MESOR,
-cosine, and sine parameters, the Bingham et al. (1982)
-population-cosinor comparison) gives one omnibus p-value for whether the
-rhythms differ at all, accounting for the correlation between the cosine
-and sine components. The per-parameter two-sample (Welch) t-tests then
-break that result down for the MESOR, amplitude, and acrophase. The
-acrophase test is circular-aware, unwrapping the per-subject acrophases
-about their common circular mean.
+An Bingham et al. (1982) comparison is a 2-variate Hotelling's \\T^2\\
+on the cosine and sine coefficients (testing equal amplitude and
+acrophase, accounting for their correlation), with the MESOR compared by
+a separate pooled-variance F-test. Auxiliary per-parameter two-sample
+(Welch) t-tests break the result down for the MESOR, amplitude, and
+acrophase; the acrophase test is circular-aware, unwrapping the
+per-subject acrophases about their common circular mean.
 
 ## Usage
 
@@ -59,10 +58,11 @@ cosinor.compare(
 ## Value
 
 An object of class `actiRhythm_cosinor_compare`: a `joint` list (the
-omnibus Hotelling \\T^2\\, its F statistic, degrees of freedom and
-p-value), a `tests` data frame (one row per parameter, with each group's
-estimate, their difference, the t statistic, degrees of freedom, p-value
-and CI), and the per-subject coefficients.
+amplitude/acrophase Hotelling \\T^2\\ with its F, degrees of freedom and
+p-value, plus a separate MESOR F-test), a `tests` data frame of
+auxiliary per-parameter Welch comparisons (each group's estimate, the
+difference, the t statistic, p-value and CI), and the per-subject
+coefficients.
 
 ## References
 
@@ -91,7 +91,8 @@ cosinor.compare(act, as.POSIXct(ts, tz = "UTC", origin = "1970-01-01"), subj, gr
 #>   Groups:  A (n=5)  vs  B (n=5)
 #>   Period:  24 h
 #> 
-#>   Joint (Bingham/Hotelling T2):  F(3,6) = 572.83   p = 9.2e-08
+#>   Amplitude/acrophase (Bingham T2):  F(2,7) = 994.58   p = 2.55e-09
+#>   MESOR (Bingham F):                 F(1,8) = 1.70   p = 0.228
 #> 
 #>   mesor     diff = +0.70   t(5.6) = 1.31   p = 0.243
 #>   amplitude diff = -0.22   t(7.8) = -0.34   p = 0.743

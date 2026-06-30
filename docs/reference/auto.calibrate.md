@@ -15,7 +15,7 @@ auto.calibrate(
   sphere_crit = 0.3,
   sd_crit = 0.013,
   max_iter = 1000,
-  tol = 1e-09
+  tol = 1e-10
 )
 ```
 
@@ -36,8 +36,8 @@ auto.calibrate(
 
 - sd_crit:
 
-  Per-axis rolling SD (g) below which a 10-second window counts as
-  non-movement (default 0.013).
+  Per-axis SD (g) over consecutive (non-overlapping) 10-second windows
+  below which a window counts as non-movement (default 0.013).
 
 - max_iter:
 
@@ -45,7 +45,7 @@ auto.calibrate(
 
 - tol:
 
-  Convergence tolerance on the calibration error (default 1e-9).
+  Convergence tolerance on the calibration error (default 1e-10).
 
 ## Value
 
@@ -75,5 +75,5 @@ raw <- do.call(rbind, lapply(seq_len(40), function(i)
   matrix(rep(u[i, ] / c(1.03, 0.97, 1.01) + c(0.04, -0.03, 0.02), each = 300),
          300, 3) + rnorm(900, 0, 0.004)))
 auto.calibrate(data.frame(x = raw[, 1], y = raw[, 2], z = raw[, 3]), fs = 30)$scale
-#> [1] 1.0301368 0.9701036 1.0099054
+#> [1] 1.0301368 0.9701036 1.0099053
 ```

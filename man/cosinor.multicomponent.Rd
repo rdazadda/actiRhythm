@@ -29,10 +29,11 @@ of harmonics, the per-harmonic amplitude and acrophase, the MESOR, R-squared,
 and the full model-comparison table. Never errors.
 }
 \description{
-Fits cosinor models with one to several harmonics of the fundamental period and
-picks the best by an information criterion, so it captures a bimodal or
-asymmetric daily shape without your choosing the number of harmonics by hand
-(Cornelissen 2014). The single cosinor is the one-harmonic special case.
+Fits the multi-component (harmonic) cosinor of Cornelissen (2014) with one to
+several harmonics of the fundamental period and picks the number of harmonics by
+an information criterion (AIC or BIC, a package choice), so it captures a bimodal
+or asymmetric daily shape without your choosing the order by hand. The single
+cosinor is the one-harmonic special case.
 }
 \examples{
 ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 4 * 1440)

@@ -23,6 +23,7 @@ test_that("returns an NA structure on insufficient data", {
   m <- mfdfa(stats::rnorm(20))
   expect_s3_class(m, "actiRhythm_mfdfa")
   expect_true(is.na(m$alpha_dfa))
+  expect_no_error(print(m))                  # print must not throw on the NA result
 })
 
 test_that("tau(q) and the Holder spectrum are consistent", {

@@ -4,13 +4,25 @@
 \alias{sleep.sadeh}
 \title{Sadeh Sleep/Wake Scoring}
 \usage{
-sleep.sadeh(counts, epoch_length = 60, na_action = c("na", "wake", "zero"))
+sleep.sadeh(
+  counts,
+  epoch_length = 60,
+  wake_threshold = 0,
+  clip = NULL,
+  na_action = c("na", "wake", "zero")
+)
 }
 \arguments{
 \item{counts}{Numeric vector of activity counts (vertical axis).}
 
 \item{epoch_length}{Epoch length in seconds (default 60). The algorithm was
 validated on 60-second epochs; other lengths raise a warning.}
+
+\item{wake_threshold}{Sleep-index cut: an epoch is sleep when \eqn{SI \ge}
+\code{wake_threshold} (default 0, Sadeh 1994; ActiLife uses -4).}
+
+\item{clip}{Optional upper cap on counts before scoring (default \code{NULL},
+no cap; ActiLife and pyActigraphy use 300). Affects AVG, SD, and LG.}
 
 \item{na_action}{How NA-count epochs appear in the output: \code{"na"}
 (default) emits \code{NA}, so non-wear gaps are not read as sleep;
@@ -22,18 +34,18 @@ the same length as \code{counts}.
 }
 \description{
 Classifies each epoch as sleep or wake from activity counts with the Sadeh
-algorithm (Sadeh et al. 1994), validated for children and adolescents on
+algorithm (Sadeh et al. 1994), validated on adults and adolescents on
 one-minute epochs.
 }
 \details{
 The sleep index uses an eleven-epoch window (five before, the current epoch,
-and five after), with counts capped at 300:
+and five after):
 \deqn{SI = 7.601 - 0.065 \cdot AVG - 1.08 \cdot NATS - 0.056 \cdot SD - 0.703 \cdot LG}
 where \eqn{AVG} is the window mean, \eqn{NATS} the number of epochs with counts
 in [50, 100), \eqn{SD} the standard deviation over the current and five
 preceding epochs, and \eqn{LG = \log(\mathrm{count} + 1)}. An epoch is scored
-sleep when \eqn{SI > -4} (the threshold used by validated ActiGraph
-implementations).
+sleep when \eqn{SI \ge 0} (Sadeh et al. 1994). For ActiLife/ActiGraph parity,
+set \code{wake_threshold = -4} and \code{clip = 300}.
 }
 \examples{
 \donttest{

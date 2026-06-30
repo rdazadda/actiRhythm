@@ -117,8 +117,8 @@ NULL
 #'   (default \code{18}).
 #' @param to Numeric. Upper bound of the period search window, in hours
 #'   (default \code{30}).
-#' @param ofac Integer oversampling factor passed to \code{lomb::lsp}. Higher
-#'   values give a finer period grid (default \code{4}).
+#' @param ofac Integer oversampling factor for the period grid. Higher values give
+#'   a finer grid (default \code{4}).
 #'
 #' @return A \code{ggplot} object: Lomb-Scargle power (y) versus period in hours
 #'   (x), with the peak period and the 24 h reference annotated. On insufficient
@@ -127,15 +127,14 @@ NULL
 #'   annotation is returned instead; the function never errors.
 #'
 #' @details
-#' The full spectrum is obtained from
-#' \code{lomb::lsp(x, times, from, to, type = "period", ofac, plot = FALSE)},
-#' whose \code{$scanned} component holds the trial periods (hours) and
-#' \code{$power} the corresponding normalized Lomb-Scargle power. The peak period
-#' \code{tau} and its \code{p_value} come from \code{\link{circadian.period}} so
-#' that the highlighted peak is exactly the value reported by the analytic
-#' function. The Lomb-Scargle periodogram is the least-squares spectral estimator
-#' for unevenly sampled series and is therefore appropriate for gappy actigraphy
-#' data, which an FFT cannot accommodate.
+#' The full standard-normalized Lomb-Scargle spectrum over the period window is
+#' computed by the package's own estimator (the same one behind
+#' \code{\link{circadian.period}}); the peak period \code{tau}, its Baluev
+#' \code{p_value}, and the 0.05 false-alarm threshold line all come from that
+#' function, so the highlighted peak and threshold match the reported values. The
+#' Lomb-Scargle periodogram is the least-squares spectral estimator for unevenly
+#' sampled series and is therefore appropriate for gappy actigraphy data, which an
+#' FFT cannot accommodate.
 #'
 #' @references
 #' \insertRef{lomb1976}{actiRhythm}
@@ -219,6 +218,7 @@ plot_periodogram <- function(counts, timestamps, from = 18, to = 30,
   )
   tau <- if (!is.null(cp) && is.finite(cp$tau)) cp$tau else NA_real_
   p_value <- if (!is.null(cp) && is.finite(cp$p_value)) cp$p_value else NA_real_
+  thr <- .lomb_fap_power(0.05, lsp$n, lsp$W)
 
   accent <- .circ_color("blue")
   peak_col <- .circ_color("orange")
@@ -257,9 +257,15 @@ plot_periodogram <- function(counts, timestamps, from = 18, to = 30,
       )
   }
 
+  if (is.finite(thr)) {
+    p <- p + ggplot2::geom_hline(yintercept = thr, linetype = "dashed",
+                                 colour = "#c0392b", linewidth = 0.5)
+  }
+
   p +
     ggplot2::labs(
       title = ttl,
+      subtitle = if (is.finite(thr)) "dashed line = 0.05 false-alarm threshold (Baluev)" else NULL,
       x = "Period (hours)",
       y = "Lomb-Scargle power"
     ) +
@@ -570,6 +576,63 @@ plot_chisq <- function(counts, timestamps, from = 18, to = 30,
 }
 
 
+#' Bootstrap Period Confidence Interval
+#'
+#' Shows the distribution of bootstrap replicate periods from
+#' \code{\link{period.ci}} with the point estimate and the confidence-interval band
+#' marked, so the period estimate is read together with its uncertainty. Returns a
+#' \code{ggplot} object and never errors.
+#'
+#' @param counts Numeric activity vector.
+#' @param timestamps POSIXct timestamps, one per value.
+#' @param from,to Period search window in hours (default 18, 30).
+#' @param level Confidence level (default 0.95).
+#' @param n_boot Bootstrap replicates (default 200).
+#' @param seed Optional RNG seed for reproducibility.
+#'
+#' @return A \code{ggplot} object.
+#'
+#' @references
+#' \insertRef{kunsch1989}{actiRhythm}
+#'
+#' \insertRef{politis1992}{actiRhythm}
+#'
+#' @examples
+#' \donttest{
+#' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 7 * 1440)
+#' h  <- as.numeric(format(ts, "%H"))
+#' plot_period_ci(100 + 60 * cos(2 * pi * (h - 8) / 24) + rnorm(length(ts), 0, 20), ts)
+#' }
+#'
+#' @export
+plot_period_ci <- function(counts, timestamps, from = 18, to = 30, level = 0.95,
+                           n_boot = 200, seed = NULL) {
+  empty <- function() .circ_empty_plot("Insufficient data for the period CI",
+                                        title = "Bootstrap period CI")
+  ci <- tryCatch(period.ci(counts, timestamps, from = from, to = to, level = level,
+                           n_boot = n_boot, seed = seed),
+                 error = function(e) NULL)
+  if (is.null(ci) || is.null(ci$tau_boot) || length(ci$tau_boot) < 2L ||
+      !is.finite(ci$tau)) return(empty())
+
+  d <- data.frame(tau = ci$tau_boot)
+  col <- .circ_color("blue")
+  ggplot2::ggplot(d, ggplot2::aes(.data$tau)) +
+    ggplot2::annotate("rect", xmin = ci$ci_lower, xmax = ci$ci_upper,
+                      ymin = -Inf, ymax = Inf, fill = col, alpha = 0.12) +
+    ggplot2::geom_histogram(bins = 30, fill = col, alpha = 0.6, colour = "white") +
+    ggplot2::geom_vline(xintercept = ci$tau, colour = .circ_color("orange"), linewidth = 0.9) +
+    ggplot2::geom_vline(xintercept = c(ci$ci_lower, ci$ci_upper),
+                        linetype = "dashed", colour = "grey40") +
+    ggplot2::labs(
+      title = "Bootstrap period confidence interval",
+      subtitle = sprintf("tau = %.2f h, %g%% CI [%.2f, %.2f] (%d replicates)",
+                         ci$tau, 100 * level, ci$ci_lower, ci$ci_upper, ci$n_valid),
+      x = "Period (hours)", y = "Bootstrap replicates") +
+    .circ_theme()
+}
+
+
 #' Plot the Extended (Marler) Cosinor Fit on the 24-Hour Activity Profile
 #'
 #' Builds the averaged 24-hour activity profile and overlays two model fits for
@@ -865,11 +928,12 @@ plot_dfa <- function(counts) {
         data = seg_long,
         ggplot2::aes(x = .data$logn, y = .data$fit_seg),
         color = a2_col, linewidth = 1, linetype = "dashed"
-      )
+      ) +
+      ggplot2::geom_vline(xintercept = log10(bp), linetype = "dotted",
+                          colour = "grey55", linewidth = 0.4)
   }
 
   # Alpha annotation (top-left).
-  label <- sprintf("alpha == %.3f", dfa$alpha)
   if (has_split) {
     label <- sprintf(
       "alpha = %.3f\nalpha1 = %.3f (n < %g)\nalpha2 = %.3f (n >= %g)",
@@ -893,5 +957,109 @@ plot_dfa <- function(counts) {
       x = "log10(window size)",
       y = "log10(F(n))"
     ) +
+    .circ_theme()
+}
+
+
+#' Multifractal DFA Spectrum
+#'
+#' Two panels from \code{\link{mfdfa}}: the generalized Hurst exponent h(q) against
+#' q (flat = monofractal, decreasing = multifractal, with h(2) marked) and the
+#' singularity spectrum f(alpha) (the arch whose width measures multifractality).
+#' Returns a \code{ggplot} object and never errors.
+#'
+#' @param counts Numeric activity vector.
+#' @param q_values Moment orders to evaluate (default \code{seq(-5, 5, by = 0.5)}).
+#' @param detrend_order Within-window polynomial detrend order (default 1).
+#'
+#' @return A \code{ggplot} object.
+#'
+#' @references
+#' \insertRef{kantelhardt2002}{actiRhythm}
+#'
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' plot_mfdfa(cumsum(rnorm(8000)))
+#' }
+#'
+#' @export
+plot_mfdfa <- function(counts, q_values = seq(-5, 5, by = 0.5), detrend_order = 1L) {
+  empty <- function() .circ_empty_plot("Insufficient data for MF-DFA",
+                                        title = "Multifractal DFA")
+  m <- tryCatch(mfdfa(counts, q_values = q_values, detrend_order = detrend_order),
+                error = function(e) NULL)
+  if (is.null(m) || !any(is.finite(m$h_q))) return(empty())
+
+  lev <- c("Generalized Hurst h(q)", "Singularity spectrum")
+  hq <- data.frame(panel = lev[1], x = m$q_values, y = m$h_q)
+  sp <- data.frame(panel = lev[2], x = m$alpha,    y = m$f_alpha)
+  d  <- rbind(hq, sp)
+  d  <- d[is.finite(d$x) & is.finite(d$y), ]
+  if (nrow(d) < 2L) return(empty())
+  d$panel <- factor(d$panel, levels = lev)
+  href <- data.frame(panel = factor(lev[1], levels = lev), y = m$alpha_dfa)
+  col <- .circ_color("blue")
+
+  ggplot2::ggplot(d, ggplot2::aes(.data$x, .data$y)) +
+    ggplot2::geom_hline(data = href, ggplot2::aes(yintercept = .data$y),
+                        linetype = "dashed", colour = "grey55") +
+    ggplot2::geom_line(colour = col, linewidth = 0.7) +
+    ggplot2::geom_point(colour = col, size = 1.4) +
+    ggplot2::facet_wrap(~ panel, scales = "free", nrow = 1) +
+    ggplot2::labs(
+      title = "Multifractal DFA",
+      subtitle = sprintf("h(2) = %.3f, spectrum width = %.3f (q in [%g, %g])",
+                         m$alpha_dfa, m$width, min(q_values), max(q_values)),
+      x = "q  /  Holder alpha", y = "h(q)  /  f(alpha)") +
+    .circ_theme()
+}
+
+
+#' Multiscale Entropy Curve
+#'
+#' Sample entropy from \code{\link{multiscale.entropy}} against the coarse-graining
+#' scale, with the complexity index (area) shaded and the across-scale slope drawn.
+#' A curve that holds its entropy across scales marks a complex signal; one that
+#' falls is closer to noise. Returns a \code{ggplot} object and never errors.
+#'
+#' @param counts Numeric activity vector.
+#' @param scales Integer coarse-graining scales (default \code{1:20}).
+#' @param m Embedding dimension for sample entropy (default 2).
+#' @param r Tolerance as a fraction of the series SD (default 0.15).
+#'
+#' @return A \code{ggplot} object.
+#'
+#' @references
+#' \insertRef{costa2002}{actiRhythm}
+#'
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' plot_mse(rnorm(3000))
+#' }
+#'
+#' @export
+plot_mse <- function(counts, scales = 1:20, m = 2L, r = 0.15) {
+  empty <- function() .circ_empty_plot("Insufficient data for multiscale entropy",
+                                        title = "Multiscale entropy")
+  mse <- tryCatch(multiscale.entropy(counts, scales = scales, m = m, r = r),
+                  error = function(e) NULL)
+  if (is.null(mse) || !any(is.finite(mse$mse))) return(empty())
+  d <- data.frame(scale = mse$scales, sampen = mse$mse)
+  d <- d[is.finite(d$sampen), ]
+  if (nrow(d) < 2L) return(empty())
+  col <- .circ_color("blue")
+
+  ggplot2::ggplot(d, ggplot2::aes(.data$scale, .data$sampen)) +
+    ggplot2::geom_area(fill = col, alpha = 0.15) +
+    ggplot2::geom_line(colour = col, linewidth = 0.7) +
+    ggplot2::geom_point(colour = col, size = 1.6) +
+    ggplot2::geom_smooth(method = "lm", formula = y ~ x, se = FALSE,
+                         colour = .circ_color("orange"), linewidth = 0.6) +
+    ggplot2::labs(
+      title = "Multiscale entropy",
+      subtitle = sprintf("complexity (area) = %.2f, slope = %.3f", mse$area, mse$slope),
+      x = "Coarse-graining scale", y = "Sample entropy") +
     .circ_theme()
 }

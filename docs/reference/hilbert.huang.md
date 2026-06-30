@@ -59,8 +59,8 @@ e <- circadian.emd(100 + 60 * cos(2 * pi * th / 24), ts, epoch_length = 600)
 hilbert.huang(e)
 #> Hilbert-Huang Instantaneous Dynamics
 #> 
-#>   Instantaneous period: 24.85 h (SD 3.60)
-#>   Instantaneous amplitude: 58.8 (CV 0.25)
-#>   Time in 20-28 h band: 76%
+#>   Instantaneous period: 23.81 h (SD 3.59)
+#>   Instantaneous amplitude: 56.3 (CV 0.28)
+#>   Time in 20-28 h band: 92%
 #> 
 ```

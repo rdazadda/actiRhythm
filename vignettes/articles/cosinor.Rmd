@@ -57,9 +57,15 @@ A = \sqrt{\beta_1^2 + \beta_2^2}, \qquad
 \phi = \operatorname{atan2}(-\beta_2,\, \beta_1).
 $$
 
-Whether the rhythm is real is the **zero-amplitude F-test** of \(H_0\!: A = 0\)
-[@nelson1979], and the share of variance the cosine explains is the
-**percent-rhythm**, \(100\,R^2\).
+The reported acrophase is the clock time of the peak, \(-\phi\,\tau/(2\pi)\) reduced
+to \([0, \tau)\). The fit uses the averaged hour-of-day profile, so the zero-amplitude
+**F-test** of \(H_0\!: A = 0\) [@nelson1979] and the **percent-rhythm** \(100\,R^2\)
+[@cornelissen2014] are computed on the profile hours present (the F-test denominator
+is hours \(- 3\), not the raw epoch count).
+
+```{r schematic, fig.cap = "The cosinor parameters: the MESOR midline, the amplitude A and double amplitude 2A, and the acrophase as the clock time of the peak."}
+plot_cosinor_schematic()
+```
 
 ## Assumptions, and when they break
 
@@ -119,14 +125,17 @@ rhythmicity.test(agd$axis1, agd$timestamp, cosinor_result = cos)
 plot_extended_cosinor(agd$axis1, agd$timestamp)
 ```
 
-For the joint uncertainty in amplitude and acrophase together,
+For the joint uncertainty in amplitude and acrophase,
 `cosinor.confidence.ellipse()` returns the @bingham1982 ellipse; an ellipse that
-excludes the origin is the geometric form of "a
-detectable rhythm".
+excludes the origin is the geometric form of "a detectable rhythm".
 
 ```{r ellipse}
 el <- cosinor.confidence.ellipse(cos)
 c(excludes_origin = el$excludes_origin, rhythm_detected = el$rhythm_detected)
+```
+
+```{r ellipse-plot, fig.cap = "The amplitude-acrophase confidence ellipse on the clock plane. The arrow is the (amplitude, acrophase) estimate measured from the origin; because the ellipse excludes the origin, the rhythm is detectable."}
+plot_cosinor_ellipse(agd$axis1, agd$timestamp)
 ```
 
 ## Reading the numbers
@@ -171,15 +180,18 @@ c(n_harmonics = mc$n_harmonics, r_squared = mc$r_squared)
 mc$harmonics
 ```
 
+```{r multicomp-plot, fig.cap = "The single cosine (orange) misses the midday dip; the two-harmonic fit (blue) recovers it."}
+plot_multicomponent(siesta, ts)
+```
+
 So in practice, let the low percent-rhythm, not the significant p-value, send you to
 a richer model rather than a misleading single acrophase.
 
 ## The wider cosinor family
 
-- **Asymmetric and squared-off days**: `cosinor.extended()` and
-  `cosinor.antilogistic()` fit the sigmoidally transformed cosine of @marler2006,
-  adding shape parameters (steepness, up- and down-mesor times)
-  the single cosinor lacks.
+- **Asymmetric and squared-off days**: `cosinor.antilogistic()` fits the sigmoidally
+  transformed cosine of @marler2006, adding shape parameters (steepness, up- and
+  down-mesor times) the single cosinor lacks.
 
 ```{r antilog}
 fit <- cosinor.antilogistic(agd$axis1, agd$timestamp)
@@ -187,17 +199,20 @@ c(MESOR = fit$MESOR, amplitude = fit$amplitude, acrophase = fit$acrophase,
   UpMesor = fit$UpMesor, DownMesor = fit$DownMesor)
 ```
 
-- **Several harmonics, chosen objectively**: `cosinor.multicomponent()` adds
-  components and picks how many by AIC or BIC, as in the siesta example above.
+- **Several harmonics**: `cosinor.extended()` and `cosinor.multicomponent()` fit the
+  multi-component (harmonic) cosinor of @cornelissen2014 for non-sinusoidal days;
+  `cosinor.multicomponent()` chooses the number of components by AIC or BIC.
 - **The parametric amplitude as a ratio**: `circadian.quotient()` turns the cosinor
   amplitude and MESOR into the circadian quotient (amplitude / MESOR).
 - **Pooling the evidence**: `consensus.rhythmicity()` runs the cosinor F-test, the
-  Bingham ellipse, the Lomb-Scargle false-alarm probability, and the chi-square
-  periodogram together, and reports a majority vote with a combined p-value.
+  Lomb-Scargle false-alarm probability, and the chi-square periodogram, and reports a
+  majority vote with a Cauchy-combined p-value (valid although the tests share one
+  series).
 - **From one subject to a group**: `population.cosinor()` pools per-subject fits
   into a Bingham population-mean rhythm with confidence intervals, and
-  `cosinor.compare()` tests whether the rhythm differs between two groups with an
-  omnibus Hotelling \(T^2\) and per-parameter tests [@bingham1982]. See
+  `cosinor.compare()` tests whether the rhythm differs between two groups with the
+  Bingham amplitude-acrophase Hotelling \(T^2\), a separate MESOR test, and auxiliary
+  per-parameter comparisons [@bingham1982]. See
   [Choosing a method](choosing-a-method.html) for when to reach for each.
 
 ## Limitations

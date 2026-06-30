@@ -60,7 +60,9 @@ circadian.emd(
 
 An object of class `actiRhythm_emd`: the IMF matrix, the residual trend,
 per-IMF period and variance share, the circadian IMF index, and the
-reconstruction error. Never errors.
+reconstruction error. The first and last epochs are unreliable (the
+spline envelopes pin the IMFs near zero at the edges), so read the
+instantaneous series away from the boundary. Never errors.
 
 ## References
 
@@ -89,11 +91,12 @@ th <- as.numeric(difftime(ts, ts[1], units = "hours"))
 circadian.emd(100 + 60 * cos(2 * pi * th / 24), ts, epoch_length = 600)
 #> Empirical Mode Decomposition
 #> 
-#>   IMFs: 2   reconstruction error: 7.11e-15
+#>   IMFs: 3   reconstruction error: 7.11e-15
 #>  IMF period_h var_share
-#>    1    22.15     0.932
-#>    2    48.00     0.068
+#>    1    20.57     0.737
+#>    2    36.00     0.030
+#>    3    57.60     0.232
 #> 
-#>   Circadian IMF: 1 (period 22.15 h)
+#>   Circadian IMF: 1 (period 20.57 h)
 #> 
 ```

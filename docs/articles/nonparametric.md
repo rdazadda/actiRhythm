@@ -24,10 +24,11 @@ real change in the rhythm.
 
 ## The math
 
-Write the recording as activity values $`x_1, \dots, x_n`$ at a fixed
-epoch, with overall mean $`\bar x`$. Bin them to hourly means and let
-$`\bar x_h`$ be the mean across all days at hour-of-day $`h`$, over
-$`p = 24`$ hours.
+Bin the recording to hourly means: let $`x_1, \dots, x_n`$ be the $`n`$
+hourly values with overall mean $`\bar x`$, and let $`\bar x_h`$ be the
+mean across all days at hour-of-day $`h`$, over $`p = 24`$ hours. The IS
+and IV formulas below are computed on this hourly series; the raw-epoch
+series is used separately for the multiscale and fractal measures.
 
 **Interdaily stability (IS)**, how tightly the pattern repeats from one
 day to the next ([Witting et al., 1990](#ref-witting1990)):
@@ -55,6 +56,12 @@ the average day ([Van Someren et al., 1999](#ref-vansomeren1999)):
 returns all of these, plus the 1-hour extremes L1 and M1, the
 autocorrelation predictability $`\phi`$, and the onset times of each
 window.
+
+The L5 and M10 windows are placed on a minute-resolution average day and
+reported in counts per minute, the sliding-window convention also used
+by nparACT and GGIR. These values track but are not identical to the
+original hourly counts-per-hour of Witting et al.
+([1990](#ref-witting1990)), and they depend on epoch length.
 
 ## Assumptions, and when they break
 
@@ -171,6 +178,21 @@ Double-plotted actogram of the bundled recording. The active rows do not
 stack into one vertical band; they drift, which is the low interdaily
 stability the metrics report.
 
+The average day makes the L5 and M10 windows concrete: the least-active
+5-hour block and the most-active 10-hour block of the folded profile.
+
+``` r
+
+plot_profile(agd$axis1, agd$timestamp)
+```
+
+![The averaged 24-hour profile (mean with a one-SD band), shading the
+least-active 5-hour window L5 and the most-active 10-hour window
+M10.](nonparametric_files/figure-html/profile-1.png)
+
+The averaged 24-hour profile (mean with a one-SD band), shading the
+least-active 5-hour window L5 and the most-active 10-hour window M10.
+
 ## Reading the numbers
 
 State each metric in human terms:
@@ -178,8 +200,10 @@ State each metric in human terms:
 - **IS** runs 0 to 1; near 1 is a highly stable 24-hour pattern, below
   about 0.3 is weak. Here it is low: the days do not land at the same
   clock time.
-- **IV** runs from about 0 (a smooth sine) to about 2 (noisy or split
-  into ultradian bouts).
+- **IV** runs from about 0 (a smooth sine) to about 2 (noise); above 2
+  flags a strong ultradian component or a too-short record. The
+  denominator is the data’s own variance, so IV is
+  amplitude-independent.
 - **RA** runs 0 to 1; higher is a stronger day-night contrast.
 
 The most informative reading is often the **combination**. This
@@ -212,40 +236,136 @@ the bin size,
 [`intradaily.variability.multiscale()`](https://rdazadda.github.io/actiRhythm/reference/intradaily.variability.multiscale.md)
 and
 [`circadian.is.multiscale()`](https://rdazadda.github.io/actiRhythm/reference/circadian.is.multiscale.md)
-recompute them across a range of epochs, so you can see (and report) how
-the value moves with resolution rather than pinning it to one choice
-([Goncalves et al., 2014](#ref-goncalves2014)).
+recompute them across a range of epochs and average them into a single
+IVm and ISm, which vary less across recordings than the hourly values
+([Goncalves et al., 2014](#ref-goncalves2014)). IVm spans 1 to 60-minute
+bins; ISm uses the bin sizes that divide 1440, so each day splits into
+whole bins.
 
 ``` r
 
 intradaily.variability.multiscale(agd$axis1, agd$timestamp)
 #> Multiscale Intradaily Variability
 #> 
-#>   IVm (averaged): 0.641
+#>   IVm (averaged): 0.720
 #> 
 #>  bin_minutes        IV
+#>            1 0.5257131
+#>            2 0.5902015
+#>            3 0.5528503
+#>            4 0.5647288
 #>            5 0.5345644
+#>            6 0.5660806
+#>            7 0.5380461
+#>            8 0.5610850
+#>            9 0.5226812
 #>           10 0.5428775
+#>           11 0.5247779
+#>           12 0.5524045
+#>           13 0.5231579
+#>           14 0.5636896
 #>           15 0.5696848
+#>           16 0.5684746
+#>           17 0.6280328
+#>           18 0.6365006
+#>           19 0.6304398
+#>           20 0.5888029
+#>           21 0.6276416
+#>           22 0.5351020
+#>           23 0.6802919
+#>           24 0.6735950
+#>           25 0.6769604
+#>           26 0.6602019
+#>           27 0.6861135
+#>           28 0.7380594
+#>           29 0.7154604
 #>           30 0.7239887
+#>           31 0.6824506
+#>           32 0.7538473
+#>           33 0.7607380
+#>           34 0.8421781
+#>           35 0.7227020
+#>           36 0.8762168
+#>           37 0.7459598
+#>           38 0.8316599
+#>           39 0.7634351
+#>           40 0.7789069
+#>           41 0.8080620
+#>           42 0.8301316
+#>           43 0.9618038
+#>           44 0.8420577
+#>           45 0.8999159
+#>           46 0.8747595
+#>           47 0.8542270
+#>           48 0.8076128
+#>           49 0.9777576
+#>           50 0.8028558
+#>           51 0.8759503
+#>           52 0.7880669
+#>           53 0.8529320
+#>           54 0.9957456
+#>           55 0.8135647
+#>           56 0.9072522
+#>           57 0.9750063
+#>           58 0.8813777
+#>           59 0.8670441
 #>           60 0.8360881
 circadian.is.multiscale(agd$axis1, agd$timestamp)
-#>   bin_minutes     IS
-#> 1          60 0.2279
-#> 2          30 0.2238
-#> 3          15 0.2102
+#> Multiscale Interdaily Stability
+#> 
+#>   ISm (averaged): 0.210
+#> 
+#>  bin_minutes     IS
+#>            1 0.1827
+#>            2 0.1874
+#>            3 0.1912
+#>            4 0.1946
+#>            5 0.1950
+#>            6 0.1984
+#>            8 0.2024
+#>            9 0.2044
+#>           10 0.2042
+#>           12 0.2079
+#>           15 0.2102
+#>           16 0.2163
+#>           18 0.2101
+#>           20 0.2157
+#>           24 0.2188
+#>           30 0.2238
+#>           32 0.2247
+#>           36 0.2193
+#>           40 0.2250
+#>           45 0.2365
+#>           48 0.2296
+#>           60 0.2279
 ```
 
-**How cleanly rest separates from activity.**
-[`dichotomy.index()`](https://rdazadda.github.io/actiRhythm/reference/dichotomy.index.md)
-compares activity during a defined rest span against the active day
-([Mormont et al., 2000](#ref-mormont2000)); here we mark the night hours
-as rest.
+``` r
+
+plot_multiscale(agd$axis1, agd$timestamp)
+```
+
+![IS and IV across epoch lengths, with the averaged ISm and IVm
+(dashed). Both vary less across recordings than a single hourly
+value.](nonparametric_files/figure-html/multiscale-plot-1.png)
+
+IS and IV across epoch lengths, with the averaged ISm and IVm (dashed).
+Both vary less across recordings than a single hourly value.
+
+**How cleanly rest separates from activity.** The dichotomy index I\<O
+is the percentage of rest-span counts that fall below the median of the
+active-span counts ([Mormont et al., 2000](#ref-mormont2000)):
+``` math
+I{<}O = 100 \times \frac{\#\{\, x_i < \tilde{x}_{\text{active}} : i \in \text{rest} \,\}}{N_{\text{rest}}},
+```
+where $`\tilde{x}_{\text{active}}`$ is the median active-span count. A
+high I\<O means rest is quiet relative to the active day. Here we mark
+the night hours as rest.
 
 ``` r
 
 h <- as.numeric(format(agd$timestamp, "%H"))
-dichotomy.index(agd$axis1, agd$timestamp, rest = h >= 23 | h < 7)
+dichotomy.index(agd$axis1, rest = h >= 23 | h < 7)
 #> Dichotomy Index (I<O)
 #> 
 #>   I<O:             0.0%
@@ -253,14 +373,27 @@ dichotomy.index(agd$axis1, agd$timestamp, rest = h >= 23 | h < 7)
 #>   Rest / active epochs: 3360 / 6559
 ```
 
+``` r
+
+plot_dichotomy(agd$axis1, rest = h >= 23 | h < 7)
+```
+
+![Rest-span and active-span count distributions. A high I\<O means most
+rest-span counts fall below the active-span median
+(dashed).](nonparametric_files/figure-html/dichotomy-plot-1.png)
+
+Rest-span and active-span count distributions. A high I\<O means most
+rest-span counts fall below the active-span median (dashed).
+
 **Fragmentation.**
 [`state.transitions()`](https://rdazadda.github.io/actiRhythm/reference/state.transitions.md)
-and
+gives the kRA and kAR rates, the rest-to-active and active-to-rest
+probabilities read off the plateau of the bout-length survival curve
+([Lim et al., 2011](#ref-lim2011)).
 [`transition.probability()`](https://rdazadda.github.io/actiRhythm/reference/transition.probability.md)
-summarise how readily the subject switches between rest and activity
-(the kRA/kAR rates and the closed-form transition probabilities),
-capturing fragmentation a single amplitude cannot ([Lim et al.,
-2011](#ref-lim2011)).
+gives the maximum-likelihood and Bayesian transition probabilities of
+Danilevicz et al. ([2024](#ref-danilevicz2024)), taken straight from the
+bout counts. Both capture fragmentation a single amplitude cannot.
 
 ``` r
 
@@ -273,11 +406,23 @@ state.transitions(agd$axis1)
 #>   pRA / pAR:          0.0487 / 0.1367
 transition.probability(agd$axis1)[c("tp_ra_mle", "tp_ar_mle")]
 #> $tp_ra_mle
-#> [1] 0.04853705
+#> [1] 0.04854369
 #> 
 #> $tp_ar_mle
 #> [1] 0.1366603
 ```
+
+``` r
+
+plot_transitions(agd$axis1)
+```
+
+![Transition hazards versus bout length, with a LOWESS fit and the
+sustained rates kRA and kAR
+(dashed).](nonparametric_files/figure-html/fragmentation-plot-1.png)
+
+Transition hazards versus bout length, with a LOWESS fit and the
+sustained rates kRA and kAR (dashed).
 
 **Per day, to see drift.**
 [`circadian.daily()`](https://rdazadda.github.io/actiRhythm/reference/circadian.daily.md)
@@ -317,13 +462,21 @@ The nonparametric battery follows Witting et al.
 ([1990](#ref-witting1990)) and Van Someren et al.
 ([1999](#ref-vansomeren1999)), with the multiscale and dichotomy
 extensions of Goncalves et al. ([2014](#ref-goncalves2014)) and Mormont
-et al. ([2000](#ref-mormont2000)). actiRhythm’s IS, IV, RA, L5, and M10
-are cross-checked against the `nparACT` and `ActCR` reference
+et al. ([2000](#ref-mormont2000)), and the fragmentation rates of Lim et
+al. ([2011](#ref-lim2011)) and Danilevicz et al.
+([2024](#ref-danilevicz2024)). actiRhythm’s IS, IV, RA, L5, and M10 are
+cross-checked against the `nparACT` and `ActCR` reference
 implementations (to the printed precision) in the
 [Validation](https://rdazadda.github.io/actiRhythm/articles/validation.md)
 article and the package’s test suite.
 
 ## References
+
+Danilevicz, I. M., Hees, V. T. van, Heide, F. van der, Jacob, L.,
+Landre, B., Benadjaoud, M. A., & Sabia, S. (2024). Measures of
+fragmentation of rest activity patterns: Mathematical properties and
+interpretability. *BMC Medical Research Methodology*, *24*, 132.
+<https://doi.org/10.1186/s12874-024-02255-w>
 
 Goncalves, B. S. B., Cavalcanti, P. R. A., Tavares, G. R., Campos, T.
 F., & Araujo, J. F. (2014). Nonparametric methods in actigraphy: An

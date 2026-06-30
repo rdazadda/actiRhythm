@@ -14,8 +14,8 @@
 #' M10 centre), separating the horizontal phase variation (how the timing shifts
 #' day to day) from the vertical amplitude variation (the registered mean profile,
 #' sharper than the plain average because phase jitter no longer blurs it). The
-#' per-day landmark times are a scale-invariant chronotype phase, unchanged by any
-#' rescaling of the counts (Ramsay and Silverman 2005).
+#' per-day landmark times are a scale-invariant phase marker (the M10-window
+#' centre), unchanged by any rescaling of the counts (Ramsay and Silverman 2005).
 #'
 #' @param counts Numeric activity vector.
 #' @param timestamps POSIXct timestamps, one per value.
@@ -29,6 +29,8 @@
 #'
 #' @references
 #' \insertRef{ramsay2005}{actiRhythm}
+#'
+#' \insertRef{vansomeren1999}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 5 * 1440)
@@ -109,7 +111,7 @@ print.actiRhythm_registration <- function(x, ...) {
 #' @param timestamps POSIXct timestamps, one per value.
 #' @param period Cosinor period in hours (default 24).
 #' @param bands Named list of \code{c(low_hours, high_hours)} period bands for the
-#'   residual power; defaults to ultradian (2-8 h) and high-frequency (<2 h).
+#'   residual power; defaults to ultradian (2-8 h) and high-frequency (0.5-2 h).
 #'
 #' @return An object of class \code{actiRhythm_rcs}: the residual variance, a
 #'   per-band power table, and the spectrum. Never errors.

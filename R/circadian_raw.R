@@ -43,7 +43,7 @@ circadian.raw <- function(x, metric = c("ENMO", "MAD"), device = "auto",
 #'
 #' The Activity Balance Index (Danilevicz et al. 2024), a 0 to 1 transform of a
 #' detrended fluctuation analysis scaling exponent that peaks at the healthy
-#' \eqn{\alpha = 1} (1/f) balance: \eqn{ABI(\alpha) = \exp(-|\alpha - 1|\,e^{-2})}.
+#' \eqn{\alpha = 1} (1/f) balance: \eqn{ABI(\alpha) = \exp(-|\alpha - 1| / e^{-2}) = \exp(-e^{2}\,|\alpha - 1|)}.
 #'
 #' @param x Either a numeric scaling exponent, or a fractal object with
 #'   \code{alpha} (and optionally \code{alpha1}, \code{alpha2}) such as the result
@@ -61,7 +61,7 @@ circadian.raw <- function(x, metric = c("ENMO", "MAD"), device = "auto",
 #'
 #' @export
 activity.balance.index <- function(x) {
-  abi <- function(a) if (is.null(a) || !is.finite(a)) NA_real_ else exp(-abs(a - 1) * exp(-2))
+  abi <- function(a) if (is.null(a) || !is.finite(a)) NA_real_ else exp(-abs(a - 1) / exp(-2))
   if (is.numeric(x)) return(abi(x[1]))
   list(ABI_overall = abi(x$alpha), ABI_short = abi(x$alpha1), ABI_long = abi(x$alpha2))
 }

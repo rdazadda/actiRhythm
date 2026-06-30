@@ -20,8 +20,9 @@ sleep.changepoints(
 \item{period}{Cosinor period in minutes (default 1440, one day).}
 
 \item{thr}{Dichotomisation threshold on the range-scaled cosine, in
-\eqn{[0, 1]} (default 0.2): the fitted curve above \code{thr} is the rough
-active span, below it the rough rest span.}
+\eqn{[0, 1]} (default 0.2, approximating CircaCP's lower-20\\% sleep cut): the
+fitted curve above \code{thr} is the rough active span, below it the rough
+rest span.}
 
 \item{window_minutes}{Half-width of the search window, in minutes, in which
 each rough boundary is refined to a change point (default 240).}
@@ -35,11 +36,12 @@ errors; on insufficient data it returns the structure with
 \code{insufficient = TRUE}.
 }
 \description{
-Locates the sleep-onset and wake-onset time of each circadian cycle by the
-cosinor-anchored change-point method of CircaCP (Chen and Sun 2024). A fixed
-24-hour cosinor is fitted to bound each rest and active span roughly, and the
-precise transition inside each bound is then placed with a single change point
-on the raw counts. The result is a per-night sleep-onset / wake-onset table.
+Locates the sleep-onset and wake-onset time of each circadian cycle with a
+cosinor-anchored mean-shift change point. A fixed 24-hour cosinor bounds each
+rest and active span roughly (the cosinor anchoring follows CircaCP, Chen and
+Sun 2024), and the precise transition inside each bound is then placed with a
+single least-squares mean-shift change point on the raw counts. The result is a
+per-night sleep-onset / wake-onset table.
 A single rest-activity transition rate (such as
 \code{\link{state.transitions}}) cannot localise this timing.
 }
@@ -53,10 +55,6 @@ sleep.changepoints(counts, ts)
 }
 \references{
 \insertRef{chensun2024}{actiRhythm}
-
-\insertRef{chen2006}{actiRhythm}
-
-\insertRef{killick2012}{actiRhythm}
 }
 \seealso{
 \code{\link{state.transitions}}, \code{\link{sleep.regularity.index}}

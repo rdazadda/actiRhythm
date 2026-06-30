@@ -87,8 +87,8 @@ test_that("transition.probability counts bouts correctly", {
   tp <- transition.probability(cnt)
   expect_equal(tp$n_active_bouts, 2L)
   expect_equal(tp$mean_active_bout, 25)
-  expect_equal(tp$tp_ar_mle, 2 / 50)                   # 2 active->rest over 50 active epochs
-  expect_equal(tp$tp_ra_mle, 2 / 150)                  # 2 rest->active over 150 rest epochs
+  expect_equal(tp$tp_ar_mle, 2 / 50)                   # active at-risk = 50 (trailing bout is rest)
+  expect_equal(tp$tp_ra_mle, 2 / 149)                  # rest at-risk = 150 - 1 (trailing rest bout)
   expect_true(tp$tp_ar_bayes > 0 && tp$tp_ar_bayes < 1)
 })
 

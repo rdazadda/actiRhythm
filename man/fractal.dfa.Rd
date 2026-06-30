@@ -4,7 +4,13 @@
 \alias{fractal.dfa}
 \title{Detrended Fluctuation Analysis (DFA)}
 \usage{
-fractal.dfa(x, scale_min = 4, scale_max = NULL, breakpoint_min = 90)
+fractal.dfa(
+  x,
+  scale_min = 4,
+  scale_max = NULL,
+  breakpoint_min = 90,
+  detrend_order = 1L
+)
 }
 \arguments{
 \item{x}{Numeric vector of activity counts (minute-level recommended).
@@ -16,12 +22,18 @@ freedom. Default 4.}
 
 \item{scale_max}{Integer or NULL. Largest window size in samples. If NULL
 (default) it is set to floor(N / 4) where N is the length of the analyzed
-segment, ensuring at least four windows at the largest scale.}
+segment, ensuring at least four windows at the largest scale. The top scales
+then have only about four windows and are somewhat undersampled; Hu et al.
+(2001) suggest a maximum nearer N / 10 for well-sampled fluctuations.}
 
 \item{breakpoint_min}{Numeric. Window-size boundary (in samples / minutes for
 minute-level data) separating the short-timescale exponent \code{alpha1}
 (scales < breakpoint_min) from the long-timescale exponent \code{alpha2}
 (scales >= breakpoint_min). Default 90.}
+
+\item{detrend_order}{Integer order of the within-window polynomial detrend: 1
+(default) is linear DFA-1 (Peng et al. 1994); 2 is quadratic DFA-2, the
+convention Hu et al. (2009) used for activity data.}
 }
 \value{
 A list with class \code{"actiRhythm_dfa"} containing:
@@ -48,17 +60,21 @@ temporal correlations: alpha approximately 0.5 indicates uncorrelated (white)
 noise, alpha approximately 1.0 indicates 1/f (pink) noise, and alpha
 approximately 1.5 indicates Brownian (random-walk / brown) noise. Healthy
 human activity fluctuations typically show alpha in the 0.9 to 1.0 range, with
-reductions reported in aging and Alzheimer's disease (Hu et al., 2009).
+reductions reported in aging and Alzheimer's disease (Hu et al., 2009); those
+reference values were obtained with quadratic DFA-2 (\code{detrend_order = 2}),
+which can differ from the default linear DFA-1 on trend-carrying data.
 }
 \details{
-Algorithm (integrated, non-overlapping, linear DFA):
+Algorithm (integrated, non-overlapping DFA, polynomial detrend of order
+\code{detrend_order}):
 \enumerate{
 \item Extract the longest continuous non-NA segment of \code{x}.
 \item Integrate the mean-centred signal: \code{y = cumsum(x - mean(x))}.
 \item For each window size n (log-spaced from \code{scale_min} to
 \code{scale_max}), split y into floor(N / n) non-overlapping windows of
-length n, fit and remove a least-squares line within each window, and
-pool the residuals. The fluctuation is
+length n, fit and remove a least-squares polynomial of order
+\code{detrend_order} within each window, and pool the residuals. The
+fluctuation is
 \code{F(n) = sqrt(mean(residuals^2))} over all pooled residuals.
 \item The scaling exponent is the slope of
 \code{log10(F(n))} regressed on \code{log10(n)}.

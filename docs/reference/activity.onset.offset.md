@@ -1,11 +1,12 @@
 # Activity Onset and Offset (Relative-Difference Phase Markers)
 
-Finds the daily activity onset and offset by the relative-difference
-method. On the averaged 24-hour profile, the onset is where mean
+Finds the daily activity onset and offset by a relative-difference
+contrast on the averaged 24-hour profile: the onset is where mean
 activity rises most sharply (the relative difference of the window after
-versus before is largest) and the offset is where it falls most sharply
-(Roenneberg et al. 2003). These are non-cosinor, non-changepoint phase
-markers.
+versus before is largest) and the offset is where it falls most sharply.
+These are non-cosinor, non-changepoint phase markers, a
+normalized-contrast edge detector on the daily profile rather than a
+published actigraphy algorithm.
 
 ## Usage
 
@@ -32,14 +33,6 @@ activity.onset.offset(counts, timestamps, window_hours = 6)
 
 An object of class `actiRhythm_aont`: `onset_h` and `offset_h` (clock
 hours) and the relative-difference profile. Never errors.
-
-## References
-
-Roenneberg T, Wirz-Justice A, Merrow M (2003). “Life between clocks:
-daily temporal patterns of human chronotypes.” *Journal of Biological
-Rhythms*, **18**(1), 80–90.
-[doi:10.1177/0748730402239679](https://doi.org/10.1177/0748730402239679)
-.
 
 ## Examples
 

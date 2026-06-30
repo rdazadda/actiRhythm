@@ -69,17 +69,21 @@
 #' @param counts Numeric activity vector (a coarse epoch is recommended for speed).
 #' @param timestamps POSIXct timestamps, one per value.
 #' @param states Number of hidden states (default 2 = rest/active; 3 adds a
-#'   moderate state).
+#'   moderate state). Huang et al. (2018) fix three states; the BIC reported here
+#'   can guide the choice.
 #' @param transform Variance-stabilizing transform of the counts: \code{"sqrt"}
-#'   (default), \code{"log"}, or \code{"none"}.
+#'   (default), \code{"log"}, or \code{"none"}. Huang et al. fit on 5-minute
+#'   averaged counts, so a coarse epoch is recommended.
+#' @param decode State decoding: \code{"posterior"} (default, the local decoding
+#'   of Huang et al. 2018) or \code{"viterbi"} (the global most-likely path).
 #' @param max_iter,tol EM iteration cap and log-likelihood tolerance.
 #' @param n_starts Random restarts; the highest-likelihood fit is kept (default 5).
 #' @param seed Optional seed for the restarts.
 #'
 #' @return An object of class \code{actiRhythm_hmm}: the per-state emission means
 #'   and SDs, the transition matrix, the decoded \code{state_path} and a
-#'   \code{sleep_state} ("S"/"W") vector, a 24-hour state-occupancy profile, and
-#'   the log-likelihood with AIC/BIC. Never errors.
+#'   \code{sleep_state} ("S"/"W") vector, a 24-hour profile of the mean posterior
+#'   rest probability, and the log-likelihood with AIC/BIC. Never errors.
 #'
 #' @references
 #' \insertRef{huang2018hmm}{actiRhythm}
@@ -94,8 +98,10 @@
 #'
 #' @export
 rest.hmm <- function(counts, timestamps, states = 2L, transform = c("sqrt", "log", "none"),
+                     decode = c("posterior", "viterbi"),
                      max_iter = 200L, tol = 1e-6, n_starts = 5L, seed = NULL) {
   transform <- match.arg(transform)
+  decode <- match.arg(decode)
   if (length(counts) != length(timestamps))
     stop("counts and timestamps must have same length")
   x <- suppressWarnings(as.numeric(counts))
@@ -122,13 +128,19 @@ rest.hmm <- function(counts, timestamps, states = 2L, transform = c("sqrt", "log
   }
   if (is.null(best)) return(na_out)
 
-  allprobs <- sapply(seq_len(states), function(k) stats::dnorm(y, best$mu[k], best$sigma[k]))
-  allprobs[allprobs < 1e-300] <- 1e-300
-  path <- .hmm_viterbi(allprobs, best$Gamma, best$delta)
+  # Huang et al. (2018) sec 3.4 use local/posterior decoding, not Viterbi.
+  if (decode == "posterior") {
+    path <- max.col(best$gamma, ties.method = "first")
+  } else {
+    allprobs <- sapply(seq_len(states), function(k) stats::dnorm(y, best$mu[k], best$sigma[k]))
+    allprobs[allprobs < 1e-300] <- 1e-300
+    path <- .hmm_viterbi(allprobs, best$Gamma, best$delta)
+  }
   sleep_state <- ifelse(path == 1L, "S", "W")        # lowest-mean state = rest/sleep
-  p <- states * 2 + states * (states - 1)            # mu, sigma, transition free params
+  # mu, sigma, transition rows, and the initial distribution (states - 1) free params
+  p <- states * 2 + states * (states - 1) + (states - 1)
   hour <- as.POSIXlt(ts)$hour
-  occ <- tapply(path == 1L, hour, mean)
+  occ <- tapply(best$gamma[, 1], hour, mean)         # mean posterior P(rest) per hour
   tod <- data.frame(hour = as.integer(names(occ)), p_rest = as.numeric(occ))
 
   structure(list(states = states,

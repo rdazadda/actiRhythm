@@ -1,8 +1,9 @@
 # Activity Counts from a Raw GENEActiv .bin File
 
 Reads a raw GENEActiv (`.bin`) accelerometer file and converts it to
-ActiGraph-equivalent activity counts via the agcounts band-pass filter
-(the Brond 2017 method). Requires the GGIRread and agcounts packages.
+ActiGraph-equivalent activity counts via the agcounts implementation of
+the ActiGraph count algorithm (Neishabouri 2022). Requires the GGIRread
+and agcounts packages.
 
 ## Usage
 
@@ -44,6 +45,13 @@ IV, RA, L5, M10, SRI); do *not* apply ActiGraph cut-points or compare
 absolute counts across brands.
 
 ## References
+
+Neishabouri A, Nguyen J, Samuelsson J, Guthrie T, Biggs M, Wyatt J,
+Cross D, Karas M, Migueles JH, Khan S, Guo CC (2022). “Quantification of
+acceleration as activity counts in ActiGraph wearable.” *Scientific
+Reports*, **12**, 11958.
+[doi:10.1038/s41598-022-16003-x](https://doi.org/10.1038/s41598-022-16003-x)
+.
 
 Brond JC, Andersen LB, Arvidsson D (2017). “Generating ActiGraph counts
 from raw acceleration recorded by an alternative monitor.” *Medicine &

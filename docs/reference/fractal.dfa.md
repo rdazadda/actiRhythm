@@ -7,12 +7,20 @@ uncorrelated (white) noise, alpha approximately 1.0 indicates 1/f (pink)
 noise, and alpha approximately 1.5 indicates Brownian (random-walk /
 brown) noise. Healthy human activity fluctuations typically show alpha
 in the 0.9 to 1.0 range, with reductions reported in aging and
-Alzheimer's disease (Hu et al., 2009).
+Alzheimer's disease (Hu et al., 2009); those reference values were
+obtained with quadratic DFA-2 (`detrend_order = 2`), which can differ
+from the default linear DFA-1 on trend-carrying data.
 
 ## Usage
 
 ``` r
-fractal.dfa(x, scale_min = 4, scale_max = NULL, breakpoint_min = 90)
+fractal.dfa(
+  x,
+  scale_min = 4,
+  scale_max = NULL,
+  breakpoint_min = 90,
+  detrend_order = 1L
+)
 ```
 
 ## Arguments
@@ -32,7 +40,10 @@ fractal.dfa(x, scale_min = 4, scale_max = NULL, breakpoint_min = 90)
 
   Integer or NULL. Largest window size in samples. If NULL (default) it
   is set to floor(N / 4) where N is the length of the analyzed segment,
-  ensuring at least four windows at the largest scale.
+  ensuring at least four windows at the largest scale. The top scales
+  then have only about four windows and are somewhat undersampled; Hu et
+  al. (2001) suggest a maximum nearer N / 10 for well-sampled
+  fluctuations.
 
 - breakpoint_min:
 
@@ -40,6 +51,12 @@ fractal.dfa(x, scale_min = 4, scale_max = NULL, breakpoint_min = 90)
   data) separating the short-timescale exponent `alpha1` (scales \<
   breakpoint_min) from the long-timescale exponent `alpha2` (scales \>=
   breakpoint_min). Default 90.
+
+- detrend_order:
+
+  Integer order of the within-window polynomial detrend: 1 (default) is
+  linear DFA-1 (Peng et al. 1994); 2 is quadratic DFA-2, the convention
+  Hu et al. (2009) used for activity data.
 
 ## Value
 
@@ -83,7 +100,8 @@ error).
 
 ## Details
 
-Algorithm (integrated, non-overlapping, linear DFA):
+Algorithm (integrated, non-overlapping DFA, polynomial detrend of order
+`detrend_order`):
 
 1.  Extract the longest continuous non-NA segment of `x`.
 
@@ -91,9 +109,9 @@ Algorithm (integrated, non-overlapping, linear DFA):
 
 3.  For each window size n (log-spaced from `scale_min` to `scale_max`),
     split y into floor(N / n) non-overlapping windows of length n, fit
-    and remove a least-squares line within each window, and pool the
-    residuals. The fluctuation is `F(n) = sqrt(mean(residuals^2))` over
-    all pooled residuals.
+    and remove a least-squares polynomial of order `detrend_order`
+    within each window, and pool the residuals. The fluctuation is
+    `F(n) = sqrt(mean(residuals^2))` over all pooled residuals.
 
 4.  The scaling exponent is the slope of `log10(F(n))` regressed on
     `log10(n)`.

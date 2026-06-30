@@ -135,6 +135,12 @@ research: analysis of incomplete and unequally spaced time-series.”
 [doi:10.1076/brhm.30.2.178.1422](https://doi.org/10.1076/brhm.30.2.178.1422)
 .
 
+Baluev RV (2008). “Assessing the statistical significance of periodogram
+peaks.” *Monthly Notices of the Royal Astronomical Society*, **385**(3),
+1279–1285.
+[doi:10.1111/j.1365-2966.2008.12689.x](https://doi.org/10.1111/j.1365-2966.2008.12689.x)
+.
+
 Refinetti R, Cornelissen G, Halberg F (2007). “Procedures for numerical
 analysis of circadian rhythms.” *Biological Rhythm Research*, **38**(4),
 275–325.

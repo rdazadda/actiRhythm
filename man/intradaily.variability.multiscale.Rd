@@ -4,18 +4,14 @@
 \alias{intradaily.variability.multiscale}
 \title{Multiscale Intradaily Variability (IVm)}
 \usage{
-intradaily.variability.multiscale(
-  counts,
-  timestamps,
-  bin_minutes = c(5, 10, 15, 30, 60)
-)
+intradaily.variability.multiscale(counts, timestamps, bin_minutes = 1:60)
 }
 \arguments{
 \item{counts}{Numeric activity vector.}
 
 \item{timestamps}{POSIXct timestamps, one per value.}
 
-\item{bin_minutes}{Bin sizes in minutes (default 5 to 60).}
+\item{bin_minutes}{Bin sizes in minutes (default 1 to 60, per Goncalves et al. 2014).}
 }
 \value{
 An object of class \code{actiRhythm_ivm}: a per-bin \code{IV} table and

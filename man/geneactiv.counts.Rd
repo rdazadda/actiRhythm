@@ -21,8 +21,9 @@ and \code{vm}, one row per epoch.
 }
 \description{
 Reads a raw GENEActiv (\code{.bin}) accelerometer file and converts it to
-ActiGraph-equivalent activity counts via the agcounts band-pass filter (the
-Brond 2017 method). Requires the \pkg{GGIRread} and \pkg{agcounts} packages.
+ActiGraph-equivalent activity counts via the agcounts implementation of the
+ActiGraph count algorithm (Neishabouri 2022). Requires the \pkg{GGIRread} and
+\pkg{agcounts} packages.
 }
 \section{Cross-brand counts}{
  These are an \emph{approximation} of ActiGraph
@@ -35,6 +36,8 @@ cut-points or compare absolute counts across brands.
 }
 
 \references{
+\insertRef{neishabouri2022}{actiRhythm}
+
 \insertRef{brond2017}{actiRhythm}
 }
 \seealso{

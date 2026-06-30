@@ -30,9 +30,11 @@
 #'
 #' @details
 #' The sleep index uses a seven-epoch window (four before, the current epoch, and
-#' two after), with counts divided by 100 and capped at 300:
+#' two after):
 #' \deqn{D = 0.001 (106 P_4 + 54 P_3 + 58 P_2 + 76 P_1 + 230 C + 74 N_1 + 67 N_2)}
-#' An epoch is scored sleep when \eqn{D < 1}. Webster's rescoring then re-labels
+#' These are Cole's mean-activity-per-minute weights (Table 6, p.466); the
+#' \eqn{/100} count scaling and the 300 cap are implementation conventions. An
+#' epoch is scored sleep when \eqn{D < 1}. Webster's rescoring then re-labels
 #' short sleep bouts that follow or are surrounded by sustained wake as wake.
 #'
 #' @references
@@ -64,8 +66,8 @@ sleep.cole.kripke <- function(counts, apply_rescoring = TRUE, epoch_length = 60,
   scaled[scaled > 300] <- 300
   n <- length(scaled)
 
-  # Seven-epoch weighted window (Cole et al. 1992, Table 2): four epochs before,
-  # the current epoch, and two after.
+  # Seven-epoch weighted window (Cole et al. 1992, Table 6 p.466, the
+  # mean-activity-per-minute variant): four epochs before, the current, two after.
   coef <- c(106, 54, 58, 76, 230, 74, 67) / 1000
   padded <- c(rep(0, 4), scaled, rep(0, 2))
   sleep_index <- numeric(n)
@@ -89,22 +91,24 @@ sleep.cole.kripke <- function(counts, apply_rescoring = TRUE, epoch_length = 60,
   lens <- r$lengths; vals <- r$values; nb <- length(lens)
   ends <- cumsum(lens); starts <- c(1, ends[-nb] + 1)
 
-  # After a wake span of given length, re-score the following sleep.
+  # After a wake span of given length, re-score the following sleep (bounded by the
+  # sleep run, so at most min(N, run length) epochs flip).
   for (b in seq_len(nb)) {
     if (vals[b] == "W" && b < nb && vals[b + 1] == "S") {
-      wake_len <- lens[b]; sleep_len <- lens[b + 1]; s0 <- starts[b + 1]
+      wake_len <- lens[b]; s0 <- starts[b + 1]; s1 <- ends[b + 1]
       if (wake_len >= 4)  rescored[s0] <- "W"
-      if (wake_len >= 10 && sleep_len >= 3) rescored[s0:min(s0 + 2, n)] <- "W"
-      if (wake_len >= 15 && sleep_len >= 4) rescored[s0:min(s0 + 3, n)] <- "W"
+      if (wake_len >= 10) rescored[s0:min(s0 + 2, s1)] <- "W"
+      if (wake_len >= 15) rescored[s0:min(s0 + 3, s1)] <- "W"
     }
   }
-  # Short sleep bouts surrounded by long wake on both sides.
+  # Short sleep bouts surrounded by long wake on both sides (the >=10 / >=20 min
+  # thresholds follow the Webster rescoring as transcribed in Cole et al. 1992 p.464).
   for (b in seq_len(nb)) {
     if (vals[b] == "S") {
       sleep_len <- lens[b]; s0 <- starts[b]; s1 <- ends[b]
       wake_before <- if (b > 1 && vals[b - 1] == "W") lens[b - 1] else 0
       wake_after  <- if (b < nb && vals[b + 1] == "W") lens[b + 1] else 0
-      if (sleep_len <= 6  && wake_before >= 15 && wake_after >= 15) rescored[s0:s1] <- "W"
+      if (sleep_len <= 6  && wake_before >= 10 && wake_after >= 10) rescored[s0:s1] <- "W"
       if (sleep_len <= 10 && wake_before >= 20 && wake_after >= 20) rescored[s0:s1] <- "W"
     }
   }
@@ -115,12 +119,16 @@ sleep.cole.kripke <- function(counts, apply_rescoring = TRUE, epoch_length = 60,
 #' Sadeh Sleep/Wake Scoring
 #'
 #' Classifies each epoch as sleep or wake from activity counts with the Sadeh
-#' algorithm (Sadeh et al. 1994), validated for children and adolescents on
+#' algorithm (Sadeh et al. 1994), validated on adults and adolescents on
 #' one-minute epochs.
 #'
 #' @param counts Numeric vector of activity counts (vertical axis).
 #' @param epoch_length Epoch length in seconds (default 60). The algorithm was
 #'   validated on 60-second epochs; other lengths raise a warning.
+#' @param wake_threshold Sleep-index cut: an epoch is sleep when \eqn{SI \ge}
+#'   \code{wake_threshold} (default 0, Sadeh 1994; ActiLife uses -4).
+#' @param clip Optional upper cap on counts before scoring (default \code{NULL},
+#'   no cap; ActiLife and pyActigraphy use 300). Affects AVG, SD, and LG.
 #' @param na_action How NA-count epochs appear in the output: \code{"na"}
 #'   (default) emits \code{NA}, so non-wear gaps are not read as sleep;
 #'   \code{"wake"} scores them wake; \code{"zero"} scores them from a zero count.
@@ -130,13 +138,13 @@ sleep.cole.kripke <- function(counts, apply_rescoring = TRUE, epoch_length = 60,
 #'
 #' @details
 #' The sleep index uses an eleven-epoch window (five before, the current epoch,
-#' and five after), with counts capped at 300:
+#' and five after):
 #' \deqn{SI = 7.601 - 0.065 \cdot AVG - 1.08 \cdot NATS - 0.056 \cdot SD - 0.703 \cdot LG}
 #' where \eqn{AVG} is the window mean, \eqn{NATS} the number of epochs with counts
 #' in [50, 100), \eqn{SD} the standard deviation over the current and five
 #' preceding epochs, and \eqn{LG = \log(\mathrm{count} + 1)}. An epoch is scored
-#' sleep when \eqn{SI > -4} (the threshold used by validated ActiGraph
-#' implementations).
+#' sleep when \eqn{SI \ge 0} (Sadeh et al. 1994). For ActiLife/ActiGraph parity,
+#' set \code{wake_threshold = -4} and \code{clip = 300}.
 #'
 #' @references
 #' \insertRef{sadeh1994}{actiRhythm}
@@ -151,7 +159,7 @@ sleep.cole.kripke <- function(counts, apply_rescoring = TRUE, epoch_length = 60,
 #' }
 #'
 #' @export
-sleep.sadeh <- function(counts, epoch_length = 60,
+sleep.sadeh <- function(counts, epoch_length = 60, wake_threshold = 0, clip = NULL,
                         na_action = c("na", "wake", "zero")) {
   na_action <- match.arg(na_action)
   was_na <- is.na(suppressWarnings(as.numeric(counts)))
@@ -162,7 +170,7 @@ sleep.sadeh <- function(counts, epoch_length = 60,
   }
 
   capped <- counts
-  capped[capped > 300] <- 300
+  if (!is.null(clip)) capped[capped > clip] <- clip
   n <- length(capped)
   padded <- c(rep(0, 5), capped, rep(0, 5))
 
@@ -181,7 +189,7 @@ sleep.sadeh <- function(counts, epoch_length = 60,
   LG <- log(capped + 1)
 
   sleep_index <- 7.601 - 0.065 * AVG - 1.08 * NATS - 0.056 * SD - 0.703 * LG
-  state <- ifelse(sleep_index > -4, "S", "W")
+  state <- ifelse(sleep_index >= wake_threshold, "S", "W")
   if (na_action != "zero") state[was_na] <- if (na_action == "na") NA_character_ else "W"
   state
 }

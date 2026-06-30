@@ -138,7 +138,8 @@ is its one-harmonic special case.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Peak 956.3 at 19.2 h; trough -117.7 at 3.8 h</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Reference: Wang et al. (2011)</span></span></code></pre></div>
+<span><span class="co">#&gt;   Basis fit follows Wang et al. (2011); F/p are ordinary regression</span></span>
+<span><span class="co">#&gt;   statistics (not Wang's between-subject permutation test).</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">flm</span><span class="op">$</span><span class="va">smooth_curve</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">activity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">flm</span><span class="op">$</span><span class="va">fitted_profile</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">t</span>, <span class="va">observed</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"grey55"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -223,12 +224,12 @@ adds the rest and active bout-length view that complements the kRA/kAR
 rates above.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">daily</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/circadian.daily.html">circadian.daily</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/dichotomy.index.html">dichotomy.index</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, rest <span class="op">=</span> <span class="va">state</span> <span class="op">==</span> <span class="st">"S"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/dichotomy.index.html">dichotomy.index</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, rest <span class="op">=</span> <span class="va">state</span> <span class="op">==</span> <span class="st">"S"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Dichotomy Index (I&lt;O)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   I&lt;O:             100.0%</span></span>
-<span><span class="co">#&gt;   Active median:   652.0 counts</span></span>
-<span><span class="co">#&gt;   Rest / active epochs: 7646 / 2273</span></span></code></pre></div>
+<span><span class="co">#&gt;   Active median:   651.5 counts</span></span>
+<span><span class="co">#&gt;   Rest / active epochs: 7641 / 2278</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">daily</span><span class="op">$</span><span class="va">daily</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">M10_onset_h</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"grey60"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#236192"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
@@ -248,7 +249,7 @@ phase is across the recording.
 <p><code><a href="../reference/cosinor.multicomponent.html">cosinor.multicomponent()</a></code> adds harmonics to the single
 cosine and picks how many by information criterion,
 <code><a href="../reference/activity.onset.offset.html">activity.onset.offset()</a></code> marks the daily activity onset and
-offset by the relative-difference method <span class="citation">(<a href="#ref-roenneberg2003">Roenneberg et al., 2003</a>)</span>, and
+offset by a relative-difference contrast, and
 <code><a href="../reference/phase.concentration.html">phase.concentration()</a></code> tests whether the daily phase markers
 cluster (Rayleigh and Hermans-Rasson).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -267,7 +268,7 @@ cluster (Rayleigh and Hermans-Rasson).</p>
 <span><span class="co">#&gt;   n days:          7</span></span>
 <span><span class="co">#&gt;   Mean direction:  13.86 h    R: 0.679</span></span>
 <span><span class="co">#&gt;   Rayleigh:        Z = 3.23, p = 0.0332</span></span>
-<span><span class="co">#&gt;   Hermans-Rasson:  T = 110.5, p = 0.0175</span></span></code></pre></div>
+<span><span class="co">#&gt;   Hermans-Rasson:  V = 6.21, p = 0.0175</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="time-frequency-and-adaptive-decomposition">Time-frequency and adaptive decomposition<a class="anchor" aria-label="anchor" href="#time-frequency-and-adaptive-decomposition"></a>
@@ -285,31 +286,51 @@ data-adaptively and tracks its instantaneous period.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#236192"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">24</span>, linetype <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"log2"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Period (h, log scale)"</span>, y <span class="op">=</span> <span class="st">"Wavelet power"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Period (h, log scale)"</span>, y <span class="op">=</span> <span class="st">"Wavelet power (scale-rectified)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/theme_actiRhythm.html">theme_actiRhythm</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="beyond-the-basics_files/figure-html/wavelet-plot-1.png" class="r-plt" alt="The global wavelet power spectrum. The peak sits at the circadian period (dashed line at 24 hours), recovered without assuming a fixed cosine shape." width="770"><p class="caption">
-The global wavelet power spectrum. The peak sits at the circadian period
-(dashed line at 24 hours), recovered without assuming a fixed cosine
-shape.
+<img src="beyond-the-basics_files/figure-html/wavelet-plot-1.png" class="r-plt" alt="The scale-rectified global wavelet power spectrum (|W|^2/scale, Liu et al. 2007). The peak sits at the circadian period (dashed line at 24 hours), recovered without assuming a fixed cosine shape." width="770"><p class="caption">
+The scale-rectified global wavelet power spectrum (|W|^2/scale, Liu et
+al. 2007). The peak sits at the circadian period (dashed line at 24
+hours), recovered without assuming a fixed cosine shape.
 </p>
 </div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_wavelet.html">plot_wavelet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">counts10</span><span class="op">)</span>, <span class="va">t10</span>, epoch_length <span class="op">=</span> <span class="fl">600</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="beyond-the-basics_files/figure-html/wavelet-scalogram-1.png" class="r-plt" alt="The full wavelet power scalogram: scale-rectified power across period (log axis) and time, with the cone of influence faded at the ends and the dominant-period ridge traced in white. The circadian band runs the length of the recording." width="770"><p class="caption">
+The full wavelet power scalogram: scale-rectified power across period
+(log axis) and time, with the cone of influence faded at the ends and
+the dominant-period ridge traced in white. The circadian band runs the
+length of the recording.
+</p>
+</div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">emd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/circadian.emd.html">circadian.emd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">counts10</span><span class="op">)</span>, <span class="va">t10</span>, epoch_length <span class="op">=</span> <span class="fl">600</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/hilbert.huang.html">hilbert.huang</a></span><span class="op">(</span><span class="va">emd</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Hilbert-Huang Instantaneous Dynamics</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   No circadian IMF to analyse</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_emd.html">plot_emd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">counts10</span><span class="op">)</span>, <span class="va">t10</span>, epoch_length <span class="op">=</span> <span class="fl">600</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="beyond-the-basics_files/figure-html/emd-stack-1.png" class="r-plt" alt="The empirical mode decomposition: intrinsic mode functions from finest at the top to the slow trend at the bottom, with the circadian mode (orange) the one nearest 24 hours." width="770"><p class="caption">
+The empirical mode decomposition: intrinsic mode functions from finest
+at the top to the slow trend at the bottom, with the circadian mode
+(orange) the one nearest 24 hours.
+</p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="registration-residual-structure-and-states">Registration, residual structure, and states<a class="anchor" aria-label="anchor" href="#registration-residual-structure-and-states"></a>
 </h3>
 <p><code><a href="../reference/curve.registration.html">curve.registration()</a></code> aligns the days on their
-active-phase landmark and reports a scale-invariant chronotype phase,
-<code><a href="../reference/residual.spectrum.html">residual.spectrum()</a></code> examines what the cosinor leaves
-behind, and <code><a href="../reference/rest.hmm.html">rest.hmm()</a></code> fits a state-space model whose
-decoded path gives the probability of rest across the day.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+active-phase landmark and reports a scale-invariant phase marker (the
+M10-window centre), <code><a href="../reference/residual.spectrum.html">residual.spectrum()</a></code> examines what the
+cosinor leaves behind, and <code><a href="../reference/rest.hmm.html">rest.hmm()</a></code> fits a state-space
+model whose decoded path gives the probability of rest across the
+day.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hmm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rest.hmm.html">rest.hmm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">counts10</span><span class="op">)</span>, <span class="va">t10</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">hmm</span><span class="op">$</span><span class="va">tod_profile</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">hour</span>, <span class="va">p_rest</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#236192"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -338,11 +359,6 @@ Bogdan, A., Lellouch, J., Misset, J. L., Touitou, Y., &amp; Levi, F.
 quality of life, better response, and longer survival in patients with
 metastatic colorectal cancer and good performance status. <em>Clinical
 Cancer Research</em>, <em>6</em>(8), 3038–3045.
-</div>
-<div id="ref-roenneberg2003" class="csl-entry">
-Roenneberg, T., Wirz-Justice, A., &amp; Merrow, M. (2003). Life between
-clocks: Daily temporal patterns of human chronotypes. <em>Journal of
-Biological Rhythms</em>, <em>18</em>(1), 80–90. <a href="https://doi.org/10.1177/0748730402239679" class="external-link">https://doi.org/10.1177/0748730402239679</a>
 </div>
 <div id="ref-wang2011flm" class="csl-entry">
 Wang, J., Xian, H., Licis, A., Deych, E., Ding, J., McLeland, J.,

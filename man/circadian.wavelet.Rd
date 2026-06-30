@@ -28,7 +28,9 @@ period are computed outside the cone so edge effects do not bias them. A
 \code{significant} logical matrix flags cells whose power exceeds the 95\\%
 confidence level against an AR(1) red-noise background (with the per-scale
 threshold \code{sig_power} and the lag-1 autocorrelation \code{phi}), which
-separates a real rhythm from background. Never errors.
+separates a real rhythm from background. The power is scale-rectified
+(\eqn{|W|^2/s}, Liu et al. 2007), which reduces the Torrence bias toward long
+periods. Never errors.
 }
 \description{
 Runs a Morlet continuous wavelet transform on the activity series and returns
@@ -47,4 +49,6 @@ circadian.wavelet(100 + 80 * cos(2 * pi * th / 24), ts, epoch_length = 600)
 \insertRef{torrence1998}{actiRhythm}
 
 \insertRef{leise2013}{actiRhythm}
+
+\insertRef{liu2007}{actiRhythm}
 }

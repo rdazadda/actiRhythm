@@ -4,18 +4,23 @@
 \alias{circadian.is.multiscale}
 \title{Multi-resolution Interdaily Stability (IS)}
 \usage{
-circadian.is.multiscale(counts, timestamps, bin_minutes = c(60, 30, 15))
+circadian.is.multiscale(
+  counts,
+  timestamps,
+  bin_minutes = (1:60)[1440L\%\%(1:60) == 0L]
+)
 }
 \arguments{
 \item{counts}{Numeric vector of epoch-level activity.}
 
 \item{timestamps}{POSIXct timestamps (one per epoch).}
 
-\item{bin_minutes}{Integer vector of bin widths in minutes (default
-\code{c(60, 30, 15)}).}
+\item{bin_minutes}{Integer bin widths in minutes that divide 1440 (default the
+divisors of 1440 from 1 to 60 min, per Goncalves et al. 2014).}
 }
 \value{
-Data frame with columns \code{bin_minutes} and \code{IS}.
+An object of class \code{actiRhythm_ism}: a per-bin \code{IS} table and
+the averaged \code{ISm}.
 }
 \description{
 Computes interdaily stability at several within-day bin resolutions. IS is
@@ -27,4 +32,6 @@ and \code{N} the total number of bins.
 }
 \references{
 \insertRef{witting1990}{actiRhythm}
+
+\insertRef{goncalves2014}{actiRhythm}
 }

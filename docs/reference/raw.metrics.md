@@ -75,6 +75,13 @@ activities using raw data of accelerometer.” *Clinical Physiology and
 Functional Imaging*, **35**(1), 64–70.
 [doi:10.1111/cpf.12127](https://doi.org/10.1111/cpf.12127) .
 
+van Hees VT, Sabia S, Anderson KN, Denton SJ, Oliver J, Catt M, Abell
+JG, Kivimaki M, Trenell MI, Singh-Manoux A (2015). “A novel, open access
+method to assess sleep duration using a wrist-worn accelerometer.” *PLoS
+ONE*, **10**(11), e0142533.
+[doi:10.1371/journal.pone.0142533](https://doi.org/10.1371/journal.pone.0142533)
+.
+
 ## See also
 
 [`auto.calibrate`](https://rdazadda.github.io/actiRhythm/reference/auto.calibrate.md),

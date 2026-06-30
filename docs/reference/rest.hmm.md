@@ -15,6 +15,7 @@ rest.hmm(
   timestamps,
   states = 2L,
   transform = c("sqrt", "log", "none"),
+  decode = c("posterior", "viterbi"),
   max_iter = 200L,
   tol = 1e-06,
   n_starts = 5L,
@@ -35,12 +36,19 @@ rest.hmm(
 - states:
 
   Number of hidden states (default 2 = rest/active; 3 adds a moderate
-  state).
+  state). Huang et al. (2018) fix three states; the BIC reported here
+  can guide the choice.
 
 - transform:
 
   Variance-stabilizing transform of the counts: `"sqrt"` (default),
-  `"log"`, or `"none"`.
+  `"log"`, or `"none"`. Huang et al. fit on 5-minute averaged counts, so
+  a coarse epoch is recommended.
+
+- decode:
+
+  State decoding: `"posterior"` (default, the local decoding of Huang et
+  al. 2018) or `"viterbi"` (the global most-likely path).
 
 - max_iter, tol:
 
@@ -58,8 +66,8 @@ rest.hmm(
 
 An object of class `actiRhythm_hmm`: the per-state emission means and
 SDs, the transition matrix, the decoded `state_path` and a `sleep_state`
-("S"/"W") vector, a 24-hour state-occupancy profile, and the
-log-likelihood with AIC/BIC. Never errors.
+("S"/"W") vector, a 24-hour profile of the mean posterior rest
+probability, and the log-likelihood with AIC/BIC. Never errors.
 
 ## References
 
@@ -83,7 +91,7 @@ counts <- ifelse(h >= 23 | h < 7, 2, 250) + pmax(0, stats::rnorm(length(ts), 0, 
 rest.hmm(counts, ts)
 #> State-Space Rest-Activity Model (Gaussian HMM)
 #> 
-#>   States: 2   log-likelihood: -349.0   AIC: 710.1
+#>   States: 2   log-likelihood: -349.0   AIC: 712.1
 #> 
 #>  state mean_transformed sd_transformed  label
 #>      1             2.26           1.07   rest

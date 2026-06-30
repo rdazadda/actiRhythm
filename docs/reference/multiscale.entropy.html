@@ -156,14 +156,14 @@ for <code>m + 1</code> points. The implementation is fully self-contained (base 
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># White noise: entropy decreases with scale</span></span></span>
 <span class="r-in"><span><span class="fu">multiscale.entropy</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">mse</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 2.4475282 2.1095652 1.9424928 1.7839571 1.6271744 1.5529452 1.5719688</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 1.4297197 1.3623616 1.3134330 1.3228068 1.4076692 1.2764495 1.2212146</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 1.1643755 1.1213814 1.2828048 1.1881730 1.0746168 0.9322216</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 2.446324 2.105090 1.935192 1.777846 1.621644 1.552057 1.569350 1.427566</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 1.357506 1.303940 1.305857 1.384235 1.256591 1.199179 1.138336 1.120196</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] 1.254367 1.146115 1.051494 0.892656</span>
 <span class="r-in"><span><span class="co"># 1/f-like (random walk): flatter / sustained entropy</span></span></span>
 <span class="r-in"><span><span class="fu">multiscale.entropy</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">2000</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">mse</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.1155946 0.1613639 0.2117052 0.2512892 0.2873474 0.3162274 0.3391400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.3552696 0.3638887 0.3696590 0.4063044 0.3947861 0.4363337 0.4262172</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.4326016 0.4276882 0.4768064 0.4615090 0.5163658 0.4473874</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.1147112 0.1594668 0.2091053 0.2474783 0.2828905 0.3114901 0.3333711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.3486852 0.3554676 0.3622740 0.4004146 0.3876029 0.4276109 0.4148211</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] 0.4246965 0.4166384 0.4553923 0.4447822 0.5024574 0.4326161</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

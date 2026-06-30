@@ -55,7 +55,8 @@ flm
 #> 
 #>   Peak 956.3 at 19.2 h; trough -117.7 at 3.8 h
 #> 
-#>   Reference: Wang et al. (2011)
+#>   Basis fit follows Wang et al. (2011); F/p are ordinary regression
+#>   statistics (not Wang's between-subject permutation test).
 ```
 
 ``` r
@@ -161,12 +162,12 @@ rates above.
 ``` r
 
 daily <- circadian.daily(agd$axis1, agd$timestamp)
-dichotomy.index(agd$axis1, agd$timestamp, rest = state == "S")
+dichotomy.index(agd$axis1, rest = state == "S")
 #> Dichotomy Index (I<O)
 #> 
 #>   I<O:             100.0%
-#>   Active median:   652.0 counts
-#>   Rest / active epochs: 7646 / 2273
+#>   Active median:   651.5 counts
+#>   Rest / active epochs: 7641 / 2278
 ```
 
 ``` r
@@ -192,8 +193,8 @@ phase is across the recording.
 adds harmonics to the single cosine and picks how many by information
 criterion,
 [`activity.onset.offset()`](https://rdazadda.github.io/actiRhythm/reference/activity.onset.offset.md)
-marks the daily activity onset and offset by the relative-difference
-method ([Roenneberg et al., 2003](#ref-roenneberg2003)), and
+marks the daily activity onset and offset by a relative-difference
+contrast, and
 [`phase.concentration()`](https://rdazadda.github.io/actiRhythm/reference/phase.concentration.md)
 tests whether the daily phase markers cluster (Rayleigh and
 Hermans-Rasson).
@@ -215,7 +216,7 @@ phase.concentration(daily$daily$M10_onset_h)
 #>   n days:          7
 #>   Mean direction:  13.86 h    R: 0.679
 #>   Rayleigh:        Z = 3.23, p = 0.0332
-#>   Hermans-Rasson:  T = 110.5, p = 0.0175
+#>   Hermans-Rasson:  V = 6.21, p = 0.0175
 ```
 
 ### Time-frequency and adaptive decomposition
@@ -239,17 +240,34 @@ ggplot(data.frame(period = wav$period_hours, power = wav$global_power),
   geom_line(colour = "#236192") +
   geom_vline(xintercept = 24, linetype = 2, colour = "grey50") +
   scale_x_continuous(trans = "log2") +
-  labs(x = "Period (h, log scale)", y = "Wavelet power") +
+  labs(x = "Period (h, log scale)", y = "Wavelet power (scale-rectified)") +
   theme_actiRhythm()
 ```
 
-![The global wavelet power spectrum. The peak sits at the circadian
-period (dashed line at 24 hours), recovered without assuming a fixed
-cosine shape.](beyond-the-basics_files/figure-html/wavelet-plot-1.png)
+![The scale-rectified global wavelet power spectrum (\|W\|^2/scale, Liu
+et al. 2007). The peak sits at the circadian period (dashed line at 24
+hours), recovered without assuming a fixed cosine
+shape.](beyond-the-basics_files/figure-html/wavelet-plot-1.png)
 
-The global wavelet power spectrum. The peak sits at the circadian period
-(dashed line at 24 hours), recovered without assuming a fixed cosine
-shape.
+The scale-rectified global wavelet power spectrum (\|W\|^2/scale, Liu et
+al. 2007). The peak sits at the circadian period (dashed line at 24
+hours), recovered without assuming a fixed cosine shape.
+
+``` r
+
+plot_wavelet(as.numeric(counts10), t10, epoch_length = 600)
+```
+
+![The full wavelet power scalogram: scale-rectified power across period
+(log axis) and time, with the cone of influence faded at the ends and
+the dominant-period ridge traced in white. The circadian band runs the
+length of the
+recording.](beyond-the-basics_files/figure-html/wavelet-scalogram-1.png)
+
+The full wavelet power scalogram: scale-rectified power across period
+(log axis) and time, with the cone of influence faded at the ends and
+the dominant-period ridge traced in white. The circadian band runs the
+length of the recording.
 
 ``` r
 
@@ -260,11 +278,25 @@ hilbert.huang(emd)
 #>   No circadian IMF to analyse
 ```
 
+``` r
+
+plot_emd(as.numeric(counts10), t10, epoch_length = 600)
+```
+
+![The empirical mode decomposition: intrinsic mode functions from finest
+at the top to the slow trend at the bottom, with the circadian mode
+(orange) the one nearest 24
+hours.](beyond-the-basics_files/figure-html/emd-stack-1.png)
+
+The empirical mode decomposition: intrinsic mode functions from finest
+at the top to the slow trend at the bottom, with the circadian mode
+(orange) the one nearest 24 hours.
+
 ### Registration, residual structure, and states
 
 [`curve.registration()`](https://rdazadda.github.io/actiRhythm/reference/curve.registration.md)
 aligns the days on their active-phase landmark and reports a
-scale-invariant chronotype phase,
+scale-invariant phase marker (the M10-window centre),
 [`residual.spectrum()`](https://rdazadda.github.io/actiRhythm/reference/residual.spectrum.md)
 examines what the cosinor leaves behind, and
 [`rest.hmm()`](https://rdazadda.github.io/actiRhythm/reference/rest.hmm.md)
@@ -299,11 +331,6 @@ Marked 24-h rest/activity rhythms are associated with better quality of
 life, better response, and longer survival in patients with metastatic
 colorectal cancer and good performance status. *Clinical Cancer
 Research*, *6*(8), 3038–3045.
-
-Roenneberg, T., Wirz-Justice, A., & Merrow, M. (2003). Life between
-clocks: Daily temporal patterns of human chronotypes. *Journal of
-Biological Rhythms*, *18*(1), 80–90.
-<https://doi.org/10.1177/0748730402239679>
 
 Wang, J., Xian, H., Licis, A., Deych, E., Ding, J., McLeland, J.,
 Toedebusch, C., Li, T., Duntley, S., & Shannon, W. (2011). Measuring the

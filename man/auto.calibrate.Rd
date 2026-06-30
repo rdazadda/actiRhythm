@@ -10,7 +10,7 @@ auto.calibrate(
   sphere_crit = 0.3,
   sd_crit = 0.013,
   max_iter = 1000,
-  tol = 1e-09
+  tol = 1e-10
 )
 }
 \arguments{
@@ -21,12 +21,12 @@ auto.calibrate(
 \item{sphere_crit}{Minimum coverage (g) each axis must span on both sides of
 zero for a stable fit (default 0.3).}
 
-\item{sd_crit}{Per-axis rolling SD (g) below which a 10-second window counts as
-non-movement (default 0.013).}
+\item{sd_crit}{Per-axis SD (g) over consecutive (non-overlapping) 10-second
+windows below which a window counts as non-movement (default 0.013).}
 
 \item{max_iter}{Maximum refinement iterations (default 1000).}
 
-\item{tol}{Convergence tolerance on the calibration error (default 1e-9).}
+\item{tol}{Convergence tolerance on the calibration error (default 1e-10).}
 }
 \value{
 A list with \code{scale} and \code{offset} (length-3), the calibration

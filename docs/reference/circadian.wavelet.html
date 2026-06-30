@@ -114,7 +114,9 @@ period are computed outside the cone so edge effects do not bias them. A
 <code>significant</code> logical matrix flags cells whose power exceeds the 95\<!-- % -->
 confidence level against an AR(1) red-noise background (with the per-scale
 threshold <code>sig_power</code> and the lag-1 autocorrelation <code>phi</code>), which
-separates a real rhythm from background. Never errors.</p>
+separates a real rhythm from background. The power is scale-rectified
+(\(|W|^2/s\), Liu et al. 2007), which reduces the Torrence bias toward long
+periods. Never errors.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -127,6 +129,11 @@ separates a real rhythm from background. Never errors.</p>
 “Wavelet analysis of circadian and ultradian behavioral rhythms.”
 <em>Journal of Circadian Rhythms</em>, <b>11</b>, 5.
 <a href="https://doi.org/10.1186/1740-3391-11-5" class="external-link">doi:10.1186/1740-3391-11-5</a>
+.</p>
+<p>Liu Y, Liang XS, Weisberg RH (2007).
+“Rectification of the bias in the wavelet power spectrum.”
+<em>Journal of Atmospheric and Oceanic Technology</em>, <b>24</b>(12), 2093–2102.
+<a href="https://doi.org/10.1175/2007JTECHO511.1" class="external-link">doi:10.1175/2007JTECHO511.1</a>
 .</p>
     </div>
 

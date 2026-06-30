@@ -11,4 +11,4 @@ src/*.dll
 inst/doc/
 *.tar.gz
 *.Rcheck/
-.positai
+Rplots.pdf

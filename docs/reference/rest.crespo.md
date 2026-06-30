@@ -1,14 +1,12 @@
 # Crespo Rest/Activity Period Detection
 
-Detects all consolidated rest bouts across a recording with the Crespo
-algorithm (Crespo et al. 2012): a two-pass rank-order (median) filter
-and mathematical-morphology pipeline that turns activity counts into a
-binary rest/activity series and reads every rest bout from its
-transitions. Like
-[`rest.periods`](https://rdazadda.github.io/actiRhythm/reference/rest.periods.md)
-it returns any number of bouts, naps and fragmented rest included; it
-reaches that result by morphological filtering rather than by
-Roenneberg-style consolidation, so the two differ in method.
+Detects the main rest and activity periods across a recording with the
+Crespo algorithm (Crespo et al. 2012): a rank-order (median) filter at
+the `alpha` (~rest-length) scale, an `alpha`/24h percentile threshold,
+and a separate minutes-scale morphology pass that turn activity counts
+into a binary rest/activity series read bout by bout from its
+transitions. The wide smoothing window suppresses short within-period
+transitions, so it reports the main daily rest rather than every nap.
 
 ## Usage
 
@@ -53,12 +51,13 @@ rest.crespo(
 - alpha:
 
   Expected daily rest length, in seconds (default 28800, 8 hours); sets
-  the threshold percentile (alpha / 24 h) and the minimum data required.
+  the rank-order smoothing window (Eq 4), the threshold percentile
+  (alpha / 24 h), and the minimum data required.
 
 - beta:
 
-  Filter and morphology scale, in seconds (default 3600, 1 hour); sets
-  the rank-order filter window and the structuring-element size.
+  Morphology scale, in seconds (default 3600, 1 hour); sets the
+  structuring-element size that consolidates the thresholded series.
 
 ## Value
 

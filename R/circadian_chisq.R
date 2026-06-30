@@ -11,7 +11,7 @@
 #' For each trial period \eqn{P} (an integer number of epochs) the series is
 #' folded into \eqn{P} phase bins over \eqn{K = \lfloor N/P \rfloor} complete
 #' cycles and the statistic
-#' \deqn{Q_P = \frac{N \sum_{h=1}^{P}(\bar{A}_h - \bar{A})^2}{\sum_{i=1}^{N}(A_i - \bar{A})^2}}
+#' \deqn{Q_P = \frac{K\,N \sum_{h=1}^{P}(\bar{A}_h - \bar{A})^2}{\sum_{i=1}^{N}(A_i - \bar{A})^2}}
 #' is computed, where \eqn{\bar{A}_h} is the mean at phase \eqn{h} and
 #' \eqn{\bar{A}} the grand mean over the \eqn{N = KP} retained points. Under the
 #' null hypothesis of no rhythm at \eqn{P}, \eqn{Q_P} follows a chi-square

@@ -143,10 +143,19 @@ the same way, with <code>raw.metrics("recording.cwa")</code>.</p>
 <span><span class="co">#&gt; 4 2024-01-01 12:03:00 44.25995 24.90778 14.705513</span></span>
 <span><span class="co">#&gt; 5 2024-01-01 12:04:00 44.79032 25.36485  8.292428</span></span>
 <span><span class="co">#&gt; 6 2024-01-01 12:05:00 44.17071 24.72920 14.755796</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_raw_metrics.html">plot_raw_metrics</a></span><span class="op">(</span><span class="va">raw</span>, epoch_length <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="raw-pipeline_files/figure-html/raw-metrics-plot-1.png" class="r-plt" alt="The three raw-acceleration epoch metrics across the recording: ENMO and MAD (movement, in mg) are low at night and zero when the device is off, while the z-angle (degrees) tracks arm posture." width="770"><p class="caption">
+The three raw-acceleration epoch metrics across the recording: ENMO and
+MAD (movement, in mg) are low at night and zero when the device is off,
+while the z-angle (degrees) tracks arm posture.
+</p>
+</div>
 <p>ENMO is the activity signal, and every method above takes it
 directly: pass it to <code><a href="../reference/circadian.rhythm.html">circadian.rhythm()</a></code>, or let
 <code><a href="../reference/circadian.raw.html">circadian.raw()</a></code> run the whole analysis from the file.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/circadian.rhythm.html">circadian.rhythm</a></span><span class="op">(</span><span class="va">m</span><span class="op">$</span><span class="va">ENMO</span>, <span class="va">m</span><span class="op">$</span><span class="va">time</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>IS <span class="op">=</span> <span class="va">cr</span><span class="op">$</span><span class="va">IS</span>, IV <span class="op">=</span> <span class="va">cr</span><span class="op">$</span><span class="va">IV</span>, RA <span class="op">=</span> <span class="va">cr</span><span class="op">$</span><span class="va">RA</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     IS     IV     RA </span></span>
@@ -156,7 +165,7 @@ directly: pass it to <code><a href="../reference/circadian.rhythm.html">circadia
 return still periods to the 1 g sphere <span class="citation">(<a href="#ref-vanhees2014">Hees et al., 2014</a>)</span>; on data with a
 known distortion it returns the original gain and offset to within a
 fraction of a percent.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">40</span> <span class="op">*</span> <span class="fl">3</span><span class="op">)</span>, <span class="fl">40</span>, <span class="fl">3</span><span class="op">)</span>; <span class="va">u</span> <span class="op">&lt;-</span> <span class="va">u</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">u</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">cal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">40</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span></span>
@@ -165,10 +174,10 @@ fraction of a percent.</p>
 <span><span class="fu"><a href="../reference/auto.calibrate.html">auto.calibrate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cal</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">cal</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, z <span class="op">=</span> <span class="va">cal</span><span class="op">[</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>               fs <span class="op">=</span> <span class="fl">30</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"scale"</span>, <span class="st">"offset"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; $scale</span></span>
-<span><span class="co">#&gt; [1] 1.0301368 0.9701036 1.0099054</span></span>
+<span><span class="co">#&gt; [1] 1.0301368 0.9701036 1.0099053</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $offset</span></span>
-<span><span class="co">#&gt; [1]  0.04000814 -0.02992012  0.01990532</span></span></code></pre></div>
+<span><span class="co">#&gt; [1]  0.04000830 -0.02992048  0.01990560</span></span></code></pre></div>
 <p>The z-angle supports a sleep detector that needs no diary and works
 from posture, which the counts cannot do. <code><a href="../reference/rest.spt.html">rest.spt()</a></code> finds
 the nightly sleep-period-time window from the distribution of angle
@@ -176,31 +185,25 @@ change [HDCZA; <span class="citation">Hees et al. (<a href="#ref-vanhees2018">20
 scores sustained-inactivity bouts <span class="citation">(<a href="#ref-vanhees2015">Hees et al., 2015</a>)</span>, and
 <code><a href="../reference/sleep.from.spt.html">sleep.from.spt()</a></code> combines them into onset, wake and
 efficiency. <code><a href="../reference/detect.nonwear.raw.html">detect.nonwear.raw()</a></code> flags a stationary,
-taken-off device [low standard deviation and range over the hour; <span class="citation">Hees et al. (<a href="#ref-vanhees2011">2011</a>)</span>], and passing its mask as
+taken-off device [low standard deviation and range over the hour; <span class="citation">Hees et al. (<a href="#ref-vanhees2013">2013</a>)</span>], and passing its mask as
 <code>wear</code> keeps a device-off stretch from being read as one long
 night. Computed here on the synthetic recording at a 5-second epoch,
 with the detected windows shaded.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m5</span>    <span class="op">&lt;-</span> <span class="fu"><a href="../reference/raw.metrics.html">raw.metrics</a></span><span class="op">(</span><span class="va">raw</span>, epoch <span class="op">=</span> <span class="fl">5</span>, metrics <span class="op">=</span> <span class="st">"anglez"</span><span class="op">)</span></span>
 <span><span class="va">wear</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/detect.nonwear.raw.html">detect.nonwear.raw</a></span><span class="op">(</span><span class="va">raw</span>, epoch <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">spt</span>   <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rest.spt.html">rest.spt</a></span><span class="op">(</span><span class="va">m5</span><span class="op">$</span><span class="va">anglez</span>, <span class="va">m5</span><span class="op">$</span><span class="va">time</span>, epoch_length <span class="op">=</span> <span class="fl">5</span>, wear <span class="op">=</span> <span class="va">wear</span><span class="op">)</span></span>
 <span><span class="va">sib</span>   <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sib.vanhees.html">sib.vanhees</a></span><span class="op">(</span><span class="va">m5</span><span class="op">$</span><span class="va">anglez</span>, epoch_length <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">sleep</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sleep.from.spt.html">sleep.from.spt</a></span><span class="op">(</span><span class="va">spt</span>, <span class="va">sib</span>, <span class="va">m5</span><span class="op">$</span><span class="va">time</span>, epoch_length <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="va">thin</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_rect</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">spt</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">onset</span>, xmax <span class="op">=</span> <span class="va">offset</span>, ymin <span class="op">=</span> <span class="op">-</span><span class="fl">90</span>, ymax <span class="op">=</span> <span class="fl">90</span><span class="op">)</span>,</span>
-<span>            fill <span class="op">=</span> <span class="st">"#236192"</span>, alpha <span class="op">=</span> <span class="fl">0.18</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">m5</span><span class="op">[</span><span class="va">thin</span>, <span class="op">]</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">anglez</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">0.2</span>, colour <span class="op">=</span> <span class="st">"grey30"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"z-angle (deg)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_actiRhythm.html">theme_actiRhythm</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/plot_spt.html">plot_spt</a></span><span class="op">(</span><span class="va">raw</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="raw-pipeline_files/figure-html/spt-1.png" class="r-plt" alt="The z-angle of the synthetic recording at 5-second epochs, with the two nightly sleep-period-time windows detected from the angle alone (HDCZA), gated by raw non-wear, shaded." width="770"><p class="caption">
+<img src="raw-pipeline_files/figure-html/spt-1.png" class="r-plt" alt="The z-angle of the synthetic recording at 5-second epochs, with the two nightly sleep-period-time windows shaded, each detected from the z-angle alone (HDCZA) and gated by raw non-wear." width="770"><p class="caption">
 The z-angle of the synthetic recording at 5-second epochs, with the two
-nightly sleep-period-time windows detected from the angle alone (HDCZA),
-gated by raw non-wear, shaded.
+nightly sleep-period-time windows shaded, each detected from the z-angle
+alone (HDCZA) and gated by raw non-wear.
 </p>
 </div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sleep</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"onset"</span>, <span class="st">"offset"</span>, <span class="st">"tst"</span>, <span class="st">"efficiency"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;         date               onset              offset      tst efficiency</span></span>
 <span><span class="co">#&gt; 1 2024-01-01 2024-01-01 23:00:00 2024-01-02 07:00:00 8.001389  0.9968853</span></span>
@@ -211,19 +214,19 @@ detrended-fluctuation exponent to a 0 to 1 score that peaks at the
 healthy 1/f balance <span class="citation">(<a href="#ref-danilevicz2024">Danilevicz et al., 2024</a>)</span>, and
 <code><a href="../reference/transition.probability.html">transition.probability()</a></code> gives the closed-form
 rest-to-active and active-to-rest transition probabilities.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/activity.balance.index.html">activity.balance.index</a></span><span class="op">(</span><span class="fu"><a href="../reference/fractal.dfa.html">fractal.dfa</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $ABI_overall</span></span>
-<span><span class="co">#&gt; [1] 0.9900827</span></span>
+<span><span class="co">#&gt; [1] 0.5803233</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $ABI_short</span></span>
-<span><span class="co">#&gt; [1] 0.9943423</span></span>
+<span><span class="co">#&gt; [1] 0.7336085</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $ABI_long</span></span>
-<span><span class="co">#&gt; [1] 0.9820051</span></span>
+<span><span class="co">#&gt; [1] 0.3710439</span></span>
 <span><span class="fu"><a href="../reference/transition.probability.html">transition.probability</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tp_ra_mle"</span>, <span class="st">"tp_ar_mle"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; $tp_ra_mle</span></span>
-<span><span class="co">#&gt; [1] 0.04853705</span></span>
+<span><span class="co">#&gt; [1] 0.04854369</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $tp_ar_mle</span></span>
 <span><span class="co">#&gt; [1] 0.1366603</span></span></code></pre></div>
@@ -242,7 +245,7 @@ measures how closely they agree.</p>
 multi-day raw file is far too large to ship), so the table is computed
 whenever the repository and GGIR are present and skipped otherwise
 (<code>gt3x_file</code> is resolved in the setup chunk).</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">P</span> <span class="op">&lt;-</span> <span class="fu">GGIR</span><span class="fu">::</span><span class="fu"><a href="https://wadpac.github.io/GGIR/reference/load_params.html" class="external-link">load_params</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">P</span><span class="op">$</span><span class="va">params_general</span><span class="op">$</span><span class="va">windowsizes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">900</span>, <span class="fl">3600</span><span class="op">)</span></span>
 <span><span class="va">I</span> <span class="op">&lt;-</span> <span class="fu">GGIR</span><span class="fu">::</span><span class="fu"><a href="https://wadpac.github.io/GGIR/reference/g.inspectfile.html" class="external-link">g.inspectfile</a></span><span class="op">(</span><span class="va">gt3x_file</span>, params_rawdata <span class="op">=</span> <span class="va">P</span><span class="op">$</span><span class="va">params_rawdata</span>,</span>
@@ -308,7 +311,7 @@ window</strong>. Feeding the <em>same</em> z-angle to actiRhythm’s
 (<code>GGIR:::HASPT</code>) isolates the detection algorithm from the
 upstream metric the table above already validated, so any difference
 here would be in the algorithm itself.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ps</span>  <span class="op">&lt;-</span> <span class="fu">GGIR</span><span class="fu">::</span><span class="fu"><a href="https://wadpac.github.io/GGIR/reference/load_params.html" class="external-link">load_params</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">params_sleep</span></span>
 <span><span class="va">spt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rest.spt.html">rest.spt</a></span><span class="op">(</span><span class="va">acti</span><span class="op">$</span><span class="va">anglez</span>, <span class="va">acti</span><span class="op">$</span><span class="va">time</span>, epoch_length <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>   <span class="co"># acti is from the chunk above</span></span>
 <span><span class="va">day</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">acti</span><span class="op">$</span><span class="va">time</span> <span class="op">-</span> <span class="fl">12</span> <span class="op">*</span> <span class="fl">3600</span><span class="op">)</span>                       <span class="co"># noon-to-noon nights</span></span>
@@ -428,12 +431,12 @@ activity assessment using local gravity and temperature: An evaluation
 on four continents. <em>Journal of Applied Physiology</em>,
 <em>117</em>(7), 738–744. <a href="https://doi.org/10.1152/japplphysiol.00421.2014" class="external-link">https://doi.org/10.1152/japplphysiol.00421.2014</a>
 </div>
-<div id="ref-vanhees2011" class="csl-entry">
-Hees, V. T. van, Renstrom, F., Wright, A., Gradmark, A., Catt, M., Chen,
-K. Y., Lof, M., Bluck, L., Pomeroy, J., Wareham, N. J., Ekelund, U.,
-Brage, S., &amp; Franks, P. W. (2011). Estimation of daily energy
-expenditure in pregnant and non-pregnant women using a wrist-worn
-tri-axial accelerometer. <em>PLoS ONE</em>, <em>6</em>(7), e22922. <a href="https://doi.org/10.1371/journal.pone.0022922" class="external-link">https://doi.org/10.1371/journal.pone.0022922</a>
+<div id="ref-vanhees2013" class="csl-entry">
+Hees, V. T. van, Gorzelniak, L., Dean Leon, E. C., Eder, M., Pias, M.,
+Taherian, S., Ekelund, U., Renstrom, F., Franks, P. W., Horsch, A.,
+&amp; Brage, S. (2013). Separating movement and gravity components in an
+acceleration signal and implications for the assessment of human daily
+physical activity. <em>PLoS ONE</em>, <em>8</em>(4), e61691. <a href="https://doi.org/10.1371/journal.pone.0061691" class="external-link">https://doi.org/10.1371/journal.pone.0061691</a>
 </div>
 <div id="ref-vanhees2015" class="csl-entry">
 Hees, V. T. van, Sabia, S., Anderson, K. N., Denton, S. J., Oliver, J.,

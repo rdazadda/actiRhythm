@@ -141,7 +141,8 @@ reproducible bootstrap draws.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An object of class <code>actiRhythm_period_ci</code>: a list with <code>tau</code>
 (the point estimate, hours), <code>ci_lower</code>/<code>ci_upper</code>, <code>se</code>, the
-<code>level</code>, and the number of valid replicates.</p>
+<code>level</code>, the number of valid replicates, and <code>tau_boot</code> (the vector
+of bootstrap replicate periods).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -169,9 +170,9 @@ Wiley, New York.</p>
 <span class="r-in"><span><span class="fu">period.ci</span><span class="op">(</span><span class="va">counts</span>, <span class="va">ts</span>, n_boot <span class="op">=</span> <span class="fl">50</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Circadian Period with Bootstrap Confidence Interval</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   tau:      24.103 h</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   95% CI:   [23.980, 24.064] h</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   SE:       0.022 h</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   tau:      24.088 h</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   95% CI:   [23.975, 24.051] h</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   SE:       0.020 h</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Method:   circular block residual bootstrap (50/50 valid reps)</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>

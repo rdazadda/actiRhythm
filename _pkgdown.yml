@@ -162,8 +162,27 @@ reference:
   - plot_actogram
   - plot_periodogram
   - plot_chisq
+  - plot_period_ci
   - plot_dfa
+  - plot_mfdfa
+  - plot_mse
   - plot_extended_cosinor
+  - plot_cosinor_ellipse
+  - plot_multicomponent
+  - plot_cosinor_schematic
+  - plot_profile
+  - plot_dichotomy
+  - plot_transitions
+  - plot_multiscale
+  - plot_wavelet
+  - plot_emd
+  - plot_ssa_wcor
+  - plot_phase_rose
+  - plot_changepoints
+  - plot_lids
+  - plot_rest_comparison
+  - plot_spt
+  - plot_raw_metrics
   - theme_actiRhythm
   - set_actiRhythm_theme
   - scale_color_actiRhythm

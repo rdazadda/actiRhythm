@@ -34,7 +34,7 @@ residual.spectrum(
 - bands:
 
   Named list of `c(low_hours, high_hours)` period bands for the residual
-  power; defaults to ultradian (2-8 h) and high-frequency (\<2 h).
+  power; defaults to ultradian (2-8 h) and high-frequency (0.5-2 h).
 
 ## Value
 

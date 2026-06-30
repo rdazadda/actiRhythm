@@ -36,8 +36,8 @@ unless that input is supplied.
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
-| n_epochs | Number of epochs analysed in the recording | count | non-negative integer |  | summary$`n_epochs       |
-|epoch_length_s |Epoch length of the recording              |seconds         |typically 15-60 s      |          |summary`$epoch_length_s |
+| `n_epochs` | Number of epochs analysed in the recording | count | non-negative integer |  | `summary$n_epochs` |
+| `epoch_length_s` | Epoch length of the recording | seconds | typically 15-60 s |  | `summary$epoch_length_s` |
 
 ## Nonparametric metrics
 
@@ -47,12 +47,12 @@ assumed waveform ([Van Someren et al., 1999](#ref-vansomeren1999);
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
-| L5 | Mean activity over the least-active 5 hours of the average day | activity counts per min | non-negative; lower = deeper rest | vansomeren1999 | circadian.rhythm()$`L5  |
-|M10    |Mean activity over the most-active 10 hours of the average day           |activity counts per min                                          |non-negative; higher = stronger active phase     |vansomeren1999 |circadian.rhythm()`$M10 |
-| RA | Relative amplitude of the rest-activity rhythm | (M10 - L5) / (M10 + L5); unitless | 0 to 1; higher = stronger rhythm | vansomeren1999 | circadian.rhythm()$`RA  |
-|IS     |Interdaily stability: strength of coupling of the rhythm to the 24 h day |n*sum((xbar_h - xbar)^2) / (p*sum((x_i - xbar)^2)); unitless     |0 to 1; near 1 = highly stable, < 0.3 = weak     |witting1990    |circadian.rhythm()`$IS |
-| IV | Intradaily variability: fragmentation of the rest-activity rhythm | n*sum((x_i - x\_{i-1})^2) / ((n-1)*sum((x_i - xbar)^2)); unitless | 0 to ~2; ~0 = smooth sine, ~2 = noisy/fragmented | witting1990 | circadian.rhythm()$`IV  |
-|phi    |Autocorrelation-based predictability of the rhythm at the 24 h lag       |unitless                                                         |higher = more predictable day-to-day             |               |circadian.rhythm()`$phi |
+| `L5` | Mean activity over the least-active 5 hours of the average day | activity counts per min | non-negative; lower = deeper rest | vansomeren1999 | `circadian.rhythm()$L5` |
+| `M10` | Mean activity over the most-active 10 hours of the average day | activity counts per min | non-negative; higher = stronger active phase | vansomeren1999 | `circadian.rhythm()$M10` |
+| `RA` | Relative amplitude of the rest-activity rhythm | (M10 - L5) / (M10 + L5); unitless | 0 to 1; higher = stronger rhythm | vansomeren1999 | `circadian.rhythm()$RA` |
+| `IS` | Interdaily stability: strength of coupling of the rhythm to the 24 h day | n\*sum((xbar_h - xbar)^2) / (p\*sum((x_i - xbar)^2)); unitless | 0 to 1; near 1 = highly stable, \< 0.3 = weak | witting1990 | `circadian.rhythm()$IS` |
+| `IV` | Intradaily variability: fragmentation of the rest-activity rhythm | n\*sum((x_i - x\_{i-1})^2) / ((n-1)\*sum((x_i - xbar)^2)); unitless | 0 to ~2; ~0 = smooth sine, ~2 = noisy/fragmented | witting1990 | `circadian.rhythm()$IV` |
+| `phi` | Autocorrelation-based predictability of the rhythm at the 24 h lag | unitless | higher = more predictable day-to-day |  | `circadian.rhythm()$phi` |
 
 ## Cosinor and rhythmicity
 
@@ -62,15 +62,15 @@ The single-component cosinor and its zero-amplitude rhythmicity test
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
-| cosinor_mesor | MESOR: the rhythm-adjusted mean of the fitted 24 h cosine | activity counts | non-negative | cornelissen2014 | cosinor.analysis()$`mesor          |
-|cosinor_amplitude |Amplitude: half the peak-to-trough extent of the fitted cosine   |activity counts    |non-negative; larger = stronger sinusoidal component |cornelissen2014 |cosinor.analysis()`$amplitude |
-| cosinor_acrophase | Acrophase: clock time of the cosine peak (circular) | clock hours (0-24) | 0 to 24 | cornelissen2014 | cosinor.analysis()$`acrophase      |
-|cosinor_r_squared |Proportion of variance explained by the single cosine            |unitless           |0 to 1                                               |cornelissen2014 |cosinor.analysis()`$r_squared |
-| rhythm_F | F statistic of the zero-amplitude (no-rhythm) test | unitless | non-negative; larger = stronger evidence of a rhythm | nelson1979 | rhythmicity.test()$`F              |
-|rhythm_df2        |Denominator degrees of freedom of the rhythmicity F-test         |count              |non-negative                                         |nelson1979      |rhythmicity.test()`$df2 |
-| rhythm_p_value | p-value of the zero-amplitude F-test | unitless | 0 to 1; \< 0.05 = detectable rhythm | nelson1979 | rhythmicity.test()$`p_value        |
-|percent_rhythm    |Percent of variance the single cosine explains (100 * R-squared) |percent            |0 to 100                                             |nelson1979      |rhythmicity.test()`$percent_rhythm |
-| rhythmic | Whether a rhythm is detected at the 0.05 level | logical | TRUE / FALSE | nelson1979 | rhythmicity.test()\$rhythmic |
+| `cosinor_mesor` | MESOR: the rhythm-adjusted mean of the fitted 24 h cosine | activity counts | non-negative | cornelissen2014 | `cosinor.analysis()$mesor` |
+| `cosinor_amplitude` | Amplitude: half the peak-to-trough extent of the fitted cosine | activity counts | non-negative; larger = stronger sinusoidal component | cornelissen2014 | `cosinor.analysis()$amplitude` |
+| `cosinor_acrophase` | Acrophase: clock time of the cosine peak (circular) | clock hours (0-24) | 0 to 24 | cornelissen2014 | `cosinor.analysis()$acrophase` |
+| `cosinor_r_squared` | Proportion of variance explained by the single cosine | unitless | 0 to 1 | cornelissen2014 | `cosinor.analysis()$r_squared` |
+| `rhythm_F` | F statistic of the zero-amplitude (no-rhythm) test | unitless | non-negative; larger = stronger evidence of a rhythm | nelson1979 | `rhythmicity.test()$F` |
+| `rhythm_df2` | Denominator degrees of freedom of the rhythmicity F-test | count | non-negative | nelson1979 | `rhythmicity.test()$df2` |
+| `rhythm_p_value` | p-value of the zero-amplitude F-test | unitless | 0 to 1; \< 0.05 = detectable rhythm | nelson1979 | `rhythmicity.test()$p_value` |
+| `percent_rhythm` | Percent of variance the single cosine explains (100 \* R-squared) | percent | 0 to 100 | cornelissen2014 | `rhythmicity.test()$percent_rhythm` |
+| `rhythmic` | Whether a rhythm is detected at the 0.05 level | logical | TRUE / FALSE | nelson1979 | `rhythmicity.test()$rhythmic` |
 
 ## Period and spectral
 
@@ -80,15 +80,15 @@ with a bootstrap confidence interval ([Lomb, 1976](#ref-lomb1976);
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
-| period_tau | Dominant free-running period from the Lomb-Scargle periodogram | hours | within the search band (default 18-30 h) | lomb1976 | circadian.period()$`tau        |
-|period_peak_power |Lomb-Scargle spectral power at the dominant period                 |unitless        |non-negative; higher = stronger periodicity |lomb1976     |circadian.period()`$peak_power |
-| period_p_value | False-alarm probability of the periodogram peak (Baluev) | unitless | 0 to 1; \< 0.05 = significant period | baluev2008 | circadian.period()$`p_value    |
-|period_ci_lower   |Lower bound of the bootstrap period confidence interval            |hours           |<= period_tau                               |politis1992  |period.ci()`$ci_lower |
-| period_ci_upper | Upper bound of the bootstrap period confidence interval | hours | \>= period_tau | politis1992 | period.ci()$`ci_upper          |
-|period_ci_se      |Bootstrap standard error of the period estimate                    |hours           |non-negative                                |politis1992  |period.ci()`$se |
-| chisq_period | Dominant period from the chi-square (Sokolove-Bushell) periodogram | hours | within the search band | sokolove1978 | chi.sq.periodogram()$`period   |
-|chisq_Qp_peak     |Peak Qp statistic of the chi-square periodogram                    |unitless        |non-negative; above threshold = significant |sokolove1978 |chi.sq.periodogram()`$Qp_peak |
-| chisq_p_value | Significance of the chi-square periodogram peak (Sidak-corrected) | unitless | 0 to 1 | sokolove1978 | chi.sq.periodogram()\$p_value |
+| `period_tau` | Dominant free-running period from the Lomb-Scargle periodogram | hours | within the search band (default 18-30 h) | lomb1976 | `circadian.period()$tau` |
+| `period_peak_power` | Lomb-Scargle spectral power at the dominant period | unitless | 0 to 1; higher = stronger periodicity | lomb1976 | `circadian.period()$peak_power` |
+| `period_p_value` | False-alarm probability of the periodogram peak (Baluev) | unitless | 0 to 1; \< 0.05 = significant period | baluev2008 | `circadian.period()$p_value` |
+| `period_ci_lower` | Lower bound of the bootstrap period confidence interval | hours | typically \<= period_tau | politis1992 | `period.ci()$ci_lower` |
+| `period_ci_upper` | Upper bound of the bootstrap period confidence interval | hours | typically \>= period_tau | politis1992 | `period.ci()$ci_upper` |
+| `period_ci_se` | Bootstrap standard error of the period estimate | hours | non-negative | politis1992 | `period.ci()$se` |
+| `chisq_period` | Dominant period from the chi-square (Sokolove-Bushell) periodogram | hours | within the search band | sokolove1978 | `chi.sq.periodogram()$period` |
+| `chisq_Qp_peak` | Peak Qp statistic of the chi-square periodogram | unitless | non-negative; above threshold = significant | sokolove1978 | `chi.sq.periodogram()$Qp_peak` |
+| `chisq_p_value` | Significance of the chi-square periodogram peak (Sidak-corrected) | unitless | 0 to 1 | sokolove1978 | `chi.sq.periodogram()$p_value` |
 
 ## Fractal and nonlinear
 
@@ -98,13 +98,13 @@ al., 2002](#ref-costa2002); [Kantelhardt et al.,
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
-| dfa_alpha | Overall detrended-fluctuation scaling exponent | unitless | ~0.5 = noise, ~1 = 1/f, \> 1 = random-walk-like | peng1994 | fractal.dfa()$`alpha        |
-|dfa_alpha1  |Short-time-scale DFA exponent (below the crossover)               |unitless        |interpreted as for dfa_alpha                           |peng1994        |fractal.dfa()`$alpha1 |
-| dfa_alpha2 | Long-time-scale DFA exponent (above the crossover) | unitless | interpreted as for dfa_alpha | peng1994 | fractal.dfa()$`alpha2       |
-|mfdfa_h2    |Generalized Hurst exponent at q = 2 (equals the DFA exponent)     |unitless        |~0.5 to 1.5                                            |kantelhardt2002 |mfdfa()`$alpha_dfa |
-| mfdfa_width | Width of the multifractal singularity spectrum | unitless | non-negative; wider = more multifractal | kantelhardt2002 | mfdfa()$`width              |
-|mse_area    |Area under the multiscale sample-entropy curve (complexity index) |unitless        |non-negative; higher = more complex                    |costa2002       |multiscale.entropy()`$area |
-| mse_slope | Slope of sample entropy across coarse-graining scales | unitless | sign indicates rising or falling complexity with scale | costa2002 | multiscale.entropy()\$slope |
+| `dfa_alpha` | Overall detrended-fluctuation scaling exponent | unitless | ~0.5 = noise, ~1 = 1/f, \> 1 = random-walk-like | peng1994 | `fractal.dfa()$alpha` |
+| `dfa_alpha1` | Short-time-scale DFA exponent (scales below the fixed breakpoint, default 90) | unitless | interpreted as for dfa_alpha | peng1994 | `fractal.dfa()$alpha1` |
+| `dfa_alpha2` | Long-time-scale DFA exponent (scales above the fixed breakpoint, default 90) | unitless | interpreted as for dfa_alpha | peng1994 | `fractal.dfa()$alpha2` |
+| `mfdfa_h2` | Generalized Hurst exponent at q = 2 (equals the DFA exponent) | unitless | ~0.5 to 1.5 | kantelhardt2002 | `mfdfa()$alpha_dfa` |
+| `mfdfa_width` | Width of the multifractal singularity spectrum | unitless | non-negative; wider = more multifractal | kantelhardt2002 | `mfdfa()$width` |
+| `mse_area` | Sum of sample entropy across scales (complexity index) | unitless | non-negative; higher = more complex | costa2002 | `multiscale.entropy()$area` |
+| `mse_slope` | Least-squares slope of sample entropy across scales (package trend summary) | unitless | sign indicates rising or falling complexity with scale |  | `multiscale.entropy()$slope` |
 
 ## Rest-activity transitions
 
@@ -113,10 +113,10 @@ single amplitude cannot ([Lim et al., 2011](#ref-lim2011)).
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
-| kRA | Rest-to-active state transition rate | per epoch | non-negative | lim2011 | state.transitions()$`kRA |
-|kAR    |Active-to-rest state transition rate        |per epoch       |non-negative           |lim2011   |state.transitions()`$kAR |
-| pRA | Rest-to-active state transition probability | unitless | 0 to 1 | lim2011 | state.transitions()$`pRA |
-|pAR    |Active-to-rest state transition probability |unitless        |0 to 1                 |lim2011   |state.transitions()`$pAR |
+| `kRA` | Rest-to-active transition rate over the LOWESS plateau | per epoch | 0 to 1; typically \< 0.5; higher = more fragmented rest | lim2011 | `state.transitions()$kRA` |
+| `kAR` | Active-to-rest transition rate over the LOWESS plateau | per epoch | 0 to 1; typically \< 0.5; higher = more fragmented activity | lim2011 | `state.transitions()$kAR` |
+| `pRA` | Overall rest-to-active rate (reciprocal mean rest-bout length) | unitless | 0 to 1 | danilevicz2024 | `state.transitions()$pRA` |
+| `pAR` | Overall active-to-rest rate (reciprocal mean active-bout length) | unitless | 0 to 1 | danilevicz2024 | `state.transitions()$pAR` |
 
 ## Sleep timing and regularity
 
@@ -127,12 +127,12 @@ Index, social jet lag, and LIDS ([Phillips et al.,
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
-| SRI | Sleep Regularity Index: how consistently the sleep/wake state repeats 24 h apart (requires sleep_state) | 200\*P - 100, where P is the fraction of epoch pairs 24 h apart in the same state; index points | -100 to 100; 100 = perfectly regular, 0 = random, higher = more regular | phillips2017 | sleep.regularity.index() |
-| social_jet_lag_hours | Social jet lag: mid-sleep difference between free and work days (requires sleep_periods) | hours | typically 0 to 3; larger = greater misalignment | wittmann2006 | social.jet.lag()$`social_jet_lag_hours |
-|MSW                  |Mid-sleep on work days                                                                                  |clock hours (0-24)                                                                             |0 to 24                                                                 |wittmann2006  |social.jet.lag()`$MSW |
-| MSF | Mid-sleep on free days | clock hours (0-24) | 0 to 24 | wittmann2006 | social.jet.lag()$`MSF                  |
-|lids_period_min      |Mean Locomotor Inactivity During Sleep ultradian period (requires sleep_periods)                        |minutes                                                                                        |typically 60 to 120 min                                                 |winnebeck2018 |lids()`$mean_period_min |
-| lids_MRI | Mean Munich Rhythmicity Index of the LIDS cycles (requires sleep_periods) | unitless | 0 to 1; higher = stronger ultradian rhythm | winnebeck2018 | lids()\$mean_MRI |
+| `SRI` | Sleep Regularity Index: how consistently the sleep/wake state repeats 24 h apart (requires sleep_state) | 200\*P - 100, where P is the fraction of epoch pairs 24 h apart in the same state; index points | -100 to 100; 100 = perfectly regular, 0 = random, higher = more regular | phillips2017 | [`sleep.regularity.index()`](https://rdazadda.github.io/actiRhythm/reference/sleep.regularity.index.md) |
+| `social_jet_lag_hours` | Social jet lag: mid-sleep difference between free and work days (requires sleep_periods) | hours | typically 0 to 3; larger = greater misalignment | roenneberg2012 | `social.jet.lag()$social_jet_lag_hours` |
+| `MSW` | Mid-sleep on work days | clock hours (0-24) | 0 to 24 | wittmann2006 | `social.jet.lag()$MSW` |
+| `MSF` | Mid-sleep on free days | clock hours (0-24) | 0 to 24 | wittmann2006 | `social.jet.lag()$MSF` |
+| `lids_period_min` | Mean Locomotor Inactivity During Sleep ultradian period (requires sleep_periods) | minutes | typically ~95 to 130 min (median ~110) | winnebeck2018 | `lids()$mean_period_min` |
+| `lids_MRI` | Mean Munich Rhythmicity Index of the LIDS cycles (requires sleep_periods) | unitless | \>=0 on the 0-100 LIDS scale; higher = stronger ultradian rhythm | winnebeck2018 | `lids()$mean_MRI` |
 
 ## References
 

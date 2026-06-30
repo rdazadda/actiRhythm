@@ -48,10 +48,9 @@ complement rather than compete: a high RA with a low IS, for instance,
 is a strong rhythm carried on irregular timing, something neither number
 says alone. To pool every test into one verdict,
 [`consensus.rhythmicity()`](https://rdazadda.github.io/actiRhythm/reference/consensus.rhythmicity.md)
-runs the cosinor F-test, the Bingham ellipse, the Lomb-Scargle
-false-alarm probability, and the chi-square periodogram, and reports a
-majority vote and a Fisher-combined p-value ([Fisher,
-1925](#ref-fisher1925)).
+runs the cosinor F-test, the Lomb-Scargle false-alarm probability, and
+the chi-square periodogram, and reports a majority vote and a
+Cauchy-combined p-value ([Liu & Xie, 2020](#ref-liu2020)).
 
 ## What is the period, and is it really 24 hours?
 
@@ -118,8 +117,8 @@ change away. Switch to the time-resolved tools:
 - [`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md):
   dates a regime change directly from the counts.
 - [`curve.registration()`](https://rdazadda.github.io/actiRhythm/reference/curve.registration.md):
-  a chronotype phase that does not blur when the days disagree ([Krafty
-  et al., 2019](#ref-krafty2019)).
+  a phase marker that does not blur when the days disagree ([Ramsay &
+  Silverman, 2005](#ref-ramsay2005)).
 
 These have their own walkthrough in the *Nonstationary and complex
 rhythms* article.
@@ -296,9 +295,6 @@ identification of activity-rest periods based on actigraphy. *Medical &
 Biological Engineering & Computing*, *50*(4), 329–340.
 <https://doi.org/10.1007/s11517-012-0875-y>
 
-Fisher, R. A. (1925). *Statistical methods for research workers*.
-Oliver; Boyd.
-
 Golyandina, N., & Zhigljavsky, A. (2013). Singular spectrum analysis for
 time series. *SpringerBriefs in Statistics*.
 <https://doi.org/10.1007/978-3-642-34913-3>
@@ -321,11 +317,10 @@ analysis of nonstationary time series. *Physica A: Statistical Mechanics
 and Its Applications*, *316*(1-4), 87–114.
 <https://doi.org/10.1016/S0378-4371(02)01383-3>
 
-Krafty, R. T., Fu, H., Graves, J. L., Bruce, S. A., Hall, M. H., &
-Smagula, S. F. (2019). Measuring variability in rest-activity rhythms
-from actigraphy with application to characterizing symptoms of
-depression. *Statistics in Biosciences*, *11*, 314–333.
-<https://doi.org/10.1007/s12561-018-09230-2>
+Liu, Y., & Xie, J. (2020). Cauchy combination test: A powerful test with
+analytic p-value calculation under arbitrary dependency structures.
+*Journal of the American Statistical Association*, *115*(529), 393–402.
+<https://doi.org/10.1080/01621459.2018.1554485>
 
 Lomb, N. R. (1976). Least-squares frequency analysis of unequally spaced
 data. *Astrophysics and Space Science*, *39*(2), 447–462.
@@ -354,6 +349,9 @@ academic performance and delayed circadian and sleep/wake timing.
 Politis, D. N., & Romano, J. P. (1992). A circular block-resampling
 procedure for stationary data. In R. LePage & L. Billard (Eds.),
 *Exploring the limits of bootstrap* (pp. 263–270). Wiley.
+
+Ramsay, J. O., & Silverman, B. W. (2005). *Functional data analysis*
+(2nd ed.). Springer. <https://doi.org/10.1007/b98888>
 
 Roenneberg, T., Keller, L. K., Fischer, D., Matera, J. L., Vetter, C., &
 Winnebeck, E. C. (2015). Human activity and rest in situ. *Methods in

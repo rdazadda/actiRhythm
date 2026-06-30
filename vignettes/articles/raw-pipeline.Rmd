@@ -61,6 +61,10 @@ m <- raw.metrics(raw, epoch = 60)   # per-epoch ENMO (mg), MAD, and the z-angle
 head(m)
 ```
 
+```{r raw-metrics-plot, fig.height = 4.2, fig.cap = "The three raw-acceleration epoch metrics across the recording: ENMO and MAD (movement, in mg) are low at night and zero when the device is off, while the z-angle (degrees) tracks arm posture."}
+plot_raw_metrics(raw, epoch_length = 60)
+```
+
 ENMO is the activity signal, and every method above takes it directly: pass it to
 `circadian.rhythm()`, or let `circadian.raw()` run the whole analysis from the file.
 
@@ -89,24 +93,18 @@ which the counts cannot do. `rest.spt()` finds the nightly sleep-period-time win
 distribution of angle change [HDCZA; @vanhees2018], `sib.vanhees()` scores
 sustained-inactivity bouts [@vanhees2015], and `sleep.from.spt()` combines them into
 onset, wake and efficiency. `detect.nonwear.raw()` flags a stationary, taken-off
-device [low standard deviation and range over the hour; @vanhees2011], and passing
+device [low standard deviation and range over the hour; @vanhees2013], and passing
 its mask as `wear` keeps a device-off stretch from being read as one long night.
 Computed here on the synthetic recording at a 5-second epoch, with the detected
 windows shaded.
 
-```{r spt, fig.height = 3, fig.cap = "The z-angle of the synthetic recording at 5-second epochs, with the two nightly sleep-period-time windows detected from the angle alone (HDCZA), gated by raw non-wear, shaded."}
+```{r spt, fig.height = 3, fig.cap = "The z-angle of the synthetic recording at 5-second epochs, with the two nightly sleep-period-time windows shaded, each detected from the z-angle alone (HDCZA) and gated by raw non-wear."}
 m5    <- raw.metrics(raw, epoch = 5, metrics = "anglez")
 wear  <- detect.nonwear.raw(raw, epoch = 5)
 spt   <- rest.spt(m5$anglez, m5$time, epoch_length = 5, wear = wear)
 sib   <- sib.vanhees(m5$anglez, epoch_length = 5)
 sleep <- sleep.from.spt(spt, sib, m5$time, epoch_length = 5)
-thin <- seq(1, nrow(m5), by = 12)
-ggplot() +
-  geom_rect(data = spt, aes(xmin = onset, xmax = offset, ymin = -90, ymax = 90),
-            fill = "#236192", alpha = 0.18) +
-  geom_line(data = m5[thin, ], aes(time, anglez), linewidth = 0.2, colour = "grey30") +
-  labs(x = NULL, y = "z-angle (deg)") +
-  theme_actiRhythm()
+plot_spt(raw)
 sleep[, c("date", "onset", "offset", "tst", "efficiency")]
 ```
 

@@ -5,8 +5,8 @@ Aligns each day's 24-hour activity profile on its active-phase landmark
 timing shifts day to day) from the vertical amplitude variation (the
 registered mean profile, sharper than the plain average because phase
 jitter no longer blurs it). The per-day landmark times are a
-scale-invariant chronotype phase, unchanged by any rescaling of the
-counts (Ramsay and Silverman 2005).
+scale-invariant phase marker (the M10-window centre), unchanged by any
+rescaling of the counts (Ramsay and Silverman 2005).
 
 ## Usage
 
@@ -43,6 +43,14 @@ profile. Never errors.
 
 Ramsay JO, Silverman BW (2005). *Functional Data Analysis*, 2nd edition.
 Springer. [doi:10.1007/b98888](https://doi.org/10.1007/b98888) .
+
+Van Someren EJW, Swaab DF, Colenda CC, Cohen W, McCall WV, Rosenquist PB
+(1999). “Bright light therapy: improved sensitivity to its effects on
+rest-activity rhythms in Alzheimer patients by application of
+nonparametric methods.” *Chronobiology International*, **16**(4),
+505–518.
+[doi:10.3109/07420529908998724](https://doi.org/10.3109/07420529908998724)
+.
 
 ## Examples
 

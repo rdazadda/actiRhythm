@@ -1,6 +1,6 @@
 # Multi-brand raw accelerometer ingest. Each brand reader normalizes its file to
 # a triaxial acceleration frame (g), which is converted to ActiGraph-equivalent
-# activity counts with the agcounts band-pass filter (the Brond 2017 method).
+# activity counts with the agcounts implementation of the count algorithm (Neishabouri 2022).
 # Cross-brand counts are an APPROXIMATION, not native ActiGraph output. See the
 # exported functions' documentation.
 
@@ -96,8 +96,9 @@
 #' Activity Counts from a Raw Axivity .cwa File
 #'
 #' Reads a raw Axivity (\code{.cwa}) accelerometer file and converts it to
-#' ActiGraph-equivalent activity counts via the agcounts band-pass filter (the
-#' Brond 2017 method). Requires the \pkg{GGIRread} and \pkg{agcounts} packages.
+#' ActiGraph-equivalent activity counts via the agcounts implementation of the
+#' ActiGraph count algorithm (Neishabouri 2022). Requires the \pkg{GGIRread} and
+#' \pkg{agcounts} packages.
 #'
 #' @section Cross-brand counts: These are an \emph{approximation} of ActiGraph
 #'   counts, not native ActiGraph output. Axivity-to-count conversion has been
@@ -115,6 +116,8 @@
 #'   and \code{vm}, one row per epoch (the same shape as \code{\link{gt3x.counts}}).
 #'
 #' @references
+#' \insertRef{neishabouri2022}{actiRhythm}
+#'
 #' \insertRef{brond2017}{actiRhythm}
 #'
 #' @seealso \code{\link{geneactiv.counts}}, \code{\link{gt3x.counts}},
@@ -136,8 +139,9 @@ axivity.counts <- function(path, epoch = 60, lfe = FALSE, tz = "UTC") {
 #' Activity Counts from a Raw GENEActiv .bin File
 #'
 #' Reads a raw GENEActiv (\code{.bin}) accelerometer file and converts it to
-#' ActiGraph-equivalent activity counts via the agcounts band-pass filter (the
-#' Brond 2017 method). Requires the \pkg{GGIRread} and \pkg{agcounts} packages.
+#' ActiGraph-equivalent activity counts via the agcounts implementation of the
+#' ActiGraph count algorithm (Neishabouri 2022). Requires the \pkg{GGIRread} and
+#' \pkg{agcounts} packages.
 #'
 #' @section Cross-brand counts: These are an \emph{approximation} of ActiGraph
 #'   counts, not native ActiGraph output, and GENEActiv-to-count conversion is
@@ -156,6 +160,8 @@ axivity.counts <- function(path, epoch = 60, lfe = FALSE, tz = "UTC") {
 #'   and \code{vm}, one row per epoch.
 #'
 #' @references
+#' \insertRef{neishabouri2022}{actiRhythm}
+#'
 #' \insertRef{brond2017}{actiRhythm}
 #'
 #' @seealso \code{\link{axivity.counts}}, \code{\link{gt3x.counts}},

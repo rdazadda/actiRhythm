@@ -62,6 +62,20 @@ head(m)
 #> 6 2024-01-01 12:05:00 44.17071 24.72920 14.755796
 ```
 
+``` r
+
+plot_raw_metrics(raw, epoch_length = 60)
+```
+
+![The three raw-acceleration epoch metrics across the recording: ENMO
+and MAD (movement, in mg) are low at night and zero when the device is
+off, while the z-angle (degrees) tracks arm
+posture.](raw-pipeline_files/figure-html/raw-metrics-plot-1.png)
+
+The three raw-acceleration epoch metrics across the recording: ENMO and
+MAD (movement, in mg) are low at night and zero when the device is off,
+while the z-angle (degrees) tracks arm posture.
+
 ENMO is the activity signal, and every method above takes it directly:
 pass it to
 [`circadian.rhythm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.rhythm.md),
@@ -95,10 +109,10 @@ cal <- do.call(rbind, lapply(seq_len(40), function(i)
 auto.calibrate(data.frame(x = cal[, 1], y = cal[, 2], z = cal[, 3]),
                fs = 30)[c("scale", "offset")]
 #> $scale
-#> [1] 1.0301368 0.9701036 1.0099054
+#> [1] 1.0301368 0.9701036 1.0099053
 #> 
 #> $offset
-#> [1]  0.04000814 -0.02992012  0.01990532
+#> [1]  0.04000830 -0.02992048  0.01990560
 ```
 
 The z-angle supports a sleep detector that needs no diary and works from
@@ -113,7 +127,7 @@ scores sustained-inactivity bouts ([Hees et al.,
 combines them into onset, wake and efficiency.
 [`detect.nonwear.raw()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.raw.md)
 flags a stationary, taken-off device \[low standard deviation and range
-over the hour; Hees et al. ([2011](#ref-vanhees2011))\], and passing its
+over the hour; Hees et al. ([2013](#ref-vanhees2013))\], and passing its
 mask as `wear` keeps a device-off stretch from being read as one long
 night. Computed here on the synthetic recording at a 5-second epoch,
 with the detected windows shaded.
@@ -125,23 +139,17 @@ wear  <- detect.nonwear.raw(raw, epoch = 5)
 spt   <- rest.spt(m5$anglez, m5$time, epoch_length = 5, wear = wear)
 sib   <- sib.vanhees(m5$anglez, epoch_length = 5)
 sleep <- sleep.from.spt(spt, sib, m5$time, epoch_length = 5)
-thin <- seq(1, nrow(m5), by = 12)
-ggplot() +
-  geom_rect(data = spt, aes(xmin = onset, xmax = offset, ymin = -90, ymax = 90),
-            fill = "#236192", alpha = 0.18) +
-  geom_line(data = m5[thin, ], aes(time, anglez), linewidth = 0.2, colour = "grey30") +
-  labs(x = NULL, y = "z-angle (deg)") +
-  theme_actiRhythm()
+plot_spt(raw)
 ```
 
 ![The z-angle of the synthetic recording at 5-second epochs, with the
-two nightly sleep-period-time windows detected from the angle alone
-(HDCZA), gated by raw non-wear,
-shaded.](raw-pipeline_files/figure-html/spt-1.png)
+two nightly sleep-period-time windows shaded, each detected from the
+z-angle alone (HDCZA) and gated by raw
+non-wear.](raw-pipeline_files/figure-html/spt-1.png)
 
 The z-angle of the synthetic recording at 5-second epochs, with the two
-nightly sleep-period-time windows detected from the angle alone (HDCZA),
-gated by raw non-wear, shaded.
+nightly sleep-period-time windows shaded, each detected from the z-angle
+alone (HDCZA) and gated by raw non-wear.
 
 ``` r
 
@@ -165,16 +173,16 @@ probabilities.
 
 activity.balance.index(fractal.dfa(agd$axis1))
 #> $ABI_overall
-#> [1] 0.9900827
+#> [1] 0.5803233
 #> 
 #> $ABI_short
-#> [1] 0.9943423
+#> [1] 0.7336085
 #> 
 #> $ABI_long
-#> [1] 0.9820051
+#> [1] 0.3710439
 transition.probability(agd$axis1)[c("tp_ra_mle", "tp_ar_mle")]
 #> $tp_ra_mle
-#> [1] 0.04853705
+#> [1] 0.04854369
 #> 
 #> $tp_ar_mle
 #> [1] 0.1366603
@@ -328,12 +336,12 @@ activity assessment using local gravity and temperature: An evaluation
 on four continents. *Journal of Applied Physiology*, *117*(7), 738–744.
 <https://doi.org/10.1152/japplphysiol.00421.2014>
 
-Hees, V. T. van, Renstrom, F., Wright, A., Gradmark, A., Catt, M., Chen,
-K. Y., Lof, M., Bluck, L., Pomeroy, J., Wareham, N. J., Ekelund, U.,
-Brage, S., & Franks, P. W. (2011). Estimation of daily energy
-expenditure in pregnant and non-pregnant women using a wrist-worn
-tri-axial accelerometer. *PLoS ONE*, *6*(7), e22922.
-<https://doi.org/10.1371/journal.pone.0022922>
+Hees, V. T. van, Gorzelniak, L., Dean Leon, E. C., Eder, M., Pias, M.,
+Taherian, S., Ekelund, U., Renstrom, F., Franks, P. W., Horsch, A., &
+Brage, S. (2013). Separating movement and gravity components in an
+acceleration signal and implications for the assessment of human daily
+physical activity. *PLoS ONE*, *8*(4), e61691.
+<https://doi.org/10.1371/journal.pone.0061691>
 
 Hees, V. T. van, Sabia, S., Anderson, K. N., Denton, S. J., Oliver, J.,
 Catt, M., Abell, J. G., Kivimaki, M., Trenell, M. I., & Singh-Manoux, A.

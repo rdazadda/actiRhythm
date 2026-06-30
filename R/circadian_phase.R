@@ -100,29 +100,38 @@ circadian.onset.ci <- function(onset_hours, level = 0.95, n_boot = 2000) {
 #'
 #' @param counts Numeric vector of epoch-level activity.
 #' @param timestamps POSIXct timestamps (one per epoch).
-#' @param bin_minutes Integer vector of bin widths in minutes (default
-#'   \code{c(60, 30, 15)}).
+#' @param bin_minutes Integer bin widths in minutes that divide 1440 (default the
+#'   divisors of 1440 from 1 to 60 min, per Goncalves et al. 2014).
 #'
-#' @return Data frame with columns \code{bin_minutes} and \code{IS}.
+#' @return An object of class \code{actiRhythm_ism}: a per-bin \code{IS} table and
+#'   the averaged \code{ISm}.
 #' @references
 #' \insertRef{witting1990}{actiRhythm}
+#'
+#' \insertRef{goncalves2014}{actiRhythm}
 #' @export
-circadian.is.multiscale <- function(counts, timestamps, bin_minutes = c(60, 30, 15)) {
+circadian.is.multiscale <- function(counts, timestamps,
+                                    bin_minutes = (1:60)[1440L %% (1:60) == 0L]) {
   if (length(counts) != length(timestamps)) {
     stop("counts and timestamps must have the same length")
+  }
+  ok <- 1440L %% bin_minutes == 0L
+  if (!all(ok)) {
+    warning("dropping bin sizes that do not divide 1440 min: ",
+            paste(bin_minutes[!ok], collapse = ", "))
+    bin_minutes <- bin_minutes[ok]
   }
   lt <- as.POSIXlt(timestamps)
   sec_of_day <- lt$hour * 3600 + lt$min * 60 + lt$sec
   day_index <- as.integer(as.Date(timestamps) - min(as.Date(timestamps)))
 
   is_at <- function(bin_min) {
-    p <- 1440L %/% bin_min                 # bins per day
+    p <- 1440L %/% bin_min
     bin_of_day <- (sec_of_day %/% (bin_min * 60)) + 1L
     cell <- interaction(day_index, bin_of_day, drop = TRUE)
-    x <- tapply(counts, cell, mean, na.rm = TRUE)  # per (day,bin) mean
+    x <- tapply(counts, cell, mean, na.rm = TRUE)
     x <- x[!is.na(x)]
     if (length(x) < p + 1) return(NA_real_)
-    # bin-of-day for each retained cell
     bod <- as.integer(sub(".*\\.", "", names(x)))
     grand <- mean(x)
     xbar_h <- tapply(x, bod, mean)
@@ -133,8 +142,18 @@ circadian.is.multiscale <- function(counts, timestamps, bin_minutes = c(60, 30, 
     round(min(num / den, 1), 4)
   }
 
-  data.frame(
-    bin_minutes = bin_minutes,
-    IS = vapply(bin_minutes, is_at, numeric(1))
-  )
+  is_vals <- vapply(bin_minutes, is_at, numeric(1))
+  structure(list(
+    table = data.frame(bin_minutes = bin_minutes, IS = is_vals),
+    ISm = if (all(is.na(is_vals))) NA_real_ else mean(is_vals, na.rm = TRUE)),
+    class = c("actiRhythm_ism", "list"))
+}
+
+#' @export
+print.actiRhythm_ism <- function(x, ...) {
+  cat("Multiscale Interdaily Stability\n\n")
+  cat(sprintf("  ISm (averaged): %.3f\n\n", x$ISm))
+  print(x$table, row.names = FALSE)
+  cat("\n")
+  invisible(x)
 }

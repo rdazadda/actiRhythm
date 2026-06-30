@@ -21,8 +21,9 @@ and \code{vm}, one row per epoch (the same shape as \code{\link{gt3x.counts}}).
 }
 \description{
 Reads a raw Axivity (\code{.cwa}) accelerometer file and converts it to
-ActiGraph-equivalent activity counts via the agcounts band-pass filter (the
-Brond 2017 method). Requires the \pkg{GGIRread} and \pkg{agcounts} packages.
+ActiGraph-equivalent activity counts via the agcounts implementation of the
+ActiGraph count algorithm (Neishabouri 2022). Requires the \pkg{GGIRread} and
+\pkg{agcounts} packages.
 }
 \section{Cross-brand counts}{
  These are an \emph{approximation} of ActiGraph
@@ -34,6 +35,8 @@ cut-points or to compare absolute counts across device brands.
 }
 
 \references{
+\insertRef{neishabouri2022}{actiRhythm}
+
 \insertRef{brond2017}{actiRhythm}
 }
 \seealso{

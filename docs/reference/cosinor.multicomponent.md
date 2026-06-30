@@ -1,10 +1,10 @@
 # Multicomponent Cosinor with Model Selection
 
-Fits cosinor models with one to several harmonics of the fundamental
-period and picks the best by an information criterion, so it captures a
-bimodal or asymmetric daily shape without your choosing the number of
-harmonics by hand (Cornelissen 2014). The single cosinor is the
-one-harmonic special case.
+Fits the multi-component (harmonic) cosinor of Cornelissen (2014) with
+one to several harmonics of the fundamental period and picks the number
+of harmonics by an information criterion (AIC or BIC, a package choice),
+so it captures a bimodal or asymmetric daily shape without your choosing
+the order by hand. The single cosinor is the one-harmonic special case.
 
 ## Usage
 

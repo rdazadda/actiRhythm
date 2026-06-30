@@ -157,6 +157,20 @@ steady through the first week and then jumps earlier once the active
 phase advances, which the spectrogram and the actogram show from
 different angles.
 
+``` r
+
+plot_changepoints(counts, t)
+```
+
+![The same detection as a track: the activity series with each sleep
+onset (navy) and wake onset (orange) marked and the rest episodes
+shaded. The rest band slides earlier across the
+recording.](nonstationary-rhythms_files/figure-html/changepoint-track-1.png)
+
+The same detection as a track: the activity series with each sleep onset
+(navy) and wake onset (orange) marked and the rest episodes shaded. The
+rest band slides earlier across the recording.
+
 ## Decomposing the signal
 
 Singular spectrum analysis separates the series into additive pieces
@@ -193,6 +207,20 @@ The singular-spectrum decomposition. The circadian component holds the
 slow drift in overall activity, and the residual collects the rising
 fragmentation.
 
+``` r
+
+plot_ssa_wcor(counts10, t10)
+```
+
+![The SSA w-correlation matrix that justifies the grouping above: bright
+off-diagonal 2x2 blocks are oscillatory pairs (the circadian rhythm), a
+single bright cell is the trend, and the diffuse tail is
+noise.](nonstationary-rhythms_files/figure-html/ssa-wcor-1.png)
+
+The SSA w-correlation matrix that justifies the grouping above: bright
+off-diagonal 2x2 blocks are oscillatory pairs (the circadian rhythm), a
+single bright cell is the trend, and the diffuse tail is noise.
+
 Empirical mode decomposition reaches the same idea from the other
 direction ([Huang et al., 1998](#ref-huang1998)). It pulls out
 data-adaptive oscillatory modes, and
@@ -211,7 +239,7 @@ ggplot(data.frame(t = emd$times, period = hht$period), aes(t, period)) +
   coord_cartesian(ylim = c(18, 30)) +
   labs(x = NULL, y = "Instantaneous period (h)") +
   theme_actiRhythm()
-#> Warning: Removed 1 row containing missing values or values outside the scale range
+#> Warning: Removed 108 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 ```
 
@@ -243,7 +271,7 @@ mse_e <- multiscale.entropy(early, scales = 1:10)
 mse_l <- multiscale.entropy(late,  scales = 1:10)
 c(early_complexity = mse_e$area, late_complexity = mse_l$area)
 #> early_complexity  late_complexity 
-#>         2.937170         3.327456
+#>         2.905382         3.170657
 c(early_mf_width = mfdfa(early)$width, late_mf_width = mfdfa(late)$width)
 #> early_mf_width  late_mf_width 
 #>       1.654179       1.084617
@@ -274,8 +302,8 @@ When the phase moves, the averaged acrophase is a poor summary of any
 single day.
 [`curve.registration()`](https://rdazadda.github.io/actiRhythm/reference/curve.registration.md)
 instead finds each day’s own activity landmark, aligns the days on it,
-and reports a chronotype phase plus how much that landmark varies
-([Krafty et al., 2019](#ref-krafty2019)). The variability is large here
+and reports a phase marker plus how much that landmark varies ([Ramsay &
+Silverman, 2005](#ref-ramsay2005)). The variability is large here
 precisely because the phase advanced, which is the honest answer.
 
 ``` r
@@ -345,11 +373,8 @@ analysis of nonstationary time series. *Physica A: Statistical Mechanics
 and Its Applications*, *316*(1-4), 87–114.
 <https://doi.org/10.1016/S0378-4371(02)01383-3>
 
-Krafty, R. T., Fu, H., Graves, J. L., Bruce, S. A., Hall, M. H., &
-Smagula, S. F. (2019). Measuring variability in rest-activity rhythms
-from actigraphy with application to characterizing symptoms of
-depression. *Statistics in Biosciences*, *11*, 314–333.
-<https://doi.org/10.1007/s12561-018-09230-2>
+Ramsay, J. O., & Silverman, B. W. (2005). *Functional data analysis*
+(2nd ed.). Springer. <https://doi.org/10.1007/b98888>
 
 Sokolove, P. G., & Bushell, W. N. (1978). The chi square periodogram:
 Its utility for analysis of circadian rhythms. *Journal of Theoretical

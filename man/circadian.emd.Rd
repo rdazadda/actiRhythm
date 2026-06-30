@@ -35,7 +35,9 @@ circadian.emd(
 \value{
 An object of class \code{actiRhythm_emd}: the IMF matrix, the residual
 trend, per-IMF period and variance share, the circadian IMF index, and the
-reconstruction error. Never errors.
+reconstruction error. The first and last epochs are unreliable (the spline
+envelopes pin the IMFs near zero at the edges), so read the instantaneous
+series away from the boundary. Never errors.
 }
 \description{
 Decomposes the activity series into intrinsic mode functions by empirical mode

@@ -109,6 +109,10 @@ ggplot(ep, aes(seq_along(onset_hour), onset_hour)) +
   theme_actiRhythm()
 ```
 
+```{r changepoint-track, fig.height = 3.2, fig.cap = "The same detection as a track: the activity series with each sleep onset (navy) and wake onset (orange) marked and the rest episodes shaded. The rest band slides earlier across the recording."}
+plot_changepoints(counts, t)
+```
+
 ## Decomposing the signal
 
 Singular spectrum analysis separates the series into additive pieces without assuming a
@@ -128,6 +132,10 @@ ggplot(parts, aes(t, value)) +
   facet_wrap(~part, ncol = 1, scales = "free_y") +
   labs(x = NULL, y = NULL) +
   theme_actiRhythm()
+```
+
+```{r ssa-wcor, fig.height = 3.6, fig.cap = "The SSA w-correlation matrix that justifies the grouping above: bright off-diagonal 2x2 blocks are oscillatory pairs (the circadian rhythm), a single bright cell is the trend, and the diffuse tail is noise."}
+plot_ssa_wcor(counts10, t10)
 ```
 
 Empirical mode decomposition reaches the same idea from the other direction [@huang1998]. It pulls out
@@ -177,7 +185,7 @@ ggplot(mse, aes(scale, sampen, colour = half)) +
 
 When the phase moves, the averaged acrophase is a poor summary of any single day.
 `curve.registration()` instead finds each day's own activity landmark, aligns the days on
-it, and reports a chronotype phase plus how much that landmark varies [@krafty2019]. The variability is
+it, and reports a phase marker plus how much that landmark varies [@ramsay2005]. The variability is
 large here precisely because the phase advanced, which is the honest answer.
 
 ```{r registration}

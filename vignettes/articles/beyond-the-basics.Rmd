@@ -101,7 +101,7 @@ rest and active bout-length view that complements the kRA/kAR rates above.
 
 ```{r daily}
 daily <- circadian.daily(agd$axis1, agd$timestamp)
-dichotomy.index(agd$axis1, agd$timestamp, rest = state == "S")
+dichotomy.index(agd$axis1, rest = state == "S")
 ```
 
 ```{r daily-plot, fig.height = 3, fig.cap = "The M10 onset (the start of the most active ten hours) for each day. Reporting it per day, rather than pooled, shows how steady the active phase is across the recording."}
@@ -115,7 +115,7 @@ ggplot(daily$daily, aes(date, M10_onset_h)) +
 
 `cosinor.multicomponent()` adds harmonics to the single cosine and picks how many by
 information criterion, `activity.onset.offset()` marks the daily activity onset and
-offset by the relative-difference method [@roenneberg2003], and
+offset by a relative-difference contrast, and
 `phase.concentration()` tests whether the daily phase markers cluster (Rayleigh and
 Hermans-Rasson).
 
@@ -131,15 +131,19 @@ power spectrum, `ultradian.bandpower()` splits the variance into ultradian bands
 `circadian.emd()` with `hilbert.huang()` extracts the circadian component
 data-adaptively and tracks its instantaneous period.
 
-```{r wavelet-plot, fig.height = 3, fig.cap = "The global wavelet power spectrum. The peak sits at the circadian period (dashed line at 24 hours), recovered without assuming a fixed cosine shape."}
+```{r wavelet-plot, fig.height = 3, fig.cap = "The scale-rectified global wavelet power spectrum (|W|^2/scale, Liu et al. 2007). The peak sits at the circadian period (dashed line at 24 hours), recovered without assuming a fixed cosine shape."}
 wav <- circadian.wavelet(as.numeric(counts10), t10, epoch_length = 600)
 ggplot(data.frame(period = wav$period_hours, power = wav$global_power),
        aes(period, power)) +
   geom_line(colour = "#236192") +
   geom_vline(xintercept = 24, linetype = 2, colour = "grey50") +
   scale_x_continuous(trans = "log2") +
-  labs(x = "Period (h, log scale)", y = "Wavelet power") +
+  labs(x = "Period (h, log scale)", y = "Wavelet power (scale-rectified)") +
   theme_actiRhythm()
+```
+
+```{r wavelet-scalogram, fig.height = 3.6, fig.cap = "The full wavelet power scalogram: scale-rectified power across period (log axis) and time, with the cone of influence faded at the ends and the dominant-period ridge traced in white. The circadian band runs the length of the recording."}
+plot_wavelet(as.numeric(counts10), t10, epoch_length = 600)
 ```
 
 ```{r emd}
@@ -147,10 +151,14 @@ emd <- circadian.emd(as.numeric(counts10), t10, epoch_length = 600)
 hilbert.huang(emd)
 ```
 
+```{r emd-stack, fig.height = 4.5, fig.cap = "The empirical mode decomposition: intrinsic mode functions from finest at the top to the slow trend at the bottom, with the circadian mode (orange) the one nearest 24 hours."}
+plot_emd(as.numeric(counts10), t10, epoch_length = 600)
+```
+
 ### Registration, residual structure, and states
 
 `curve.registration()` aligns the days on their active-phase landmark and reports a
-scale-invariant chronotype phase, `residual.spectrum()` examines what the cosinor
+scale-invariant phase marker (the M10-window centre), `residual.spectrum()` examines what the cosinor
 leaves behind, and `rest.hmm()` fits a state-space model whose decoded path gives the
 probability of rest across the day.
 

@@ -302,20 +302,19 @@ inactivity during sleep that tracks ultradian sleep structure [@winnebeck2018].
 ## Pooling the evidence
 
 Each test above answers "is there a rhythm?" in its own language.
-`consensus.rhythmicity()` runs four of them, the cosinor F-test, the Bingham
-ellipse, the Lomb-Scargle false-alarm probability, and the chi-square periodogram,
-and reports both a majority vote and a Fisher-combined p-value [@fisher1925].
+`consensus.rhythmicity()` runs three of them, the cosinor F-test, the Lomb-Scargle
+false-alarm probability, and the chi-square periodogram, and reports both a majority
+vote and a Cauchy-combined p-value [@liu2020].
 
 ```{r consensus}
 consensus.rhythmicity(agd$axis1, agd$timestamp)
 ```
 
-For this recording three of the four tests agree that a rhythm is present and the
-Fisher-combined p-value is effectively zero, so the evidence leans firmly toward a
-real rhythm even where one method on its own might hesitate. Read that combined
-p-value as indicative rather than exact, though: the four tests run on the same
-series, so they are not independent, which is the assumption Fisher's method rests
-on.
+For this recording the tests agree that a rhythm is present and the combined
+p-value is effectively zero, so the evidence leans firmly toward a real rhythm even
+where one method on its own might hesitate. The three tests run on the same series,
+so they are not independent; the Cauchy combination stays valid under that
+dependence, where Fisher's method would not.
 
 ## A one-row summary
 

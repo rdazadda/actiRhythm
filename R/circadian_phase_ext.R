@@ -1,9 +1,10 @@
 #' Multicomponent Cosinor with Model Selection
 #'
-#' Fits cosinor models with one to several harmonics of the fundamental period and
-#' picks the best by an information criterion, so it captures a bimodal or
-#' asymmetric daily shape without your choosing the number of harmonics by hand
-#' (Cornelissen 2014). The single cosinor is the one-harmonic special case.
+#' Fits the multi-component (harmonic) cosinor of Cornelissen (2014) with one to
+#' several harmonics of the fundamental period and picks the number of harmonics by
+#' an information criterion (AIC or BIC, a package choice), so it captures a bimodal
+#' or asymmetric daily shape without your choosing the order by hand. The single
+#' cosinor is the one-harmonic special case.
 #'
 #' @param counts Numeric activity vector.
 #' @param timestamps POSIXct timestamps, one per value.
@@ -98,11 +99,12 @@ print.actiRhythm_multicosinor <- function(x, ...) {
 
 #' Activity Onset and Offset (Relative-Difference Phase Markers)
 #'
-#' Finds the daily activity onset and offset by the relative-difference method.
-#' On the averaged 24-hour profile, the onset is where mean activity rises most
+#' Finds the daily activity onset and offset by a relative-difference contrast on
+#' the averaged 24-hour profile: the onset is where mean activity rises most
 #' sharply (the relative difference of the window after versus before is largest)
-#' and the offset is where it falls most sharply (Roenneberg et al. 2003). These
-#' are non-cosinor, non-changepoint phase markers.
+#' and the offset is where it falls most sharply. These are non-cosinor,
+#' non-changepoint phase markers, a normalized-contrast edge detector on the daily
+#' profile rather than a published actigraphy algorithm.
 #'
 #' @param counts Numeric activity vector.
 #' @param timestamps POSIXct timestamps, one per value.
@@ -111,9 +113,6 @@ print.actiRhythm_multicosinor <- function(x, ...) {
 #'
 #' @return An object of class \code{actiRhythm_aont}: \code{onset_h} and
 #'   \code{offset_h} (clock hours) and the relative-difference profile. Never errors.
-#'
-#' @references
-#' \insertRef{roenneberg2003}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 4 * 1440)
@@ -158,12 +157,13 @@ print.actiRhythm_aont <- function(x, ...) {
 #' Tests whether a set of daily phase markers (acrophases, onsets, L5/M10 times)
 #' are concentrated rather than scattered around the clock. Reports the mean
 #' resultant vector, the Rayleigh test of uniformity (Fisher 1993), and the
-#' Hermans-Rasson test (Hermans and Rasson 2017), which catches multimodal
+#' Hermans-Rasson test (Landler et al. 2019), which catches multimodal
 #' clustering that Rayleigh misses.
 #'
 #' @param times_h Numeric vector of clock times (hours, 0-24), one per day.
 #' @param period Period the times wrap on, in hours (default 24).
-#' @param n_perm Permutations for the Hermans-Rasson p-value (default 2000).
+#' @param n_perm Permutations for the Hermans-Rasson p-value (default 2000, a
+#'   speed tradeoff; Landler et al. 2019 use 9999 for a finer minimum p-value).
 #'
 #' @return An object of class \code{actiRhythm_phasetest}: mean direction, mean
 #'   resultant length R, and the Rayleigh and Hermans-Rasson statistics and
@@ -199,20 +199,22 @@ phase.concentration <- function(times_h, period = 24, n_perm = 2000) {
                       (24 * Z - 132 * Z^2 + 76 * Z^3 - 9 * Z^4) / (288 * n^2))
   p_ray <- min(max(p_ray, 0), 1)
 
-  # Hermans-Rasson T (Hermans & Rasson 2017): the pairwise angular-distance term
-  # plus the |sin| term. Clustered angles give SMALL pairwise distances, so the
-  # statistic is small under clustering; the permutation lower tail is the test.
+  # Hermans-Rasson test (Landler et al. 2019). The base statistic is the pairwise
+  # angular-distance term plus the |sin| term; clustered angles make it small, so
+  # the reported V = (n^2 pi - T) / n increases with clustering and its upper-tail
+  # permutation p equals the lower tail of T.
   hr_T <- function(a) {
     d <- outer(a, a, "-")
     sum(pi - abs(pi - (d %% (2 * pi)))) + 2.895 * sum(abs(sin(d)))
   }
-  Tobs <- hr_T(th)
+  hr_V <- function(a) (n^2 * pi - hr_T(a)) / n
+  Vobs <- hr_V(th)
   perm <- vapply(seq_len(n_perm), function(i)
-    hr_T(stats::runif(n, 0, 2 * pi)), numeric(1))
-  p_hr <- (1 + sum(perm <= Tobs)) / (n_perm + 1)
+    hr_V(stats::runif(n, 0, 2 * pi)), numeric(1))
+  p_hr <- (1 + sum(perm >= Vobs)) / (n_perm + 1)
 
   structure(list(n = n, mean_direction_h = mean_dir, R = R,
-    rayleigh_stat = Z, rayleigh_p = p_ray, hr_stat = Tobs, hr_p = p_hr),
+    rayleigh_stat = Z, rayleigh_p = p_ray, hr_stat = Vobs, hr_p = p_hr),
     class = c("actiRhythm_phasetest", "list"))
 }
 
@@ -222,6 +224,6 @@ print.actiRhythm_phasetest <- function(x, ...) {
   cat(sprintf("  n days:          %d\n", x$n))
   cat(sprintf("  Mean direction:  %05.2f h    R: %.3f\n", x$mean_direction_h, x$R))
   cat(sprintf("  Rayleigh:        Z = %.2f, p = %.4f\n", x$rayleigh_stat, x$rayleigh_p))
-  cat(sprintf("  Hermans-Rasson:  T = %.1f, p = %.4f\n\n", x$hr_stat, x$hr_p))
+  cat(sprintf("  Hermans-Rasson:  V = %.2f, p = %.4f\n\n", x$hr_stat, x$hr_p))
   invisible(x)
 }

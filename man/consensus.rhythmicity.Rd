@@ -24,18 +24,17 @@ consensus.rhythmicity(
 \item{wear_time}{Optional logical wear-time mask for the cosinor fit.}
 }
 \value{
-An object of class \code{actiRhythm_consensus}: the Fisher-combined
-p-value and consensus call, the vote count, a per-method \code{tests} data
-frame, and the agreement fraction.
+An object of class \code{actiRhythm_consensus}: the combined p-value
+and consensus call, the vote count, a per-method \code{tests} data frame, and
+the agreement fraction.
 }
 \description{
-Combines the rhythmicity verdicts of several independent tests into one
-call: the cosinor zero-amplitude F-test (\code{\link{rhythmicity.test}}), the
-Bingham confidence ellipse (\code{\link{cosinor.confidence.ellipse}}), the
-Lomb-Scargle Baluev false-alarm probability (\code{\link{circadian.period}}),
-and the chi-square (Sokolove-Bushell) periodogram (\code{\link{chi.sq.periodogram}}).
-The available p-values are pooled by Fisher's method, and a majority vote across
-all methods is also reported.
+Combines the rhythmicity verdicts of three tests into one call: the cosinor
+zero-amplitude F-test (\code{\link{rhythmicity.test}}), the Lomb-Scargle Baluev
+false-alarm probability (\code{\link{circadian.period}}), and the chi-square
+(Sokolove-Bushell) periodogram (\code{\link{chi.sq.periodogram}}). The three
+share one series, so their p-values are pooled by the Cauchy combination, which
+is valid under arbitrary dependence, and a majority vote is also reported.
 }
 \examples{
 ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 3 * 1440)
@@ -45,5 +44,5 @@ consensus.rhythmicity(counts, ts)
 
 }
 \references{
-\insertRef{fisher1925}{actiRhythm}
+\insertRef{liu2020}{actiRhythm}
 }

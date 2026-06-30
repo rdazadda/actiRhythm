@@ -19,7 +19,7 @@ test_that("activity.extrema puts the least-active window at night, most-active b
 
 test_that("dichotomy.index is high when rest is quiet relative to the active day", {
   d <- .ra(2)
-  di <- dichotomy.index(d$counts, d$ts, rest = d$h >= 23 | d$h < 7)
+  di <- dichotomy.index(d$counts, rest = d$h >= 23 | d$h < 7)
   expect_s3_class(di, "actiRhythm_dichotomy")
   expect_gt(di$IO, 90)
 })
@@ -30,7 +30,7 @@ test_that("intradaily.variability.multiscale returns a finite averaged IVm", {
   iv <- intradaily.variability.multiscale(d$counts + stats::rnorm(length(d$counts), 0, 2), d$ts)
   expect_s3_class(iv, "actiRhythm_ivm")
   expect_true(is.finite(iv$IVm))
-  expect_equal(nrow(iv$table), 5L)
+  expect_equal(nrow(iv$table), 60L)
 })
 
 test_that("circadian.daily returns one row per day with the expected columns", {

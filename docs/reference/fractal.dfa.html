@@ -5,13 +5,17 @@ temporal correlations: alpha approximately 0.5 indicates uncorrelated (white)
 noise, alpha approximately 1.0 indicates 1/f (pink) noise, and alpha
 approximately 1.5 indicates Brownian (random-walk / brown) noise. Healthy
 human activity fluctuations typically show alpha in the 0.9 to 1.0 range, with
-reductions reported in aging and Alzheimer's disease (Hu et al., 2009)."><meta property="og:description" content="Computes the scaling exponent alpha of an activity time series using
+reductions reported in aging and Alzheimer's disease (Hu et al., 2009); those
+reference values were obtained with quadratic DFA-2 (detrend_order = 2),
+which can differ from the default linear DFA-1 on trend-carrying data."><meta property="og:description" content="Computes the scaling exponent alpha of an activity time series using
 Detrended Fluctuation Analysis (Peng et al., 1994). DFA quantifies long-range
 temporal correlations: alpha approximately 0.5 indicates uncorrelated (white)
 noise, alpha approximately 1.0 indicates 1/f (pink) noise, and alpha
 approximately 1.5 indicates Brownian (random-walk / brown) noise. Healthy
 human activity fluctuations typically show alpha in the 0.9 to 1.0 range, with
-reductions reported in aging and Alzheimer's disease (Hu et al., 2009)."><meta property="og:image" content="https://rdazadda.github.io/actiRhythm/logo.png"></head><body>
+reductions reported in aging and Alzheimer's disease (Hu et al., 2009); those
+reference values were obtained with quadratic DFA-2 (detrend_order = 2),
+which can differ from the default linear DFA-1 on trend-carrying data."><meta property="og:image" content="https://rdazadda.github.io/actiRhythm/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -76,12 +80,20 @@ temporal correlations: alpha approximately 0.5 indicates uncorrelated (white)
 noise, alpha approximately 1.0 indicates 1/f (pink) noise, and alpha
 approximately 1.5 indicates Brownian (random-walk / brown) noise. Healthy
 human activity fluctuations typically show alpha in the 0.9 to 1.0 range, with
-reductions reported in aging and Alzheimer's disease (Hu et al., 2009).</p>
+reductions reported in aging and Alzheimer's disease (Hu et al., 2009); those
+reference values were obtained with quadratic DFA-2 (<code>detrend_order = 2</code>),
+which can differ from the default linear DFA-1 on trend-carrying data.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fractal.dfa</span><span class="op">(</span><span class="va">x</span>, scale_min <span class="op">=</span> <span class="fl">4</span>, scale_max <span class="op">=</span> <span class="cn">NULL</span>, breakpoint_min <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fractal.dfa</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  scale_min <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  scale_max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  breakpoint_min <span class="op">=</span> <span class="fl">90</span>,</span>
+<span>  detrend_order <span class="op">=</span> <span class="fl">1L</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -102,7 +114,9 @@ freedom. Default 4.</p></dd>
 <dt id="arg-scale-max">scale_max<a class="anchor" aria-label="anchor" href="#arg-scale-max"></a></dt>
 <dd><p>Integer or NULL. Largest window size in samples. If NULL
 (default) it is set to floor(N / 4) where N is the length of the analyzed
-segment, ensuring at least four windows at the largest scale.</p></dd>
+segment, ensuring at least four windows at the largest scale. The top scales
+then have only about four windows and are somewhat undersampled; Hu et al.
+(2001) suggest a maximum nearer N / 10 for well-sampled fluctuations.</p></dd>
 
 
 <dt id="arg-breakpoint-min">breakpoint_min<a class="anchor" aria-label="anchor" href="#arg-breakpoint-min"></a></dt>
@@ -110,6 +124,12 @@ segment, ensuring at least four windows at the largest scale.</p></dd>
 minute-level data) separating the short-timescale exponent <code>alpha1</code>
 (scales &lt; breakpoint_min) from the long-timescale exponent <code>alpha2</code>
 (scales &gt;= breakpoint_min). Default 90.</p></dd>
+
+
+<dt id="arg-detrend-order">detrend_order<a class="anchor" aria-label="anchor" href="#arg-detrend-order"></a></dt>
+<dd><p>Integer order of the within-window polynomial detrend: 1
+(default) is linear DFA-1 (Peng et al. 1994); 2 is quadratic DFA-2, the
+convention Hu et al. (2009) used for activity data.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -145,12 +165,14 @@ outputs are returned as NA with the same structure (never an error).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Algorithm (integrated, non-overlapping, linear DFA):</p><ol><li><p>Extract the longest continuous non-NA segment of <code>x</code>.</p></li>
+    <p>Algorithm (integrated, non-overlapping DFA, polynomial detrend of order
+<code>detrend_order</code>):</p><ol><li><p>Extract the longest continuous non-NA segment of <code>x</code>.</p></li>
 <li><p>Integrate the mean-centred signal: <code>y = cumsum(x - mean(x))</code>.</p></li>
 <li><p>For each window size n (log-spaced from <code>scale_min</code> to
 <code>scale_max</code>), split y into floor(N / n) non-overlapping windows of
-length n, fit and remove a least-squares line within each window, and
-pool the residuals. The fluctuation is
+length n, fit and remove a least-squares polynomial of order
+<code>detrend_order</code> within each window, and pool the residuals. The
+fluctuation is
 <code>F(n) = sqrt(mean(residuals^2))</code> over all pooled residuals.</p></li>
 <li><p>The scaling exponent is the slope of
 <code>log10(F(n))</code> regressed on <code>log10(n)</code>.</p></li>

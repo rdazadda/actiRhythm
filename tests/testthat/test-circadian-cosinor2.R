@@ -47,3 +47,35 @@ test_that("cosinor recovers a shifted acrophase", {
   expect_equal(as.numeric(ca$amplitude), 40, tolerance = 0.02)
   expect_lt(abs(as.numeric(ca$acrophase) - 6), 0.2)
 })
+
+# Cross-validate the Bingham (1982) population-mean cosinor and its confidence
+# intervals against cosinor2::population.cosinor.lm. cosinor2 takes one row per
+# subject; its time reference is set to our hourly bin centres (h + 0.5), and its
+# acrophase (negative radians) is converted to clock hours.
+test_that("population.cosinor matches cosinor2 population mean and CIs", {
+  skip_if_not_installed("cosinor2")
+
+  set.seed(11); K <- 8L; hrs <- 0:23
+  mat <- t(vapply(seq_len(K), function(i) {
+    Mi <- 100 + stats::rnorm(1, 0, 5); Ai <- 40 + stats::rnorm(1, 0, 5)
+    pii <- 8 + stats::rnorm(1, 0, 1)
+    Mi + Ai * cos(2 * pi * (hrs - pii) / 24) + stats::rnorm(24, 0, 3)
+  }, numeric(24)))
+
+  invisible(utils::capture.output(
+    pc <- cosinor2::population.cosinor.lm(data = as.data.frame(mat), time = hrs + 0.5,
+                                          period = 24, plot = FALSE)))
+  rad2h <- function(r) ((-r) * 24 / (2 * pi)) %% 24
+
+  base <- as.POSIXct("2024-01-01", tz = "UTC")
+  ts   <- rep(base + hrs * 3600, times = K)
+  ours <- population.cosinor(as.vector(t(mat)), ts, rep(paste0("S", seq_len(K)), each = 24))
+
+  expect_equal(ours$mesor,     pc$coefficients[["MESOR"]],            tolerance = 1e-4)
+  expect_equal(ours$amplitude, pc$coefficients[["Amplitude"]],        tolerance = 1e-4)
+  expect_equal(ours$acrophase, rad2h(pc$coefficients[["Acrophase"]]), tolerance = 1e-3)
+
+  expect_equal(sort(ours$ci_mesor),     sort(as.numeric(pc$conf.ints[, "MESOR"])),     tolerance = 1e-3)
+  expect_equal(sort(ours$ci_amplitude), sort(as.numeric(pc$conf.ints[, "Amplitude"])), tolerance = 1e-3)
+  expect_equal(sort(ours$ci_acrophase), sort(rad2h(as.numeric(pc$conf.ints[, "Acrophase"]))), tolerance = 1e-3)
+})

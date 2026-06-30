@@ -98,6 +98,8 @@ circadian.period(counts, ts)$tau   # about 24.0
 
 \insertRef{ruf1999}{actiRhythm}
 
+\insertRef{baluev2008}{actiRhythm}
+
 \insertRef{refinetti2007}{actiRhythm}
 }
 \seealso{

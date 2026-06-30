@@ -3,7 +3,7 @@
 The Activity Balance Index (Danilevicz et al. 2024), a 0 to 1 transform
 of a detrended fluctuation analysis scaling exponent that peaks at the
 healthy \\\alpha = 1\\ (1/f) balance: \\ABI(\alpha) = \exp(-\|\alpha -
-1\|\\e^{-2})\\.
+1\| / e^{-2}) = \exp(-e^{2}\\\|\alpha - 1\|)\\.
 
 ## Usage
 
@@ -39,5 +39,5 @@ Medical Research Methodology*, **24**, 132.
 activity.balance.index(1.0)   # perfect 1/f balance -> 1
 #> [1] 1
 activity.balance.index(0.7)
-#> [1] 0.9602126
+#> [1] 0.1089663
 ```

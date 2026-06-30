@@ -33,11 +33,12 @@ signal into a profile ([Hu et al., 2001](#ref-hu2001); [Peng et al.,
 ``` math
 Y(k) = \sum_{i=1}^{k} \bigl(x_i - \bar x\bigr).
 ```
-Split $`Y`$ into non-overlapping windows of length $`n`$, fit and remove
-a least-squares line inside each window, and pool the residuals into the
-fluctuation
+Split $`Y`$ into $`M = \lfloor N/n \rfloor`$ non-overlapping windows of
+length $`n`$, fit and remove a least-squares polynomial (linear by
+default, quadratic for DFA-2) inside each window, and pool the residuals
+into the fluctuation
 ``` math
-F(n) = \sqrt{\tfrac{1}{N}\sum_{k}\bigl(Y(k) - \widehat{Y}_n(k)\bigr)^2}.
+F(n) = \sqrt{\tfrac{1}{M n}\sum_{k=1}^{M n}\bigl(Y(k) - \widehat{Y}_n(k)\bigr)^2}.
 ```
 If the signal is self-similar, $`F(n)`$ grows as a power law,
 $`F(n)\propto
@@ -52,13 +53,17 @@ law governs the whole signal. MF-DFA relaxes that by weighting the
 windowed variances $`F^2(v,n)`$ by a moment order $`q`$([Kantelhardt et
 al., 2002](#ref-kantelhardt2002)):
 ``` math
-F_q(n) = \Bigl[\tfrac{1}{N_s}\sum_{v}\bigl(F^2(v,n)\bigr)^{q/2}\Bigr]^{1/q}
-        \propto n^{\,h(q)} .
+F_q(n) = \Bigl[\tfrac{1}{2 N_s}\sum_{v}\bigl(F^2(v,n)\bigr)^{q/2}\Bigr]^{1/q}
+        \propto n^{\,h(q)} ,
 ```
-$`h(2)`$ is the ordinary DFA exponent. If $`h(q)`$ is flat the signal is
+with windows taken from both ends (hence $`2 N_s`$), the $`q = 0`$ case
+using the geometric mean, and zero-variance windows dropped. $`h(2)`$ is
+the ordinary DFA exponent. If $`h(q)`$ is flat the signal is
 **monofractal**; if $`h(q)`$ decreases with $`q`$ the signal is
 **multifractal**, and the **spectrum width** $`\Delta\alpha`$ (the
-spread of Holder exponents) measures how much.
+spread of Holder exponents) measures how much. The width depends on the
+$`q`$ range, so compare it only across recordings analysed with the same
+grid (the default is $`q \in [-5, 5]`$).
 
 **Multiscale entropy (MSE).** Complexity is not the same as scaling.
 Sample entropy counts how unpredictable a series is: the negative log of
@@ -84,9 +89,8 @@ hold their entropy across scales.
   embedded rhythm or a device-off step can masquerade as long-range
   correlation. Gate on wear time first.
 - **Amplitude-blind, by design.** $`\alpha`$ is invariant to scaling the
-  signal, so it complements, never replaces, the amplitude metrics.
-  Report it alongside, not instead of, the cosinor and nonparametric
-  numbers.
+  signal, so it adds to the amplitude metrics rather than replacing
+  them; report it alongside the cosinor and nonparametric numbers.
 - **Heavy zeros distort the negative moments.** Activity counts have
   long runs of exact zeros, which give near-zero windowed variances.
   Raised to a negative power in MF-DFA these blow up, inflating the
@@ -181,7 +185,12 @@ dfa
 
 The overall $`\alpha`$ sits in the **0.9-1.0 healthy band** (the $`1/f`$
 signature of intact activity regulation) rather than near the 0.5 of
-noise or the 1.5 of a random walk.
+noise or the 1.5 of a random walk. That band, and the aging and disease
+reductions below, were established by Hu et al. ([2009](#ref-hu2009))
+with quadratic detrending (DFA-2);
+[`fractal.dfa()`](https://rdazadda.github.io/actiRhythm/reference/fractal.dfa.md)
+defaults to linear DFA-1, so set `detrend_order = 2` to compare directly
+against those reference values.
 
 ## Reading the numbers
 
@@ -201,9 +210,9 @@ State each exponent in human terms:
   higher means the signal stays unpredictable even when smoothed, the
   hallmark of physiological complexity rather than noise.
 
-A useful pairing is $`\alpha`$ with the MSE slope: $`1/f`$ scaling
-**and** sustained entropy across scales together say “complex and
-healthy”, which neither number asserts alone.
+A useful pairing is $`\alpha`$ with the MSE slope: $`1/f`$ scaling and
+sustained entropy across scales together say “complex and healthy”,
+which neither number asserts alone.
 
 ## The wider fractal and nonlinear family
 
@@ -256,6 +265,20 @@ c(h2 = unname(mf$alpha_dfa))
 #> 0.9175375
 ```
 
+``` r
+
+plot_mfdfa(agd$axis1)
+```
+
+![MF-DFA on the recording: the generalized Hurst exponent h(q) with h(2)
+dashed, and the singularity spectrum. The wide negative-q side reflects
+the zero-variance windows noted above, so read h(2) and the q \> 0
+side.](fractal-nonlinear_files/figure-html/mfdfa-plot-1.png)
+
+MF-DFA on the recording: the generalized Hurst exponent h(q) with h(2)
+dashed, and the singularity spectrum. The wide negative-q side reflects
+the zero-variance windows noted above, so read h(2) and the q \> 0 side.
+
 **Complexity across scales.**
 [`multiscale.entropy()`](https://rdazadda.github.io/actiRhythm/reference/multiscale.entropy.md)
 applies sample entropy to coarse-grained copies of the recording,
@@ -271,21 +294,16 @@ mse
 #> 
 #>   Samples analyzed:   9919
 #>   Scales:             20 (1-20)
-#>   SampEn @ scale 1:   0.0729
-#>   Complexity (area):  1.4762
-#>   Slope (mse on scale):0.0006
+#>   SampEn @ scale 1:   0.0727
+#>   Complexity (area):  1.4636
+#>   Slope (mse on scale):0.0005
 #> 
 #>   Negative slope => noise-like; flat/positive => complex
 ```
 
 ``` r
 
-ggplot(data.frame(scale = mse$scales, sampen = mse$mse),
-       aes(scale, sampen)) +
-  geom_line(colour = "grey60") +
-  geom_point(colour = "#236192", size = 2) +
-  labs(x = "scale (tau)", y = "sample entropy") +
-  theme_actiRhythm()
+plot_mse(agd$axis1, scales = 1:20)
 ```
 
 ![Sample entropy across coarse-graining scales. A flat or rising curve
@@ -320,10 +338,11 @@ recordings.
 
 ## Reference and validation
 
-DFA follows Peng et al. ([1994](#ref-peng1994)) with the
-activity-specific framing of Hu et al. ([2001](#ref-hu2001); [Hu et al.,
-2009](#ref-hu2009)); the multifractal generalisation is Kantelhardt et
-al. ([2002](#ref-kantelhardt2002)); and multiscale entropy combines the
+DFA follows Peng et al. ([1994](#ref-peng1994)), with trend and
+crossover handling from Hu et al. ([2001](#ref-hu2001)) and the
+activity-specific framing of Hu et al. ([2009](#ref-hu2009)); the
+multifractal generalisation is Kantelhardt et al.
+([2002](#ref-kantelhardt2002)); and multiscale entropy combines the
 sample-entropy estimator of Richman & Moorman ([2000](#ref-richman2000))
 with the multiscale construction of Costa et al.
 ([2002](#ref-costa2002)). actiRhythm’s DFA and MSE are implemented in

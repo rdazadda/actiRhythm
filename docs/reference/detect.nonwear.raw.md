@@ -1,8 +1,8 @@
 # Non-Wear Detection from Raw Acceleration
 
-Flags non-wear time from raw acceleration by the van Hees et al. (2011)
-standard-deviation-and-range rule: a block is non-wear when, over a
-window centred on it (default 60 minutes), at least two of the three
+Flags non-wear time from raw acceleration by the van Hees et al. (2013)
+/ GGIR standard-deviation-and-range rule: a block is non-wear when, over
+a window centred on it (default 60 minutes), at least two of the three
 axes have both a standard deviation below `sd_crit` and a value range
 below `range_crit`. A stationary, taken-off device reads as non-wear.
 This lets the z-angle sleep detector tell device-off periods from real
@@ -44,7 +44,9 @@ detect.nonwear.raw(
 
 - block:
 
-  Internal classification block length in seconds (default 300).
+  Internal classification block length in seconds (default 300; GGIR
+  steps the 60-minute window in 15-minute blocks, so boundaries can
+  differ by a few minutes from GGIR's grid).
 
 - window:
 
@@ -70,12 +72,12 @@ Never errors.
 
 ## References
 
-van Hees VT, Renstrom F, Wright A, Gradmark A, Catt M, Chen KY, Lof M,
-Bluck L, Pomeroy J, Wareham NJ, Ekelund U, Brage S, Franks PW (2011).
-“Estimation of daily energy expenditure in pregnant and non-pregnant
-women using a wrist-worn tri-axial accelerometer.” *PLoS ONE*, **6**(7),
-e22922.
-[doi:10.1371/journal.pone.0022922](https://doi.org/10.1371/journal.pone.0022922)
+van Hees VT, Gorzelniak L, Dean Leon EC, Eder M, Pias M, Taherian S,
+Ekelund U, Renstrom F, Franks PW, Horsch A, Brage S (2013). “Separating
+movement and gravity components in an acceleration signal and
+implications for the assessment of human daily physical activity.” *PLoS
+ONE*, **8**(4), e61691.
+[doi:10.1371/journal.pone.0061691](https://doi.org/10.1371/journal.pone.0061691)
 .
 
 ## See also

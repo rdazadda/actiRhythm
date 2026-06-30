@@ -129,12 +129,15 @@ and integrate the mean-centred signal into a profile <span class="citation">(<a 
 Y(k) = \sum_{i=1}^{k} \bigl(x_i - \bar x\bigr).
 </annotation></semantics></math> Split
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Y</mi><annotation encoding="application/x-tex">Y</annotation></semantics></math>
-into non-overlapping windows of length
+into
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo>=</mo><mo stretchy="false" form="prefix">⌊</mo><mi>N</mi><mi>/</mi><mi>n</mi><mo stretchy="false" form="postfix">⌋</mo></mrow><annotation encoding="application/x-tex">M = \lfloor N/n \rfloor</annotation></semantics></math>
+non-overlapping windows of length
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>,
-fit and remove a least-squares line inside each window, and pool the
-residuals into the fluctuation
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msqrt><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mi>N</mi></mfrac></mstyle><munder><mo>∑</mo><mi>k</mi></munder><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><mi>k</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mi>n</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>k</mi><mo stretchy="false" form="postfix">)</mo><msup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><mn>2</mn></msup></mrow></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">
-F(n) = \sqrt{\tfrac{1}{N}\sum_{k}\bigl(Y(k) - \widehat{Y}_n(k)\bigr)^2}.
+fit and remove a least-squares polynomial (linear by default, quadratic
+for DFA-2) inside each window, and pool the residuals into the
+fluctuation
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msqrt><mrow><mstyle displaystyle="false"><mfrac><mn>1</mn><mrow><mi>M</mi><mi>n</mi></mrow></mfrac></mstyle><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>M</mi><mi>n</mi></mrow></munderover><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><mi>Y</mi><mo stretchy="false" form="prefix">(</mo><mi>k</mi><mo stretchy="false" form="postfix">)</mo><mo>−</mo><msub><mover><mi>Y</mi><mo accent="true">̂</mo></mover><mi>n</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>k</mi><mo stretchy="false" form="postfix">)</mo><msup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><mn>2</mn></msup></mrow></msqrt><mi>.</mi></mrow><annotation encoding="application/x-tex">
+F(n) = \sqrt{\tfrac{1}{M n}\sum_{k=1}^{M n}\bigl(Y(k) - \widehat{Y}_n(k)\bigr)^2}.
 </annotation></semantics></math> If the signal is self-similar,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>F</mi><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">F(n)</annotation></semantics></math>
 grows as a power law,
@@ -163,10 +166,16 @@ weighting the windowed variances
 by a moment order
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math><span class="citation">(<a href="#ref-kantelhardt2002">Kantelhardt et
 al., 2002</a>)</span>:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mi>q</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo minsize="180%" maxsize="180%" stretchy="true" form="prefix">[</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><msub><mi>N</mi><mi>s</mi></msub></mfrac></mstyle><munder><mo>∑</mo><mi>v</mi></munder><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msup><mi>F</mi><mn>2</mn></msup><mo stretchy="false" form="prefix">(</mo><mi>v</mi><mo>,</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><msup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><mrow><mi>q</mi><mi>/</mi><mn>2</mn></mrow></msup><msup><mo minsize="180%" maxsize="180%" stretchy="true" form="postfix">]</mo><mrow><mn>1</mn><mi>/</mi><mi>q</mi></mrow></msup><mo>∝</mo><msup><mi>n</mi><mrow><mspace width="0.167em"></mspace><mi>h</mi><mo stretchy="false" form="prefix">(</mo><mi>q</mi><mo stretchy="false" form="postfix">)</mo></mrow></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
-F_q(n) = \Bigl[\tfrac{1}{N_s}\sum_{v}\bigl(F^2(v,n)\bigr)^{q/2}\Bigr]^{1/q}
-        \propto n^{\,h(q)} .
-</annotation></semantics></math><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">h(2)</annotation></semantics></math>
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>F</mi><mi>q</mi></msub><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo minsize="180%" maxsize="180%" stretchy="true" form="prefix">[</mo><mstyle displaystyle="false"><mfrac><mn>1</mn><mrow><mn>2</mn><msub><mi>N</mi><mi>s</mi></msub></mrow></mfrac></mstyle><munder><mo>∑</mo><mi>v</mi></munder><mo minsize="120%" maxsize="120%" stretchy="true" form="prefix">(</mo><msup><mi>F</mi><mn>2</mn></msup><mo stretchy="false" form="prefix">(</mo><mi>v</mi><mo>,</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo><msup><mo minsize="120%" maxsize="120%" stretchy="true" form="postfix">)</mo><mrow><mi>q</mi><mi>/</mi><mn>2</mn></mrow></msup><msup><mo minsize="180%" maxsize="180%" stretchy="true" form="postfix">]</mo><mrow><mn>1</mn><mi>/</mi><mi>q</mi></mrow></msup><mo>∝</mo><msup><mi>n</mi><mrow><mspace width="0.167em"></mspace><mi>h</mi><mo stretchy="false" form="prefix">(</mo><mi>q</mi><mo stretchy="false" form="postfix">)</mo></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">
+F_q(n) = \Bigl[\tfrac{1}{2 N_s}\sum_{v}\bigl(F^2(v,n)\bigr)^{q/2}\Bigr]^{1/q}
+        \propto n^{\,h(q)} ,
+</annotation></semantics></math> with windows taken from both ends
+(hence
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><msub><mi>N</mi><mi>s</mi></msub></mrow><annotation encoding="application/x-tex">2 N_s</annotation></semantics></math>),
+the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">q = 0</annotation></semantics></math>
+case using the geometric mean, and zero-variance windows dropped.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">h(2)</annotation></semantics></math>
 is the ordinary DFA exponent. If
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false" form="prefix">(</mo><mi>q</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">h(q)</annotation></semantics></math>
 is flat the signal is <strong>monofractal</strong>; if
@@ -176,7 +185,12 @@ decreases with
 the signal is <strong>multifractal</strong>, and the <strong>spectrum
 width</strong>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Δ</mi><mi>α</mi></mrow><annotation encoding="application/x-tex">\Delta\alpha</annotation></semantics></math>
-(the spread of Holder exponents) measures how much.</p>
+(the spread of Holder exponents) measures how much. The width depends on
+the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math>
+range, so compare it only across recordings analysed with the same grid
+(the default is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mo>∈</mo><mo stretchy="false" form="prefix">[</mo><mi>−</mi><mn>5</mn><mo>,</mo><mn>5</mn><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">q \in [-5, 5]</annotation></semantics></math>).</p>
 <p><strong>Multiscale entropy (MSE).</strong> Complexity is not the same
 as scaling. Sample entropy counts how unpredictable a series is: the
 negative log of the chance that two sub-sequences matching for
@@ -213,9 +227,9 @@ correlation. Gate on wear time first.</li>
 <li>
 <strong>Amplitude-blind, by design.</strong>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
-is invariant to scaling the signal, so it complements, never replaces,
-the amplitude metrics. Report it alongside, not instead of, the cosinor
-and nonparametric numbers.</li>
+is invariant to scaling the signal, so it adds to the amplitude metrics
+rather than replacing them; report it alongside the cosinor and
+nonparametric numbers.</li>
 <li>
 <strong>Heavy zeros distort the negative moments.</strong> Activity
 counts have long runs of exact zeros, which give near-zero windowed
@@ -333,7 +347,12 @@ default).</p>
 sits in the <strong>0.9-1.0 healthy band</strong> (the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>f</mi></mrow><annotation encoding="application/x-tex">1/f</annotation></semantics></math>
 signature of intact activity regulation) rather than near the 0.5 of
-noise or the 1.5 of a random walk.</p>
+noise or the 1.5 of a random walk. That band, and the aging and disease
+reductions below, were established by <span class="citation">Hu et al.
+(<a href="#ref-hu2009">2009</a>)</span> with quadratic detrending
+(DFA-2); <code><a href="../reference/fractal.dfa.html">fractal.dfa()</a></code> defaults to linear DFA-1, so set
+<code>detrend_order = 2</code> to compare directly against those
+reference values.</p>
 </div>
 <div class="section level2">
 <h2 id="reading-the-numbers">Reading the numbers<a class="anchor" aria-label="anchor" href="#reading-the-numbers"></a>
@@ -371,8 +390,8 @@ noise.</li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
 with the MSE slope:
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>f</mi></mrow><annotation encoding="application/x-tex">1/f</annotation></semantics></math>
-scaling <strong>and</strong> sustained entropy across scales together
-say “complex and healthy”, which neither number asserts alone.</p>
+scaling and sustained entropy across scales together say “complex and
+healthy”, which neither number asserts alone.</p>
 </div>
 <div class="section level2">
 <h2 id="the-wider-fractal-and-nonlinear-family">The wider fractal and nonlinear family<a class="anchor" aria-label="anchor" href="#the-wider-fractal-and-nonlinear-family"></a>
@@ -435,11 +454,21 @@ as the reliable summary.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>h2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="va">mf</span><span class="op">$</span><span class="va">alpha_dfa</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;        h2 </span></span>
 <span><span class="co">#&gt; 0.9175375</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_mfdfa.html">plot_mfdfa</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="fractal-nonlinear_files/figure-html/mfdfa-plot-1.png" class="r-plt" alt="MF-DFA on the recording: the generalized Hurst exponent h(q) with h(2) dashed, and the singularity spectrum. The wide negative-q side reflects the zero-variance windows noted above, so read h(2) and the q &gt; 0 side." width="770"><p class="caption">
+MF-DFA on the recording: the generalized Hurst exponent h(q) with h(2)
+dashed, and the singularity spectrum. The wide negative-q side reflects
+the zero-variance windows noted above, so read h(2) and the q &gt; 0
+side.
+</p>
+</div>
 <p><strong>Complexity across scales.</strong>
 <code><a href="../reference/multiscale.entropy.html">multiscale.entropy()</a></code> applies sample entropy to
 coarse-grained copies of the recording, separating signals that stay
 complex when smoothed from noise that loses entropy with scale.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mse</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiscale.entropy.html">multiscale.entropy</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, scales <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span>
 <span><span class="va">mse</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -447,18 +476,13 @@ complex when smoothed from noise that loses entropy with scale.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Samples analyzed:   9919</span></span>
 <span><span class="co">#&gt;   Scales:             20 (1-20)</span></span>
-<span><span class="co">#&gt;   SampEn @ scale 1:   0.0729</span></span>
-<span><span class="co">#&gt;   Complexity (area):  1.4762</span></span>
-<span><span class="co">#&gt;   Slope (mse on scale):0.0006</span></span>
+<span><span class="co">#&gt;   SampEn @ scale 1:   0.0727</span></span>
+<span><span class="co">#&gt;   Complexity (area):  1.4636</span></span>
+<span><span class="co">#&gt;   Slope (mse on scale):0.0005</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Negative slope =&gt; noise-like; flat/positive =&gt; complex</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="va">mse</span><span class="op">$</span><span class="va">scales</span>, sampen <span class="op">=</span> <span class="va">mse</span><span class="op">$</span><span class="va">mse</span><span class="op">)</span>,</span>
-<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">scale</span>, <span class="va">sampen</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"grey60"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#236192"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"scale (tau)"</span>, y <span class="op">=</span> <span class="st">"sample entropy"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_actiRhythm.html">theme_actiRhythm</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_mse.html">plot_mse</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, scales <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fractal-nonlinear_files/figure-html/mse-plot-1.png" class="r-plt" alt="Sample entropy across coarse-graining scales. A flat or rising curve is the signature of physiological complexity; a curve that falls toward zero is noise-like." width="770"><p class="caption">
 Sample entropy across coarse-graining scales. A flat or rising curve is
@@ -506,9 +530,10 @@ timing, and fragmentation metrics, never in isolation.</li>
 <div class="section level2">
 <h2 id="reference-and-validation">Reference and validation<a class="anchor" aria-label="anchor" href="#reference-and-validation"></a>
 </h2>
-<p>DFA follows <span class="citation">Peng et al. (<a href="#ref-peng1994">1994</a>)</span> with the activity-specific framing
-of <span class="citation">Hu et al. (<a href="#ref-hu2001">2001</a>; <a href="#ref-hu2009">Hu et al., 2009</a>)</span>; the multifractal
-generalisation is <span class="citation">Kantelhardt et al. (<a href="#ref-kantelhardt2002">2002</a>)</span>; and multiscale entropy
+<p>DFA follows <span class="citation">Peng et al. (<a href="#ref-peng1994">1994</a>)</span>, with trend and crossover handling
+from <span class="citation">Hu et al. (<a href="#ref-hu2001">2001</a>)</span> and the activity-specific framing of
+<span class="citation">Hu et al. (<a href="#ref-hu2009">2009</a>)</span>; the multifractal generalisation is
+<span class="citation">Kantelhardt et al. (<a href="#ref-kantelhardt2002">2002</a>)</span>; and multiscale entropy
 combines the sample-entropy estimator of <span class="citation">Richman
 &amp; Moorman (<a href="#ref-richman2000">2000</a>)</span> with the
 multiscale construction of <span class="citation">Costa et al. (<a href="#ref-costa2002">2002</a>)</span>. actiRhythm’s DFA and MSE are

@@ -1,6 +1,7 @@
 # Gap-aware intradaily variability of a series binned to bin_min resolution,
 # matching the consecutive-pair convention of .calculate.IS.IV.
 .iv_at_bin <- function(counts, timestamps, bin_min) {
+  if (length(timestamps) < 2L) return(NA_real_)
   t0 <- min(timestamps, na.rm = TRUE)
   bin <- floor(as.numeric(difftime(timestamps, t0, units = "mins")) / bin_min)
   agg <- tapply(counts, bin, mean, na.rm = TRUE)
@@ -26,7 +27,7 @@
 #'
 #' @param counts Numeric activity vector.
 #' @param timestamps POSIXct timestamps, one per value.
-#' @param bin_minutes Bin sizes in minutes (default 5 to 60).
+#' @param bin_minutes Bin sizes in minutes (default 1 to 60, per Goncalves et al. 2014).
 #'
 #' @return An object of class \code{actiRhythm_ivm}: a per-bin \code{IV} table and
 #'   the averaged \code{IVm}. Never errors; returns \code{NA} on insufficient data.
@@ -43,7 +44,7 @@
 #'
 #' @export
 intradaily.variability.multiscale <- function(counts, timestamps,
-                                              bin_minutes = c(5, 10, 15, 30, 60)) {
+                                              bin_minutes = 1:60) {
   if (length(counts) != length(timestamps))
     stop("counts and timestamps must have same length")
   keep <- is.finite(suppressWarnings(as.numeric(counts))) & !is.na(timestamps)
@@ -144,7 +145,6 @@ print.actiRhythm_mxlx <- function(x, ...) {
 #' to the active day, marking a well-separated rhythm.
 #'
 #' @param counts Numeric activity vector.
-#' @param timestamps POSIXct timestamps, one per value.
 #' @param rest A logical vector (TRUE = rest / in-bed), or a character vector of
 #'   states where \code{"R"}/\code{"S"}/\code{"sleep"} mark rest. Same length as
 #'   \code{counts}.
@@ -159,10 +159,10 @@ print.actiRhythm_mxlx <- function(x, ...) {
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 2 * 1440)
 #' h  <- as.numeric(format(ts, "%H"))
 #' counts <- ifelse(h >= 23 | h < 7, 5, 300)
-#' dichotomy.index(counts, ts, rest = h >= 23 | h < 7)
+#' dichotomy.index(counts, rest = h >= 23 | h < 7)
 #'
 #' @export
-dichotomy.index <- function(counts, timestamps, rest) {
+dichotomy.index <- function(counts, rest) {
   if (length(counts) != length(rest))
     stop("counts and rest must have same length")
   x <- suppressWarnings(as.numeric(counts))

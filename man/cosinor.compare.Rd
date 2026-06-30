@@ -31,21 +31,21 @@ cosinor.compare(
 }
 \value{
 An object of class \code{actiRhythm_cosinor_compare}: a \code{joint}
-list (the omnibus Hotelling \eqn{T^2}, its F statistic, degrees of freedom
-and p-value), a \code{tests} data frame (one row per parameter, with each
-group's estimate, their difference, the t statistic, degrees of freedom,
-p-value and CI), and the per-subject coefficients.
+list (the amplitude/acrophase Hotelling \eqn{T^2} with its F, degrees of
+freedom and p-value, plus a separate MESOR F-test), a \code{tests} data frame
+of auxiliary per-parameter Welch comparisons (each group's estimate, the
+difference, the t statistic, p-value and CI), and the per-subject coefficients.
 }
 \description{
 Tests whether the rest-activity rhythm differs between two groups. Fits each
 subject's cosinor with the same engine as \code{\link{cosinor.analysis}}. An
-overall multivariate test (Hotelling's \eqn{T^2} on the joint MESOR, cosine,
-and sine parameters, the Bingham et al. (1982) population-cosinor comparison)
-gives one omnibus p-value for whether the rhythms differ at all, accounting
-for the correlation between the cosine and sine components. The per-parameter
-two-sample (Welch) t-tests then break that result down for the MESOR,
-amplitude, and acrophase. The acrophase test is circular-aware, unwrapping the
-per-subject acrophases about their common circular mean.
+Bingham et al. (1982) comparison is a 2-variate Hotelling's \eqn{T^2} on the
+cosine and sine coefficients (testing equal amplitude and acrophase, accounting
+for their correlation), with the MESOR compared by a separate pooled-variance
+F-test. Auxiliary per-parameter two-sample (Welch) t-tests break the result
+down for the MESOR, amplitude, and acrophase; the acrophase test is
+circular-aware, unwrapping the per-subject acrophases about their common
+circular mean.
 }
 \examples{
 set.seed(1); hrs <- 0:23

@@ -7,9 +7,9 @@ test_that("consensus.rhythmicity flags a strong rhythm and combines methods", {
 
   r <- consensus.rhythmicity(counts, ts)
   expect_s3_class(r, "actiRhythm_consensus")
-  expect_equal(nrow(r$tests), 4L)
+  expect_equal(nrow(r$tests), 3L)
   expect_true(r$consensus_rhythmic)
-  expect_gte(r$votes, 3)
+  expect_gte(r$votes, 2)
   expect_lt(r$consensus_p, 0.05)
 })
 

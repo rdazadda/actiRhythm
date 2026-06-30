@@ -18,8 +18,9 @@ cosinor.antilogistic(counts, timestamps, period = 24)
 A list with class \code{"actiRhythm_cosinor_ext"} containing:
 \describe{
 \item{minimum}{Lower asymptote of the fitted curve (rest-phase level).}
-\item{amplitude}{Vertical span of the sigmoidal transition
-(\code{amp}); peak level is \code{minimum + amplitude}.}
+\item{amplitude}{Vertical span of the sigmoidal transition (\code{amp}); the
+asymptotic ceiling is \code{minimum + amplitude}, with the fitted-curve
+maximum slightly below it at a finite steepness.}
 \item{alpha}{Width-asymmetry parameter in \eqn{[-1, 1]}.}
 \item{beta}{Steepness parameter (\eqn{\ge 0}).}
 \item{acrophase}{Time of peak activity in clock hours (\code{acrotime}).}

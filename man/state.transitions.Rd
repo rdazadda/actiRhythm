@@ -18,9 +18,11 @@ state.transitions(counts, threshold = 1, frac = 0.3, iter = 0)
 }
 \value{
 An object of class \code{actiRhythm_transitions}: a list with
-\code{kRA}/\code{kAR} (sustained rest-to-active / active-to-rest rates),
-\code{pRA}/\code{pAR} (overall per-epoch transition probabilities,
-1 / mean bout length), bout counts, and the two transition curves.
+\code{kRA}/\code{kAR} (sustained rest-to-active / active-to-rest rates over
+the LOWESS plateau), \code{pRA}/\code{pAR} (overall rest-to-active /
+active-to-rest rate, the reciprocal mean bout length), bout counts, and the
+two transition curves. The plateau search follows the pyActigraphy
+implementation of Lim et al. (2011).
 }
 \description{
 Computes the rest-to-activity and activity-to-rest transition rates from a

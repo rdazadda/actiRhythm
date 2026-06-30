@@ -8,7 +8,7 @@ quiet relative to the active day, marking a well-separated rhythm.
 ## Usage
 
 ``` r
-dichotomy.index(counts, timestamps, rest)
+dichotomy.index(counts, rest)
 ```
 
 ## Arguments
@@ -16,10 +16,6 @@ dichotomy.index(counts, timestamps, rest)
 - counts:
 
   Numeric activity vector.
-
-- timestamps:
-
-  POSIXct timestamps, one per value.
 
 - rest:
 
@@ -46,7 +42,7 @@ cancer and good performance status.” *Clinical Cancer Research*,
 ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 2 * 1440)
 h  <- as.numeric(format(ts, "%H"))
 counts <- ifelse(h >= 23 | h < 7, 5, 300)
-dichotomy.index(counts, ts, rest = h >= 23 | h < 7)
+dichotomy.index(counts, rest = h >= 23 | h < 7)
 #> Dichotomy Index (I<O)
 #> 
 #>   I<O:             100.0%

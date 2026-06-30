@@ -80,7 +80,8 @@ DFA scaling exponent.</p>
 <span>  scale_min <span class="op">=</span> <span class="fl">8L</span>,</span>
 <span>  scale_max <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  q_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span>, by <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>  both_ends <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  both_ends <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  detrend_order <span class="op">=</span> <span class="fl">1L</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -109,6 +110,11 @@ analysed.</p></dd>
 <dd><p>If <code>TRUE</code> (default) windows are taken from both ends so
 the tail of the profile is not discarded; <code>FALSE</code> reproduces the
 start-only convention of <code><a href="fractal.dfa.html">fractal.dfa</a></code>.</p></dd>
+
+
+<dt id="arg-detrend-order">detrend_order<a class="anchor" aria-label="anchor" href="#arg-detrend-order"></a></dt>
+<dd><p>Integer order of the within-window polynomial detrend
+(default 1, linear MF-DFA1; 2 gives MF-DFA2, matching DFA-2).</p></dd>
 
 </dl></div>
     <div class="section level2">

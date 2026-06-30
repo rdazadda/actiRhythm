@@ -16,8 +16,9 @@ test_that("cosinor.compare reports a valid Bingham joint test that rejects a rea
   d <- .two_group(8, 11)
   cc <- cosinor.compare(d$act, d$ts, d$subj, d$grp)
   expect_true(cc$joint$valid)
-  expect_equal(cc$joint$df1, 3L); expect_equal(cc$joint$df2, 6L)   # K=10 -> K-4
-  expect_lt(cc$joint$p_value, 0.05)                                # groups differ
+  expect_equal(cc$joint$df1, 2L); expect_equal(cc$joint$df2, 7L)   # K=10 -> K-3
+  expect_lt(cc$joint$p_value, 0.05)                                # acrophase differs
+  expect_true(is.finite(cc$joint$mesor_p))                         # separate MESOR test
   # identical groups -> joint not significant
   s <- .two_group(8, 8, seed = 7)
   expect_gt(cosinor.compare(s$act, s$ts, s$subj, s$grp)$joint$p_value, 0.05)

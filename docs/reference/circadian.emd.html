@@ -127,7 +127,9 @@ EMD adds noise to reduce mode mixing (Wu and Huang 2009).</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>An object of class <code>actiRhythm_emd</code>: the IMF matrix, the residual
 trend, per-IMF period and variance share, the circadian IMF index, and the
-reconstruction error. Never errors.</p>
+reconstruction error. The first and last epochs are unreliable (the spline
+envelopes pin the IMFs near zero at the edges), so read the instantaneous
+series away from the boundary. Never errors.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -154,12 +156,13 @@ reconstruction error. Never errors.</p>
 <span class="r-in"><span><span class="fu">circadian.emd</span><span class="op">(</span><span class="fl">100</span> <span class="op">+</span> <span class="fl">60</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="va">th</span> <span class="op">/</span> <span class="fl">24</span><span class="op">)</span>, <span class="va">ts</span>, epoch_length <span class="op">=</span> <span class="fl">600</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Empirical Mode Decomposition</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   IMFs: 2   reconstruction error: 7.11e-15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   IMFs: 3   reconstruction error: 7.11e-15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  IMF period_h var_share</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1    22.15     0.932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    2    48.00     0.068</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1    20.57     0.737</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    2    36.00     0.030</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3    57.60     0.232</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Circadian IMF: 1 (period 22.15 h)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Circadian IMF: 1 (period 20.57 h)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

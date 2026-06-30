@@ -119,7 +119,7 @@ circadian.flm <- function(counts, timestamps, basis = c("fourier", "bspline"),
       harmonic = k,
       frequency_cycles_per_day = k * (24 / period),
       amplitude = sqrt(cos_c^2 + sin_c^2),
-      acrophase_hours = (atan2(sin_c, cos_c) * period / (2 * pi)) %% period)
+      acrophase_hours = (atan2(sin_c, cos_c) %% (2 * pi)) / (2 * pi) * (period / k))
   }
 
   pk <- which.max(smooth); tr <- which.min(smooth)
@@ -158,6 +158,7 @@ print.actiRhythm_flm <- function(x, ...) {
   }
   cat(sprintf("\n  Peak %.1f at %.1f h; trough %.1f at %.1f h\n",
               x$peak_value, x$peak_time, x$trough_value, x$trough_time))
-  cat("\n  Reference: Wang et al. (2011)\n\n")
+  cat("\n  Basis fit follows Wang et al. (2011); F/p are ordinary regression\n")
+  cat("  statistics (not Wang's between-subject permutation test).\n\n")
   invisible(x)
 }

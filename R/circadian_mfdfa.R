@@ -14,6 +14,8 @@
 #' @param both_ends If \code{TRUE} (default) windows are taken from both ends so
 #'   the tail of the profile is not discarded; \code{FALSE} reproduces the
 #'   start-only convention of \code{\link{fractal.dfa}}.
+#' @param detrend_order Integer order of the within-window polynomial detrend
+#'   (default 1, linear MF-DFA1; 2 gives MF-DFA2, matching DFA-2).
 #'
 #' @return An object of class \code{actiRhythm_mfdfa}: a list with \code{q_values},
 #'   \code{h_q} (generalized Hurst exponent), \code{tau_q} (mass exponent),
@@ -32,7 +34,10 @@
 #'
 #' @export
 mfdfa <- function(x, scale_min = 8L, scale_max = NULL,
-                  q_values = seq(-5, 5, by = 0.5), both_ends = TRUE) {
+                  q_values = seq(-5, 5, by = 0.5), both_ends = TRUE,
+                  detrend_order = 1L) {
+  detrend_order <- max(1L, as.integer(round(detrend_order)))
+  scale_min <- max(as.integer(scale_min), detrend_order + 2L)
 
   na_out <- function() structure(list(
     q_values = q_values, h_q = rep(NA_real_, length(q_values)),
@@ -55,7 +60,7 @@ mfdfa <- function(x, scale_min = 8L, scale_max = NULL,
 
   Fqs <- matrix(NA_real_, nrow = length(scales), ncol = length(q_values))
   for (si in seq_along(scales)) {
-    f2 <- .mfdfa_variances(Y, scales[si], both_ends)
+    f2 <- .mfdfa_variances(Y, scales[si], both_ends, detrend_order)
     f2 <- f2[is.finite(f2) & f2 > 0]
     if (length(f2) < 2L) next
     for (qi in seq_along(q_values)) {
@@ -86,14 +91,15 @@ mfdfa <- function(x, scale_min = 8L, scale_max = NULL,
 }
 
 
-# Detrended variance of each window at one scale (linear detrend, m = 1).
-.mfdfa_variances <- function(Y, s, both_ends) {
+# Detrended variance of each window at one scale (polynomial detrend of order m).
+.mfdfa_variances <- function(Y, s, both_ends, detrend_order = 1L) {
   N <- length(Y)
   Ns <- floor(N / s)
   if (Ns < 1L) return(numeric(0))
   starts <- (0:(Ns - 1L)) * s
   if (both_ends) starts <- c(starts, N - (1:Ns) * s)
-  Xs <- cbind(1, seq_len(s))
+  tc <- seq_len(s) - (s + 1) / 2
+  Xs <- outer(tc, 0:detrend_order, `^`)
   vapply(starts, function(st) mean(stats::lm.fit(Xs, Y[(st + 1L):(st + s)])$residuals^2),
          numeric(1))
 }
@@ -116,6 +122,10 @@ mfdfa <- function(x, scale_min = 8L, scale_max = NULL,
 #' @export
 print.actiRhythm_mfdfa <- function(x, ...) {
   cat("Multifractal Detrended Fluctuation Analysis\n\n")
+  if (!length(x$scales) || !any(is.finite(x$h_q))) {
+    cat("  (insufficient data)\n\n")
+    return(invisible(x))
+  }
   cat(sprintf("  DFA scaling exponent h(2): %s\n",
               formatC(x$alpha_dfa, format = "f", digits = 3)))
   cat(sprintf("  h(q) range:                [%s, %s]\n",

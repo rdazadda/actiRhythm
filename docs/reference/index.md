@@ -65,7 +65,7 @@ and fragmentation, with no assumed waveform.
 - [`rest.activity.fragmentation()`](https://rdazadda.github.io/actiRhythm/reference/rest.activity.fragmentation.md)
   : Rest-Activity Bout Fragmentation
 - [`transition.probability()`](https://rdazadda.github.io/actiRhythm/reference/transition.probability.md)
-  : Rest-Active Transition Probabilities (ASTP / SATP)
+  : Rest-Active Transition Probabilities
 - [`state.transitions()`](https://rdazadda.github.io/actiRhythm/reference/state.transitions.md)
   : Rest-Activity State Transition Rates (kRA, kAR)
 - [`activity.extrema()`](https://rdazadda.github.io/actiRhythm/reference/activity.extrema.md)
@@ -224,11 +224,49 @@ ggplot2 plots and the package theme/palette.
   : Plot the Lomb-Scargle Periodogram with the Endogenous Period
 - [`plot_chisq()`](https://rdazadda.github.io/actiRhythm/reference/plot_chisq.md)
   : Plot the Chi-Square (Sokolove-Bushell) Periodogram
+- [`plot_period_ci()`](https://rdazadda.github.io/actiRhythm/reference/plot_period_ci.md)
+  : Bootstrap Period Confidence Interval
 - [`plot_dfa()`](https://rdazadda.github.io/actiRhythm/reference/plot_dfa.md)
   : Plot the Detrended Fluctuation Analysis (DFA) Scaling Relationship
+- [`plot_mfdfa()`](https://rdazadda.github.io/actiRhythm/reference/plot_mfdfa.md)
+  : Multifractal DFA Spectrum
+- [`plot_mse()`](https://rdazadda.github.io/actiRhythm/reference/plot_mse.md)
+  : Multiscale Entropy Curve
 - [`plot_extended_cosinor()`](https://rdazadda.github.io/actiRhythm/reference/plot_extended_cosinor.md)
   : Plot the Extended (Marler) Cosinor Fit on the 24-Hour Activity
   Profile
+- [`plot_cosinor_ellipse()`](https://rdazadda.github.io/actiRhythm/reference/plot_cosinor_ellipse.md)
+  : Cosinor Amplitude-Acrophase Confidence Ellipse
+- [`plot_multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/plot_multicomponent.md)
+  : Single Cosine vs Multicomponent Cosinor Fit
+- [`plot_cosinor_schematic()`](https://rdazadda.github.io/actiRhythm/reference/plot_cosinor_schematic.md)
+  : Annotated Cosinor Parameter Schematic
+- [`plot_profile()`](https://rdazadda.github.io/actiRhythm/reference/plot_profile.md)
+  : Average-Day Profile with the L5 and M10 Windows
+- [`plot_dichotomy()`](https://rdazadda.github.io/actiRhythm/reference/plot_dichotomy.md)
+  : Dichotomy Index Plot
+- [`plot_transitions()`](https://rdazadda.github.io/actiRhythm/reference/plot_transitions.md)
+  : Rest-Activity Transition Curves
+- [`plot_multiscale()`](https://rdazadda.github.io/actiRhythm/reference/plot_multiscale.md)
+  : Multiscale IS and IV Profiles
+- [`plot_wavelet()`](https://rdazadda.github.io/actiRhythm/reference/plot_wavelet.md)
+  : Wavelet Power Scalogram
+- [`plot_emd()`](https://rdazadda.github.io/actiRhythm/reference/plot_emd.md)
+  : Empirical Mode Decomposition Stack
+- [`plot_ssa_wcor()`](https://rdazadda.github.io/actiRhythm/reference/plot_ssa_wcor.md)
+  : SSA w-Correlation Matrix
+- [`plot_phase_rose()`](https://rdazadda.github.io/actiRhythm/reference/plot_phase_rose.md)
+  : Circular Phase Rose
+- [`plot_changepoints()`](https://rdazadda.github.io/actiRhythm/reference/plot_changepoints.md)
+  : Sleep / Wake Change-Point Track
+- [`plot_lids()`](https://rdazadda.github.io/actiRhythm/reference/plot_lids.md)
+  : LIDS Ultradian Cycle Curve
+- [`plot_rest_comparison()`](https://rdazadda.github.io/actiRhythm/reference/plot_rest_comparison.md)
+  : Rest-Detector Comparison Strip
+- [`plot_spt()`](https://rdazadda.github.io/actiRhythm/reference/plot_spt.md)
+  : z-Angle Sleep-Period-Time Detection
+- [`plot_raw_metrics()`](https://rdazadda.github.io/actiRhythm/reference/plot_raw_metrics.md)
+  : Raw-Acceleration Epoch Metrics Profile
 - [`theme_actiRhythm()`](https://rdazadda.github.io/actiRhythm/reference/theme_actiRhythm.md)
   : actiRhythm ggplot2 Theme
 - [`set_actiRhythm_theme()`](https://rdazadda.github.io/actiRhythm/reference/set_actiRhythm_theme.md)
@@ -283,12 +321,50 @@ object.
   : Plot Circadian Rhythm Profile
 - [`plot_actogram()`](https://rdazadda.github.io/actiRhythm/reference/plot_actogram.md)
   : Double-Plotted Actogram
+- [`plot_changepoints()`](https://rdazadda.github.io/actiRhythm/reference/plot_changepoints.md)
+  : Sleep / Wake Change-Point Track
 - [`plot_chisq()`](https://rdazadda.github.io/actiRhythm/reference/plot_chisq.md)
   : Plot the Chi-Square (Sokolove-Bushell) Periodogram
+- [`plot_cosinor_ellipse()`](https://rdazadda.github.io/actiRhythm/reference/plot_cosinor_ellipse.md)
+  : Cosinor Amplitude-Acrophase Confidence Ellipse
+- [`plot_cosinor_schematic()`](https://rdazadda.github.io/actiRhythm/reference/plot_cosinor_schematic.md)
+  : Annotated Cosinor Parameter Schematic
 - [`plot_dfa()`](https://rdazadda.github.io/actiRhythm/reference/plot_dfa.md)
   : Plot the Detrended Fluctuation Analysis (DFA) Scaling Relationship
+- [`plot_dichotomy()`](https://rdazadda.github.io/actiRhythm/reference/plot_dichotomy.md)
+  : Dichotomy Index Plot
+- [`plot_emd()`](https://rdazadda.github.io/actiRhythm/reference/plot_emd.md)
+  : Empirical Mode Decomposition Stack
 - [`plot_extended_cosinor()`](https://rdazadda.github.io/actiRhythm/reference/plot_extended_cosinor.md)
   : Plot the Extended (Marler) Cosinor Fit on the 24-Hour Activity
   Profile
+- [`plot_lids()`](https://rdazadda.github.io/actiRhythm/reference/plot_lids.md)
+  : LIDS Ultradian Cycle Curve
+- [`plot_mfdfa()`](https://rdazadda.github.io/actiRhythm/reference/plot_mfdfa.md)
+  : Multifractal DFA Spectrum
+- [`plot_mse()`](https://rdazadda.github.io/actiRhythm/reference/plot_mse.md)
+  : Multiscale Entropy Curve
+- [`plot_multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/plot_multicomponent.md)
+  : Single Cosine vs Multicomponent Cosinor Fit
+- [`plot_multiscale()`](https://rdazadda.github.io/actiRhythm/reference/plot_multiscale.md)
+  : Multiscale IS and IV Profiles
 - [`plot_periodogram()`](https://rdazadda.github.io/actiRhythm/reference/plot_periodogram.md)
   : Plot the Lomb-Scargle Periodogram with the Endogenous Period
+- [`plot_period_ci()`](https://rdazadda.github.io/actiRhythm/reference/plot_period_ci.md)
+  : Bootstrap Period Confidence Interval
+- [`plot_phase_rose()`](https://rdazadda.github.io/actiRhythm/reference/plot_phase_rose.md)
+  : Circular Phase Rose
+- [`plot_profile()`](https://rdazadda.github.io/actiRhythm/reference/plot_profile.md)
+  : Average-Day Profile with the L5 and M10 Windows
+- [`plot_raw_metrics()`](https://rdazadda.github.io/actiRhythm/reference/plot_raw_metrics.md)
+  : Raw-Acceleration Epoch Metrics Profile
+- [`plot_rest_comparison()`](https://rdazadda.github.io/actiRhythm/reference/plot_rest_comparison.md)
+  : Rest-Detector Comparison Strip
+- [`plot_spt()`](https://rdazadda.github.io/actiRhythm/reference/plot_spt.md)
+  : z-Angle Sleep-Period-Time Detection
+- [`plot_ssa_wcor()`](https://rdazadda.github.io/actiRhythm/reference/plot_ssa_wcor.md)
+  : SSA w-Correlation Matrix
+- [`plot_transitions()`](https://rdazadda.github.io/actiRhythm/reference/plot_transitions.md)
+  : Rest-Activity Transition Curves
+- [`plot_wavelet()`](https://rdazadda.github.io/actiRhythm/reference/plot_wavelet.md)
+  : Wavelet Power Scalogram

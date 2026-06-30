@@ -85,5 +85,5 @@ population.cosinor(act, as.POSIXct(ts, tz = "UTC", origin = "1970-01-01"), subj)
 #>   Period:     24 h
 #>   MESOR:      100.17  [99.32, 101.01]
 #>   Amplitude:  39.68  [38.54, 40.81]
-#>   Acrophase:  9.71 h  [9.07, 10.36]
+#>   Acrophase:  9.71 h  [9.05, 10.34]
 ```

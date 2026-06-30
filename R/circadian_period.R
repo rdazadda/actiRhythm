@@ -12,11 +12,29 @@
 NULL
 
 
+# Baluev (2008) analytic false-alarm probability for a standard-normalized
+# Lomb-Scargle peak of power z, given N points and the effective bandwidth
+# W = fmax * sqrt(4 * pi * Var(t)).
+.lomb_baluev_fap <- function(z, N, W) {
+  ggamma <- function(m) sqrt(2 / m) * exp(lgamma(m / 2) - lgamma((m - 1) / 2))
+  NH <- N - 1; NK <- N - 3
+  fsingle <- (1 - z)^(0.5 * NK)
+  tau_b <- ggamma(NH) * W * (1 - z)^(0.5 * (NK - 1)) * sqrt(0.5 * NH * z)
+  1 - exp(-tau_b) + fsingle * exp(-tau_b)
+}
+
+# Invert the Baluev FAP: the power level whose false-alarm probability equals alpha.
+.lomb_fap_power <- function(alpha, N, W) {
+  if (!is.finite(N) || N < 4 || !is.finite(W) || W <= 0) return(NA_real_)
+  f <- function(z) .lomb_baluev_fap(z, N, W) - alpha
+  if (f(1e-8) * f(1 - 1e-8) > 0) return(NA_real_)
+  tryCatch(stats::uniroot(f, c(1e-8, 1 - 1e-8))$root, error = function(e) NA_real_)
+}
+
 # Standard-normalized Lomb-Scargle periodogram over a PERIOD window, with the
-# Baluev (2008) analytic false-alarm probability. Replicates the relevant path
-# of lomb::lsp(type = "period", normalize = "standard") so actiRhythm does not
-# depend on lomb (and its plotly/data.table closure). Inputs are assumed finite
-# and length-matched; returns NULL on a degenerate grid/series.
+# Baluev (2008) analytic false-alarm probability. Self-contained (no lomb
+# dependency), using the exact Scargle 1982 double-angle time offset. Inputs are
+# assumed finite and length-matched; returns NULL on a degenerate grid/series.
 .lomb_scargle <- function(x, times, from, to, ofac = 4) {
   ofac <- max(1L, as.integer(floor(ofac)))
   o <- order(times)
@@ -43,7 +61,7 @@ NULL
   PN <- numeric(n.out)
   for (i in seq_len(n.out)) {
     wi <- w[i]
-    tau <- 0.5 * atan2(sum(sin(wi * t)), sum(cos(wi * t))) / wi
+    tau <- 0.5 * atan2(sum(sin(2 * wi * t)), sum(cos(2 * wi * t))) / wi
     arg <- wi * (t - tau)
     cs <- cos(arg)
     sn <- sin(arg)
@@ -53,15 +71,10 @@ NULL
   PN.max <- max(PN)
   peak.freq <- freq[which.max(PN)]
 
-  # Baluev (2008) false-alarm probability (lomb's pbaluev/ggamma).
-  ggamma <- function(N) sqrt(2 / N) * exp(lgamma(N / 2) - lgamma((N - 1) / 2))
+  # Baluev (2008) analytic false-alarm probability.
   Dt <- mean(t^2) - mean(t)^2
-  NH <- n - 1
-  NK <- n - 3
-  fsingle <- (1 - PN.max)^(0.5 * NK)
   W <- max(freq) * sqrt(4 * pi * Dt)
-  tau_b <- ggamma(NH) * W * (1 - PN.max)^(0.5 * (NK - 1)) * sqrt(0.5 * NH * PN.max)
-  p.value <- -(exp(-tau_b) - 1) + fsingle * exp(-tau_b)
+  p.value <- .lomb_baluev_fap(PN.max, n, W)
 
   # Report on the ascending-period axis (lomb reverses the frequency order here).
   list(
@@ -71,7 +84,8 @@ NULL
     peak.at = c(1 / peak.freq, peak.freq),
     p.value = p.value,
     n.out   = n.out,
-    n       = n
+    n       = n,
+    W       = W
   )
 }
 
@@ -152,6 +166,8 @@ NULL
 #' \insertRef{scargle1982}{actiRhythm}
 #'
 #' \insertRef{ruf1999}{actiRhythm}
+#'
+#' \insertRef{baluev2008}{actiRhythm}
 #'
 #' \insertRef{refinetti2007}{actiRhythm}
 #'
@@ -316,7 +332,8 @@ circadian.period <- function(counts, timestamps, from = 18, to = 30, ofac = 4) {
 #'
 #' @return An object of class \code{actiRhythm_period_ci}: a list with \code{tau}
 #'   (the point estimate, hours), \code{ci_lower}/\code{ci_upper}, \code{se}, the
-#'   \code{level}, and the number of valid replicates.
+#'   \code{level}, the number of valid replicates, and \code{tau_boot} (the vector
+#'   of bootstrap replicate periods).
 #'
 #' @references
 #' \insertRef{kunsch1989}{actiRhythm}
@@ -340,7 +357,7 @@ period.ci <- function(counts, timestamps, from = 18, to = 30, ofac = 4,
   na_out <- function(tau = NA_real_) structure(
     list(tau = tau, ci_lower = NA_real_, ci_upper = NA_real_, se = NA_real_,
          level = level, n_boot = n_boot, n_valid = 0L, block_hours = block_hours,
-         method = "circular block residual bootstrap"),
+         method = "circular block residual bootstrap", tau_boot = numeric(0)),
     class = "actiRhythm_period_ci")
 
   t_sec <- suppressWarnings(as.numeric(timestamps))
@@ -391,7 +408,8 @@ period.ci <- function(counts, timestamps, from = 18, to = 30, ofac = 4,
   structure(list(
     tau = tau_hat, ci_lower = ci[1], ci_upper = ci[2], se = stats::sd(tau_boot),
     level = level, n_boot = n_boot, n_valid = length(tau_boot),
-    block_hours = block_hours, method = "circular block residual bootstrap"
+    block_hours = block_hours, method = "circular block residual bootstrap",
+    tau_boot = tau_boot
   ), class = "actiRhythm_period_ci")
 }
 

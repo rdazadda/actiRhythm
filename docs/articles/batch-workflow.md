@@ -162,7 +162,8 @@ cmp
 #>   Groups:  evening (n=6)  vs  morning (n=6)
 #>   Period:  24 h
 #> 
-#>   Joint (Bingham/Hotelling T2):  F(3,8) = 594.68   p = 9.76e-10
+#>   Amplitude/acrophase (Bingham T2):  F(2,9) = 966.39   p = 3.14e-11
+#>   MESOR (Bingham F):                 F(1,10) = 0.05   p = 0.82
 #> 
 #>   mesor     diff = +0.11   t(7.5) = 0.23   p = 0.821
 #>   amplitude diff = -8.04   t(7.3) = -9.27   p = 2.62e-05
@@ -194,7 +195,7 @@ batch[, c("file", "error", "IS", "IV", "RA",
 #> 1 MOS2E39230594_60sec.agd  <NA> 0.2279 1.0008 0.9800            295.63
 #> 2  MOS2E3923063660sec.agd  <NA> 0.4230 1.2687 0.7706            351.14
 #>   rhythm_p_value period_tau
-#> 1    0.002396228   25.43077
+#> 1    0.002396228   24.48889
 #> 2    0.050151893   24.09425
 ```
 

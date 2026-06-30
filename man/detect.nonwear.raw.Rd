@@ -23,7 +23,9 @@ detect.nonwear.raw(
 \item{epoch}{Output epoch length in seconds for the returned mask (default 5,
 matching \code{\link{rest.spt}}).}
 
-\item{block}{Internal classification block length in seconds (default 300).}
+\item{block}{Internal classification block length in seconds (default 300;
+GGIR steps the 60-minute window in 15-minute blocks, so boundaries can differ
+by a few minutes from GGIR's grid).}
 
 \item{window}{Window in seconds over which the SD and range are taken (default 3600).}
 
@@ -38,7 +40,7 @@ A logical vector, one per epoch: \code{TRUE} = wear, \code{FALSE} =
 non-wear. Never errors.
 }
 \description{
-Flags non-wear time from raw acceleration by the van Hees et al. (2011)
+Flags non-wear time from raw acceleration by the van Hees et al. (2013) / GGIR
 standard-deviation-and-range rule: a block is non-wear when, over a window
 centred on it (default 60 minutes), at least two of the three axes have both a
 standard deviation below \code{sd_crit} and a value range below
@@ -55,7 +57,7 @@ mean(detect.nonwear.raw(raw, epoch = 60))       # fraction of epochs worn
 
 }
 \references{
-\insertRef{vanhees2011}{actiRhythm}
+\insertRef{vanhees2013}{actiRhythm}
 }
 \seealso{
 \code{\link{rest.spt}}, \code{\link{raw.metrics}}

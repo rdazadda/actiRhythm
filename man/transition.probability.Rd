@@ -2,28 +2,27 @@
 % Please edit documentation in R/circadian_transitions.R
 \name{transition.probability}
 \alias{transition.probability}
-\title{Rest-Active Transition Probabilities (ASTP / SATP)}
+\title{Rest-Active Transition Probabilities}
 \usage{
-transition.probability(counts, threshold = 1, lambda = 1)
+transition.probability(counts, threshold = 1, eps = 0.5)
 }
 \arguments{
-\item{counts}{Numeric activity vector.}
+\item{counts}{Numeric activity vector; \code{NA} are dropped.}
 
 \item{threshold}{Counts at or above which an epoch is active (default 1).}
 
-\item{lambda}{Bayesian prior pseudo-count (default 1).}
+\item{eps}{Bayesian Beta pseudo-count added to the transition count and the
+epochs at risk (default 0.5).}
 }
 \value{
-A list with the MLE and Bayesian \code{tp_ra} (rest to active) and
-\code{tp_ar} (active to rest), the active bout count and the mean active
-bout length.
+A list with the maximum-likelihood and Bayesian \code{tp_ra} (rest to
+active) and \code{tp_ar} (active to rest), the active bout count, and the
+mean active bout length.
 }
 \description{
-Closed-form maximum-likelihood and Bayesian estimates of the rest-to-active
-and active-to-rest transition probabilities, the reciprocal-mean-bout-length
-fragmentation estimators (Danilevicz et al. 2024). Each is a transition count
-over the time at risk. Unlike the survival-curve rates in
-\code{\link{state.transitions}}, these come straight from the bout counts.
+Maximum-likelihood and Bayesian estimates of the rest-to-active and
+active-to-rest transition probabilities (Danilevicz et al. 2024): the
+transitions out of a state divided by its epochs at risk.
 }
 \examples{
 counts <- c(rep(0, 50), rep(100, 20), rep(0, 40), rep(80, 30), rep(0, 60))

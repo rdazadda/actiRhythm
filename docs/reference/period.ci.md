@@ -66,8 +66,9 @@ period.ci(
 ## Value
 
 An object of class `actiRhythm_period_ci`: a list with `tau` (the point
-estimate, hours), `ci_lower`/`ci_upper`, `se`, the `level`, and the
-number of valid replicates.
+estimate, hours), `ci_lower`/`ci_upper`, `se`, the `level`, the number
+of valid replicates, and `tau_boot` (the vector of bootstrap replicate
+periods).
 
 ## References
 
@@ -94,9 +95,9 @@ counts <- 100 + 80 * cos(2 * pi * (t_hours - 8) / 24) + rnorm(length(t_hours), 0
 period.ci(counts, ts, n_boot = 50, seed = 1)
 #> Circadian Period with Bootstrap Confidence Interval
 #> 
-#>   tau:      24.103 h
-#>   95% CI:   [23.980, 24.064] h
-#>   SE:       0.022 h
+#>   tau:      24.088 h
+#>   95% CI:   [23.975, 24.051] h
+#>   SE:       0.020 h
 #>   Method:   circular block residual bootstrap (50/50 valid reps)
 # }
 ```

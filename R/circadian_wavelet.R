@@ -21,8 +21,9 @@
 }
 
 # Torrence-Compo (1998) cone of influence: the largest reliable Fourier period
-# (hours) at each time column, rising from a sliver at the edges to N/2 in the
-# middle. Power at periods above this curve is edge-contaminated.
+# (hours) at each time column, rising from a sliver at the edges to about
+# (ff / sqrt(2)) * (N / 2) epochs in the middle. Power at periods above this curve
+# is edge-contaminated.
 .torrence_coi <- function(N, ff, ep_h) {
   d <- pmin(seq_len(N) - 1L, N - seq_len(N))
   d[d == 0] <- 1e-5
@@ -53,12 +54,16 @@
 #'   \code{significant} logical matrix flags cells whose power exceeds the 95\%
 #'   confidence level against an AR(1) red-noise background (with the per-scale
 #'   threshold \code{sig_power} and the lag-1 autocorrelation \code{phi}), which
-#'   separates a real rhythm from background. Never errors.
+#'   separates a real rhythm from background. The power is scale-rectified
+#'   (\eqn{|W|^2/s}, Liu et al. 2007), which reduces the Torrence bias toward long
+#'   periods. Never errors.
 #'
 #' @references
 #' \insertRef{torrence1998}{actiRhythm}
 #'
 #' \insertRef{leise2013}{actiRhythm}
+#'
+#' \insertRef{liu2007}{actiRhythm}
 #'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 600, length.out = 6 * 144)
@@ -85,7 +90,7 @@ circadian.wavelet <- function(counts, timestamps, dj = 1 / 12, omega0 = 6,
   xc <- x - mean(x)
   cw <- .cwt_morlet(xc, dj, omega0)
   period_h <- cw$period * ep_h
-  power <- (Mod(cw$W)^2) / cw$scales            # divide-by-scale bias rectification
+  power <- (Mod(cw$W)^2) / cw$scales            # scale-rectified power |W|^2/s (Liu et al. 2007)
   coi_h <- .torrence_coi(N, cw$ff, ep_h)        # cone of influence (hours, per time)
   in_coi <- outer(period_h, coi_h, ">")         # TRUE where the cell is edge-affected
   masked <- power; masked[in_coi] <- NA

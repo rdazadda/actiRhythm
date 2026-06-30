@@ -253,9 +253,9 @@ interval that respects the autocorrelation of activity <span class="citation">(<
 <span><span class="va">ci</span></span>
 <span><span class="co">#&gt; Circadian Period with Bootstrap Confidence Interval</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   tau:      25.038 h</span></span>
-<span><span class="co">#&gt;   95% CI:   [24.981, 25.015] h</span></span>
-<span><span class="co">#&gt;   SE:       0.009 h</span></span>
+<span><span class="co">#&gt;   tau:      25.027 h</span></span>
+<span><span class="co">#&gt;   95% CI:   [24.987, 25.012] h</span></span>
+<span><span class="co">#&gt;   SE:       0.006 h</span></span>
 <span><span class="co">#&gt;   Method:   circular block residual bootstrap (200/200 valid reps)</span></span>
 <span><span class="va">tau_true</span> <span class="op">&gt;=</span> <span class="va">ci</span><span class="op">$</span><span class="va">ci_lower</span> <span class="op">&amp;&amp;</span> <span class="va">tau_true</span> <span class="op">&lt;=</span> <span class="va">ci</span><span class="op">$</span><span class="va">ci_upper</span>   <span class="co"># the interval brackets the truth</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
@@ -273,21 +273,30 @@ Baluev false-alarm probability.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>tau <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">tau</span>, peak_power <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">peak_power</span>, p_value <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">p_value</span>,</span>
 <span>  n_used <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">n_used</span>, span_days <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">ls</span><span class="op">$</span><span class="va">span_days</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          tau   peak_power      p_value       n_used    span_days </span></span>
-<span><span class="co">#&gt; 2.543077e+01 4.361705e-02 9.388299e-97 9.919000e+03 6.890000e+00</span></span></code></pre></div>
+<span><span class="co">#&gt; 2.448889e+01 4.418582e-02 4.916458e-98 9.919000e+03 6.890000e+00</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ls_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>period <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">scanned</span>, power <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">power</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">ls_df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">period</span>, <span class="va">power</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"grey60"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">tau</span>, colour <span class="op">=</span> <span class="st">"#236192"</span>, linewidth <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">24</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span>, colour <span class="op">=</span> <span class="st">"grey40"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Period (hours)"</span>, y <span class="op">=</span> <span class="st">"Lomb-Scargle power"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/theme_actiRhythm.html">theme_actiRhythm</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_periodogram.html">plot_periodogram</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="period-estimation_files/figure-html/ls-plot-1.png" class="r-plt" alt="The Lomb-Scargle periodogram of the bundled recording over the 18-30 h window. The vertical line marks the dominant period; the dashed line is the conventional 24 hours. The peak sits to the right of 24, a longer-than-day dominant cycle in this recording." width="770"><p class="caption">
+<img src="period-estimation_files/figure-html/ls-plot-1.png" class="r-plt" alt="The Lomb-Scargle periodogram of the bundled recording over the 18-30 h window. The orange line marks the dominant period, the grey dashed line is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm threshold, which is flat across periods (unlike the chi-square critical curve below). The peak sits to the right of 24, a longer-than-day dominant cycle." width="770"><p class="caption">
 The Lomb-Scargle periodogram of the bundled recording over the 18-30 h
-window. The vertical line marks the dominant period; the dashed line is
-the conventional 24 hours. The peak sits to the right of 24, a
-longer-than-day dominant cycle in this recording.
+window. The orange line marks the dominant period, the grey dashed line
+is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm
+threshold, which is flat across periods (unlike the chi-square critical
+curve below). The peak sits to the right of 24, a longer-than-day
+dominant cycle.
+</p>
+</div>
+<p>The bootstrap interval shows how firmly that period is pinned down.
+On this recording the replicate periods spread widely across the search
+window, so the interval spans several hours: a single tau on a noisy
+free-running record carries real uncertainty.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_period_ci.html">plot_period_ci</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, n_boot <span class="op">=</span> <span class="fl">200</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="period-estimation_files/figure-html/ci-plot-1.png" class="r-plt" alt="Bootstrap replicate periods (histogram) with the point estimate (orange) and the 95% confidence-interval band. A broad spread means the dominant period is only weakly determined." width="770"><p class="caption">
+Bootstrap replicate periods (histogram) with the point estimate (orange)
+and the 95% confidence-interval band. A broad spread means the dominant
+period is only weakly determined.
 </p>
 </div>
 </div>
@@ -326,7 +335,7 @@ separate an entrained from a free-running rhythm.</li>
 two-day device-off gap), then re-estimate. Lomb-Scargle reads the real
 timestamps and should hold at 25; the chi-square fold, which assumes a
 regular grid, should slip.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gap</span>   <span class="op">&lt;-</span> <span class="va">th</span> <span class="op">&gt;=</span> <span class="fl">5</span> <span class="op">*</span> <span class="fl">24</span> <span class="op">&amp;</span> <span class="va">th</span> <span class="op">&lt;</span> <span class="fl">7.3</span> <span class="op">*</span> <span class="fl">24</span>          <span class="co"># remove ~2.3 days in the middle</span></span>
 <span><span class="va">ts_g</span>  <span class="op">&lt;-</span> <span class="va">ts</span><span class="op">[</span><span class="op">!</span><span class="va">gap</span><span class="op">]</span></span>
 <span><span class="va">cnt_g</span> <span class="op">&lt;-</span> <span class="va">counts</span><span class="op">[</span><span class="op">!</span><span class="va">gap</span><span class="op">]</span></span>
@@ -382,14 +391,15 @@ single global number.</p>
 recording and runs the chi-square periodogram in each, producing a
 period-by-time heat map that shows drift, fragmentation, and
 re-entrainment a single fit averages away.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/circadian.spectrogram.html">circadian.spectrogram</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, step_hours <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="va">sg</span><span class="op">$</span><span class="va">plot</span></span></code></pre></div>
 <div class="figure">
-<img src="period-estimation_files/figure-html/spectrogram-1.png" class="r-plt" alt="Sliding-window chi-square spectrogram of the bundled recording. The dashed line is 24 h; bright bands show where power concentrates and how the dominant period wanders across the days." width="770"><p class="caption">
-Sliding-window chi-square spectrogram of the bundled recording. The
-dashed line is 24 h; bright bands show where power concentrates and how
-the dominant period wanders across the days.
+<img src="period-estimation_files/figure-html/spectrogram-1.png" class="r-plt" alt="Sliding-window chi-square spectrogram of the bundled recording, coloured by Qp relative to its per-period significance threshold so equal colour means equal significance across periods. The white line traces the per-window peak period and the dashed line is 24 h." width="770"><p class="caption">
+Sliding-window chi-square spectrogram of the bundled recording, coloured
+by Qp relative to its per-period significance threshold so equal colour
+means equal significance across periods. The white line traces the
+per-window peak period and the dashed line is 24 h.
 </p>
 </div>
 <p><strong>Ultradian band power.</strong> Rhythms faster than a day (the
@@ -397,7 +407,7 @@ roughly 90-minute, 4-hour, and 8-hour bands) carry real physiology.
 <code><a href="../reference/ultradian.bandpower.html">ultradian.bandpower()</a></code> partitions the activity variance into
 dyadic period bands with an undecimated Haar wavelet and reports the
 fraction of variance in each <span class="citation">(<a href="#ref-percival2000">Percival &amp; Walden, 2000</a>)</span>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ultradian.bandpower.html">ultradian.bandpower</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Ultradian Wavelet Band Power</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -410,7 +420,7 @@ fraction of variance in each <span class="citation">(<a href="#ref-percival2000"
 and estimates the spectrum of the residual, splitting it into ultradian
 and high-frequency bands. Two recordings with the same 24-hour rhythm
 but different residual fragmentation are told apart here.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/residual.spectrum.html">residual.spectrum</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, period <span class="op">=</span> <span class="fl">24</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Residual Circadian Spectrum</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -453,12 +463,13 @@ the chi-square periodogram is that of <span class="citation">Sokolove
 &amp; Bushell (<a href="#ref-sokolove1978">1978</a>)</span>. The period
 confidence interval uses the moving-block bootstrap of <span class="citation">Kunsch (<a href="#ref-kunsch1989">1989</a>)</span> in
 its circular form <span class="citation">(<a href="#ref-politis1992">Politis &amp; Romano, 1992</a>)</span>.
-actiRhythm’s Lomb-Scargle power and the chi-square
+actiRhythm’s Lomb-Scargle power is cross-checked against a direct
+least-squares periodogram (the exact estimator: it uses the double-angle
+time offset of <span class="citation">Scargle (<a href="#ref-scargle1982">1982</a>)</span>, where the <code>lomb</code>
+package uses a single-angle offset), and the chi-square
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>Q</mi><mi>P</mi></msub><annotation encoding="application/x-tex">Q_P</annotation></semantics></math>
-statistic are cross-checked against the <code>lomb</code> and
-<code>zeitgebr</code>/<code>periodogram</code> reference implementations
-(to the printed precision) in the <a href="validation.html">Validation</a> article and the package’s test
-suite.</p>
+statistic is validated against its chi-square null, in the package’s
+test suite.</p>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

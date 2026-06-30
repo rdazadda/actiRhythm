@@ -141,7 +141,7 @@ test_that("multiscale.entropy scale-1 equals inline SampEn hand value", {
     N <- length(x)
     rr <- r * stats::sd(x)
     cnt <- function(mm) {
-      tpl <- N - mm + 1
+      tpl <- N - m
       total <- 0
       for (i in 1:(tpl - 1)) {
         for (j in (i + 1):tpl) {
@@ -157,6 +157,15 @@ test_that("multiscale.entropy scale-1 equals inline SampEn hand value", {
 
   hand <- sampen_naive(x, 2, 0.15)
   expect_equal(res$mse[1], hand, tolerance = 1e-9)
+})
+
+test_that("multiscale.entropy scale-1 matches pracma::sample_entropy", {
+  skip_if_not_installed("pracma")
+  set.seed(2)
+  x <- rnorm(500)
+  res <- multiscale.entropy(x, scales = 1, m = 2, r = 0.15)
+  ref <- pracma::sample_entropy(x, edim = 2, r = 0.15 * stats::sd(x), tau = 1)
+  expect_equal(res$mse[1], as.numeric(ref), tolerance = 1e-9)
 })
 
 test_that("multiscale.entropy scale-1 matches pracma::sample_entropy", {

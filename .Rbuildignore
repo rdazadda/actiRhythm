@@ -16,10 +16,9 @@
 ^doc$
 ^Meta$
 ^tools$
-^\.positai$
-^\.claude$
 ^data-raw$
 ^vignettes/articles$
 ^vignettes/.*_cache$
 ^vignettes/.*_files$
 ^vignettes/figure$
+^Rplots\.pdf$

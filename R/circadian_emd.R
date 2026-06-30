@@ -4,8 +4,11 @@
   list(maxi = which(s < 0) + 1L, mini = which(s > 0) + 1L)
 }
 
-# Sift one intrinsic mode function out of the residual h.
-.emd_sift_one <- function(x, max_sift = 50L, sd_tol = 0.25) {
+# Sift one intrinsic mode function out of the residual h. Stops on the Wu & Huang
+# (2009) Cauchy-type energy ratio sum((h - h1)^2) / sum(h^2); the ~1e-3 threshold
+# gives proper convergence (the 0.2-0.3 range belongs to Huang's per-point SD, a
+# different statistic).
+.emd_sift_one <- function(x, max_sift = 50L, cauchy_tol = 1e-3) {
   h <- x; n <- length(h)
   for (it in seq_len(max_sift)) {
     e <- .emd_extrema(h)
@@ -15,9 +18,9 @@
     up <- stats::spline(mx, h[mx], xout = seq_len(n), method = "natural")$y
     lo <- stats::spline(mn, h[mn], xout = seq_len(n), method = "natural")$y
     h1 <- h - (up + lo) / 2
-    sd_val <- sum((h - h1)^2) / (sum(h^2) + 1e-10)
+    cauchy <- sum((h - h1)^2) / (sum(h^2) + 1e-10)
     h <- h1
-    if (sd_val < sd_tol) break
+    if (cauchy < cauchy_tol) break
   }
   list(imf = h, residue = FALSE)
 }
@@ -48,7 +51,9 @@
 #'
 #' @return An object of class \code{actiRhythm_emd}: the IMF matrix, the residual
 #'   trend, per-IMF period and variance share, the circadian IMF index, and the
-#'   reconstruction error. Never errors.
+#'   reconstruction error. The first and last epochs are unreliable (the spline
+#'   envelopes pin the IMFs near zero at the edges), so read the instantaneous
+#'   series away from the boundary. Never errors.
 #'
 #' @references
 #' \insertRef{huang1998}{actiRhythm}
@@ -92,14 +97,18 @@ circadian.emd <- function(counts, timestamps, max_imf = 10L, ensemble = 1L,
   if (ensemble > 1L) {
     if (!is.null(seed)) set.seed(seed)
     sd_x <- stats::sd(xc)
-    accum <- NULL; ncols <- NULL
+    accum <- NULL; ncols <- NULL; col_counts <- NULL
     for (e in seq_len(ensemble)) {
       em <- one_emd(xc + stats::rnorm(n, 0, noise_sd * sd_x))
       m <- do.call(cbind, em$imfs)
-      if (is.null(accum)) { accum <- m; ncols <- ncol(m) }
-      else { k <- min(ncols, ncol(m)); accum[, seq_len(k)] <- accum[, seq_len(k)] + m[, seq_len(k)] }
+      if (is.null(accum)) { accum <- m; ncols <- ncol(m); col_counts <- rep(1L, ncols) }
+      else {
+        k <- min(ncols, ncol(m))
+        accum[, seq_len(k)] <- accum[, seq_len(k)] + m[, seq_len(k)]
+        col_counts[seq_len(k)] <- col_counts[seq_len(k)] + 1L
+      }
     }
-    imfs_m <- accum / ensemble
+    imfs_m <- sweep(accum, 2L, col_counts, "/")
     residual <- xc - rowSums(imfs_m)
   } else {
     em <- one_emd(xc)

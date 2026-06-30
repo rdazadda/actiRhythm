@@ -19,7 +19,7 @@ residual.spectrum(
 \item{period}{Cosinor period in hours (default 24).}
 
 \item{bands}{Named list of \code{c(low_hours, high_hours)} period bands for the
-residual power; defaults to ultradian (2-8 h) and high-frequency (<2 h).}
+residual power; defaults to ultradian (2-8 h) and high-frequency (0.5-2 h).}
 }
 \value{
 An object of class \code{actiRhythm_rcs}: the residual variance, a

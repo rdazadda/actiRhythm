@@ -127,7 +127,9 @@ the current epoch
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>,
 and two after
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>N</mi><mn>1</mn></msub><mo>,</mo><msub><mi>N</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">N_1, N_2</annotation></semantics></math>).
-Counts are scaled by 100 and capped:
+The weights are Cole’s mean-activity variant (Table 6); the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>/</mi><mn>100</mn></mrow><annotation encoding="application/x-tex">/100</annotation></semantics></math>
+scaling and cap are implementation conventions:
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mo>=</mo><mn>0.001</mn><mspace width="0.167em"></mspace><mo stretchy="false" form="prefix">(</mo><mn>106</mn><mspace width="0.167em"></mspace><msub><mi>P</mi><mn>4</mn></msub><mo>+</mo><mn>54</mn><mspace width="0.167em"></mspace><msub><mi>P</mi><mn>3</mn></msub><mo>+</mo><mn>58</mn><mspace width="0.167em"></mspace><msub><mi>P</mi><mn>2</mn></msub><mo>+</mo><mn>76</mn><mspace width="0.167em"></mspace><msub><mi>P</mi><mn>1</mn></msub><mo>+</mo><mn>230</mn><mspace width="0.167em"></mspace><mi>C</mi><mo>+</mo><mn>74</mn><mspace width="0.167em"></mspace><msub><mi>N</mi><mn>1</mn></msub><mo>+</mo><mn>67</mn><mspace width="0.167em"></mspace><msub><mi>N</mi><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 D = 0.001\,(106\,P_4 + 54\,P_3 + 58\,P_2 + 76\,P_1 + 230\,C + 74\,N_1 + 67\,N_2),
 </annotation></semantics></math> and scores the epoch <strong>sleep when
@@ -135,7 +137,7 @@ D = 0.001\,(106\,P_4 + 54\,P_3 + 58\,P_2 + 76\,P_1 + 230\,C + 74\,N_1 + 67\,N_2)
 Webster’s rescoring rules <span class="citation">(<a href="#ref-webster1982">Webster et al., 1982</a>)</span> then re-label
 short sleep bouts bracketed by sustained wake.</p>
 <p><strong>Sadeh</strong> <span class="citation">(<a href="#ref-sadeh1994">Sadeh et al., 1994</a>)</span> uses an
-eleven-epoch window (five each side) with counts capped at 300:
+eleven-epoch window (five each side):
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>I</mi><mo>=</mo><mn>7.601</mn><mo>−</mo><mn>0.065</mn><mspace width="0.167em"></mspace><mover><mi>A</mi><mo accent="true">¯</mo></mover><mo>−</mo><mn>1.08</mn><mspace width="0.167em"></mspace><mrow><mi mathvariant="normal">N</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">T</mi></mrow><mo>−</mo><mn>0.056</mn><mspace width="0.167em"></mspace><mi>s</mi><mo>−</mo><mn>0.703</mn><mspace width="0.167em"></mspace><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>C</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 SI = 7.601 - 0.065\,\overline{A} - 1.08\,\mathrm{NAT} - 0.056\,s - 0.703\,\log(C+1),
 </annotation></semantics></math> where
@@ -148,7 +150,9 @@ the count of epochs in
 the standard deviation over the current and five preceding epochs, and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>C</mi><annotation encoding="application/x-tex">C</annotation></semantics></math>
 the current count. The epoch is scored <strong>sleep when
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>I</mi><mo>&gt;</mo><mi>−</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">SI &gt; -4</annotation></semantics></math></strong>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>I</mi><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">SI \ge 0</annotation></semantics></math></strong>;
+set <code>wake_threshold = -4</code> and <code>clip = 300</code> for
+ActiLife parity.</p>
 <p>The change-point detector <span class="citation">(<a href="#ref-chensun2024">Chen &amp; Sun, 2024</a>)</span> is geometric
 rather than weighted: it fits a 24-hour cosinor to bound each rest and
 active span roughly, then places the exact transition inside each bound
@@ -227,7 +231,7 @@ day wake.</caption>
 </tr>
 <tr class="even">
 <td align="left">Sadeh</td>
-<td align="right">0.993</td>
+<td align="right">0.988</td>
 <td align="right">1.000</td>
 </tr>
 </tbody>
@@ -289,14 +293,14 @@ per-night episode table.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span>cole_kripke <span class="op">=</span> <span class="fu"><a href="../reference/sleep.cole.kripke.html">sleep.cole.kripke</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; cole_kripke</span></span>
 <span><span class="co">#&gt;    S    W </span></span>
-<span><span class="co">#&gt; 7646 2273</span></span>
+<span><span class="co">#&gt; 7641 2278</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span>sadeh       <span class="op">=</span> <span class="fu"><a href="../reference/sleep.sadeh.html">sleep.sadeh</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; sadeh</span></span>
 <span><span class="co">#&gt;    S    W </span></span>
-<span><span class="co">#&gt; 7190 2729</span></span>
+<span><span class="co">#&gt; 6757 3162</span></span>
 <span><span class="va">cp_real</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sleep.changepoints.html">sleep.changepoints</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="va">cp_real</span></span>
-<span><span class="co">#&gt; Change-Point Sleep/Wake Detection (CircaCP)</span></span>
+<span><span class="co">#&gt; Change-Point Sleep/Wake Detection</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Span:           6.9 days (9919 epochs)</span></span>
 <span><span class="co">#&gt;   Cosinor acrophase: 20.5 h</span></span>
@@ -349,14 +353,14 @@ because three of them are wrong.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sleep.changepoints.html">sleep.changepoints</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span>   <span class="co"># one main bout per night</span></span>
 <span><span class="va">rp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rest.periods.html">rest.periods</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span>         <span class="co"># every bout (Roenneberg/MASDA)</span></span>
-<span><span class="va">rc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rest.crespo.html">rest.crespo</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span>          <span class="co"># every bout (Crespo morphology)</span></span>
+<span><span class="va">rc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rest.crespo.html">rest.crespo</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span>          <span class="co"># main rest periods (Crespo morphology)</span></span>
 <span><span class="va">hm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rest.hmm.html">rest.hmm</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>   <span class="co"># state-space alternative</span></span>
 <span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>    detector <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sleep.changepoints"</span>, <span class="st">"rest.periods"</span>, <span class="st">"rest.crespo"</span>, <span class="st">"rest.hmm"</span><span class="op">)</span>,</span>
 <span>    question <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"one main bout / night"</span>, <span class="st">"every bout (naps incl.)"</span>,</span>
-<span>                 <span class="st">"every bout (naps incl.)"</span>, <span class="st">"latent rest state"</span><span class="op">)</span>,</span>
+<span>                 <span class="st">"main rest periods"</span>, <span class="st">"latent rest state"</span><span class="op">)</span>,</span>
 <span>    bouts    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cp</span><span class="op">$</span><span class="va">n_episodes</span>, <span class="va">rp</span><span class="op">$</span><span class="va">n_bouts</span>, <span class="va">rc</span><span class="op">$</span><span class="va">n_rest_periods</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
 <span>    family   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CircaCP"</span>, <span class="st">"Roenneberg"</span>, <span class="st">"Crespo"</span>, <span class="st">"Gaussian HMM"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  caption <span class="op">=</span> <span class="st">"Four detectors, four counts: the difference is the question, not the accuracy."</span></span>
@@ -385,7 +389,7 @@ not the accuracy.</caption>
 </tr>
 <tr class="odd">
 <td align="left">rest.crespo</td>
-<td align="left">every bout (naps incl.)</td>
+<td align="left">main rest periods</td>
 <td align="right">4</td>
 <td align="left">Crespo</td>
 </tr>
@@ -397,20 +401,30 @@ not the accuracy.</caption>
 </tr>
 </tbody>
 </table>
-<p><code><a href="../reference/sleep.changepoints.html">sleep.changepoints()</a></code> <span class="citation">(<a href="#ref-chensun2024">Chen &amp; Sun, 2024</a>)</span> returns one
-episode per circadian cycle: the single dominant night-time rest bout.
-<code><a href="../reference/rest.periods.html">rest.periods()</a></code> <span class="citation">(<a href="#ref-loock2021">Loock et al., 2021</a>; <a href="#ref-roenneberg2015">Roenneberg et al., 2015</a>)</span> and
-<code><a href="../reference/rest.crespo.html">rest.crespo()</a></code> <span class="citation">(<a href="#ref-crespo2012">Crespo et al., 2012</a>)</span> instead
-consolidate <strong>every</strong> rest bout, so a daytime nap or a
-fragmented night becomes its own row. They reach that result by two
-independent routes, Roenneberg’s trend-and-correlation consolidation
-versus Crespo’s median-filter-and-morphology pipeline, which is why
-their bout counts differ even though both aim to catch all rest.
-<code><a href="../reference/rest.hmm.html">rest.hmm()</a></code> <span class="citation">(<a href="#ref-huang2018hmm">Huang et al., 2018</a>)</span> is the
-state-space alternative: rather than thresholding each epoch, it fits a
-Gaussian hidden Markov model whose latent rest state <em>persists</em>,
-and reports a 24-hour rest-occupancy profile.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_rest_comparison.html">plot_rest_comparison</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="sleep_files/figure-html/rest-comparison-1.png" class="r-plt" alt="The four detectors as a strip: the activity series on top, then each detector's rest bands on a shared time axis. sleep.changepoints and rest.crespo report the main night, while rest.periods and rest.hmm also catch the daytime nap." width="770"><p class="caption">
+The four detectors as a strip: the activity series on top, then each
+detector’s rest bands on a shared time axis. sleep.changepoints and
+rest.crespo report the main night, while rest.periods and rest.hmm also
+catch the daytime nap.
+</p>
+</div>
+<p><code><a href="../reference/sleep.changepoints.html">sleep.changepoints()</a></code> <span class="citation">(<a href="#ref-chensun2024">Chen &amp; Sun, 2024</a>)</span> returns one
+episode per circadian cycle: the single dominant night-time rest bout,
+and <code><a href="../reference/rest.crespo.html">rest.crespo()</a></code> <span class="citation">(<a href="#ref-crespo2012">Crespo et al., 2012</a>)</span> likewise reports
+the <strong>main</strong> rest and activity periods, its roughly
+eight-hour median window (Eq 4) suppressing short within-period
+transitions. <code><a href="../reference/rest.periods.html">rest.periods()</a></code> <span class="citation">(<a href="#ref-loock2021">Loock et al., 2021</a>; <a href="#ref-roenneberg2015">Roenneberg et al., 2015</a>)</span> instead
+returns <strong>every</strong> consolidated bout, so a daytime nap or a
+fragmented night becomes its own row, by Roenneberg’s
+trend-and-correlation route. <code><a href="../reference/rest.hmm.html">rest.hmm()</a></code> <span class="citation">(<a href="#ref-huang2018hmm">Huang et al.,
+2018</a>)</span> is the state-space alternative: rather than
+thresholding each epoch, it fits a Gaussian hidden Markov model whose
+latent rest state <em>persists</em>, and reports a 24-hour
+rest-probability profile.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">hm</span><span class="op">$</span><span class="va">tod_profile</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">hour</span>, <span class="va">p_rest</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#236192"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">24</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -423,12 +437,12 @@ state-space model infers the rest band, centred on the night, without a
 fixed count threshold.
 </p>
 </div>
-<p>The lesson is the rule: if you report
-<code><a href="../reference/sleep.changepoints.html">sleep.changepoints()</a></code> you are reporting <em>the night</em>;
-if you report <code><a href="../reference/rest.periods.html">rest.periods()</a></code> or <code><a href="../reference/rest.crespo.html">rest.crespo()</a></code>
-you are reporting <em>all rest</em>, naps and all. Choose the one whose
-question matches yours, rather than treating the differing bout counts
-as a contradiction.</p>
+<p>The lesson is the rule: <code><a href="../reference/sleep.changepoints.html">sleep.changepoints()</a></code> and
+<code><a href="../reference/rest.crespo.html">rest.crespo()</a></code> report <em>the main rest period</em>;
+<code><a href="../reference/rest.periods.html">rest.periods()</a></code> reports <em>all rest</em>, naps and all;
+<code><a href="../reference/rest.hmm.html">rest.hmm()</a></code> reports a <em>latent-state probability</em>.
+Choose the one whose question matches yours, rather than treating the
+differing bout counts as a contradiction.</p>
 </div>
 <div class="section level2">
 <h2 id="the-wider-sleep-and-rest-family">The wider sleep-and-rest family<a class="anchor" aria-label="anchor" href="#the-wider-sleep-and-rest-family"></a>
@@ -438,7 +452,7 @@ profile above, <code><a href="../reference/rest.hmm.html">rest.hmm()</a></code> 
 means, the transition matrix, and a decoded <code>state_path</code> with
 its own <code>sleep_state</code> vector, plus AIC/BIC for choosing
 between a two- and three-state model <span class="citation">(<a href="#ref-huang2018hmm">Huang et al., 2018</a>)</span>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hm</span><span class="op">$</span><span class="va">emission</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"state"</span>, <span class="st">"label"</span>, <span class="st">"mean_transformed"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;   state  label mean_transformed</span></span>
 <span><span class="co">#&gt; 1     1   rest    6.326781e-295</span></span>
@@ -446,7 +460,7 @@ between a two- and three-state model <span class="citation">(<a href="#ref-huang
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>time_at_rest <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">hm</span><span class="op">$</span><span class="va">state_path</span> <span class="op">==</span> <span class="fl">1L</span><span class="op">)</span>,</span>
 <span>  rest_persistence <span class="op">=</span> <span class="va">hm</span><span class="op">$</span><span class="va">transition</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span>, AIC <span class="op">=</span> <span class="va">hm</span><span class="op">$</span><span class="va">AIC</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     time_at_rest rest_persistence              AIC </span></span>
-<span><span class="co">#&gt;     7.373727e-01     9.514564e-01    -1.604721e+05</span></span></code></pre></div>
+<span><span class="co">#&gt;     7.373727e-01     9.514564e-01    -1.604701e+05</span></span></code></pre></div>
 <p><strong>The ultradian structure within sleep.</strong> Once you have
 sleep windows, <code><a href="../reference/lids.html">lids()</a></code> describes the sleep-cycle oscillation
 <em>inside</em> them. It needs a <code>sleep_periods</code> data frame
@@ -456,7 +470,7 @@ activity to locomotor inactivity
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mtext mathvariant="normal">activity</mtext><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">100/(\text{activity}+1)</annotation></semantics></math>),
 and fits an ultradian cosine, reporting the best period and its Munich
 Rhythmicity Index <span class="citation">(<a href="#ref-winnebeck2018">Winnebeck et al., 2018</a>)</span>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sleep_periods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  in_bed_time  <span class="op">=</span> <span class="va">cp</span><span class="op">$</span><span class="va">sleep_episodes</span><span class="op">$</span><span class="va">sleep_onset</span>,</span>
 <span>  out_bed_time <span class="op">=</span> <span class="va">cp</span><span class="op">$</span><span class="va">sleep_episodes</span><span class="op">$</span><span class="va">wake_onset</span><span class="op">)</span></span>
@@ -465,10 +479,19 @@ Rhythmicity Index <span class="citation">(<a href="#ref-winnebeck2018">Winnebeck
 <span><span class="co">#&gt; Locomotor Inactivity During Sleep (LIDS)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Sleep periods:    7</span></span>
-<span><span class="co">#&gt;   Mean LIDS period: 167.9 min</span></span>
-<span><span class="co">#&gt;   Mean MRI:         2.844</span></span></code></pre></div>
-<p>The mean LIDS period lands in the ninety-minute-to-three-hour band
-expected of human sleep cycles, recovered from the inactivity signal
+<span><span class="co">#&gt;   Mean LIDS period: 115.7 min</span></span>
+<span><span class="co">#&gt;   Mean MRI:         5.474</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_lids.html">plot_lids</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, <span class="va">sleep_periods</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="sleep_files/figure-html/lids-plot-1.png" class="r-plt" alt="The LIDS ultradian cycle across one sleep period: smoothed inactivity (navy) with the best-fit cosine (orange). The roughly 90-to-130-minute oscillation is the sleep-cycle rhythm read from movement alone." width="770"><p class="caption">
+The LIDS ultradian cycle across one sleep period: smoothed inactivity
+(navy) with the best-fit cosine (orange). The roughly 90-to-130-minute
+oscillation is the sleep-cycle rhythm read from movement alone.
+</p>
+</div>
+<p>The mean LIDS period lands in the roughly 90-to-130-minute band, near
+Winnebeck’s ~110 min median, recovered from the inactivity signal
 alone.</p>
 </div>
 <div class="section level2">

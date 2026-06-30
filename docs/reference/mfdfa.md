@@ -15,7 +15,8 @@ mfdfa(
   scale_min = 8L,
   scale_max = NULL,
   q_values = seq(-5, 5, by = 0.5),
-  both_ends = TRUE
+  both_ends = TRUE,
+  detrend_order = 1L
 )
 ```
 
@@ -44,6 +45,11 @@ mfdfa(
   the profile is not discarded; `FALSE` reproduces the start-only
   convention of
   [`fractal.dfa`](https://rdazadda.github.io/actiRhythm/reference/fractal.dfa.md).
+
+- detrend_order:
+
+  Integer order of the within-window polynomial detrend (default 1,
+  linear MF-DFA1; 2 gives MF-DFA2, matching DFA-2).
 
 ## Value
 

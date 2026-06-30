@@ -101,7 +101,7 @@ population.cosinor <- function(activity, timestamps, subject, group = NULL,
     denom <- A^2 * k
     c22 <- (sdB^2 * B^2 + 2 * covBG * B * G + sdG^2 * G^2) / denom
     c33 <- (sdB^2 * G^2 - 2 * covBG * B * G + sdG^2 * B^2) / denom
-    c23 <- -((-(sdB^2 - sdG^2) * B * G + covBG * (B^2 - G^2)) / denom)  # gamma = -beta2
+    c23 <- (-(sdB^2 - sdG^2) * B * G + covBG * (B^2 - G^2)) / denom
 
     ci_amplitude <- c(max(0, A - tcrit * sqrt(c22)), A + tcrit * sqrt(c22))
 
@@ -109,8 +109,8 @@ population.cosinor <- function(activity, timestamps, subject, group = NULL,
     radicand <- A^2 - ((c22 * c33 - c23^2) * tcrit^2) / c33
     if (is.finite(c33) && c33 > 0 && is.finite(radicand) && radicand >= 0 && den > 0) {
       root   <- tcrit * sqrt(c33) * sqrt(radicand)
-      bounds <- atan2(-G, B) + atan(c(c23 * tcrit^2 + root, c23 * tcrit^2 - root) / den)
-      ci_acrophase <- sort((-bounds / omega) %% period)
+      off    <- atan(c(c23 * tcrit^2 + root, c23 * tcrit^2 - root) / den)
+      ci_acrophase <- acrophase + sort(-off / omega)
       ci_valid <- TRUE
     }
   }
@@ -180,13 +180,13 @@ print.actiRhythm_population_cosinor_list <- function(x, ...) {
 #'
 #' Tests whether the rest-activity rhythm differs between two groups. Fits each
 #' subject's cosinor with the same engine as \code{\link{cosinor.analysis}}. An
-#' overall multivariate test (Hotelling's \eqn{T^2} on the joint MESOR, cosine,
-#' and sine parameters, the Bingham et al. (1982) population-cosinor comparison)
-#' gives one omnibus p-value for whether the rhythms differ at all, accounting
-#' for the correlation between the cosine and sine components. The per-parameter
-#' two-sample (Welch) t-tests then break that result down for the MESOR,
-#' amplitude, and acrophase. The acrophase test is circular-aware, unwrapping the
-#' per-subject acrophases about their common circular mean.
+#' Bingham et al. (1982) comparison is a 2-variate Hotelling's \eqn{T^2} on the
+#' cosine and sine coefficients (testing equal amplitude and acrophase, accounting
+#' for their correlation), with the MESOR compared by a separate pooled-variance
+#' F-test. Auxiliary per-parameter two-sample (Welch) t-tests break the result
+#' down for the MESOR, amplitude, and acrophase; the acrophase test is
+#' circular-aware, unwrapping the per-subject acrophases about their common
+#' circular mean.
 #'
 #' @param activity Numeric activity vector with all subjects stacked.
 #' @param timestamps POSIXct timestamps, one per value.
@@ -197,10 +197,10 @@ print.actiRhythm_population_cosinor_list <- function(x, ...) {
 #' @param min_valid_hours Minimum profile hours for a subject to be included.
 #'
 #' @return An object of class \code{actiRhythm_cosinor_compare}: a \code{joint}
-#'   list (the omnibus Hotelling \eqn{T^2}, its F statistic, degrees of freedom
-#'   and p-value), a \code{tests} data frame (one row per parameter, with each
-#'   group's estimate, their difference, the t statistic, degrees of freedom,
-#'   p-value and CI), and the per-subject coefficients.
+#'   list (the amplitude/acrophase Hotelling \eqn{T^2} with its F, degrees of
+#'   freedom and p-value, plus a separate MESOR F-test), a \code{tests} data frame
+#'   of auxiliary per-parameter Welch comparisons (each group's estimate, the
+#'   difference, the t statistic, p-value and CI), and the per-subject coefficients.
 #'
 #' @references
 #' \insertRef{bingham1982}{actiRhythm}
@@ -252,23 +252,30 @@ cosinor.compare <- function(activity, timestamps, subject, group, period = 24,
 }
 
 
-# Bingham (1982) omnibus comparison: Hotelling's T^2 on the joint (MESOR, cosine,
-# sine) parameter vectors of two groups with pooled within-group covariance.
+# Bingham (1982) two-group comparison: a 2-variate Hotelling T^2 on the (cosine,
+# sine) coefficients tests equal amplitude and acrophase (Eq 72-73); the MESOR is
+# compared by a separate pooled-variance F (Eq 68).
 .bingham.joint.test <- function(g1, g2) {
-  X1 <- as.matrix(g1[, c("mesor", "beta1", "beta2")])
-  X2 <- as.matrix(g2[, c("mesor", "beta1", "beta2")])
+  X1 <- as.matrix(g1[, c("beta1", "beta2")])
+  X2 <- as.matrix(g2[, c("beta1", "beta2")])
   k1 <- nrow(X1); k2 <- nrow(X2); K <- k1 + k2
-  na <- list(valid = FALSE, T2 = NA_real_, statistic = NA_real_,
-             df1 = 3L, df2 = K - 4L, p_value = NA_real_)
-  if (K - 4L < 1L) return(na)
+  m1 <- g1$mesor; m2 <- g2$mesor
+  sp2 <- ((k1 - 1) * stats::var(m1) + (k2 - 1) * stats::var(m2)) / (K - 2)
+  mesor_F <- if (K > 2L && is.finite(sp2) && sp2 > 0)
+    (mean(m1) - mean(m2))^2 / (sp2 * (1 / k1 + 1 / k2)) else NA_real_
+  mesor_p <- if (is.finite(mesor_F)) stats::pf(mesor_F, 1L, K - 2L, lower.tail = FALSE) else NA_real_
+  out <- list(valid = FALSE, T2 = NA_real_, statistic = NA_real_, df1 = 2L, df2 = K - 3L,
+              p_value = NA_real_, mesor_F = mesor_F, mesor_df2 = K - 2L, mesor_p = mesor_p)
+  if (K - 3L < 1L) return(out)
   Sp <- ((k1 - 1) * stats::cov(X1) + (k2 - 1) * stats::cov(X2)) / (K - 2)
-  d <- colMeans(X1) - colMeans(X2)
+  d  <- colMeans(X1) - colMeans(X2)
   tryCatch({
     T2 <- (k1 * k2 / K) * as.numeric(t(d) %*% solve(Sp) %*% d)
-    Fstat <- T2 * (K - 4) / (3 * (K - 2))
-    list(valid = TRUE, T2 = T2, statistic = Fstat, df1 = 3L, df2 = K - 4L,
-         p_value = stats::pf(Fstat, 3, K - 4L, lower.tail = FALSE))
-  }, error = function(e) na)
+    Fstat <- T2 * (K - 3) / (2 * (K - 2))
+    out$valid <- TRUE; out$T2 <- T2; out$statistic <- Fstat
+    out$p_value <- stats::pf(Fstat, 2L, K - 3L, lower.tail = FALSE)
+    out
+  }, error = function(e) out)
 }
 
 
@@ -297,9 +304,13 @@ print.actiRhythm_cosinor_compare <- function(x, ...) {
   cat(sprintf("  Groups:  %s (n=%d)  vs  %s (n=%d)\n", x$groups[1], x$n1, x$groups[2], x$n2))
   cat(sprintf("  Period:  %g h\n\n", x$period))
   if (isTRUE(x$joint$valid)) {
-    cat(sprintf("  Joint (Bingham/Hotelling T2):  F(%d,%d) = %.2f   p = %s\n\n",
+    cat(sprintf("  Amplitude/acrophase (Bingham T2):  F(%d,%d) = %.2f   p = %s\n",
                 x$joint$df1, x$joint$df2, x$joint$statistic,
                 format.pval(x$joint$p_value, digits = 3)))
+    if (is.finite(x$joint$mesor_F))
+      cat(sprintf("  MESOR (Bingham F):                 F(1,%d) = %.2f   p = %s\n",
+                  x$joint$mesor_df2, x$joint$mesor_F, format.pval(x$joint$mesor_p, digits = 3)))
+    cat("\n")
   }
   t <- x$tests
   for (i in seq_len(nrow(t))) {

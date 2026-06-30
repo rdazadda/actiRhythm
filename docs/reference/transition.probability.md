@@ -1,37 +1,35 @@
-# Rest-Active Transition Probabilities (ASTP / SATP)
+# Rest-Active Transition Probabilities
 
-Closed-form maximum-likelihood and Bayesian estimates of the
-rest-to-active and active-to-rest transition probabilities, the
-reciprocal-mean-bout-length fragmentation estimators (Danilevicz et al.
-2024). Each is a transition count over the time at risk. Unlike the
-survival-curve rates in
-[`state.transitions`](https://rdazadda.github.io/actiRhythm/reference/state.transitions.md),
-these come straight from the bout counts.
+Maximum-likelihood and Bayesian estimates of the rest-to-active and
+active-to-rest transition probabilities (Danilevicz et al. 2024): the
+transitions out of a state divided by its epochs at risk.
 
 ## Usage
 
 ``` r
-transition.probability(counts, threshold = 1, lambda = 1)
+transition.probability(counts, threshold = 1, eps = 0.5)
 ```
 
 ## Arguments
 
 - counts:
 
-  Numeric activity vector.
+  Numeric activity vector; `NA` are dropped.
 
 - threshold:
 
   Counts at or above which an epoch is active (default 1).
 
-- lambda:
+- eps:
 
-  Bayesian prior pseudo-count (default 1).
+  Bayesian Beta pseudo-count added to the transition count and the
+  epochs at risk (default 0.5).
 
 ## Value
 
-A list with the MLE and Bayesian `tp_ra` (rest to active) and `tp_ar`
-(active to rest), the active bout count and the mean active bout length.
+A list with the maximum-likelihood and Bayesian `tp_ra` (rest to active)
+and `tp_ar` (active to rest), the active bout count, and the mean active
+bout length.
 
 ## References
 
@@ -56,13 +54,13 @@ transition.probability(counts)
 #> [1] 0.04
 #> 
 #> $tp_ra_mle
-#> [1] 0.01333333
+#> [1] 0.01342282
 #> 
 #> $tp_ar_bayes
-#> [1] 0.05882353
+#> [1] 0.04950495
 #> 
 #> $tp_ra_bayes
-#> [1] 0.01986755
+#> [1] 0.01672241
 #> 
 #> $n_active_bouts
 #> [1] 2

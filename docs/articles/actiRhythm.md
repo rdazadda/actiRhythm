@@ -199,7 +199,7 @@ and returns the dominant period `tau`, with a false-alarm probability in
 per <- circadian.period(agd$axis1, agd$timestamp)
 c(tau = per$tau, p_value = per$p_value)
 #>          tau      p_value 
-#> 2.543077e+01 9.388299e-97
+#> 2.448889e+01 4.916458e-98
 ```
 
 The strongest cycle here sits near 25.4 hours, meaningfully longer than
@@ -220,9 +220,9 @@ more.
 period.ci(agd$axis1, agd$timestamp, n_boot = 50, seed = 1)
 #> Circadian Period with Bootstrap Confidence Interval
 #> 
-#>   tau:      24.980 h
-#>   95% CI:   [23.484, 26.342] h
-#>   SE:       1.220 h
+#>   tau:      24.895 h
+#>   95% CI:   [23.373, 26.193] h
+#>   SE:       1.195 h
 #>   Method:   circular block residual bootstrap (50/50 valid reps)
 ```
 
@@ -370,7 +370,7 @@ places the precise transition ([Chen & Sun, 2024](#ref-chensun2024)).
 
 cp <- sleep.changepoints(agd$axis1, agd$timestamp)
 cp
-#> Change-Point Sleep/Wake Detection (CircaCP)
+#> Change-Point Sleep/Wake Detection
 #> 
 #>   Span:           6.9 days (9919 epochs)
 #>   Cosinor acrophase: 20.5 h
@@ -483,7 +483,7 @@ state <- sleep.cole.kripke(agd$axis1)
 table(state)
 #> state
 #>    S    W 
-#> 7646 2273
+#> 7641 2278
 ```
 
 Count-based scoring labels every low-activity epoch as sleep, so a
@@ -496,7 +496,7 @@ share the same state ([Phillips et al., 2017](#ref-phillips2017)).
 ``` r
 
 sleep.regularity.index(state, agd$timestamp)
-#> [1] 58.46
+#> [1] 58.27
 ```
 
 When you also have explicit sleep periods,
@@ -511,10 +511,9 @@ locomotor inactivity during sleep that tracks ultradian sleep structure
 
 Each test above answers “is there a rhythm?” in its own language.
 [`consensus.rhythmicity()`](https://rdazadda.github.io/actiRhythm/reference/consensus.rhythmicity.md)
-runs four of them, the cosinor F-test, the Bingham ellipse, the
-Lomb-Scargle false-alarm probability, and the chi-square periodogram,
-and reports both a majority vote and a Fisher-combined p-value ([Fisher,
-1925](#ref-fisher1925)).
+runs three of them, the cosinor F-test, the Lomb-Scargle false-alarm
+probability, and the chi-square periodogram, and reports both a majority
+vote and a Cauchy-combined p-value ([Liu & Xie, 2020](#ref-liu2020)).
 
 ``` r
 
@@ -522,21 +521,20 @@ consensus.rhythmicity(agd$axis1, agd$timestamp)
 #> Consensus Rhythmicity (multi-method)
 #> 
 #>   cosinor F-test         p=0.0024  rhythmic
-#>   Bingham ellipse                  rhythmic
 #>   Lomb-Scargle FAP       p=<2e-16  rhythmic
 #>   chi-square periodogram p=1       no
 #> 
-#>   Votes:        3 / 4 methods
-#>   Fisher p:     <2e-16
+#>   Votes:        2 / 3 methods
+#>   Combined p:   <2e-16
 #>   Consensus:    RHYTHMIC (alpha = 0.05)
 ```
 
-For this recording three of the four tests agree that a rhythm is
-present and the Fisher-combined p-value is effectively zero, so the
-evidence leans firmly toward a real rhythm even where one method on its
-own might hesitate. Read that combined p-value as indicative rather than
-exact, though: the four tests run on the same series, so they are not
-independent, which is the assumption Fisher’s method rests on.
+For this recording the tests agree that a rhythm is present and the
+combined p-value is effectively zero, so the evidence leans firmly
+toward a real rhythm even where one method on its own might hesitate.
+The three tests run on the same series, so they are not independent; the
+Cauchy combination stays valid under that dependence, where Fisher’s
+method would not.
 
 ## A one-row summary
 
@@ -555,7 +553,7 @@ data.frame(
   dfa_alpha = fractal.dfa(agd$axis1)$alpha
 )
 #>              IS     IV   RA      tau amplitude acrophase dfa_alpha
-#> cos_term 0.2279 1.0008 0.98 25.43077    295.63     16.92 0.9263546
+#> cos_term 0.2279 1.0008 0.98 24.48889    295.63     16.92 0.9263546
 ```
 
 Read across, this row is one person: a strongly amplitude-modulated
@@ -582,7 +580,7 @@ batch <- circadian.batch(
 )
 batch[, c("file", "IS", "IV", "RA", "period_tau", "rhythm_p_value")]
 #>                      file     IS     IV     RA period_tau rhythm_p_value
-#> 1 MOS2E39230594_60sec.agd 0.2279 1.0008 0.9800   25.43077    0.002396228
+#> 1 MOS2E39230594_60sec.agd 0.2279 1.0008 0.9800   24.48889    0.002396228
 #> 2  MOS2E3923063660sec.agd 0.4230 1.2687 0.7706   24.09425    0.050151893
 ```
 
@@ -671,9 +669,6 @@ identification of activity-rest periods based on actigraphy. *Medical &
 Biological Engineering & Computing*, *50*(4), 329–340.
 <https://doi.org/10.1007/s11517-012-0875-y>
 
-Fisher, R. A. (1925). *Statistical methods for research workers*.
-Oliver; Boyd.
-
 Hu, K., Ivanov, P. C., Chen, Z., Carpena, P., & Stanley, H. E. (2001).
 Effect of trends on detrended fluctuation analysis. *Physical Review E*,
 *64*(1), 011114. <https://doi.org/10.1103/PhysRevE.64.011114>
@@ -693,6 +688,11 @@ Bennett, D. A., & Saper, C. B. (2011). Quantification of the
 fragmentation of rest-activity patterns in elderly individuals using a
 state transition analysis. *Sleep*, *34*(11), 1569–1581.
 <https://doi.org/10.5665/sleep.1400>
+
+Liu, Y., & Xie, J. (2020). Cauchy combination test: A powerful test with
+analytic p-value calculation under arbitrary dependency structures.
+*Journal of the American Statistical Association*, *115*(529), 393–402.
+<https://doi.org/10.1080/01621459.2018.1554485>
 
 Lomb, N. R. (1976). Least-squares frequency analysis of unequally spaced
 data. *Astrophysics and Space Science*, *39*(2), 447–462.

@@ -136,7 +136,7 @@ empty vectors; the function never throws.</p>
     <p>For each trial period \(P\) (an integer number of epochs) the series is
 folded into \(P\) phase bins over \(K = \lfloor N/P \rfloor\) complete
 cycles and the statistic
-$$Q_P = \frac{N \sum_{h=1}^{P}(\bar{A}_h - \bar{A})^2}{\sum_{i=1}^{N}(A_i - \bar{A})^2}$$
+$$Q_P = \frac{K\,N \sum_{h=1}^{P}(\bar{A}_h - \bar{A})^2}{\sum_{i=1}^{N}(A_i - \bar{A})^2}$$
 is computed, where \(\bar{A}_h\) is the mean at phase \(h\) and
 \(\bar{A}\) the grand mean over the \(N = KP\) retained points. Under the
 null hypothesis of no rhythm at \(P\), \(Q_P\) follows a chi-square

@@ -14,10 +14,10 @@
 #' @param fs Sample rate in Hz.
 #' @param sphere_crit Minimum coverage (g) each axis must span on both sides of
 #'   zero for a stable fit (default 0.3).
-#' @param sd_crit Per-axis rolling SD (g) below which a 10-second window counts as
-#'   non-movement (default 0.013).
+#' @param sd_crit Per-axis SD (g) over consecutive (non-overlapping) 10-second
+#'   windows below which a window counts as non-movement (default 0.013).
 #' @param max_iter Maximum refinement iterations (default 1000).
-#' @param tol Convergence tolerance on the calibration error (default 1e-9).
+#' @param tol Convergence tolerance on the calibration error (default 1e-10).
 #'
 #' @return A list with \code{scale} and \code{offset} (length-3), the calibration
 #'   error before and after (\code{cal_error_start}, \code{cal_error_end}, mean
@@ -39,7 +39,7 @@
 #'
 #' @export
 auto.calibrate <- function(xyz, fs, sphere_crit = 0.3, sd_crit = 0.013,
-                           max_iter = 1000, tol = 1e-9) {
+                           max_iter = 1000, tol = 1e-10) {
   X <- as.matrix(xyz[, 1:3]); n <- nrow(X)
   ident <- function(reason) list(scale = c(1, 1, 1), offset = c(0, 0, 0),
     cal_error_start = NA_real_, cal_error_end = NA_real_, npoints = 0L,
@@ -77,9 +77,12 @@ auto.calibrate <- function(xyz, fs, sphere_crit = 0.3, sd_crit = 0.013,
     cur <- sweep(sweep(D, 2, offset, "-"), 2, scale, "*")
   }
   cal_end <- mean(abs(sqrt(rowSums(cur^2)) - 1))
+  if (!is.finite(cal_end) || cal_end > cal_start) {   # calibration did not improve the fit
+    scale <- c(1, 1, 1); offset <- c(0, 0, 0); cal_end <- cal_start
+  }
   list(scale = scale, offset = offset, cal_error_start = cal_start,
        cal_error_end = cal_end, npoints = nrow(D),
-       calibrated = is.finite(cal_end) && cal_end < 0.02, reason = "ok")
+       calibrated = is.finite(cal_end) && cal_end < 0.01, reason = "ok")
 }
 
 # Aggregate native-rate calibrated g (matrix x/y/z) to per-epoch raw metrics.
@@ -135,6 +138,8 @@ auto.calibrate <- function(xyz, fs, sphere_crit = 0.3, sd_crit = 0.013,
 #' \insertRef{vanhees2013}{actiRhythm}
 #'
 #' \insertRef{vahaypya2015}{actiRhythm}
+#'
+#' \insertRef{vanhees2015}{actiRhythm}
 #'
 #' @seealso \code{\link{auto.calibrate}}, \code{\link{circadian.raw}},
 #'   \code{\link{rest.spt}}, \code{\link{example_raw}}

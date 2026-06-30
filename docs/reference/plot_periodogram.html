@@ -107,8 +107,8 @@ timestamps before estimation.</p></dd>
 
 
 <dt id="arg-ofac">ofac<a class="anchor" aria-label="anchor" href="#arg-ofac"></a></dt>
-<dd><p>Integer oversampling factor passed to <code><a href="https://rdrr.io/pkg/lomb/man/lsp.html" class="external-link">lomb::lsp</a></code>. Higher
-values give a finer period grid (default <code>4</code>).</p></dd>
+<dd><p>Integer oversampling factor for the period grid. Higher values give
+a finer grid (default <code>4</code>).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -121,15 +121,14 @@ annotation is returned instead; the function never errors.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The full spectrum is obtained from
-<code>lomb::lsp(x, times, from, to, type = "period", ofac, plot = FALSE)</code>,
-whose <code>$scanned</code> component holds the trial periods (hours) and
-<code>$power</code> the corresponding normalized Lomb-Scargle power. The peak period
-<code>tau</code> and its <code>p_value</code> come from <code><a href="circadian.period.html">circadian.period</a></code> so
-that the highlighted peak is exactly the value reported by the analytic
-function. The Lomb-Scargle periodogram is the least-squares spectral estimator
-for unevenly sampled series and is therefore appropriate for gappy actigraphy
-data, which an FFT cannot accommodate.</p>
+    <p>The full standard-normalized Lomb-Scargle spectrum over the period window is
+computed by the package's own estimator (the same one behind
+<code><a href="circadian.period.html">circadian.period</a></code>); the peak period <code>tau</code>, its Baluev
+<code>p_value</code>, and the 0.05 false-alarm threshold line all come from that
+function, so the highlighted peak and threshold match the reported values. The
+Lomb-Scargle periodogram is the least-squares spectral estimator for unevenly
+sampled series and is therefore appropriate for gappy actigraphy data, which an
+FFT cannot accommodate.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

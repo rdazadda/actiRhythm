@@ -1,16 +1,15 @@
 # Consensus Rhythmicity Across Methods
 
-Combines the rhythmicity verdicts of several independent tests into one
-call: the cosinor zero-amplitude F-test
+Combines the rhythmicity verdicts of three tests into one call: the
+cosinor zero-amplitude F-test
 ([`rhythmicity.test`](https://rdazadda.github.io/actiRhythm/reference/rhythmicity.test.md)),
-the Bingham confidence ellipse
-([`cosinor.confidence.ellipse`](https://rdazadda.github.io/actiRhythm/reference/cosinor.confidence.ellipse.md)),
 the Lomb-Scargle Baluev false-alarm probability
 ([`circadian.period`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md)),
 and the chi-square (Sokolove-Bushell) periodogram
 ([`chi.sq.periodogram`](https://rdazadda.github.io/actiRhythm/reference/chi.sq.periodogram.md)).
-The available p-values are pooled by Fisher's method, and a majority
-vote across all methods is also reported.
+The three share one series, so their p-values are pooled by the Cauchy
+combination, which is valid under arbitrary dependence, and a majority
+vote is also reported.
 
 ## Usage
 
@@ -48,14 +47,18 @@ consensus.rhythmicity(
 
 ## Value
 
-An object of class `actiRhythm_consensus`: the Fisher-combined p-value
-and consensus call, the vote count, a per-method `tests` data frame, and
-the agreement fraction.
+An object of class `actiRhythm_consensus`: the combined p-value and
+consensus call, the vote count, a per-method `tests` data frame, and the
+agreement fraction.
 
 ## References
 
-Fisher RA (1925). *Statistical Methods for Research Workers*. Oliver and
-Boyd, Edinburgh.
+Liu Y, Xie J (2020). “Cauchy combination test: a powerful test with
+analytic p-value calculation under arbitrary dependency structures.”
+*Journal of the American Statistical Association*, **115**(529),
+393–402.
+[doi:10.1080/01621459.2018.1554485](https://doi.org/10.1080/01621459.2018.1554485)
+.
 
 ## Examples
 
@@ -67,11 +70,10 @@ consensus.rhythmicity(counts, ts)
 #> Consensus Rhythmicity (multi-method)
 #> 
 #>   cosinor F-test         p=<2e-16  rhythmic
-#>   Bingham ellipse                  no
 #>   Lomb-Scargle FAP       p=<2e-16  rhythmic
 #>   chi-square periodogram p=<2e-16  rhythmic
 #> 
-#>   Votes:        3 / 4 methods
-#>   Fisher p:     <2e-16
+#>   Votes:        3 / 3 methods
+#>   Combined p:   <2e-16
 #>   Consensus:    RHYTHMIC (alpha = 0.05)
 ```

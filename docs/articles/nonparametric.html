@@ -114,17 +114,21 @@ much as a real change in the rhythm.</p>
 <div class="section level2">
 <h2 id="the-math">The math<a class="anchor" aria-label="anchor" href="#the-math"></a>
 </h2>
-<p>Write the recording as activity values
+<p>Bin the recording to hourly means: let
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1, \dots, x_n</annotation></semantics></math>
-at a fixed epoch, with overall mean
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>x</mi><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar x</annotation></semantics></math>.
-Bin them to hourly means and let
+be the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+hourly values with overall mean
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>x</mi><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar x</annotation></semantics></math>,
+and let
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>h</mi></msub><annotation encoding="application/x-tex">\bar x_h</annotation></semantics></math>
 be the mean across all days at hour-of-day
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math>,
 over
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>24</mn></mrow><annotation encoding="application/x-tex">p = 24</annotation></semantics></math>
-hours.</p>
+hours. The IS and IV formulas below are computed on this hourly series;
+the raw-epoch series is used separately for the multiscale and fractal
+measures.</p>
 <p><strong>Interdaily stability (IS)</strong>, how tightly the pattern
 repeats from one day to the next <span class="citation">(<a href="#ref-witting1990">Witting et al., 1990</a>)</span>:
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">I</mi><mi mathvariant="normal">S</mi></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><munderover><mo>∑</mo><mrow><mi>h</mi><mo>=</mo><mn>1</mn></mrow><mi>p</mi></munderover><mo stretchy="false" form="prefix">(</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>h</mi></msub><mo>−</mo><mover><mi>x</mi><mo accent="true">‾</mo></mover><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow><mrow><mi>p</mi><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mover><mi>x</mi><mo accent="true">‾</mo></mover><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
@@ -148,6 +152,12 @@ window L5 of the average day <span class="citation">(<a href="#ref-vansomeren199
 extremes L1 and M1, the autocorrelation predictability
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ϕ</mi><annotation encoding="application/x-tex">\phi</annotation></semantics></math>,
 and the onset times of each window.</p>
+<p>The L5 and M10 windows are placed on a minute-resolution average day
+and reported in counts per minute, the sliding-window convention also
+used by nparACT and GGIR. These values track but are not identical to
+the original hourly counts-per-hour of <span class="citation">Witting et
+al. (<a href="#ref-witting1990">1990</a>)</span>, and they depend on
+epoch length.</p>
 </div>
 <div class="section level2">
 <h2 id="assumptions-and-when-they-break">Assumptions, and when they break<a class="anchor" aria-label="anchor" href="#assumptions-and-when-they-break"></a>
@@ -282,6 +292,17 @@ stack into one vertical band; they drift, which is the low interdaily
 stability the metrics report.
 </p>
 </div>
+<p>The average day makes the L5 and M10 windows concrete: the
+least-active 5-hour block and the most-active 10-hour block of the
+folded profile.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_profile.html">plot_profile</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="nonparametric_files/figure-html/profile-1.png" class="r-plt" alt="The averaged 24-hour profile (mean with a one-SD band), shading the least-active 5-hour window L5 and the most-active 10-hour window M10." width="770"><p class="caption">
+The averaged 24-hour profile (mean with a one-SD band), shading the
+least-active 5-hour window L5 and the most-active 10-hour window M10.
+</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="reading-the-numbers">Reading the numbers<a class="anchor" aria-label="anchor" href="#reading-the-numbers"></a>
@@ -294,7 +315,9 @@ pattern, below about 0.3 is weak. Here it is low: the days do not land
 at the same clock time.</li>
 <li>
 <strong>IV</strong> runs from about 0 (a smooth sine) to about 2
-(noisy or split into ultradian bouts).</li>
+(noise); above 2 flags a strong ultradian component or a too-short
+record. The denominator is the data’s own variance, so IV is
+amplitude-independent.</li>
 <li>
 <strong>RA</strong> runs 0 to 1; higher is a stronger day-night
 contrast.</li>
@@ -314,7 +337,7 @@ descriptors.</p>
 <code><a href="../reference/activity.extrema.html">activity.extrema()</a></code> reports the least- and most-active
 window of any length, with onset and midpoint times. L1/M1 and L5/M10
 are special cases.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/activity.extrema.html">activity.extrema</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, windows <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">table</span></span>
 <span><span class="co">#&gt;   window_h    L_mean L_onset_h  L_mid_h    M_mean M_onset_h  M_mid_h</span></span>
 <span><span class="co">#&gt; 1        1  3.102381  2.583333 3.083333 1175.5115  17.71667 18.21667</span></span>
@@ -324,44 +347,146 @@ are special cases.</p>
 IS depend on the bin size,
 <code><a href="../reference/intradaily.variability.multiscale.html">intradaily.variability.multiscale()</a></code> and
 <code><a href="../reference/circadian.is.multiscale.html">circadian.is.multiscale()</a></code> recompute them across a range of
-epochs, so you can see (and report) how the value moves with resolution
-rather than pinning it to one choice <span class="citation">(<a href="#ref-goncalves2014">Goncalves et al., 2014</a>)</span>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+epochs and average them into a single IVm and ISm, which vary less
+across recordings than the hourly values <span class="citation">(<a href="#ref-goncalves2014">Goncalves et al., 2014</a>)</span>. IVm spans
+1 to 60-minute bins; ISm uses the bin sizes that divide 1440, so each
+day splits into whole bins.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/intradaily.variability.multiscale.html">intradaily.variability.multiscale</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Multiscale Intradaily Variability</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   IVm (averaged): 0.641</span></span>
+<span><span class="co">#&gt;   IVm (averaged): 0.720</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  bin_minutes        IV</span></span>
+<span><span class="co">#&gt;            1 0.5257131</span></span>
+<span><span class="co">#&gt;            2 0.5902015</span></span>
+<span><span class="co">#&gt;            3 0.5528503</span></span>
+<span><span class="co">#&gt;            4 0.5647288</span></span>
 <span><span class="co">#&gt;            5 0.5345644</span></span>
+<span><span class="co">#&gt;            6 0.5660806</span></span>
+<span><span class="co">#&gt;            7 0.5380461</span></span>
+<span><span class="co">#&gt;            8 0.5610850</span></span>
+<span><span class="co">#&gt;            9 0.5226812</span></span>
 <span><span class="co">#&gt;           10 0.5428775</span></span>
+<span><span class="co">#&gt;           11 0.5247779</span></span>
+<span><span class="co">#&gt;           12 0.5524045</span></span>
+<span><span class="co">#&gt;           13 0.5231579</span></span>
+<span><span class="co">#&gt;           14 0.5636896</span></span>
 <span><span class="co">#&gt;           15 0.5696848</span></span>
+<span><span class="co">#&gt;           16 0.5684746</span></span>
+<span><span class="co">#&gt;           17 0.6280328</span></span>
+<span><span class="co">#&gt;           18 0.6365006</span></span>
+<span><span class="co">#&gt;           19 0.6304398</span></span>
+<span><span class="co">#&gt;           20 0.5888029</span></span>
+<span><span class="co">#&gt;           21 0.6276416</span></span>
+<span><span class="co">#&gt;           22 0.5351020</span></span>
+<span><span class="co">#&gt;           23 0.6802919</span></span>
+<span><span class="co">#&gt;           24 0.6735950</span></span>
+<span><span class="co">#&gt;           25 0.6769604</span></span>
+<span><span class="co">#&gt;           26 0.6602019</span></span>
+<span><span class="co">#&gt;           27 0.6861135</span></span>
+<span><span class="co">#&gt;           28 0.7380594</span></span>
+<span><span class="co">#&gt;           29 0.7154604</span></span>
 <span><span class="co">#&gt;           30 0.7239887</span></span>
+<span><span class="co">#&gt;           31 0.6824506</span></span>
+<span><span class="co">#&gt;           32 0.7538473</span></span>
+<span><span class="co">#&gt;           33 0.7607380</span></span>
+<span><span class="co">#&gt;           34 0.8421781</span></span>
+<span><span class="co">#&gt;           35 0.7227020</span></span>
+<span><span class="co">#&gt;           36 0.8762168</span></span>
+<span><span class="co">#&gt;           37 0.7459598</span></span>
+<span><span class="co">#&gt;           38 0.8316599</span></span>
+<span><span class="co">#&gt;           39 0.7634351</span></span>
+<span><span class="co">#&gt;           40 0.7789069</span></span>
+<span><span class="co">#&gt;           41 0.8080620</span></span>
+<span><span class="co">#&gt;           42 0.8301316</span></span>
+<span><span class="co">#&gt;           43 0.9618038</span></span>
+<span><span class="co">#&gt;           44 0.8420577</span></span>
+<span><span class="co">#&gt;           45 0.8999159</span></span>
+<span><span class="co">#&gt;           46 0.8747595</span></span>
+<span><span class="co">#&gt;           47 0.8542270</span></span>
+<span><span class="co">#&gt;           48 0.8076128</span></span>
+<span><span class="co">#&gt;           49 0.9777576</span></span>
+<span><span class="co">#&gt;           50 0.8028558</span></span>
+<span><span class="co">#&gt;           51 0.8759503</span></span>
+<span><span class="co">#&gt;           52 0.7880669</span></span>
+<span><span class="co">#&gt;           53 0.8529320</span></span>
+<span><span class="co">#&gt;           54 0.9957456</span></span>
+<span><span class="co">#&gt;           55 0.8135647</span></span>
+<span><span class="co">#&gt;           56 0.9072522</span></span>
+<span><span class="co">#&gt;           57 0.9750063</span></span>
+<span><span class="co">#&gt;           58 0.8813777</span></span>
+<span><span class="co">#&gt;           59 0.8670441</span></span>
 <span><span class="co">#&gt;           60 0.8360881</span></span>
 <span><span class="fu"><a href="../reference/circadian.is.multiscale.html">circadian.is.multiscale</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   bin_minutes     IS</span></span>
-<span><span class="co">#&gt; 1          60 0.2279</span></span>
-<span><span class="co">#&gt; 2          30 0.2238</span></span>
-<span><span class="co">#&gt; 3          15 0.2102</span></span></code></pre></div>
-<p><strong>How cleanly rest separates from activity.</strong>
-<code><a href="../reference/dichotomy.index.html">dichotomy.index()</a></code> compares activity during a defined rest
-span against the active day <span class="citation">(<a href="#ref-mormont2000">Mormont et al., 2000</a>)</span>; here we mark
-the night hours as rest.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<span><span class="co">#&gt; Multiscale Interdaily Stability</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   ISm (averaged): 0.210</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  bin_minutes     IS</span></span>
+<span><span class="co">#&gt;            1 0.1827</span></span>
+<span><span class="co">#&gt;            2 0.1874</span></span>
+<span><span class="co">#&gt;            3 0.1912</span></span>
+<span><span class="co">#&gt;            4 0.1946</span></span>
+<span><span class="co">#&gt;            5 0.1950</span></span>
+<span><span class="co">#&gt;            6 0.1984</span></span>
+<span><span class="co">#&gt;            8 0.2024</span></span>
+<span><span class="co">#&gt;            9 0.2044</span></span>
+<span><span class="co">#&gt;           10 0.2042</span></span>
+<span><span class="co">#&gt;           12 0.2079</span></span>
+<span><span class="co">#&gt;           15 0.2102</span></span>
+<span><span class="co">#&gt;           16 0.2163</span></span>
+<span><span class="co">#&gt;           18 0.2101</span></span>
+<span><span class="co">#&gt;           20 0.2157</span></span>
+<span><span class="co">#&gt;           24 0.2188</span></span>
+<span><span class="co">#&gt;           30 0.2238</span></span>
+<span><span class="co">#&gt;           32 0.2247</span></span>
+<span><span class="co">#&gt;           36 0.2193</span></span>
+<span><span class="co">#&gt;           40 0.2250</span></span>
+<span><span class="co">#&gt;           45 0.2365</span></span>
+<span><span class="co">#&gt;           48 0.2296</span></span>
+<span><span class="co">#&gt;           60 0.2279</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_multiscale.html">plot_multiscale</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="nonparametric_files/figure-html/multiscale-plot-1.png" class="r-plt" alt="IS and IV across epoch lengths, with the averaged ISm and IVm (dashed). Both vary less across recordings than a single hourly value." width="770"><p class="caption">
+IS and IV across epoch lengths, with the averaged ISm and IVm (dashed).
+Both vary less across recordings than a single hourly value.
+</p>
+</div>
+<p><strong>How cleanly rest separates from activity.</strong> The
+dichotomy index I&lt;O is the percentage of rest-span counts that fall
+below the median of the active-span counts <span class="citation">(<a href="#ref-mormont2000">Mormont et al., 2000</a>)</span>:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>&lt;</mo><mi>O</mi><mo>=</mo><mn>100</mn><mo>×</mo><mfrac><mrow><mi>#</mi><mo stretchy="false" form="prefix">{</mo><mspace width="0.167em"></mspace><msub><mi>x</mi><mi>i</mi></msub><mo>&lt;</mo><msub><mover><mi>x</mi><mo accent="true">̃</mo></mover><mtext mathvariant="normal">active</mtext></msub><mo>:</mo><mi>i</mi><mo>∈</mo><mtext mathvariant="normal">rest</mtext><mspace width="0.167em"></mspace><mo stretchy="false" form="postfix">}</mo></mrow><msub><mi>N</mi><mtext mathvariant="normal">rest</mtext></msub></mfrac><mo>,</mo></mrow><annotation encoding="application/x-tex">
+I{&lt;}O = 100 \times \frac{\#\{\, x_i &lt; \tilde{x}_{\text{active}} : i \in \text{rest} \,\}}{N_{\text{rest}}},
+</annotation></semantics></math> where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>x</mi><mo accent="true">̃</mo></mover><mtext mathvariant="normal">active</mtext></msub><annotation encoding="application/x-tex">\tilde{x}_{\text{active}}</annotation></semantics></math>
+is the median active-span count. A high I&lt;O means rest is quiet
+relative to the active day. Here we mark the night hours as rest.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, <span class="st">"%H"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/dichotomy.index.html">dichotomy.index</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, rest <span class="op">=</span> <span class="va">h</span> <span class="op">&gt;=</span> <span class="fl">23</span> <span class="op">|</span> <span class="va">h</span> <span class="op">&lt;</span> <span class="fl">7</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/dichotomy.index.html">dichotomy.index</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, rest <span class="op">=</span> <span class="va">h</span> <span class="op">&gt;=</span> <span class="fl">23</span> <span class="op">|</span> <span class="va">h</span> <span class="op">&lt;</span> <span class="fl">7</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Dichotomy Index (I&lt;O)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   I&lt;O:             0.0%</span></span>
 <span><span class="co">#&gt;   Active median:   0.0 counts</span></span>
 <span><span class="co">#&gt;   Rest / active epochs: 3360 / 6559</span></span></code></pre></div>
-<p><strong>Fragmentation.</strong> <code><a href="../reference/state.transitions.html">state.transitions()</a></code> and
-<code><a href="../reference/transition.probability.html">transition.probability()</a></code> summarise how readily the subject
-switches between rest and activity (the kRA/kAR rates and the
-closed-form transition probabilities), capturing fragmentation a single
-amplitude cannot <span class="citation">(<a href="#ref-lim2011">Lim et
-al., 2011</a>)</span>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_dichotomy.html">plot_dichotomy</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, rest <span class="op">=</span> <span class="va">h</span> <span class="op">&gt;=</span> <span class="fl">23</span> <span class="op">|</span> <span class="va">h</span> <span class="op">&lt;</span> <span class="fl">7</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="nonparametric_files/figure-html/dichotomy-plot-1.png" class="r-plt" alt="Rest-span and active-span count distributions. A high I&lt;O means most rest-span counts fall below the active-span median (dashed)." width="770"><p class="caption">
+Rest-span and active-span count distributions. A high I&lt;O means most
+rest-span counts fall below the active-span median (dashed).
+</p>
+</div>
+<p><strong>Fragmentation.</strong> <code><a href="../reference/state.transitions.html">state.transitions()</a></code>
+gives the kRA and kAR rates, the rest-to-active and active-to-rest
+probabilities read off the plateau of the bout-length survival curve
+<span class="citation">(<a href="#ref-lim2011">Lim et al.,
+2011</a>)</span>. <code><a href="../reference/transition.probability.html">transition.probability()</a></code> gives the
+maximum-likelihood and Bayesian transition probabilities of <span class="citation">Danilevicz et al. (<a href="#ref-danilevicz2024">2024</a>)</span>, taken straight from the
+bout counts. Both capture fragmentation a single amplitude cannot.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/state.transitions.html">state.transitions</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rest-Activity State Transitions</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -371,14 +496,22 @@ al., 2011</a>)</span>.</p>
 <span><span class="co">#&gt;   pRA / pAR:          0.0487 / 0.1367</span></span>
 <span><span class="fu"><a href="../reference/transition.probability.html">transition.probability</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tp_ra_mle"</span>, <span class="st">"tp_ar_mle"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; $tp_ra_mle</span></span>
-<span><span class="co">#&gt; [1] 0.04853705</span></span>
+<span><span class="co">#&gt; [1] 0.04854369</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $tp_ar_mle</span></span>
 <span><span class="co">#&gt; [1] 0.1366603</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_transitions.html">plot_transitions</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="nonparametric_files/figure-html/fragmentation-plot-1.png" class="r-plt" alt="Transition hazards versus bout length, with a LOWESS fit and the sustained rates kRA and kAR (dashed)." width="770"><p class="caption">
+Transition hazards versus bout length, with a LOWESS fit and the
+sustained rates kRA and kAR (dashed).
+</p>
+</div>
 <p><strong>Per day, to see drift.</strong>
 <code><a href="../reference/circadian.daily.html">circadian.daily()</a></code> reports each day on its own, so
 within-recording change shows instead of being averaged away.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">daily</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/circadian.daily.html">circadian.daily</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span><span class="op">$</span><span class="va">daily</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">daily</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">M10_onset_h</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"grey60"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#236192"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
@@ -414,8 +547,9 @@ reports how many days qualified.</li>
 </h2>
 <p>The nonparametric battery follows <span class="citation">Witting et
 al. (<a href="#ref-witting1990">1990</a>)</span> and <span class="citation">Van Someren et al. (<a href="#ref-vansomeren1999">1999</a>)</span>, with the multiscale and
-dichotomy extensions of <span class="citation">Goncalves et al. (<a href="#ref-goncalves2014">2014</a>)</span> and <span class="citation">Mormont et al. (<a href="#ref-mormont2000">2000</a>)</span>. actiRhythm’s IS, IV, RA, L5,
-and M10 are cross-checked against the <code>nparACT</code> and
+dichotomy extensions of <span class="citation">Goncalves et al. (<a href="#ref-goncalves2014">2014</a>)</span> and <span class="citation">Mormont et al. (<a href="#ref-mormont2000">2000</a>)</span>, and the fragmentation rates of
+<span class="citation">Lim et al. (<a href="#ref-lim2011">2011</a>)</span> and <span class="citation">Danilevicz et al. (<a href="#ref-danilevicz2024">2024</a>)</span>. actiRhythm’s IS, IV, RA,
+L5, and M10 are cross-checked against the <code>nparACT</code> and
 <code>ActCR</code> reference implementations (to the printed precision)
 in the <a href="validation.html">Validation</a> article and the
 package’s test suite.</p>
@@ -424,6 +558,13 @@ package’s test suite.</p>
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
+<div id="ref-danilevicz2024" class="csl-entry">
+Danilevicz, I. M., Hees, V. T. van, Heide, F. van der, Jacob, L.,
+Landre, B., Benadjaoud, M. A., &amp; Sabia, S. (2024). Measures of
+fragmentation of rest activity patterns: Mathematical properties and
+interpretability. <em>BMC Medical Research Methodology</em>,
+<em>24</em>, 132. <a href="https://doi.org/10.1186/s12874-024-02255-w" class="external-link">https://doi.org/10.1186/s12874-024-02255-w</a>
+</div>
 <div id="ref-goncalves2014" class="csl-entry">
 Goncalves, B. S. B., Cavalcanti, P. R. A., Tavares, G. R., Campos, T.
 F., &amp; Araujo, J. F. (2014). Nonparametric methods in actigraphy: An

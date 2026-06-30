@@ -14,9 +14,11 @@
 #' @param iter LOWESS robustifying iterations (default 0).
 #'
 #' @return An object of class \code{actiRhythm_transitions}: a list with
-#'   \code{kRA}/\code{kAR} (sustained rest-to-active / active-to-rest rates),
-#'   \code{pRA}/\code{pAR} (overall per-epoch transition probabilities,
-#'   1 / mean bout length), bout counts, and the two transition curves.
+#'   \code{kRA}/\code{kAR} (sustained rest-to-active / active-to-rest rates over
+#'   the LOWESS plateau), \code{pRA}/\code{pAR} (overall rest-to-active /
+#'   active-to-rest rate, the reciprocal mean bout length), bout counts, and the
+#'   two transition curves. The plateau search follows the pyActigraphy
+#'   implementation of Lim et al. (2011).
 #'
 #' @references
 #' \insertRef{lim2011}{actiRhythm}
@@ -114,21 +116,20 @@ print.actiRhythm_transitions <- function(x, ...) {
 }
 
 
-#' Rest-Active Transition Probabilities (ASTP / SATP)
+#' Rest-Active Transition Probabilities
 #'
-#' Closed-form maximum-likelihood and Bayesian estimates of the rest-to-active
-#' and active-to-rest transition probabilities, the reciprocal-mean-bout-length
-#' fragmentation estimators (Danilevicz et al. 2024). Each is a transition count
-#' over the time at risk. Unlike the survival-curve rates in
-#' \code{\link{state.transitions}}, these come straight from the bout counts.
+#' Maximum-likelihood and Bayesian estimates of the rest-to-active and
+#' active-to-rest transition probabilities (Danilevicz et al. 2024): the
+#' transitions out of a state divided by its epochs at risk.
 #'
-#' @param counts Numeric activity vector.
+#' @param counts Numeric activity vector; \code{NA} are dropped.
 #' @param threshold Counts at or above which an epoch is active (default 1).
-#' @param lambda Bayesian prior pseudo-count (default 1).
+#' @param eps Bayesian Beta pseudo-count added to the transition count and the
+#'   epochs at risk (default 0.5).
 #'
-#' @return A list with the MLE and Bayesian \code{tp_ra} (rest to active) and
-#'   \code{tp_ar} (active to rest), the active bout count and the mean active
-#'   bout length.
+#' @return A list with the maximum-likelihood and Bayesian \code{tp_ra} (rest to
+#'   active) and \code{tp_ar} (active to rest), the active bout count, and the
+#'   mean active bout length.
 #'
 #' @references
 #' \insertRef{danilevicz2024}{actiRhythm}
@@ -140,16 +141,21 @@ print.actiRhythm_transitions <- function(x, ...) {
 #' transition.probability(counts)
 #'
 #' @export
-transition.probability <- function(counts, threshold = 1, lambda = 1) {
+transition.probability <- function(counts, threshold = 1, eps = 0.5) {
   active <- suppressWarnings(as.numeric(counts)) >= threshold
-  active[is.na(active)] <- FALSE
+  active <- active[!is.na(active)]
   r <- rle(active); v <- r$values; nv <- length(v)
+  if (!nv) return(list(tp_ar_mle = NA_real_, tp_ra_mle = NA_real_,
+    tp_ar_bayes = NA_real_, tp_ra_bayes = NA_real_,
+    n_active_bouts = 0L, mean_active_bout = NA_real_))
   T_active <- sum(active); T_rest <- sum(!active)
-  n_ar <- if (nv > 1L) sum(v[-nv] & !v[-1]) else 0L   # active -> rest boundaries
-  n_ra <- if (nv > 1L) sum(!v[-nv] & v[-1]) else 0L   # rest -> active boundaries
-  mle   <- function(n, tot) if (tot > 0) n / tot else NA_real_
-  bayes <- function(n, tot) (n + lambda) / (tot + lambda)
-  list(tp_ar_mle = mle(n_ar, T_active), tp_ra_mle = mle(n_ra, T_rest),
-       tp_ar_bayes = bayes(n_ar, T_active), tp_ra_bayes = bayes(n_ra, T_rest),
+  n_ar <- if (nv > 1L) sum(v[-nv] & !v[-1]) else 0L
+  n_ra <- if (nv > 1L) sum(!v[-nv] & v[-1]) else 0L
+  rest_risk <- T_rest   - as.integer(!v[nv])
+  act_risk  <- T_active - as.integer(v[nv])
+  mle   <- function(n, risk) if (risk > 0) n / risk else NA_real_
+  bayes <- function(n, risk) if (risk + eps > 0) (n + eps) / (risk + eps) else NA_real_
+  list(tp_ar_mle = mle(n_ar, act_risk), tp_ra_mle = mle(n_ra, rest_risk),
+       tp_ar_bayes = bayes(n_ar, act_risk), tp_ra_bayes = bayes(n_ra, rest_risk),
        n_active_bouts = sum(v), mean_active_bout = if (any(v)) mean(r$lengths[v]) else NA_real_)
 }

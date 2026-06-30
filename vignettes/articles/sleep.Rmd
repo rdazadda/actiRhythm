@@ -42,22 +42,21 @@ is the most common way to misread the output.
 The two epoch scorers are weighted windows over the counts. **Cole-Kripke**
 [@cole1992] forms a sleep index from a seven-epoch window: four epochs before the
 current one (\(P_4 \dots P_1\)), the current epoch \(C\), and two after
-(\(N_1, N_2\)). Counts are scaled by 100 and capped:
+(\(N_1, N_2\)). The weights are Cole's mean-activity variant (Table 6); the \(/100\) scaling and cap are implementation conventions:
 $$
 D = 0.001\,(106\,P_4 + 54\,P_3 + 58\,P_2 + 76\,P_1 + 230\,C + 74\,N_1 + 67\,N_2),
 $$
 and scores the epoch **sleep when \(D < 1\)**. Webster's rescoring rules
 [@webster1982] then re-label short sleep bouts bracketed by sustained wake.
 
-**Sadeh** [@sadeh1994] uses an eleven-epoch window (five each side) with counts
-capped at 300:
+**Sadeh** [@sadeh1994] uses an eleven-epoch window (five each side):
 $$
 SI = 7.601 - 0.065\,\overline{A} - 1.08\,\mathrm{NAT} - 0.056\,s - 0.703\,\log(C+1),
 $$
 where \(\overline{A}\) is the window mean, \(\mathrm{NAT}\) the count of epochs in
 \([50,100)\), \(s\) the standard deviation over the current and five preceding
 epochs, and \(C\) the current count. The epoch is scored **sleep when
-\(SI > -4\)**.
+\(SI \ge 0\)**; set `wake_threshold = -4` and `clip = 300` for ActiLife parity.
 
 The change-point detector [@chensun2024] is geometric rather than weighted: it
 fits a 24-hour cosinor to bound each rest and active span roughly, then places the
@@ -172,30 +171,34 @@ questions, not because three of them are wrong.
 ```{r contrast}
 cp <- sleep.changepoints(agd$axis1, agd$timestamp)   # one main bout per night
 rp <- rest.periods(agd$axis1, agd$timestamp)         # every bout (Roenneberg/MASDA)
-rc <- rest.crespo(agd$axis1, agd$timestamp)          # every bout (Crespo morphology)
+rc <- rest.crespo(agd$axis1, agd$timestamp)          # main rest periods (Crespo morphology)
 hm <- rest.hmm(agd$axis1, agd$timestamp, seed = 1)   # state-space alternative
 
 knitr::kable(
   data.frame(
     detector = c("sleep.changepoints", "rest.periods", "rest.crespo", "rest.hmm"),
     question = c("one main bout / night", "every bout (naps incl.)",
-                 "every bout (naps incl.)", "latent rest state"),
+                 "main rest periods", "latent rest state"),
     bouts    = c(cp$n_episodes, rp$n_bouts, rc$n_rest_periods, NA),
     family   = c("CircaCP", "Roenneberg", "Crespo", "Gaussian HMM")),
   caption = "Four detectors, four counts: the difference is the question, not the accuracy."
 )
 ```
 
+```{r rest-comparison, fig.height = 4, fig.cap = "The four detectors as a strip: the activity series on top, then each detector's rest bands on a shared time axis. sleep.changepoints and rest.crespo report the main night, while rest.periods and rest.hmm also catch the daytime nap."}
+plot_rest_comparison(agd$axis1, agd$timestamp)
+```
+
 `sleep.changepoints()` [@chensun2024] returns one episode per circadian cycle: the
-single dominant night-time rest bout. `rest.periods()` [@roenneberg2015; @loock2021]
-and `rest.crespo()` [@crespo2012] instead consolidate **every** rest bout, so a
-daytime nap or a fragmented night becomes its own row. They reach that result by
-two independent routes, Roenneberg's trend-and-correlation consolidation versus
-Crespo's median-filter-and-morphology pipeline, which is why their bout counts
-differ even though both aim to catch all rest. `rest.hmm()` [@huang2018hmm] is the
-state-space alternative: rather than thresholding each epoch, it fits a Gaussian
-hidden Markov model whose latent rest state *persists*, and reports a 24-hour
-rest-occupancy profile.
+single dominant night-time rest bout, and `rest.crespo()` [@crespo2012] likewise
+reports the **main** rest and activity periods, its roughly eight-hour median
+window (Eq 4) suppressing short within-period transitions. `rest.periods()`
+[@roenneberg2015; @loock2021] instead returns **every** consolidated bout, so a
+daytime nap or a fragmented night becomes its own row, by Roenneberg's
+trend-and-correlation route. `rest.hmm()` [@huang2018hmm] is the state-space
+alternative: rather than thresholding each epoch, it fits a Gaussian hidden Markov
+model whose latent rest state *persists*, and reports a 24-hour rest-probability
+profile.
 
 ```{r hmm-profile, fig.height = 3.4, fig.cap = "The HMM's probability of being in the rest state across the day. The state-space model infers the rest band, centred on the night, without a fixed count threshold."}
 ggplot(hm$tod_profile, aes(hour, p_rest)) +
@@ -205,10 +208,10 @@ ggplot(hm$tod_profile, aes(hour, p_rest)) +
   theme_actiRhythm()
 ```
 
-The lesson is the rule: if you report `sleep.changepoints()` you are reporting *the
-night*; if you report `rest.periods()` or `rest.crespo()` you are reporting *all
-rest*, naps and all. Choose the one whose question matches yours, rather than
-treating the differing bout counts as a contradiction.
+The lesson is the rule: `sleep.changepoints()` and `rest.crespo()` report *the main
+rest period*; `rest.periods()` reports *all rest*, naps and all; `rest.hmm()`
+reports a *latent-state probability*. Choose the one whose question matches yours,
+rather than treating the differing bout counts as a contradiction.
 
 ## The wider sleep-and-rest family
 
@@ -238,8 +241,12 @@ li <- lids(agd$axis1, agd$timestamp, sleep_periods)
 li
 ```
 
-The mean LIDS period lands in the ninety-minute-to-three-hour band expected of
-human sleep cycles, recovered from the inactivity signal alone.
+```{r lids-plot, fig.height = 3.4, fig.cap = "The LIDS ultradian cycle across one sleep period: smoothed inactivity (navy) with the best-fit cosine (orange). The roughly 90-to-130-minute oscillation is the sleep-cycle rhythm read from movement alone."}
+plot_lids(agd$axis1, agd$timestamp, sleep_periods)
+```
+
+The mean LIDS period lands in the roughly 90-to-130-minute band, near Winnebeck's
+~110 min median, recovered from the inactivity signal alone.
 
 ## Limitations
 

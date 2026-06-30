@@ -137,12 +137,27 @@ coefficients:</p>
 A = \sqrt{\beta_1^2 + \beta_2^2}, \qquad
 \phi = \operatorname{atan2}(-\beta_2,\, \beta_1).
 </annotation></semantics></math></p>
-<p>Whether the rhythm is real is the <strong>zero-amplitude
-F-test</strong> of
+<p>The reported acrophase is the clock time of the peak,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mi>ϕ</mi><mspace width="0.167em"></mspace><mi>τ</mi><mi>/</mi><mo stretchy="false" form="prefix">(</mo><mn>2</mn><mi>π</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">-\phi\,\tau/(2\pi)</annotation></semantics></math>
+reduced to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>,</mo><mi>τ</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">[0, \tau)</annotation></semantics></math>.
+The fit uses the averaged hour-of-day profile, so the zero-amplitude
+<strong>F-test</strong> of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>H</mi><mn>0</mn></msub><mspace width="-0.167em"></mspace><mo>:</mo><mi>A</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">H_0\!: A = 0</annotation></semantics></math><span class="citation">(<a href="#ref-nelson1979">Nelson et al.,
-1979</a>)</span>, and the share of variance the cosine explains is the
-<strong>percent-rhythm</strong>,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mspace width="0.167em"></mspace><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">100\,R^2</annotation></semantics></math>.</p>
+1979</a>)</span> and the <strong>percent-rhythm</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mspace width="0.167em"></mspace><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">100\,R^2</annotation></semantics></math><span class="citation">(<a href="#ref-cornelissen2014">Cornelissen,
+2014</a>)</span> are computed on the profile hours present (the F-test
+denominator is hours
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mn>3</mn></mrow><annotation encoding="application/x-tex">- 3</annotation></semantics></math>,
+not the raw epoch count).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_cosinor_schematic.html">plot_cosinor_schematic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="cosinor_files/figure-html/schematic-1.png" class="r-plt" alt="The cosinor parameters: the MESOR midline, the amplitude A and double amplitude 2A, and the acrophase as the clock time of the peak." width="770"><p class="caption">
+The cosinor parameters: the MESOR midline, the amplitude A and double
+amplitude 2A, and the acrophase as the clock time of the peak.
+</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="assumptions-and-when-they-break">Assumptions, and when they break<a class="anchor" aria-label="anchor" href="#assumptions-and-when-they-break"></a>
@@ -172,7 +187,7 @@ amplitude is not distinguishable from zero.</li>
 <p>First, see the fit recover parameters we plant. We build a seven-day
 recording from a cosine with a MESOR of 200, an amplitude of 100, and a
 16:00 acrophase, then add noise.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2024-01-01"</span>, tz <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">60</span>, length.out <span class="op">=</span> <span class="fl">7</span> <span class="op">*</span> <span class="fl">1440</span><span class="op">)</span></span>
 <span><span class="va">th</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">difftime</a></span><span class="op">(</span><span class="va">ts</span>, <span class="va">ts</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, units <span class="op">=</span> <span class="st">"hours"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
@@ -217,7 +232,7 @@ acrophase.</caption>
 </table>
 <p>The rhythmicity test confirms the rhythm is real and reports how much
 of the variance the cosine carries.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rhythmicity.test.html">rhythmicity.test</a></span><span class="op">(</span><span class="va">known</span>, <span class="va">ts</span>, cosinor_result <span class="op">=</span> <span class="va">ca</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>F <span class="op">=</span> <span class="va">rt</span><span class="op">$</span><span class="cn">F</span>, p_value <span class="op">=</span> <span class="va">rt</span><span class="op">$</span><span class="va">p_value</span>, percent_rhythm <span class="op">=</span> <span class="va">rt</span><span class="op">$</span><span class="va">percent_rhythm</span>, rhythmic <span class="op">=</span> <span class="va">rt</span><span class="op">$</span><span class="va">rhythmic</span><span class="op">)</span></span>
 <span><span class="co">#&gt;              F        p_value percent_rhythm       rhythmic </span></span>
@@ -230,7 +245,7 @@ of the variance the cosine carries.</p>
 <code><a href="../reference/cosinor.analysis.html">cosinor.analysis()</a></code> returns a typed object;
 <code><a href="../reference/rhythmicity.test.html">rhythmicity.test()</a></code> checks whether the rhythm is
 statistically real.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">agd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/agd.counts.html">agd.counts</a></span><span class="op">(</span><span class="fu"><a href="../reference/read.agd.html">read.agd</a></span><span class="op">(</span><span class="fu"><a href="../reference/example_agd.html">example_agd</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">cos</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.analysis.html">cosinor.analysis</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span>, period <span class="op">=</span> <span class="fl">24</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>mesor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="va">cos</span><span class="op">$</span><span class="va">mesor</span><span class="op">)</span>, amplitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="va">cos</span><span class="op">$</span><span class="va">amplitude</span><span class="op">)</span>,</span>
@@ -246,7 +261,7 @@ statistically real.</p>
 <span><span class="co">#&gt;   P-value:        0.0024</span></span>
 <span><span class="co">#&gt;   Percent rhythm: 43.7% (R-squared = 0.4371)</span></span>
 <span><span class="co">#&gt;   Rhythmic:       YES (alpha = 0.05)</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_extended_cosinor.html">plot_extended_cosinor</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="cosinor_files/figure-html/fit-plot-1.png" class="r-plt" alt="Hourly activity with the fitted 24-hour cosine overlaid. The peak of the curve is the acrophase; its height above the MESOR line is the amplitude. Where the points leave the curve is the structure a single cosine cannot follow." width="770"><p class="caption">
@@ -256,14 +271,23 @@ amplitude. Where the points leave the curve is the structure a single
 cosine cannot follow.
 </p>
 </div>
-<p>For the joint uncertainty in amplitude and acrophase together,
+<p>For the joint uncertainty in amplitude and acrophase,
 <code><a href="../reference/cosinor.confidence.ellipse.html">cosinor.confidence.ellipse()</a></code> returns the <span class="citation">Bingham et al. (<a href="#ref-bingham1982">1982</a>)</span> ellipse; an ellipse that
 excludes the origin is the geometric form of “a detectable rhythm”.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">el</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.confidence.ellipse.html">cosinor.confidence.ellipse</a></span><span class="op">(</span><span class="va">cos</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>excludes_origin <span class="op">=</span> <span class="va">el</span><span class="op">$</span><span class="va">excludes_origin</span>, rhythm_detected <span class="op">=</span> <span class="va">el</span><span class="op">$</span><span class="va">rhythm_detected</span><span class="op">)</span></span>
 <span><span class="co">#&gt; excludes_origin rhythm_detected </span></span>
 <span><span class="co">#&gt;            TRUE            TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_cosinor_ellipse.html">plot_cosinor_ellipse</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="cosinor_files/figure-html/ellipse-plot-1.png" class="r-plt" alt="The amplitude-acrophase confidence ellipse on the clock plane. The arrow is the (amplitude, acrophase) estimate measured from the origin; because the ellipse excludes the origin, the rhythm is detectable." width="770"><p class="caption">
+The amplitude-acrophase confidence ellipse on the clock plane. The arrow
+is the (amplitude, acrophase) estimate measured from the origin; because
+the ellipse excludes the origin, the rhythm is detectable.
+</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="reading-the-numbers">Reading the numbers<a class="anchor" aria-label="anchor" href="#reading-the-numbers"></a>
@@ -291,7 +315,7 @@ the rule above flags.</li>
 <p>This is the rule in action. We build a <strong>siesta day</strong>
 (an active morning and evening with a midday dip), which has a clear
 24-hour rhythm but is not a single symmetric cosine.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">ts</span>, <span class="st">"%H"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">ts</span>, <span class="st">"%M"</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fl">60</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">siesta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">120</span> <span class="op">+</span> <span class="fl">70</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="op">(</span><span class="va">hod</span> <span class="op">-</span> <span class="fl">14</span><span class="op">)</span> <span class="op">/</span> <span class="fl">24</span><span class="op">)</span> <span class="op">+</span>     <span class="co"># day-night fundamental</span></span>
@@ -308,7 +332,7 @@ cosine explains only about 62 percent of the day. The missing third is
 the midday dip, which a symmetric cosine cannot represent. A
 multi-harmonic fit recovers it: it selects two components and explains
 essentially all of it (the chunk below reports the R-squared).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.multicomponent.html">cosinor.multicomponent</a></span><span class="op">(</span><span class="va">siesta</span>, <span class="va">ts</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>n_harmonics <span class="op">=</span> <span class="va">mc</span><span class="op">$</span><span class="va">n_harmonics</span>, r_squared <span class="op">=</span> <span class="va">mc</span><span class="op">$</span><span class="va">r_squared</span><span class="op">)</span></span>
 <span><span class="co">#&gt; n_harmonics   r_squared </span></span>
@@ -317,6 +341,14 @@ essentially all of it (the chunk below reports the R-squared).</p>
 <span><span class="co">#&gt;    harmonic amplitude acrophase_h</span></span>
 <span><span class="co">#&gt; x2        1  69.67840   14.012182</span></span>
 <span><span class="co">#&gt; x4        2  54.41006    2.011788</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_multicomponent.html">plot_multicomponent</a></span><span class="op">(</span><span class="va">siesta</span>, <span class="va">ts</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="cosinor_files/figure-html/multicomp-plot-1.png" class="r-plt" alt="The single cosine (orange) misses the midday dip; the two-harmonic fit (blue) recovers it." width="770"><p class="caption">
+The single cosine (orange) misses the midday dip; the two-harmonic fit
+(blue) recovers it.
+</p>
+</div>
 <p>So in practice, let the low percent-rhythm, not the significant
 p-value, send you to a richer model rather than a misleading single
 acrophase.</p>
@@ -327,13 +359,11 @@ acrophase.</p>
 <ul>
 <li>
 <strong>Asymmetric and squared-off days</strong>:
-<code><a href="../reference/cosinor.extended.html">cosinor.extended()</a></code> and <code><a href="../reference/cosinor.antilogistic.html">cosinor.antilogistic()</a></code>
-fit the sigmoidally transformed cosine of <span class="citation">Marler
-et al. (<a href="#ref-marler2006">2006</a>)</span>, adding shape
-parameters (steepness, up- and down-mesor times) the single cosinor
-lacks.</li>
+<code><a href="../reference/cosinor.antilogistic.html">cosinor.antilogistic()</a></code> fits the sigmoidally transformed
+cosine of <span class="citation">Marler et al. (<a href="#ref-marler2006">2006</a>)</span>, adding shape parameters
+(steepness, up- and down-mesor times) the single cosinor lacks.</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.antilogistic.html">cosinor.antilogistic</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>MESOR <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">MESOR</span>, amplitude <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">amplitude</span>, acrophase <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">acrophase</span>,</span>
 <span>  UpMesor <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">UpMesor</span>, DownMesor <span class="op">=</span> <span class="va">fit</span><span class="op">$</span><span class="va">DownMesor</span><span class="op">)</span></span>
@@ -341,9 +371,11 @@ lacks.</li>
 <span><span class="co">#&gt; 372.95566 488.79342  16.59496  11.60451  21.58541</span></span></code></pre></div>
 <ul>
 <li>
-<strong>Several harmonics, chosen objectively</strong>:
-<code><a href="../reference/cosinor.multicomponent.html">cosinor.multicomponent()</a></code> adds components and picks how many
-by AIC or BIC, as in the siesta example above.</li>
+<strong>Several harmonics</strong>: <code><a href="../reference/cosinor.extended.html">cosinor.extended()</a></code>
+and <code><a href="../reference/cosinor.multicomponent.html">cosinor.multicomponent()</a></code> fit the multi-component
+(harmonic) cosinor of <span class="citation">Cornelissen (<a href="#ref-cornelissen2014">2014</a>)</span> for non-sinusoidal days;
+<code><a href="../reference/cosinor.multicomponent.html">cosinor.multicomponent()</a></code> chooses the number of components
+by AIC or BIC.</li>
 <li>
 <strong>The parametric amplitude as a ratio</strong>:
 <code><a href="../reference/circadian.quotient.html">circadian.quotient()</a></code> turns the cosinor amplitude and MESOR
@@ -351,18 +383,19 @@ into the circadian quotient (amplitude / MESOR).</li>
 <li>
 <strong>Pooling the evidence</strong>:
 <code><a href="../reference/consensus.rhythmicity.html">consensus.rhythmicity()</a></code> runs the cosinor F-test, the
-Bingham ellipse, the Lomb-Scargle false-alarm probability, and the
-chi-square periodogram together, and reports a majority vote with a
-combined p-value.</li>
+Lomb-Scargle false-alarm probability, and the chi-square periodogram,
+and reports a majority vote with a Cauchy-combined p-value (valid
+although the tests share one series).</li>
 <li>
 <strong>From one subject to a group</strong>:
 <code><a href="../reference/population.cosinor.html">population.cosinor()</a></code> pools per-subject fits into a Bingham
 population-mean rhythm with confidence intervals, and
 <code><a href="../reference/cosinor.compare.html">cosinor.compare()</a></code> tests whether the rhythm differs between
-two groups with an omnibus Hotelling
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>T</mi><mn>2</mn></msup><annotation encoding="application/x-tex">T^2</annotation></semantics></math>
-and per-parameter tests <span class="citation">(<a href="#ref-bingham1982">Bingham et al., 1982</a>)</span>. See <a href="choosing-a-method.html">Choosing a method</a> for when to reach
-for each.</li>
+two groups with the Bingham amplitude-acrophase Hotelling
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>T</mi><mn>2</mn></msup><annotation encoding="application/x-tex">T^2</annotation></semantics></math>,
+a separate MESOR test, and auxiliary per-parameter comparisons <span class="citation">(<a href="#ref-bingham1982">Bingham et al.,
+1982</a>)</span>. See <a href="choosing-a-method.html">Choosing a
+method</a> for when to reach for each.</li>
 </ul>
 </div>
 <div class="section level2">

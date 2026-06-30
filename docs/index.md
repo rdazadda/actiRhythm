@@ -1,22 +1,31 @@
 # actiRhythm
 
-**actiRhythm measures circadian rest-activity rhythms from activity
-counts or raw acceleration.** It works on a count vector and its
-timestamps and reads those counts straight out of an ActiGraph `.agd`
-file. It also reads raw `.gt3x`, `.cwa`, and `.bin` recordings,
-auto-calibrates them, and derives the ENMO, MAD, and z-angle signals
-that agree with GGIR. From one recording it produces the metrics a
-chronobiology analysis reports, from the nonparametric measures through
-cosinor, periodograms, and fractal structure. Every analysis returns a
-typed object that prints its own metrics and plots with one call.
+**actiRhythm turns activity counts or raw acceleration into a complete
+picture of the circadian rest-activity rhythm.** It reads ActiGraph
+`.agd` counts and raw `.gt3x`, `.cwa`, and `.bin` recordings,
+auto-calibrates the raw signal, and derives the ENMO, MAD, and z-angle
+metrics that agree with GGIR. From a single recording it computes what a
+chronobiology analysis reports, from the nonparametric measures and
+cosinor through periodograms and fractal structure to wavelet and
+empirical-mode decomposition, sleep scoring, and a state-space
+rest-activity model. Methods that usually live in separate packages, or
+in no R package at all, sit behind one consistent interface, and every
+analysis returns a typed object that prints its own summary and draws
+its own plots.
 
-You can usually see the answer before computing it. Plot the recording
+Each method carries the reference that defined it, and where a trusted
+implementation already exists, actiRhythm is checked against it: the raw
+metrics against GGIR, the single-component cosinor against the `cosinor`
+package, and the nonparametric measures against `nparACT` and `ActCR`.
+Those cross-checks run live in the package’s [validation
+article](https://rdazadda.github.io/actiRhythm/articles/validation.html).
+
+You can usually see the answer before you compute it. Plot a recording
 as an actogram and a regular sleeper forms a single vertical band of
 activity at the same clock time each day, while a drifting rhythm
-scatters across the panel. The methods that follow put numbers to what
-that picture shows, and each carries the reference that defined it, from
-Witting (1990) and van Someren (1999) through the cosinor and the
-periodogram.
+scatters across the panel. The numbers that follow put a figure to what
+the picture shows, from Witting (1990) and van Someren (1999) through
+Cornelissen (2014) and the periodogram.
 
 ## Installation
 
@@ -61,7 +70,7 @@ rhythm
 #>   M1 (most active 1h):      1175.51 counts/min, onset 17:43
 #>   Relative Amplitude (RA):  0.9800 (range 0-1, higher=stronger rhythm)
 #>   Interdaily Stability (IS): 0.2279 (range 0-1, higher=more consistent)
-#>   Intradaily Variability (IV): 1.0008 (~0=sine, ~2=noise)
+#>   Intradaily Variability (IV): 1.0008 (near 0 = sine, near 2 = noise)
 #>   Phi (autocorrelation):    0.4151 (higher=more predictable)
 #> 
 #> Sleep-Based & Variability Metrics
@@ -93,133 +102,126 @@ rhythm.
 For this recording a high relative amplitude near 0.98 sits with a low
 interdaily stability near 0.23: the days are strongly active, but the
 pattern does not land at the same clock time from one day to the next.
-
 Every number and figure here regenerates from the installed package and
 its bundled recording, and the calculations behind them are exercised by
 the package’s test suite.
 
-## Going further
+## What the package covers
 
-The same recording runs through the rest of the package.
+**Cosinor and the spectrum.**
 [`cosinor.analysis()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md)
 fits a 24-hour cosine (Cornelissen 2014) and
 [`rhythmicity.test()`](https://rdazadda.github.io/actiRhythm/reference/rhythmicity.test.md)
-checks whether the rhythm is statistically real.
+checks whether the rhythm is statistically real;
+[`cosinor.multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.multicomponent.md)
+adds harmonics and
+[`population.cosinor()`](https://rdazadda.github.io/actiRhythm/reference/population.cosinor.md)
+compares groups.
 [`circadian.period()`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md)
 estimates the free-running period from a Lomb-Scargle periodogram (Lomb
-1976),
+1976) and
+[`chi.sq.periodogram()`](https://rdazadda.github.io/actiRhythm/reference/chi.sq.periodogram.md)
+from the chi-square periodogram (Sokolove 1978);
 [`period.ci()`](https://rdazadda.github.io/actiRhythm/reference/period.ci.md)
-puts a bootstrap confidence interval on it, and
+puts a bootstrap interval on it, and
 [`circadian.spectrogram()`](https://rdazadda.github.io/actiRhythm/reference/circadian.spectrogram.md)
-shows how that period drifts across the recording.
+shows how the period drifts across the recording.
 [`fractal.dfa()`](https://rdazadda.github.io/actiRhythm/reference/fractal.dfa.md)
 measures the long-range correlation in the series (Peng 1994), and
-[`multiscale.entropy()`](https://rdazadda.github.io/actiRhythm/reference/multiscale.entropy.md)
-and
 [`mfdfa()`](https://rdazadda.github.io/actiRhythm/reference/mfdfa.md)
+and
+[`multiscale.entropy()`](https://rdazadda.github.io/actiRhythm/reference/multiscale.entropy.md)
 describe its finer nonlinear structure.
-[`circadian.flm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.flm.md)
-fits a functional (multi-harmonic) model of the daily profile and
-[`circadian.ssa()`](https://rdazadda.github.io/actiRhythm/reference/circadian.ssa.md)
-decomposes the recording into trend, circadian, and noise components.
-[`sleep.regularity.index()`](https://rdazadda.github.io/actiRhythm/reference/sleep.regularity.index.md)
-(Phillips 2017),
-[`social.jet.lag()`](https://rdazadda.github.io/actiRhythm/reference/social.jet.lag.md),
-and
-[`state.transitions()`](https://rdazadda.github.io/actiRhythm/reference/state.transitions.md)
-summarise sleep timing and rest-activity fragmentation, and
-[`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md)
-locates each night’s sleep and wake onset directly from the counts (Chen
-and Sun 2024).
-[`sleep.cole.kripke()`](https://rdazadda.github.io/actiRhythm/reference/sleep.cole.kripke.md)
-and
-[`sleep.sadeh()`](https://rdazadda.github.io/actiRhythm/reference/sleep.sadeh.md)
-score each epoch as sleep or wake (Cole et al. 1992; Sadeh et al. 1994),
-and
-[`rest.periods()`](https://rdazadda.github.io/actiRhythm/reference/rest.periods.md)
-(Roenneberg et al. 2015) and
-[`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)
-(Crespo et al. 2012) consolidate every rest bout across the recording,
-naps included, by two independent algorithms.
 
-A further set of methods covers the harder cases.
+**Rhythms that move rather than repeat.** A set of nonstationary methods
+reads the change directly.
 [`circadian.wavelet()`](https://rdazadda.github.io/actiRhythm/reference/circadian.wavelet.md)
-gives the time-frequency power surface,
-[`ultradian.bandpower()`](https://rdazadda.github.io/actiRhythm/reference/ultradian.bandpower.md)
-the dyadic ultradian bands, and
+returns the time-frequency power surface with its cone of influence,
 [`circadian.emd()`](https://rdazadda.github.io/actiRhythm/reference/circadian.emd.md)
 with
 [`hilbert.huang()`](https://rdazadda.github.io/actiRhythm/reference/hilbert.huang.md)
-a data-adaptive decomposition and instantaneous phase.
-[`cosinor.multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.multicomponent.md)
-fits a multi-harmonic shape,
-[`activity.onset.offset()`](https://rdazadda.github.io/actiRhythm/reference/activity.onset.offset.md)
-marks daily onset and offset, and
-[`phase.concentration()`](https://rdazadda.github.io/actiRhythm/reference/phase.concentration.md)
-tests day-to-day phase clustering.
+give a data-adaptive decomposition and an instantaneous period, and
+[`circadian.ssa()`](https://rdazadda.github.io/actiRhythm/reference/circadian.ssa.md)
+separates the series into trend, circadian, and residual components.
+[`circadian.flm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.flm.md)
+fits a functional model of the daily profile,
 [`rest.hmm()`](https://rdazadda.github.io/actiRhythm/reference/rest.hmm.md)
-is a state-space rest-activity model,
+infers rest and active states with a hidden Markov model,
+[`sleep.changepoints()`](https://rdazadda.github.io/actiRhythm/reference/sleep.changepoints.md)
+locates each night’s onset and wake straight from the counts (Chen and
+Sun 2024), and
 [`curve.registration()`](https://rdazadda.github.io/actiRhythm/reference/curve.registration.md)
-aligns daily profiles for a scale-invariant chronotype phase, and
-[`residual.spectrum()`](https://rdazadda.github.io/actiRhythm/reference/residual.spectrum.md)
-spectra what the cosinor leaves behind.
-[`circadian.daily()`](https://rdazadda.github.io/actiRhythm/reference/circadian.daily.md),
-[`intradaily.variability.multiscale()`](https://rdazadda.github.io/actiRhythm/reference/intradaily.variability.multiscale.md),
-[`activity.extrema()`](https://rdazadda.github.io/actiRhythm/reference/activity.extrema.md),
-and
-[`dichotomy.index()`](https://rdazadda.github.io/actiRhythm/reference/dichotomy.index.md)
-complete the nonparametric set.
+aligns the days on their active-phase landmark for a scale-invariant
+phase marker.
 
-Counts can come from more than `.agd` files:
+**Sleep, regularity, and fragmentation.**
+[`sleep.cole.kripke()`](https://rdazadda.github.io/actiRhythm/reference/sleep.cole.kripke.md)
+and
+[`sleep.sadeh()`](https://rdazadda.github.io/actiRhythm/reference/sleep.sadeh.md)
+score each epoch as sleep or wake (Cole et al. 1992; Sadeh et al. 1994).
+[`rest.periods()`](https://rdazadda.github.io/actiRhythm/reference/rest.periods.md)
+(Roenneberg et al. 2015) returns every consolidated rest bout, naps
+included, while
+[`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)
+(Crespo et al. 2012) detects the main daily rest periods.
+[`sleep.regularity.index()`](https://rdazadda.github.io/actiRhythm/reference/sleep.regularity.index.md)
+(Phillips 2017),
+[`social.jet.lag()`](https://rdazadda.github.io/actiRhythm/reference/social.jet.lag.md),
+and [`lids()`](https://rdazadda.github.io/actiRhythm/reference/lids.md)
+(Winnebeck 2018) summarise sleep regularity, chronotype misalignment,
+and the ultradian sleep cycle, and
+[`phase.concentration()`](https://rdazadda.github.io/actiRhythm/reference/phase.concentration.md)
+and
+[`state.transitions()`](https://rdazadda.github.io/actiRhythm/reference/state.transitions.md)
+test day-to-day phase clustering and rest-activity fragmentation.
+
+**From files to counts to raw acceleration.** Counts can come from more
+than `.agd` files:
 [`read.actigraph.csv()`](https://rdazadda.github.io/actiRhythm/reference/read.actigraph.csv.md)
-reads ActiLife epoch CSVs and
-[`counts.from.data.frame()`](https://rdazadda.github.io/actiRhythm/reference/counts.from.data.frame.md)
-takes a count series from any data frame.
+reads ActiLife epoch CSVs, and
 [`read.raw()`](https://rdazadda.github.io/actiRhythm/reference/read.raw.md)
-turns raw ActiGraph `.gt3x`, Axivity `.cwa`, and GENEActiv `.bin` files
-into counts with the agcounts band-pass filter, and
+turns raw `.gt3x`, `.cwa`, and `.bin` files into counts with the
+agcounts implementation of the ActiGraph count algorithm (Neishabouri
+2022);
 [`gt3x.counts()`](https://rdazadda.github.io/actiRhythm/reference/gt3x.counts.md),
 [`axivity.counts()`](https://rdazadda.github.io/actiRhythm/reference/axivity.counts.md),
 and
 [`geneactiv.counts()`](https://rdazadda.github.io/actiRhythm/reference/geneactiv.counts.md)
-do the same per brand. Cross-brand counts are an approximation rather
-than native ActiGraph output.
-[`detect.nonwear.choi()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.choi.md)
-and
-[`detect.nonwear.troiano()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.troiano.md)
-flag non-wear time directly from the counts to use as the wear filter
-(Choi et al. 2011; Troiano et al. 2008).
-
-Raw acceleration also gives the gravity-based metrics that counts cannot
-carry.
+do the same per brand, with cross-brand counts treated as an
+approximation rather than native ActiGraph output.
 [`raw.metrics()`](https://rdazadda.github.io/actiRhythm/reference/raw.metrics.md)
-returns per-epoch ENMO, MAD and the z-angle with van Hees (2014)
+returns per-epoch ENMO, MAD, and the z-angle with van Hees (2014)
 auto-calibration, and
 [`circadian.raw()`](https://rdazadda.github.io/actiRhythm/reference/circadian.raw.md)
-runs every method above on ENMO from a single call. The z-angle also
-supports a sleep pipeline that needs no diary, which counts cannot do.
+runs every method above on ENMO from one call. The z-angle drives a
+diary-free sleep pipeline that counts cannot:
 [`rest.spt()`](https://rdazadda.github.io/actiRhythm/reference/rest.spt.md)
-finds the nightly sleep-period window (HDCZA, van Hees 2018) and
+finds the nightly sleep-period window (HDCZA, van Hees 2018),
 [`sib.vanhees()`](https://rdazadda.github.io/actiRhythm/reference/sib.vanhees.md)
-scores sustained-inactivity bouts (van Hees 2015);
+scores sustained-inactivity bouts (van Hees 2015), and
 [`sleep.from.spt()`](https://rdazadda.github.io/actiRhythm/reference/sleep.from.spt.md)
-turns them into onset, wake, WASO and efficiency.
-[`detect.nonwear.raw()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.raw.md)
-gates out a device taken off and left still, so it is not read as sleep
-(van Hees 2011).
-[`activity.balance.index()`](https://rdazadda.github.io/actiRhythm/reference/activity.balance.index.md)
+reports onset, wake, WASO, and efficiency.
+[`detect.nonwear.choi()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.choi.md),
+[`detect.nonwear.troiano()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.troiano.md),
 and
-[`transition.probability()`](https://rdazadda.github.io/actiRhythm/reference/transition.probability.md)
-add two fragmentation estimators.
+[`detect.nonwear.raw()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.raw.md)
+flag non-wear time (Choi et al. 2011; Troiano et al. 2008; van Hees et
+al. 2013).
 
+**Plots and batch reports.** Every analysis prints a readable summary
+and draws a themed `ggplot`: the actogram and periodogram, the
+spectrogram, the cosinor fit and confidence ellipse, the wavelet
+scalogram, the singular-spectrum components, a circular phase rose, and
+a rest-detector comparison strip, each one you can recolour with
+[`theme_actiRhythm()`](https://rdazadda.github.io/actiRhythm/reference/theme_actiRhythm.md)
+and save with
+[`save.circadian.plot()`](https://rdazadda.github.io/actiRhythm/reference/save.circadian.plot.md).
 When a study has many files,
 [`circadian.batch()`](https://rdazadda.github.io/actiRhythm/reference/circadian.batch.md)
 runs the whole pipeline over a folder and returns one row per recording,
 and
 [`circadian.workbook()`](https://rdazadda.github.io/actiRhythm/reference/circadian.workbook.md)
-writes a full analysis to a multi-sheet Excel file. Every plotting
-function returns a `ggplot` object you can theme and save with
-[`save.circadian.plot()`](https://rdazadda.github.io/actiRhythm/reference/save.circadian.plot.md).
+writes the full analysis to a multi-sheet Excel file.
 
 ## Documentation
 
@@ -231,13 +233,14 @@ is the get-started walkthrough and
 is a data dictionary for every metric the package reports. A set of
 articles goes deeper: [Choosing a
 method](https://rdazadda.github.io/actiRhythm/articles/choosing-a-method.html)
-maps each question to the right function; [Validation against reference
+maps each question to the right function, [Validation against reference
 packages](https://rdazadda.github.io/actiRhythm/articles/validation.html)
-cross-checks the metrics live against nparACT, ActCR and the cosinor
-package; and the method-family articles (nonparametric, cosinor, period,
-fractal, sleep, phase, raw acceleration, batch) each work one family
-from the math to a worked example. Every function’s help page also
-carries its method reference, so
+cross-checks the metrics live against GGIR, `nparACT`, `ActCR`, and the
+`cosinor` package, and the method-family articles (nonparametric,
+cosinor, period, fractal, nonstationary, phase and regularity, sleep,
+raw acceleration, batch) each work one family from the math to a worked
+example. Every function’s help page also carries its method reference,
+so
 [`?circadian.rhythm`](https://rdazadda.github.io/actiRhythm/reference/circadian.rhythm.md),
 [`?cosinor.analysis`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md),
 and

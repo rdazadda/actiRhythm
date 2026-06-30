@@ -22,7 +22,7 @@ Character. Full path to the example AGD file.
 
 ``` r
 example_agd()
-#> [1] "D:/Rtemp/RtmpOGrobw/temp_libpath424c3eb81783/actiRhythm/extdata/MOS2E39230594_60sec.agd"
+#> [1] "D:/Rtemp/RtmpOGrobw/temp_libpath424c24955f38/actiRhythm/extdata/MOS2E39230594_60sec.agd"
 example_agd("list")
 #> [1] "MOS2E39230594_60sec.agd" "MOS2E3923063660sec.agd" 
 agd_path <- example_agd(1)

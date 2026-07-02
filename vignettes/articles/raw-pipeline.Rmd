@@ -61,7 +61,7 @@ m <- raw.metrics(raw, epoch = 60)   # per-epoch ENMO (mg), MAD, and the z-angle
 head(m)
 ```
 
-```{r raw-metrics-plot, fig.height = 4.2, fig.cap = "The three raw-acceleration epoch metrics across the recording: ENMO and MAD (movement, in mg) are low at night and zero when the device is off, while the z-angle (degrees) tracks arm posture."}
+```{r raw-metrics-plot, fig.height = 4.2, fig.cap = "The three raw-acceleration epoch metrics across the recording: ENMO and MAD (movement, in mg) are low at night, while the z-angle (degrees) tracks arm posture."}
 plot_raw_metrics(raw, epoch_length = 60)
 ```
 

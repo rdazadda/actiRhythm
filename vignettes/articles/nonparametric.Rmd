@@ -39,7 +39,7 @@ Bin the recording to hourly means: let \(x_1, \dots, x_n\) be the \(n\) hourly
 values with overall mean \(\bar x\), and let \(\bar x_h\) be the mean across all
 days at hour-of-day \(h\), over \(p = 24\) hours. The IS and IV formulas below are
 computed on this hourly series; the raw-epoch series is used separately for the
-multiscale and fractal measures.
+multiscale measures.
 
 **Interdaily stability (IS)**, how tightly the pattern repeats from one day to
 the next [@witting1990]:
@@ -68,7 +68,7 @@ autocorrelation predictability \(\phi\), and the onset times of each window.
 The L5 and M10 windows are placed on a minute-resolution average day and reported in
 counts per minute, the sliding-window convention also used by nparACT and GGIR. These
 values track but are not identical to the original hourly counts-per-hour of
-@witting1990, and they depend on epoch length.
+@vansomeren1999, and they depend on epoch length.
 
 ## Assumptions, and when they break
 
@@ -85,7 +85,7 @@ values track but are not identical to the original hourly counts-per-hour of
 
 ## Recovering known truth
 
-Before trusting these numbers on real data, it is worth seeing them behave on data
+Before trusting these numbers on real data, see them behave on data
 whose answer we know. We build three seven-day recordings: one whose day repeats
 **exactly**, one whose peak **wanders** a few hours from day to day, and one that
 is **pure noise**. IS should fall from near 1 toward 0 across the three, and IV
@@ -201,11 +201,16 @@ dichotomy.index(agd$axis1, rest = h >= 23 | h < 7)
 plot_dichotomy(agd$axis1, rest = h >= 23 | h < 7)
 ```
 
+On this recording the active-span count median is zero, so the strict I < median
+comparison collapses to 0 percent. The dichotomy index needs a denser active span,
+a coarser epoch or a count threshold in place of the median, to separate quiet rest
+from an active day; it is a caution worth keeping for sparse minute-level counts.
+
 **Fragmentation.** `state.transitions()` gives the kRA and kAR rates, the
 rest-to-active and active-to-rest probabilities read off the plateau of the
 bout-length survival curve [@lim2011]. `transition.probability()` gives the
 maximum-likelihood and Bayesian transition probabilities of @danilevicz2024, taken
-straight from the bout counts. Both capture fragmentation a single amplitude cannot.
+straight from the epoch-to-epoch transition counts. Both capture fragmentation a single amplitude cannot.
 
 ```{r fragmentation}
 state.transitions(agd$axis1)

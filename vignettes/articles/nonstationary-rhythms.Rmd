@@ -86,7 +86,7 @@ periodogram [@sokolove1978] in each, so the dominant period and its strength bec
 rather than a single estimate. The circadian band stays near 24 hours here, but its
 power tracks the regime change instead of averaging through it.
 
-```{r spectrogram, fig.height = 4, fig.cap = "Sliding-window periodogram. Each column is one 48-hour window stepped every 12 hours; colour is periodogram power. The circadian band is visible throughout, and its strength shifts as the recording moves from the stable first week into the fragmented second."}
+```{r spectrogram, fig.height = 4, fig.cap = "Sliding-window periodogram. Each column is one 48-hour window stepped every 12 hours; colour is periodogram power relative to the significance threshold (Qp / threshold). The circadian band is visible throughout, and its strength shifts as the recording moves from the stable first week into the fragmented second."}
 circadian.spectrogram(counts10, t10, window_hours = 48, step_hours = 12,
                       epoch_length = 600)$plot
 ```
@@ -135,7 +135,7 @@ ggplot(parts, aes(t, value)) +
 ```
 
 ```{r ssa-wcor, fig.height = 3.6, fig.cap = "The SSA w-correlation matrix that justifies the grouping above: bright off-diagonal 2x2 blocks are oscillatory pairs (the circadian rhythm), a single bright cell is the trend, and the diffuse tail is noise."}
-plot_ssa_wcor(counts10, t10)
+plot_ssa_wcor(counts10, t10, window_hours = 24)
 ```
 
 Empirical mode decomposition reaches the same idea from the other direction [@huang1998]. It pulls out
@@ -143,7 +143,7 @@ data-adaptive oscillatory modes, and `hilbert.huang()` turns the circadian mode 
 instantaneous period, one value per epoch, so a period that wanders shows up as a moving
 line rather than a single number.
 
-```{r emd, fig.height = 3.2, fig.cap = "Instantaneous period of the circadian mode from the Hilbert-Huang transform. It stays near 24 hours but is not flat: the phase advance leaves its mark on the cycle-by-cycle estimate."}
+```{r emd, fig.height = 3.2, fig.cap = "Instantaneous period of the circadian mode from the Hilbert-Huang transform. It sits somewhat above 24 hours and wanders cycle to cycle, reflecting the phase advance and some mode mixing on this noisy series."}
 emd <- circadian.emd(counts, t)
 hht <- hilbert.huang(emd)
 ggplot(data.frame(t = emd$times, period = hht$period), aes(t, period)) +
@@ -158,8 +158,8 @@ ggplot(data.frame(t = emd$times, period = hht$period), aes(t, period)) +
 
 Fragmentation is a change in structure, not just in level, so it shows up in the
 multiscale measures. Splitting the recording into its clean first half and its broken
-second half, the late half carries more sample entropy [@costa2002] and a narrower multifractal
-spectrum [@kantelhardt2002], both signs that its dynamics have simplified toward noise: less predictable
+second half, the late half carries more short-scale sample entropy [@costa2002] and a narrower multifractal
+spectrum [@kantelhardt2002], both signs that its dynamics have shifted toward noise: less predictable
 from epoch to epoch, and less richly self-similar across scales.
 
 ```{r complexity}
@@ -167,7 +167,7 @@ half  <- length(counts10) %/% 2
 early <- counts10[1:half]; late <- counts10[(half + 1):length(counts10)]
 mse_e <- multiscale.entropy(early, scales = 1:10)
 mse_l <- multiscale.entropy(late,  scales = 1:10)
-c(early_complexity = mse_e$area, late_complexity = mse_l$area)
+c(early_sampen1 = mse_e$mse[1], late_sampen1 = mse_l$mse[1])
 c(early_mf_width = mfdfa(early)$width, late_mf_width = mfdfa(late)$width)
 ```
 

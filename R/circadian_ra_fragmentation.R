@@ -4,10 +4,8 @@
 #' rest/active state: the mean and median rest and active bout durations, the
 #' number of state transitions, and transitions per day. These add a
 #' bout-length view of fragmentation to the transition probabilities of
-#' \code{\link{state.transitions}} (kRA/kAR) (Lim et al. 2011). This covers
-#' rest-activity-rhythm fragmentation only; it omits the
-#' sedentary-behaviour bout distribution (Gini, power law, hazard), which
-#' is a physical-activity-epidemiology concern, not a circadian one.
+#' \code{\link{state.transitions}} (kRA/kAR) (Lim et al. 2011). It does not cover
+#' sedentary-bout distribution metrics (Gini, power law, hazard).
 #'
 #' @param state Per-epoch state: a logical vector (TRUE = active) or a character
 #'   vector where \code{"R"}/\code{"S"}/\code{"sleep"}/\code{"rest"} mark rest.
@@ -32,8 +30,10 @@
 rest.activity.fragmentation <- function(state, timestamps, epoch_length = 60) {
   if (length(state) != length(timestamps))
     stop("state and timestamps must have same length")
-  active <- if (is.logical(state)) state
-            else !(tolower(as.character(state)) %in% c("r", "s", "sleep", "rest"))
+  active <- if (is.logical(state)) state else {
+    sc <- tolower(as.character(state))
+    ifelse(is.na(sc), NA, !(sc %in% c("r", "s", "sleep", "rest")))
+  }
   ok <- !is.na(active) & !is.na(timestamps)
   active <- active[ok]; ts <- timestamps[ok]
   em <- epoch_length / 60

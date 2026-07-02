@@ -131,7 +131,7 @@ activity.onset.offset <- function(counts, timestamps, window_hours = 6) {
     rel_diff = rep(NA_real_, 1440), insufficient = TRUE), class = c("actiRhythm_aont", "list"))
   if (all(is.na(prof))) return(na_out)
   prof[is.na(prof)] <- mean(prof, na.rm = TRUE)
-  w <- as.integer(window_hours * 60)
+  w <- max(1L, min(as.integer(round(window_hours * 60)), 1440L))  # keep +/-window within the padded profile
   cp <- c(prof, prof, prof)                   # three copies, centre minute i -> 1440 + i
   rd <- vapply(seq_len(1440), function(i) {
     ci <- 1440L + i

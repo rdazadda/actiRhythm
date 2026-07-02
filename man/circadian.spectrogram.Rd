@@ -11,7 +11,7 @@ circadian.spectrogram(
   step_hours = 6,
   from = 18,
   to = 30,
-  epoch_length = 60
+  epoch_length = NULL
 )
 }
 \arguments{

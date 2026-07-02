@@ -24,10 +24,8 @@ Summarizes how broken up the rest-activity rhythm is, from a per-epoch
 rest/active state: the mean and median rest and active bout durations, the
 number of state transitions, and transitions per day. These add a
 bout-length view of fragmentation to the transition probabilities of
-\code{\link{state.transitions}} (kRA/kAR) (Lim et al. 2011). This covers
-rest-activity-rhythm fragmentation only; it omits the
-sedentary-behaviour bout distribution (Gini, power law, hazard), which
-is a physical-activity-epidemiology concern, not a circadian one.
+\code{\link{state.transitions}} (kRA/kAR) (Lim et al. 2011). It does not cover
+sedentary-bout distribution metrics (Gini, power law, hazard).
 }
 \examples{
 ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 3 * 1440)

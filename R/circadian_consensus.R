@@ -32,7 +32,8 @@ consensus.rhythmicity <- function(counts, timestamps, period = 24, alpha = 0.05,
   saf <- function(expr) tryCatch(expr, error = function(e) NULL)
 
   cos <- saf(cosinor.analysis(counts, timestamps, period = period, wear_time = wear_time))
-  rhy <- saf(rhythmicity.test(counts, timestamps, cosinor_result = cos, alpha = alpha))
+  rhy <- saf(rhythmicity.test(counts, timestamps, cosinor_result = cos, alpha = alpha,
+                              period = period, wear_time = wear_time))
   per <- saf(circadian.period(counts, timestamps))
   chi <- saf(chi.sq.periodogram(counts, timestamps))
 

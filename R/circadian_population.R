@@ -72,6 +72,7 @@ population.cosinor <- function(activity, timestamps, subject, group = NULL,
     return(out)
   }
   out <- lapply(split(coefs, coefs$group), run_group)
+  attr(out, "n_dropped") <- n_dropped
   class(out) <- "actiRhythm_population_cosinor_list"
   out
 }
@@ -232,6 +233,7 @@ cosinor.compare <- function(activity, timestamps, subject, group, period = 24,
                              period, min_valid_hours)
   if (is.null(coefs)) stop("no subject had >= ", min_valid_hours, " valid profile hours")
   gl <- sort(unique(coefs$group))
+  if (length(gl) != 2L) stop("both groups need at least one subject with a valid fit")
   g1 <- coefs[coefs$group == gl[1], , drop = FALSE]
   g2 <- coefs[coefs$group == gl[2], , drop = FALSE]
   if (nrow(g1) < 2L || nrow(g2) < 2L) stop("each group needs >= 2 subjects with a valid fit")
@@ -280,12 +282,15 @@ cosinor.compare <- function(activity, timestamps, subject, group, period = 24,
 
 
 .two.sample.test <- function(parameter, x1, x2, level) {
-  tt <- stats::t.test(x1, x2, conf.level = level)
+  tt <- tryCatch(stats::t.test(x1, x2, conf.level = level), error = function(e) NULL)
   data.frame(parameter = parameter,
              estimate1 = mean(x1), estimate2 = mean(x2),
              difference = mean(x1) - mean(x2),
-             statistic = unname(tt$statistic), df = unname(tt$parameter),
-             p_value = tt$p.value, ci_lo = tt$conf.int[1], ci_hi = tt$conf.int[2],
+             statistic = if (is.null(tt)) NA_real_ else unname(tt$statistic),
+             df = if (is.null(tt)) NA_real_ else unname(tt$parameter),
+             p_value = if (is.null(tt)) NA_real_ else tt$p.value,
+             ci_lo = if (is.null(tt)) NA_real_ else tt$conf.int[1],
+             ci_hi = if (is.null(tt)) NA_real_ else tt$conf.int[2],
              stringsAsFactors = FALSE)
 }
 

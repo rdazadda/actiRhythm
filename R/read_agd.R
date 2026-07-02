@@ -167,13 +167,11 @@ agd.counts <- function(agd_data, convert.timestamps = TRUE, include_inclinometer
 
   if ("dataTimestamp" %in% names(data)) {
     if (convert.timestamps) {
-      #  Add validation for dataTimestamp column
       if (!is.numeric(data$dataTimestamp)) {
         warning("dataTimestamp column is not numeric, attempting conversion")
         data$dataTimestamp <- as.numeric(data$dataTimestamp)
       }
 
-      # Check for NA values
       na_count <- sum(is.na(data$dataTimestamp))
       if (na_count > 0) {
         warning("Found ", na_count, " NA values in dataTimestamp column")
@@ -182,7 +180,7 @@ agd.counts <- function(agd_data, convert.timestamps = TRUE, include_inclinometer
       timestamps <- as.POSIXct((data$dataTimestamp / 10000000 - 62135596800),
                                origin = '1970-01-01', tz = 'UTC')
 
-      #  Validate timestamps are in reasonable range (1990-2050)
+      # Timestamps must fall in a plausible range (1990-2050)
       min_valid_date <- as.POSIXct("1990-01-01", tz = "UTC")
       max_valid_date <- as.POSIXct("2050-01-01", tz = "UTC")
       valid_timestamps <- !is.na(timestamps) & timestamps >= min_valid_date & timestamps <= max_valid_date
@@ -197,8 +195,10 @@ agd.counts <- function(agd_data, convert.timestamps = TRUE, include_inclinometer
     }
   } else if ("timestamp" %in% names(data)) {
     timestamps <- data$timestamp
+    if (convert.timestamps && !inherits(timestamps, "POSIXct"))
+      timestamps <- tryCatch(as.POSIXct(timestamps, tz = "UTC"), error = function(e) timestamps)
 
-    #  Validate existing timestamps if POSIXct
+    # Validate existing timestamps if POSIXct
     if (inherits(timestamps, "POSIXct")) {
       min_valid_date <- as.POSIXct("1990-01-01", tz = "UTC")
       max_valid_date <- as.POSIXct("2050-01-01", tz = "UTC")
@@ -211,9 +211,9 @@ agd.counts <- function(agd_data, convert.timestamps = TRUE, include_inclinometer
     }
   }
 
-  #  Hard stop when no real timestamp column is present. A sequential
-  #  fallback produces non-POSIXct integer "timestamps" that break all
-  #  downstream day-level and circadian analyses, so fail fast at read time.
+  # Hard stop when no real timestamp column is present. A sequential fallback
+  # produces non-POSIXct integer "timestamps" that break downstream day-level and
+  # circadian analyses, so fail fast at read time.
   if (is.null(timestamps)) {
     stop("No valid timestamp column found (dataTimestamp or timestamp). ",
          "Time-based, day-level, and circadian analyses require real timestamps.")

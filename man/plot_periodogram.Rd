@@ -4,7 +4,14 @@
 \alias{plot_periodogram}
 \title{Plot the Lomb-Scargle Periodogram with the Endogenous Period}
 \usage{
-plot_periodogram(counts, timestamps, from = 18, to = 30, ofac = 4)
+plot_periodogram(
+  counts,
+  timestamps,
+  from = 18,
+  to = 30,
+  ofac = 4,
+  alpha = 0.05
+)
 }
 \arguments{
 \item{counts}{Numeric vector of activity counts (minute-level recommended).
@@ -22,6 +29,8 @@ timestamps before estimation.}
 
 \item{ofac}{Integer oversampling factor for the period grid. Higher values give
 a finer grid (default \code{4}).}
+
+\item{alpha}{Significance level for the Baluev false-alarm threshold (default 0.05).}
 }
 \value{
 A \code{ggplot} object: Lomb-Scargle power (y) versus period in hours
@@ -42,7 +51,7 @@ clock from exactly one solar day is visible.
 The full standard-normalized Lomb-Scargle spectrum over the period window is
 computed by the package's own estimator (the same one behind
 \code{\link{circadian.period}}); the peak period \code{tau}, its Baluev
-\code{p_value}, and the 0.05 false-alarm threshold line all come from that
+\code{p_value}, and the false-alarm threshold line all come from that
 function, so the highlighted peak and threshold match the reported values. The
 Lomb-Scargle periodogram is the least-squares spectral estimator for unevenly
 sampled series and is therefore appropriate for gappy actigraphy data, which an

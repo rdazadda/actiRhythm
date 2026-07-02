@@ -146,7 +146,7 @@ rest.hmm <- function(counts, timestamps, states = 2L, transform = c("sqrt", "log
   structure(list(states = states,
     emission = data.frame(state = seq_len(states),
       mean_transformed = best$mu, sd_transformed = best$sigma,
-      label = c("rest", if (states == 3) "moderate", "active")[seq_len(states)]),
+      label = c("rest", if (states == 3) "moderate" else if (states > 3) paste0("mid", seq_len(states - 2)), "active")[seq_len(states)]),
     transition = best$Gamma, state_path = path, sleep_state = sleep_state,
     tod_profile = tod, loglik = best$llk,
     AIC = -2 * best$llk + 2 * p, BIC = -2 * best$llk + log(n) * p,

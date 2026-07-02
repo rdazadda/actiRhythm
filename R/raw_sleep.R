@@ -87,7 +87,7 @@ detect.nonwear.raw <- function(x, device = "auto", epoch = 5, block = 300,
       s <- cS[hi + 1L, a] - cS[lo, a]; ss <- cSS[hi + 1L, a] - cSS[lo, a]
       sdv <- sqrt(max(ss / N - (s / N)^2, 0))
       rng <- max(MX[lo:hi, a]) - min(MN[lo:hi, a])
-      if (sdv < sd_crit && rng < range_crit) cnt <- cnt + 1L
+      if (isTRUE(sdv < sd_crit) && isTRUE(rng < range_crit)) cnt <- cnt + 1L
     }
     score[i] <- cnt
   }
@@ -171,7 +171,7 @@ rest.spt <- function(anglez, timestamps, epoch_length = 5, pct = 10, mult = 15,
     idx <- which(day == d); if (length(idx) < min_ep) next
     xd <- x[idx]
     if (algo == "HDCZA") {
-      thr <- min(max(stats::quantile(xd, pct / 100, names = FALSE) * mult,
+      thr <- min(max(stats::quantile(xd, pct / 100, names = FALSE, na.rm = TRUE) * mult,
                      clamp[1]), clamp[2])
     } else thr <- 60
     nomov <- xd < thr
@@ -268,11 +268,12 @@ sleep.from.spt <- function(spt, sib, timestamps, epoch_length = 5) {
     tst = numeric(0), waso = numeric(0), efficiency = numeric(0),
     n_awakenings = integer(0), mid_sleep = as.POSIXct(character(0))),
     class = c("actiRhythm_sleep", "data.frame"))
-  if (!nrow(spt) || !length(sib)) return(empty)
+  if (!nrow(spt) || length(sib) != length(timestamps)) return(empty)
   rows <- list()
   for (i in seq_len(nrow(spt))) {
     inw <- which(timestamps >= spt$onset[i] & timestamps <= spt$offset[i])
     if (!length(inw)) next
+    inw <- inw[order(timestamps[inw])]          # ensure time order for span/onset/offset
     s <- sib[inw]; sleep_ep <- which(s == "S")
     if (!length(sleep_ep)) next
     span    <- sleep_ep[1]:sleep_ep[length(sleep_ep)]

@@ -22,3 +22,4 @@
 ^vignettes/.*_files$
 ^vignettes/figure$
 ^Rplots\.pdf$
+

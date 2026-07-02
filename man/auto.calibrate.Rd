@@ -31,9 +31,10 @@ windows below which a window counts as non-movement (default 0.013).}
 \value{
 A list with \code{scale} and \code{offset} (length-3), the calibration
 error before and after (\code{cal_error_start}, \code{cal_error_end}, mean
-absolute deviation from 1 g), \code{npoints}, and a \code{calibrated} flag.
-When there is too little non-movement data the identity correction is
-returned with \code{calibrated = FALSE}.
+absolute deviation from 1 g), \code{npoints}, a \code{calibrated} flag, and a
+\code{reason} string describing the outcome. When there is too little
+non-movement data the identity correction is returned with
+\code{calibrated = FALSE}.
 }
 \description{
 Estimates per-axis gain and offset corrections by the van Hees et al. (2014)

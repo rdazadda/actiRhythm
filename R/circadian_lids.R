@@ -38,7 +38,7 @@ lids <- function(counts, timestamps, sleep_periods, epoch_length = 60,
 
   fits <- Filter(Negate(is.null), lapply(seq_len(nrow(sleep_periods)), function(i) {
     sel <- ts >= ib[i] & ts < ob[i]
-    if (sum(sel) < 10L) return(NULL)
+    if (is.na(ib[i]) || is.na(ob[i]) || sum(sel, na.rm = TRUE) < 10L) return(NULL)
     f <- .lids_fit(counts[sel], epoch_length, smooth_minutes, grid_min)
     if (!is.null(f)) f$period <- i
     f

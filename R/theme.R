@@ -305,13 +305,15 @@ actiRhythm_colors <- function(n = NULL, type = "categorical") {
   )
 
   colors <- palettes[[type]]
+  if (is.null(colors))
+    stop("unknown palette '", type, "'; choose one of: ", paste(names(palettes), collapse = ", "))
 
   if (is.null(n)) {
     return(colors)
   }
 
   if (n <= length(colors)) {
-    return(colors[1:n])
+    return(colors[seq_len(n)])
   } else {
     # Interpolate if more colors needed
     return(grDevices::colorRampPalette(colors)(n))

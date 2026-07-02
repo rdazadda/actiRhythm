@@ -236,17 +236,17 @@ plot_multiscale <- function(counts, timestamps) {
   empty <- function() .circ_empty_plot("Insufficient data for the multiscale profiles",
                                         title = "Multiscale IS and IV")
   iv <- tryCatch(intradaily.variability.multiscale(counts, timestamps), error = function(e) NULL)
-  is <- tryCatch(circadian.is.multiscale(counts, timestamps), error = function(e) NULL)
-  if (is.null(iv) || is.null(is)) return(empty())
+  iss <- tryCatch(circadian.is.multiscale(counts, timestamps), error = function(e) NULL)
+  if (is.null(iv) || is.null(iss)) return(empty())
 
   lev <- c("IS (synchronisation)", "IV (fragmentation)")
   d <- rbind(
-    data.frame(bin = is$table$bin_minutes, value = is$table$IS, metric = lev[1]),
+    data.frame(bin = iss$table$bin_minutes, value = iss$table$IS, metric = lev[1]),
     data.frame(bin = iv$table$bin_minutes, value = iv$table$IV, metric = lev[2]))
   d <- d[is.finite(d$value), ]; d$metric <- factor(d$metric, levels = lev)
   if (!nrow(d)) return(empty())
-  means <- data.frame(metric = factor(lev, levels = lev), m = c(is$ISm, iv$IVm),
-                      label = sprintf(c("ISm = %.2f", "IVm = %.2f"), c(is$ISm, iv$IVm)))
+  means <- data.frame(metric = factor(lev, levels = lev), m = c(iss$ISm, iv$IVm),
+                      label = sprintf(c("ISm = %.2f", "IVm = %.2f"), c(iss$ISm, iv$IVm)))
   blue <- .circ_color("blue"); orange <- .circ_color("orange")
 
   ggplot2::ggplot(d, ggplot2::aes(.data$bin, .data$value, color = .data$metric)) +

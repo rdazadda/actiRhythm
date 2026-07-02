@@ -30,16 +30,23 @@
 #' @export
 circadian.spectrogram <- function(counts, timestamps, window_hours = 72,
                                   step_hours = 6, from = 18, to = 30,
-                                  epoch_length = 60) {
+                                  epoch_length = NULL) {
   insuf <- function() structure(list(data = NULL,
     plot = .circ_empty_plot("Insufficient data", title = "Circadian Spectrogram"),
     window_hours = window_hours, step_hours = step_hours, n_windows = 0L,
     insufficient = TRUE), class = "actiRhythm_spectrogram")
-  ts  <- as.POSIXct(timestamps)
+  ts <- if (inherits(timestamps, "POSIXct")) timestamps else
+    tryCatch(as.POSIXct(timestamps, origin = "1970-01-01", tz = "UTC"),
+             error = function(e) NULL)
+  if (is.null(ts)) return(insuf())
   cnt <- as.numeric(counts)
   ok  <- is.finite(cnt) & !is.na(ts)
   ts  <- ts[ok]; cnt <- cnt[ok]
   if (length(cnt) < 10L) return(insuf())
+  if (is.null(epoch_length)) {
+    d <- stats::median(diff(as.numeric(ts)))
+    epoch_length <- if (is.finite(d) && d > 0) d else 60
+  }
 
   t0     <- min(ts)
   span_h <- as.numeric(difftime(max(ts), t0, units = "hours"))
@@ -71,7 +78,7 @@ circadian.spectrogram <- function(counts, timestamps, window_hours = 72,
     .circ_theme()
 
   structure(list(data = long, plot = p, window_hours = window_hours,
-                 step_hours = step_hours, n_windows = length(starts),
+                 step_hours = step_hours, n_windows = length(unique(long$center_time)),
                  insufficient = FALSE),
             class = "actiRhythm_spectrogram")
 }

@@ -78,6 +78,9 @@ read.actigraph.csv <- function(filepath, tz = "UTC", date_format = "%m/%d/%Y",
 
   t0 <- as.POSIXct(strptime(paste(start_date, start_time),
                             paste(date_format, "%H:%M:%S"), tz = tz))
+  if (is.na(t0))
+    stop("could not parse Start Date/Time from the header of ", basename(filepath),
+         "; check the date_format argument")
   timestamp <- seq(t0, by = epoch_length, length.out = nrow(out))
   cbind(timestamp = timestamp, out)
 }

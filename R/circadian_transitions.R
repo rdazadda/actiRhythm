@@ -87,8 +87,8 @@ state.transitions <- function(counts, threshold = 1, frac = 0.3, iter = 0) {
   s  <- stats::sd(curve$prob)
   if (!is.finite(s) || s == 0) return(stats::weighted.mean(curve$prob, curve$weight))
 
-  below <- abs(curve$prob - sm) < s
-  rr <- rle(below)
+  in_band <- abs(curve$prob - sm) < s
+  rr <- rle(in_band)
   on <- which(rr$values)
   if (!length(on)) return(stats::weighted.mean(curve$prob, curve$weight))
 

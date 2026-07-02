@@ -81,7 +81,7 @@ shifts later samples off their true phase distorts every \(Q_P\).
   Use `circadian.spectrogram()` to see the period over time.
 - **Regular sampling, for the chi-square periodogram only.** Its phase-folding needs
   a near-uniform grid; gaps mis-align the fold. Lomb-Scargle carries the real times
-  and is unbiased under irregular sampling, the centrepiece of this article.
+  and is unbiased under irregular sampling.
 - **A search window.** The peak is taken within `[from, to]` (default 18-30 h). A
   rhythm outside the window cannot be found; widen it for ultradian or infradian work.
 
@@ -132,7 +132,7 @@ c(tau = ls$tau, peak_power = ls$peak_power, p_value = ls$p_value,
   n_used = ls$n_used, span_days = round(ls$span_days, 2))
 ```
 
-```{r ls-plot, fig.cap = "The Lomb-Scargle periodogram of the bundled recording over the 18-30 h window. The orange line marks the dominant period, the grey dashed line is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm threshold, which is flat across periods (unlike the chi-square critical curve below). The peak sits to the right of 24, a longer-than-day dominant cycle."}
+```{r ls-plot, fig.cap = "The Lomb-Scargle periodogram of the bundled recording over the 18-30 h window. The orange line marks the dominant period, the grey dashed line is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm threshold, which is flat across periods (unlike the chi-square critical curve below). The peak sits just above 24 hours, close to a solar day."}
 plot_periodogram(agd$axis1, agd$timestamp)
 ```
 

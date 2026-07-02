@@ -23,10 +23,8 @@ reference, hours), \code{reference_phase}, and \code{n_days}.
 Combines, for each day, the deviation of the phase marker from the
 individual's own mean phase (precision) and from a reference phase
 (accuracy) as \code{CPD = mean(sqrt(precision^2 + accuracy^2))}. When no
-external reference phase is supplied, accuracy is taken relative to the
-individual's own mean phase (accuracy = 0), so CPD reduces to the mean
-absolute phase deviation - still a valid, published measure of phase
-instability, and distinct from the circular SD reported by
+external reference phase is supplied, accuracy is measured from the
+individual's own mean phase. CPD is distinct from the circular SD reported by
 \code{onset_timing_variability}.
 }
 \references{

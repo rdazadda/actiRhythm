@@ -119,6 +119,7 @@ NULL
 #'   (default \code{30}).
 #' @param ofac Integer oversampling factor for the period grid. Higher values give
 #'   a finer grid (default \code{4}).
+#' @param alpha Significance level for the Baluev false-alarm threshold (default 0.05).
 #'
 #' @return A \code{ggplot} object: Lomb-Scargle power (y) versus period in hours
 #'   (x), with the peak period and the 24 h reference annotated. On insufficient
@@ -130,7 +131,7 @@ NULL
 #' The full standard-normalized Lomb-Scargle spectrum over the period window is
 #' computed by the package's own estimator (the same one behind
 #' \code{\link{circadian.period}}); the peak period \code{tau}, its Baluev
-#' \code{p_value}, and the 0.05 false-alarm threshold line all come from that
+#' \code{p_value}, and the false-alarm threshold line all come from that
 #' function, so the highlighted peak and threshold match the reported values. The
 #' Lomb-Scargle periodogram is the least-squares spectral estimator for unevenly
 #' sampled series and is therefore appropriate for gappy actigraphy data, which an
@@ -156,7 +157,7 @@ NULL
 #'
 #' @export
 plot_periodogram <- function(counts, timestamps, from = 18, to = 30,
-                             ofac = 4) {
+                             ofac = 4, alpha = 0.05) {
 
   if (!requireNamespace("ggplot2", quietly = TRUE)) {
     stop("Package 'ggplot2' is required for plot_periodogram().")
@@ -218,7 +219,7 @@ plot_periodogram <- function(counts, timestamps, from = 18, to = 30,
   )
   tau <- if (!is.null(cp) && is.finite(cp$tau)) cp$tau else NA_real_
   p_value <- if (!is.null(cp) && is.finite(cp$p_value)) cp$p_value else NA_real_
-  thr <- .lomb_fap_power(0.05, lsp$n, lsp$W)
+  thr <- .lomb_fap_power(alpha, lsp$n, lsp$W)
 
   accent <- .circ_color("blue")
   peak_col <- .circ_color("orange")
@@ -265,7 +266,7 @@ plot_periodogram <- function(counts, timestamps, from = 18, to = 30,
   p +
     ggplot2::labs(
       title = ttl,
-      subtitle = if (is.finite(thr)) "dashed line = 0.05 false-alarm threshold (Baluev)" else NULL,
+      subtitle = if (is.finite(thr)) sprintf("dashed line = %.2g false-alarm threshold (Baluev)", alpha) else NULL,
       x = "Period (hours)",
       y = "Lomb-Scargle power"
     ) +
@@ -786,7 +787,7 @@ plot_extended_cosinor <- function(counts, timestamps, period = 24) {
       )
   }
 
-  subtitle <- if (ext_ok) {
+  subtitle <- if (ext_ok && is.finite(ext$MESOR)) {
     sprintf(
       "Marler fit: MESOR = %.1f, amplitude = %.1f, alpha = %.2f, beta = %.2f",
       ext$MESOR, ext$amplitude, ext$alpha, ext$beta

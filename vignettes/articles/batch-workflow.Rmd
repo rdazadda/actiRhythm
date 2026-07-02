@@ -119,9 +119,10 @@ knitr::kable(
 )
 ```
 
-`cosinor.compare()` then tests whether the two groups differ. The omnibus is a Bingham
-/ Hotelling \(T^2\) on the joint (MESOR, cosine, sine) vector [@bingham1982]; the
-per-parameter rows break it down, with the acrophase test made circular-aware.
+`cosinor.compare()` then tests whether the two groups differ. The amplitude/acrophase
+test is a two-variate Hotelling \(T^2\) on the (cosine, sine) coefficients [@bingham1982];
+the MESOR difference is a separate pooled-variance F-test. The per-parameter rows break
+both down, with the acrophase test made circular-aware.
 
 ```{r compare-recover}
 cmp <- cosinor.compare(act, ts, subject = subj, group = grp)

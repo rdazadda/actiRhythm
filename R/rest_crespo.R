@@ -104,7 +104,8 @@ rest.crespo <- function(counts, timestamps, epoch_length = 60, zeta = 15,
   ts <- timestamps
   n <- length(x)
   if (n != length(ts)) stop("counts and timestamps must have same length")
-  if (n < L_w || all(is.na(x)) || stats::sd(x, na.rm = TRUE) == 0)
+  sdv <- stats::sd(x, na.rm = TRUE)
+  if (n < L_w || all(is.na(x)) || !is.finite(sdv) || sdv == 0)
     return(out(empty_periods(), rep(NA_character_, n)))
   x[is.na(x)] <- 0
 

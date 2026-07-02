@@ -73,8 +73,10 @@ In order of increasing waveform flexibility, choose the simplest the percent-rhy
 says is enough:
 
 - `cosinor.analysis()`: one symmetric cosine; simplest and most interpretable.
-- `cosinor.extended()` / `cosinor.antilogistic()`: adds nonlinear shape for the
-  asymmetric, squared-off real day [@marler2006].
+- `cosinor.extended()`: several fixed harmonics (24 h + 12 h) for a bimodal or
+  asymmetric day [@cornelissen2014].
+- `cosinor.antilogistic()`: a sigmoidally transformed cosine with squared-off peaks
+  and troughs [@marler2006].
 - `cosinor.multicomponent()`: several harmonics, with the number chosen by AIC or
   BIC.
 - `circadian.flm()`: a functional model of the whole daily profile that follows
@@ -167,12 +169,12 @@ Every function above describes one recording. For a study:
 
 | Your question | Reach for | Walkthrough |
 |---|---|---|
-| Is there a rhythm, and how strong? | `circadian.rhythm`, `cosinor.analysis` + `rhythmicity.test`, `consensus.rhythmicity` | Get started |
-| What is the period? | `circadian.period`, `chi.sq.periodogram`, `period.ci` | Get started |
-| What shape is the day? | `cosinor.extended`, `cosinor.multicomponent`, `circadian.flm` | Beyond the basics |
+| Is there a rhythm, and how strong? | `circadian.rhythm`, `cosinor.analysis` + `rhythmicity.test`, `consensus.rhythmicity` | Getting started |
+| What is the period? | `circadian.period`, `chi.sq.periodogram`, `period.ci` | Period and spectral analysis |
+| What shape is the day? | `cosinor.extended`, `cosinor.multicomponent`, `circadian.flm` | Cosinor models |
 | Does it drift or fragment? | `circadian.spectrogram`, `circadian.ssa`, `circadian.emd`, `sleep.changepoints` | Nonstationary and complex rhythms |
 | How fractal/complex? | `fractal.dfa`, `mfdfa`, `multiscale.entropy` | Beyond the basics |
-| When is sleep, how regular? | `sleep.cole.kripke`/`sleep.sadeh`, `sleep.regularity.index`, `rest.periods`/`rest.crespo` | Get started |
+| When is sleep, how regular? | `sleep.cole.kripke`/`sleep.sadeh`, `sleep.regularity.index`, `rest.periods`/`rest.crespo` | Sleep and rest detection |
 | Raw files, posture, diary-free sleep | `read.raw`, `raw.metrics`, `rest.spt` + `sib.vanhees` | From raw acceleration |
 | A group, not one subject | `population.cosinor`, `cosinor.compare`, then `lme4`/`nlme` | Get started |
 | What does column *X* mean? | the metric tables | Output codebook |

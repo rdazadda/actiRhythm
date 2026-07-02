@@ -72,7 +72,7 @@
       stop("reading .gt3x requires the 'read.gt3x' package")
     mat <- read.gt3x::read.gt3x(path, asDataFrame = FALSE, imputeZeroes = TRUE)
     m  <- unclass(mat)
-    t0 <- as.numeric(attr(mat, "start_time")) + attr(mat, "time_index")[1] / 100
+    t0 <- as.numeric(attr(mat, "start_time")) + attr(mat, "time_index")[1] / 100  # time_index in 1/100 s ticks
     g  <- .locf_idle_sleep(m[, "X"], m[, "Y"], m[, "Z"])   # carry gravity through idle-sleep
     return(list(x = g$x, y = g$y, z = g$z, fs = attr(mat, "sample_rate"),
                 start = as.POSIXct(t0, origin = "1970-01-01", tz = tz)))

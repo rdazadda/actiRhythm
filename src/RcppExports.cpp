@@ -37,13 +37,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // calculate_L1_M1_cpp
-Rcpp::List calculate_L1_M1_cpp(NumericVector minute_data);
-RcppExport SEXP _actiRhythm_calculate_L1_M1_cpp(SEXP minute_dataSEXP) {
+Rcpp::List calculate_L1_M1_cpp(NumericVector minute_data, int start_minute);
+RcppExport SEXP _actiRhythm_calculate_L1_M1_cpp(SEXP minute_dataSEXP, SEXP start_minuteSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type minute_data(minute_dataSEXP);
-    rcpp_result_gen = Rcpp::wrap(calculate_L1_M1_cpp(minute_data));
+    Rcpp::traits::input_parameter< int >::type start_minute(start_minuteSEXP);
+    rcpp_result_gen = Rcpp::wrap(calculate_L1_M1_cpp(minute_data, start_minute));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -159,7 +160,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_actiRhythm_sliding_window_mean_cpp", (DL_FUNC) &_actiRhythm_sliding_window_mean_cpp, 2},
     {"_actiRhythm_calculate_L5_M10_cpp", (DL_FUNC) &_actiRhythm_calculate_L5_M10_cpp, 4},
-    {"_actiRhythm_calculate_L1_M1_cpp", (DL_FUNC) &_actiRhythm_calculate_L1_M1_cpp, 1},
+    {"_actiRhythm_calculate_L1_M1_cpp", (DL_FUNC) &_actiRhythm_calculate_L1_M1_cpp, 2},
     {"_actiRhythm_calculate_IS_cpp", (DL_FUNC) &_actiRhythm_calculate_IS_cpp, 2},
     {"_actiRhythm_calculate_IV_cpp", (DL_FUNC) &_actiRhythm_calculate_IV_cpp, 1},
     {"_actiRhythm_calculate_phi_cpp", (DL_FUNC) &_actiRhythm_calculate_phi_cpp, 2},

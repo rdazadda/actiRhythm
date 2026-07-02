@@ -70,8 +70,8 @@ Rcpp::List sliding_window_mean_cpp(NumericVector x, int window_size) {
 }
 
 
-// Calculate L5 and M10 from minute-level data using van Someren (1999) method
-// CORRECT METHOD: First create average 24-hour profile, then apply circular sliding window
+// Calculate L5 and M10 from minute-level data (van Someren 1999): build the average
+// 24-hour profile, then apply a circular sliding window.
 // window_L5: number of minutes for L5 (typically 300 = 5 hours)
 // window_M10: number of minutes for M10 (typically 600 = 10 hours)
 // start_minute: minute of day when data starts (0-1439). If data starts at 14:30, this is 870.
@@ -105,10 +105,8 @@ Rcpp::List calculate_L5_M10_cpp(NumericVector minute_data,
     // Validate start_minute
     start_minute = ((start_minute % MINUTES_PER_DAY) + MINUTES_PER_DAY) % MINUTES_PER_DAY;
 
-    // STEP 1: Create average 24-hour profile
-    // This is the KEY step that matches the standard van Someren method
-    // Average activity at each minute-of-day across all days
-    // Use start_minute offset to correctly map index to minute-of-day
+    // Average activity at each minute-of-day across all days (van Someren profile);
+    // the start_minute offset maps the index to the correct minute-of-day.
 
     std::vector<double> avg_profile(MINUTES_PER_DAY, 0.0);
     std::vector<int> count_profile(MINUTES_PER_DAY, 0);
@@ -139,9 +137,9 @@ Rcpp::List calculate_L5_M10_cpp(NumericVector minute_data,
             int prev = -1, next = -1;
             for (int d = 1; d < MINUTES_PER_DAY / 2; ++d) {
                 int p = (m - d + MINUTES_PER_DAY) % MINUTES_PER_DAY;
-                int n = (m + d) % MINUTES_PER_DAY;
+                int nb = (m + d) % MINUTES_PER_DAY;
                 if (prev < 0 && valid_bin[p]) prev = p;
-                if (next < 0 && valid_bin[n]) next = n;
+                if (next < 0 && valid_bin[nb]) next = nb;
                 if (prev >= 0 && next >= 0) break;
             }
             if (prev >= 0 && next >= 0) {
@@ -231,8 +229,8 @@ Rcpp::List calculate_L5_M10_cpp(NumericVector minute_data,
 
 // Calculate L1 and M1 (1-hour windows for finer granularity)
 // [[Rcpp::export]]
-Rcpp::List calculate_L1_M1_cpp(NumericVector minute_data) {
-    return calculate_L5_M10_cpp(minute_data, 60, 60);
+Rcpp::List calculate_L1_M1_cpp(NumericVector minute_data, int start_minute = 0) {
+    return calculate_L5_M10_cpp(minute_data, 60, 60, start_minute);
 }
 
 
@@ -284,7 +282,7 @@ double calculate_IS_cpp(NumericVector hourly_data, int hours_per_day = 24) {
 
     // IS = (n * Var(hourly_means)) / Var(total)
     double IS = var_hourly / var_total;
-
+    if (var_total == 0.0 || !R_finite(IS)) return NA_REAL;
     return std::max(0.0, std::min(1.0, IS));
 }
 
@@ -399,7 +397,7 @@ NumericVector rolling_mean_cpp(NumericVector x, int window) {
 }
 
 
-// Rolling standard deviation with O(n) complexity using Welford's algorithm
+// Rolling standard deviation, O(n*window): a Welford pass per window for numerical stability
 // [[Rcpp::export]]
 NumericVector rolling_sd_cpp(NumericVector x, int window) {
     int n = x.size();
@@ -528,11 +526,12 @@ Rcpp::List calculate_all_circadian_cpp(NumericVector minute_data,
     NumericVector hourly_data(n_hours);
     for (int h = 0; h < n_hours; ++h) {
         double sum = 0.0;
+        int valid = 0;
         for (int m = 0; m < 60; ++m) {
             int idx = h * 60 + m;
-            if (idx < n) sum += minute_data[idx];
+            if (idx < n && R_finite(minute_data[idx])) { sum += minute_data[idx]; ++valid; }
         }
-        hourly_data[h] = sum;
+        hourly_data[h] = (valid > 0) ? sum : NA_REAL;
     }
 
     // Calculate L5/M10 with correct time alignment

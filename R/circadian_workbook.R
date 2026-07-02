@@ -184,7 +184,7 @@ circadian.batch <- function(files, file = NULL, metric = c("axis1", "vm"),
     if (verbose) message(sprintf("[%d/%d] %s", i, length(files), basename(f)))
     tryCatch({
       agd <- agd.counts(read.agd(f, verbose = FALSE))
-      act <- if (metric == "vm" && all(c("axis2", "axis3") %in% names(agd))) {
+      act <- if (metric == "vm" && !all(is.na(agd$axis2)) && !all(is.na(agd$axis3))) {
         sqrt(agd$axis1^2 + agd$axis2^2 + agd$axis3^2)
       } else agd$axis1
       el <- if (!is.null(epoch_length)) epoch_length else {

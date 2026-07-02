@@ -200,11 +200,12 @@ ultradian.bandpower <- function(counts, timestamps,
   if (length(counts) != length(timestamps))
     stop("counts and timestamps must have same length")
   x <- suppressWarnings(as.numeric(counts))
-  x[!is.finite(x)] <- 0
+  x <- x[order(timestamps)]                   # decompose in time order
+  x[!is.finite(x)] <- 0                       # zero-fill to keep the regular grid MODWT needs
   ep_h <- epoch_length / 3600
   N <- length(x)
   na_out <- structure(list(bands = data.frame(), levels = data.frame(),
-    insufficient = TRUE), class = c("actiRhythm_bandpower", "list"))
+    smooth_fraction = NA_real_, insufficient = TRUE), class = c("actiRhythm_bandpower", "list"))
   if (N < 16L || stats::sd(x) == 0) return(na_out)
 
   xc <- x - mean(x)

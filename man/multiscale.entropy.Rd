@@ -52,8 +52,7 @@ embedding dimension \code{m} and the FIXED absolute tolerance
 \code{r * sd(x_original)}. Sample Entropy is the negative natural log of the
 conditional probability that two sub-sequences matching for \code{m} points
 (within the tolerance, Chebyshev distance, self-matches excluded) also match
-for \code{m + 1} points. The implementation is fully self-contained (base R /
-\pkg{stats} only).
+for \code{m + 1} points.
 }
 \examples{
 \donttest{

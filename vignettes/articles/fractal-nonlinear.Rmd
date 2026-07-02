@@ -115,7 +115,7 @@ n <- 8192
 white <- rnorm(n)                                   # planted alpha = 0.5
 brown <- cumsum(rnorm(n))                            # planted alpha = 1.5
 pink  <- {                                           # planted alpha = 1.0
-  amp  <- 1 / sqrt(1:(n / 2))                        # 1/f amplitude spectrum
+  amp  <- 1 / sqrt(1:(n / 2))                        # 1/sqrt(f) amplitude -> 1/f power
   ph   <- runif(n / 2, 0, 2 * pi)
   half <- complex(modulus = c(0, amp), argument = c(0, ph))
   Re(fft(c(half, Conj(rev(half[2:(n / 2)]))), inverse = TRUE))[1:n]
@@ -133,10 +133,12 @@ knitr::kable(
 ```
 
 The exponent tracks the planted process almost exactly. The fluctuation plot for the
-random-walk (brown) series shows the scaling directly: a single straight line on
-log-log axes, whose slope is the exponent.
+random-walk (brown) series shows the scaling directly on log-log axes, with one
+dominant slope, the scaling exponent. `plot_dfa()` also draws the short- and
+long-scale segment fits and a breakpoint marker; for a monofractal series they coincide
+with that overall line.
 
-```{r dfa-plot, fig.cap = "DFA fluctuation curve for the random-walk (brown) series on log-log axes. The slope is the scaling exponent (~1.5 here); one straight line is monofractal scaling."}
+```{r dfa-plot, fig.cap = "DFA fluctuation curve for the random-walk (brown) series on log-log axes. The slope is the scaling exponent (~1.5 here); the coinciding short- and long-scale segments mark monofractal scaling."}
 plot_dfa(brown)
 ```
 

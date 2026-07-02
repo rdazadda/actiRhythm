@@ -10,18 +10,17 @@
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
-**actiRhythm turns activity counts or raw acceleration into a complete
-picture of the circadian rest-activity rhythm.** It reads ActiGraph
-`.agd` counts and raw `.gt3x`, `.cwa`, and `.bin` recordings,
-auto-calibrates the raw signal, and derives the ENMO, MAD, and z-angle
-metrics that agree with GGIR. From a single recording it computes what a
-chronobiology analysis reports, from the nonparametric measures and
-cosinor through periodograms and fractal structure to wavelet and
-empirical-mode decomposition, sleep scoring, and a state-space
-rest-activity model. Methods that usually live in separate packages, or
-in no R package at all, sit behind one consistent interface, and every
-analysis returns a typed object that prints its own summary and draws
-its own plots.
+**actiRhythm turns activity counts or raw acceleration into the full set
+of circadian rest-activity measures.** It reads ActiGraph `.agd` counts
+and raw `.gt3x`, `.cwa`, and `.bin` recordings, auto-calibrates the raw
+signal, and derives the ENMO, MAD, and z-angle metrics that agree with
+GGIR. From a single recording it computes what a chronobiology analysis
+reports, from the nonparametric measures and cosinor through
+periodograms and fractal structure to wavelet and empirical-mode
+decomposition, sleep scoring, and a hidden Markov rest-activity model.
+Methods that usually live in separate packages, or in no R package at
+all, sit behind one consistent interface, and every analysis returns a
+typed object that prints its own summary and draws its own plots.
 
 Each method carries the reference that defined it, and where a trusted
 implementation already exists, actiRhythm is checked against it: the raw
@@ -123,12 +122,12 @@ the package’s test suite.
 statistically real; `cosinor.multicomponent()` adds harmonics and
 `population.cosinor()` compares groups. `circadian.period()` estimates
 the free-running period from a Lomb-Scargle periodogram (Lomb 1976) and
-`chi.sq.periodogram()` from the chi-square periodogram (Sokolove 1978);
-`period.ci()` puts a bootstrap interval on it, and
+`chi.sq.periodogram()` from the chi-square periodogram (Sokolove and
+Bushell 1978); `period.ci()` puts a bootstrap interval on it, and
 `circadian.spectrogram()` shows how the period drifts across the
 recording. `fractal.dfa()` measures the long-range correlation in the
-series (Peng 1994), and `mfdfa()` and `multiscale.entropy()` describe
-its finer nonlinear structure.
+series (Peng et al. 1994), and `mfdfa()` and `multiscale.entropy()`
+describe its finer nonlinear structure.
 
 **Rhythms that move rather than repeat.** A set of nonstationary methods
 reads the change directly. `circadian.wavelet()` returns the
@@ -147,8 +146,8 @@ days on their active-phase landmark for a scale-invariant phase marker.
 Sadeh et al. 1994). `rest.periods()` (Roenneberg et al. 2015) returns
 every consolidated rest bout, naps included, while `rest.crespo()`
 (Crespo et al. 2012) detects the main daily rest periods.
-`sleep.regularity.index()` (Phillips 2017), `social.jet.lag()`, and
-`lids()` (Winnebeck 2018) summarise sleep regularity, chronotype
+`sleep.regularity.index()` (Phillips et al. 2017), `social.jet.lag()`,
+and `lids()` (Winnebeck 2018) summarise sleep regularity, chronotype
 misalignment, and the ultradian sleep cycle, and `phase.concentration()`
 and `state.transitions()` test day-to-day phase clustering and
 rest-activity fragmentation.
@@ -164,11 +163,12 @@ treated as an approximation rather than native ActiGraph output.
 Hees (2014) auto-calibration, and `circadian.raw()` runs every method
 above on ENMO from one call. The z-angle drives a diary-free sleep
 pipeline that counts cannot: `rest.spt()` finds the nightly sleep-period
-window (HDCZA, van Hees 2018), `sib.vanhees()` scores
-sustained-inactivity bouts (van Hees 2015), and `sleep.from.spt()`
-reports onset, wake, WASO, and efficiency. `detect.nonwear.choi()`,
-`detect.nonwear.troiano()`, and `detect.nonwear.raw()` flag non-wear
-time (Choi et al. 2011; Troiano et al. 2008; van Hees et al. 2013).
+window (HDCZA, van Hees et al. 2018), `sib.vanhees()` scores
+sustained-inactivity bouts (van Hees et al. 2015), and
+`sleep.from.spt()` reports onset, wake, WASO, and efficiency.
+`detect.nonwear.choi()`, `detect.nonwear.troiano()`, and
+`detect.nonwear.raw()` flag non-wear time (Choi et al. 2011; Troiano et
+al. 2008; van Hees et al. 2013).
 
 **Plots and batch reports.** Every analysis prints a readable summary
 and draws a themed `ggplot`: the actogram and periodogram, the

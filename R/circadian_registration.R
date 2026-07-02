@@ -52,7 +52,7 @@ curve.registration <- function(counts, timestamps, n_grid = 144L, period = 24) {
   for (di in seq_along(udays)) {
     d <- udays[di]
     idx <- day == d; xd <- x[idx]; td <- ts[idx]
-    if (sum(is.finite(xd)) < n_grid * binw * 0.3) next
+    if (sum(is.finite(xd)) < length(xd) * 0.3) next
     mod <- as.POSIXlt(td)$hour * 60 + as.POSIXlt(td)$min
     g <- pmin(floor(mod / binw) + 1L, n_grid)
     p <- as.numeric(tapply(xd, factor(g, levels = seq_len(n_grid)), mean, na.rm = TRUE))

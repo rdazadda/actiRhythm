@@ -27,7 +27,8 @@
 
 # Mean period (hours) of an IMF from its zero-crossing count.
 .imf_period <- function(imf, epoch_seconds) {
-  zc <- sum(abs(diff(sign(imf))) > 0)
+  s <- sign(imf); s <- s[s != 0]              # drop exact zeros (incl. pinned endpoints)
+  zc <- if (length(s) < 2) 0L else sum(abs(diff(s)) > 0)
   if (zc < 2) return(NA_real_)
   (length(imf) / (zc / 2)) * epoch_seconds / 3600
 }

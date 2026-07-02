@@ -25,7 +25,8 @@ NULL
 #' @param window_L5 L5 window in minutes (default: 300)
 #' @param window_M10 M10 window in minutes (default: 600)
 #' @param start_minute Start minute of day (0-1439)
-#' @return List with L5_value, L5_onset, M10_value, M10_onset, RA
+#' @return List with L5_value, L5_onset, L5_onset_hours, M10_value, M10_onset,
+#'   M10_onset_hours, RA
 #' @export
 L5M10_cpp <- function(minute_data, window_L5 = 300L, window_M10 = 600L, start_minute = 0L) {
   calculate_L5_M10_cpp(as.numeric(minute_data), as.integer(window_L5),

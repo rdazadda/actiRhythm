@@ -133,10 +133,7 @@ sri.matrix <- function(sleep_state, timestamps, epoch_length = 60) {
     return(na_result())
   }
 
-  # Map distinct dates to consecutive day indices preserving chronological
-  # order. Note: gaps in the calendar (a missing day in the middle) become an
-  # all-NA column, so the pairs spanning that gap are simply never counted -
-  # exactly the desired behaviour.
+  # Distinct dates to consecutive day indices, in chronological order.
   uniq_dates <- sort(unique(date_chr[valid_row]))
   N <- length(uniq_dates)
 
@@ -145,20 +142,15 @@ sri.matrix <- function(sleep_state, timestamps, epoch_length = 60) {
     return(na_result(n_days = N, n_valid_pairs = 0L))
   }
 
-  # Build a full N-day calendar (including any internal missing days) so that
-  # "consecutive" means consecutive calendar days, not consecutive present
-  # days. A missing internal day yields an all-NA column and breaks the chain
-  # of comparisons across it (no spurious concordance is credited).
+  # Full N-day calendar so "consecutive" means consecutive calendar days; an
+  # internal missing day is an all-NA column, and pairs across it are not counted.
   d0 <- as.Date(uniq_dates[1])
   d1 <- as.Date(uniq_dates[N])
   all_dates <- as.character(seq(d0, d1, by = "day"))
   N <- length(all_dates)
   date_to_j <- match(date_chr, all_dates)
 
-  # Populate the M x N matrix
-  # Initialise to NA; fill only valid (non-NA timestamp) epochs. If two epochs
-  # ever map to the same (i, j) cell (e.g. duplicate timestamps), the later
-  # assignment wins - acceptable and rare for clean epoch grids.
+  # M x N matrix, NA-filled; a duplicate (i, j) cell takes the last write.
   s <- matrix(NA_real_, nrow = M, ncol = N)
   fill <- valid_row & !is.na(date_to_j)
   s[cbind(i_idx[fill], date_to_j[fill])] <- state[fill]

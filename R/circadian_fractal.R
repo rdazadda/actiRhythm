@@ -211,8 +211,8 @@ fractal.dfa <- function(x, scale_min = 4, scale_max = NULL,
   fluct_ok <- fluct[ok]
   if (length(scales_ok) < 2L) {
     res <- empty_result(N)
-    res$scales <- scales
-    res$fluctuations <- fluct
+    res$scales <- scales_ok
+    res$fluctuations <- fluct_ok
     return(res)
   }
 
@@ -358,8 +358,7 @@ fractal.dfa <- function(x, scale_min = 4, scale_max = NULL,
 #' \code{r * sd(x_original)}. Sample Entropy is the negative natural log of the
 #' conditional probability that two sub-sequences matching for \code{m} points
 #' (within the tolerance, Chebyshev distance, self-matches excluded) also match
-#' for \code{m + 1} points. The implementation is fully self-contained (base R /
-#' \pkg{stats} only).
+#' for \code{m + 1} points.
 #'
 #' @examples
 #' \donttest{
@@ -413,7 +412,7 @@ multiscale.entropy <- function(x, scales = 1:20, m = 2, r = 0.15) {
     .sample_entropy(cg, m = m, r = r_abs)
   }, numeric(1))
 
-  area <- sum(mse, na.rm = TRUE)
+  area <- if (any(is.finite(mse))) sum(mse, na.rm = TRUE) else NA_real_
 
   ok <- is.finite(mse)
   slope <- NA_real_
@@ -468,13 +467,13 @@ print.actiRhythm_dfa <- function(x, ...) {
 print.actiRhythm_mse <- function(x, ...) {
   cat("\nMultiscale Sample Entropy (Costa et al., 2002)\n\n")
   cat(sprintf("  Samples analyzed:   %d\n", x$n_used))
-  cat(sprintf("  Scales:             %d (1-%d)\n",
+  cat(sprintf("  Scales:             %d (%s)\n",
               length(x$scales),
-              if (length(x$scales)) max(x$scales) else 0L))
+              if (length(x$scales)) paste(range(x$scales), collapse = "-") else "none"))
   cat(sprintf("  SampEn @ scale 1:   %s\n",
               .fmt_num(if (length(x$mse)) x$mse[1L] else NA_real_)))
   cat(sprintf("  Complexity (area):  %s\n", .fmt_num(x$area)))
-  cat(sprintf("  Slope (mse on scale):%s\n", .fmt_num(x$slope)))
+  cat(sprintf("  Slope (mse on scale): %s\n", .fmt_num(x$slope)))
   cat("\n  Negative slope => noise-like; flat/positive => complex\n\n")
   invisible(x)
 }

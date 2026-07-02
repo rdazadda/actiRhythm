@@ -99,6 +99,8 @@ plot_rest_comparison <- function(counts, timestamps) {
       inband(rp$rest_periods, "onset", "offset") else logical(n),
     `rest.crespo` = if (!is.null(rc) && !isTRUE(rc$insufficient))
       inband(rc$rest_periods, "onset", "offset") else logical(n),
+    # rest.hmm returns a per-epoch state path, so it is mapped positionally and
+    # shown only when it aligns 1:1 with the input epochs.
     `rest.hmm` = if (!is.null(hm) && !isTRUE(hm$insufficient) && length(hm$sleep_state) == n)
       hm$sleep_state == "S" else logical(n))
 

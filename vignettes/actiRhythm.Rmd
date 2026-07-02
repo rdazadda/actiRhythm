@@ -134,10 +134,10 @@ per <- circadian.period(agd$axis1, agd$timestamp)
 c(tau = per$tau, p_value = per$p_value)
 ```
 
-The strongest cycle here sits near 25.4 hours, meaningfully longer than a solar day,
+The strongest cycle here sits near 24.9 hours, a little longer than a solar day,
 and the false-alarm probability is essentially zero, so the cycle itself is not in
-doubt. Its exact length is less certain. `period.ci()` refines that peak and
-bootstraps it with a circular block bootstrap [@kunsch1989; @politis1992], which respects the autocorrelation in activity data. The interval it
+doubt. Its exact length is less certain. `period.ci()` puts a confidence interval
+around that same peak with a circular block bootstrap [@kunsch1989; @politis1992], which respects the autocorrelation in activity data. The interval it
 returns is wide enough to span 24 hours. On a single recording the period is clearly
 present but not pinned to the hour. Passing `seed = 1` makes the bootstrap
 reproducible; the 50 replicates here keep the vignette fast, and a real interval
@@ -170,10 +170,10 @@ dominant period move, the chronobiology equivalent of a music spectrogram.
 circadian.spectrogram(agd$axis1, agd$timestamp, step_hours = 24)$plot
 ```
 
-Follow the band of colour left to right: here it drifts upward, the dominant period
-lengthening across the recording rather than holding at 24 hours. Read the later
-windows with some caution, since they ride the upper edge of the search band, where
-a weakening rhythm and a genuinely longer period can look alike.
+Follow the band of colour left to right: here the dominant period wanders rather than
+holding steady at 24 hours. Read the final window with particular caution, since it
+rides the upper edge of the search band, where a weakening rhythm and a genuinely
+longer period can look alike.
 
 ## Nonlinear structure
 
@@ -241,9 +241,9 @@ ggplot(cps, aes(time, clock, colour = type)) +
 ```
 
 For this recording the detector finds seven nights, sleep onset late in the evening
-and wake onset around seven in the morning, with most nights near eight to nine hours
-of rest. That is the per-night sleep and wake timing the single transition rate above
-cannot localise.
+and wake onset spread from early morning to around midday, with most rest spans in the
+eleven-to-twelve-hour range. That is the per-night sleep and wake timing the single
+transition rate above cannot localise.
 
 ## Every rest bout, naps included
 
@@ -310,9 +310,9 @@ vote and a Cauchy-combined p-value [@liu2020].
 consensus.rhythmicity(agd$axis1, agd$timestamp)
 ```
 
-For this recording the tests agree that a rhythm is present and the combined
-p-value is effectively zero, so the evidence leans firmly toward a real rhythm even
-where one method on its own might hesitate. The three tests run on the same series,
+For this recording a majority of the tests find a rhythm (two of the three) and the
+combined p-value is effectively zero, so the evidence leans firmly toward a real rhythm
+even where one method on its own hesitates. The three tests run on the same series,
 so they are not independent; the Cauchy combination stays valid under that
 dependence, where Fisher's method would not.
 
@@ -355,8 +355,8 @@ batch[, c("file", "IS", "IV", "RA", "period_tau", "rhythm_p_value")]
 
 Each row is one subject, described by the same metrics as the walkthrough above, and
 already the two differ: the second is steadier from day to day (higher IS) but less
-amplitude-modulated (lower RA), and its rhythm clears significance only at the
-margin. Point the call at your own folder and nothing else changes.
+amplitude-modulated (lower RA), and its rhythm falls just short of significance
+(p = 0.05). Point the call at your own folder and nothing else changes.
 
 When you want the full analysis for a single recording rather than a summary row,
 `circadian.workbook()` writes every table to a multi-sheet Excel file: a summary row

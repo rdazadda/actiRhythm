@@ -25,6 +25,7 @@ maximum slightly below it at a finite steepness.}
 \item{beta}{Steepness parameter (\eqn{\ge 0}).}
 \item{acrophase}{Time of peak activity in clock hours (\code{acrotime}).}
 \item{acrotime}{Alias of \code{acrophase} (ActCR naming).}
+\item{peak}{Fitted activity level at the acrophase (renormalized Marler peak).}
 \item{UpMesor}{Clock time of the rest-to-active (rising) transition,
 \eqn{-\arccos(\alpha) / (2\pi/T) + acrotime}.}
 \item{DownMesor}{Clock time of the active-to-rest (falling) transition,

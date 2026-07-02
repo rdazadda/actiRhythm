@@ -143,11 +143,8 @@ circadian.rhythm <- function(counts,
     exists("calculate_L5_M10_cpp") && is.function(get("calculate_L5_M10_cpp"))
   }, error = function(e) FALSE)
 
-  # 
-
   if (cpp_available) {
-    # Use fast C++ implementations (10-50x faster)
-    # Convert to minute-level if needed
+    # C++ L5/M10 backend
     epochs_per_min <- 60 / epoch_length
 
     # Validate epoch length - must divide 60 evenly for proper aggregation
@@ -159,9 +156,8 @@ circadian.rhythm <- function(counts,
     }
 
     if (epochs_per_min != 1 && epochs_per_min > 0) {
-      # Aggregate to minute level for C++ functions
-      # Use proper indexing that handles non-integer epochs_per_min
-      n_minutes <- floor(length(counts) / max(1, epochs_per_min))
+      # Aggregate to minute level for the C++ backend
+      n_minutes <- floor(length(counts) * epoch_length / 60)
       if (epochs_per_min >= 1) {
         # Sub-minute epochs (5s, 10s, 15s, 30s): aggregate multiple epochs per minute
         epm_int <- as.integer(round(epochs_per_min))
@@ -201,9 +197,9 @@ circadian.rhythm <- function(counts,
     # sliding_window_cpp.cpp already handles NA properly with ISNA() checks.
     # Replacing NA with 0 would bias L5 downward by treating non-wear as inactivity.
 
-    # Track coverage for quality metrics
-    n_valid <- sum(!is.na(minute_counts))
-    n_total <- length(minute_counts)
+    # Track coverage on the raw epoch series (consistent with the R fallback path)
+    n_valid <- sum(!is.na(counts))
+    n_total <- length(counts)
     coverage_pct <- if (n_total > 0) 100 * n_valid / n_total else 0
 
     # Calculate start minute of day from first timestamp
@@ -237,7 +233,7 @@ circadian.rhythm <- function(counts,
       ra <- .calculate.RA(m10$value, l5$value)
     }
 
-    # L1/M1 using R (not critical for speed)
+    # L1/M1 in R
     l1 <- .calculate.LX.sliding(counts, timestamps, X = 1, find_minimum = TRUE, epoch_length = epoch_length)
     m1 <- .calculate.LX.sliding(counts, timestamps, X = 1, find_minimum = FALSE, epoch_length = epoch_length)
 
@@ -298,10 +294,6 @@ circadian.rhythm <- function(counts,
   # Phi - first-order autocorrelation (GGIR method) - fast enough in R
   phi <- .calculate.phi(counts, timestamps)
 
-  # 
-
-  # 
-
   sri <- NA_real_
   sri_n_pairs <- NA_integer_
   if (!is.null(sleep_state) && calculate_sri) {
@@ -319,8 +311,6 @@ circadian.rhythm <- function(counts,
   # Endogenous period via the Lomb-Scargle periodogram (gap-robust).
   period_res <- tryCatch(circadian.period(counts, timestamps),
                          error = function(e) list(tau = NA_real_, peak_power = NA_real_, p_value = NA_real_))
-
-  #
 
   hourly_profile <- .calculate.hourly.profile(counts, timestamps)
   daily_metrics <- .calculate.daily.circadian(counts, timestamps, epoch_length)
@@ -340,8 +330,6 @@ circadian.rhythm <- function(counts,
   }
   cpd_res <- composite.phase.deviation(l5_onsets)
   l5_onset_ci <- circadian.onset.ci(l5_onsets)
-
-  # 
 
   n_days <- length(unique(as.Date(timestamps)))
   n_valid_days <- sum(!is.na(daily_metrics$L5))
@@ -937,8 +925,11 @@ social.jet.lag <- function(sleep_periods, work_days = NULL) {
     return(list(
       MSW = NA_real_, MSW_time = NA_character_,
       MSF = NA_real_, MSF_time = NA_character_,
+      MSFsc = NA_real_, MSFsc_time = NA_character_,
       social_jet_lag_hours = NA_real_,
-      social_jet_lag_min = NA_integer_
+      social_jet_lag_min = NA_integer_,
+      social_jet_lag_sc_hours = NA_real_,
+      n_work_nights = 0L, n_free_nights = 0L
     ))
   }
 
@@ -961,6 +952,8 @@ social.jet.lag <- function(sleep_periods, work_days = NULL) {
     is_work_day <- weekdays(sleep_date) %in%
       c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
   } else if (is.logical(work_days)) {
+    if (length(work_days) != length(sleep_date))
+      stop("logical 'work_days' must have one entry per sleep period")
     is_work_day <- work_days
   } else {
     is_work_day <- sleep_date %in% as.Date(work_days)
@@ -1097,7 +1090,8 @@ cosinor.analysis <- function(counts, timestamps, period = 24, wear_time = NULL,
   # Wear filter + valid-day gate.
   counts <- .gate_invalid_days(counts, timestamps, wear_time, min_valid_hours)
   if (transform == "log1p") {                  # GGIR raw-ENMO input transform
-    if (mean(counts, na.rm = TRUE) < 1 && max(counts, na.rm = TRUE) < 13)
+    m <- mean(counts, na.rm = TRUE)
+    if (is.finite(m) && m < 1 && max(counts, na.rm = TRUE) < 13)
       counts <- counts * 1000                  # g -> mg
     counts <- log(counts + 1)
   }
@@ -1108,7 +1102,7 @@ cosinor.analysis <- function(counts, timestamps, period = 24, wear_time = NULL,
   }
 
   if (sum(valid) < 48) {  # Need at least 2 full periods
-    return(list(
+    return(structure(list(
       mesor = NA_real_,
       amplitude = NA_real_,
       acrophase = NA_real_,
@@ -1116,8 +1110,8 @@ cosinor.analysis <- function(counts, timestamps, period = 24, wear_time = NULL,
       r_squared = NA_real_,
       f_statistic = NA_real_,
       p_value = NA_real_,
-      class = "actiRhythm_cosinor"
-    ))
+      n_profile_hours = 0L
+    ), class = "actiRhythm_cosinor"))
   }
 
   y <- counts[valid]
@@ -1137,7 +1131,7 @@ cosinor.analysis <- function(counts, timestamps, period = 24, wear_time = NULL,
 
   # Require at least 12 hours with data for reliable fit
   if (length(hours_present) < 12) {
-    return(list(
+    return(structure(list(
       mesor = NA_real_,
       amplitude = NA_real_,
       acrophase = NA_real_,
@@ -1145,8 +1139,8 @@ cosinor.analysis <- function(counts, timestamps, period = 24, wear_time = NULL,
       r_squared = NA_real_,
       f_statistic = NA_real_,
       p_value = NA_real_,
-      class = "actiRhythm_cosinor"
-    ))
+      n_profile_hours = 0L
+    ), class = "actiRhythm_cosinor"))
   }
 
   # Fit cosinor to the averaged profile
@@ -1173,7 +1167,7 @@ cosinor.analysis <- function(counts, timestamps, period = 24, wear_time = NULL,
   }, error = function(e) NULL)
 
   if (is.null(fit)) {
-    return(list(
+    return(structure(list(
       mesor = NA_real_,
       amplitude = NA_real_,
       acrophase = NA_real_,
@@ -1181,8 +1175,8 @@ cosinor.analysis <- function(counts, timestamps, period = 24, wear_time = NULL,
       r_squared = NA_real_,
       f_statistic = NA_real_,
       p_value = NA_real_,
-      class = "actiRhythm_cosinor"
-    ))
+      n_profile_hours = 0L
+    ), class = "actiRhythm_cosinor"))
   }
 
   beta <- fit$coefficients
@@ -1309,8 +1303,7 @@ cosinor.analysis <- function(counts, timestamps, period = 24, wear_time = NULL,
     n_observations = n_raw,
     n_profile_hours = length(profile_y),
     n_days = n_days,
-    method = "averaged_profile",
-    class = "actiRhythm_cosinor"
+    method = "averaged_profile"
   )
 
   class(result) <- "actiRhythm_cosinor"
@@ -1573,7 +1566,7 @@ cosinor.extended <- function(counts, timestamps, harmonics = c(24, 12),
 
     # Pattern interpretation
     pattern_type = pattern_type,
-    is_bimodal = any(harmonics == 12) && components$relative_power[components$period == 12] > 15,
+    is_bimodal = isTRUE(any(harmonics == 12)) && isTRUE(components$relative_power[components$period == 12] > 15),
 
     # Metadata
     harmonics = harmonics,

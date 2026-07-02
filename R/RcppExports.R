@@ -9,8 +9,8 @@ calculate_L5_M10_cpp <- function(minute_data, window_L5 = 300L, window_M10 = 600
     .Call(`_actiRhythm_calculate_L5_M10_cpp`, minute_data, window_L5, window_M10, start_minute)
 }
 
-calculate_L1_M1_cpp <- function(minute_data) {
-    .Call(`_actiRhythm_calculate_L1_M1_cpp`, minute_data)
+calculate_L1_M1_cpp <- function(minute_data, start_minute = 0L) {
+    .Call(`_actiRhythm_calculate_L1_M1_cpp`, minute_data, start_minute)
 }
 
 calculate_IS_cpp <- function(hourly_data, hours_per_day = 24L) {

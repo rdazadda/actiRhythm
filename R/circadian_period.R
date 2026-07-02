@@ -76,7 +76,7 @@ NULL
   W <- max(freq) * sqrt(4 * pi * Dt)
   p.value <- .lomb_baluev_fap(PN.max, n, W)
 
-  # Report on the ascending-period axis (lomb reverses the frequency order here).
+  # Report on the ascending-period axis (the frequency grid is descending in period).
   list(
     scanned = (1 / freq)[n.out:1],
     power   = PN[n.out:1],
@@ -186,6 +186,7 @@ NULL
 #'
 #' @export
 circadian.period <- function(counts, timestamps, from = 18, to = 30, ofac = 4) {
+  ofac <- max(1L, as.integer(floor(ofac)))
 
   # Structured "insufficient data" return so callers get a stable shape and the
   # function never errors on an edge case.
@@ -260,6 +261,8 @@ circadian.period <- function(counts, timestamps, from = 18, to = 30, ofac = 4) {
   # peak.at[1] is the peak PERIOD (hours); its second element is the matching
   # frequency, which we ignore.
   tau        <- suppressWarnings(as.numeric(lsp$peak.at[1]))
+  ref_tau    <- tryCatch(.lsp_peak_parabola(lsp$scanned, lsp$power)$tau, error = function(e) NA_real_)
+  if (is.finite(ref_tau)) tau <- ref_tau      # sub-grid refinement, matching period.ci()
   peak_power <- suppressWarnings(as.numeric(lsp$peak))
   p_value    <- suppressWarnings(as.numeric(lsp$p.value))
 
@@ -353,6 +356,7 @@ circadian.period <- function(counts, timestamps, from = 18, to = 30, ofac = 4) {
 #' @export
 period.ci <- function(counts, timestamps, from = 18, to = 30, ofac = 4,
                       n_boot = 200, block_hours = 24, level = 0.95, seed = NULL) {
+  ofac <- max(1L, as.integer(floor(ofac)))
 
   na_out <- function(tau = NA_real_) structure(
     list(tau = tau, ci_lower = NA_real_, ci_upper = NA_real_, se = NA_real_,

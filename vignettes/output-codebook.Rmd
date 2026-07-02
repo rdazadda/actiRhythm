@@ -97,8 +97,8 @@ show_family("cosinor")
 
 ## Period and spectral
 
-The endogenous period from the Lomb-Scargle and chi-square periodograms, with a
-bootstrap confidence interval [@lomb1976; @sokolove1978].
+The endogenous period from the Lomb-Scargle [@lomb1976] and chi-square [@sokolove1978]
+periodograms, with a circular block-bootstrap confidence interval [@politis1992].
 
 ```{r period, echo = FALSE}
 show_family("period")
@@ -116,7 +116,7 @@ show_family("fractal")
 ## Rest-activity transitions
 
 State-transition rates and probabilities that capture fragmentation a single
-amplitude cannot [@lim2011].
+amplitude cannot [@lim2011; @danilevicz2024].
 
 ```{r phase, echo = FALSE}
 show_family("phase")
@@ -125,7 +125,7 @@ show_family("phase")
 ## Sleep timing and regularity
 
 Metrics that need a sleep label or sleep periods: the Sleep Regularity Index,
-social jet lag, and LIDS [@phillips2017; @wittmann2006; @winnebeck2018].
+social jet lag, and LIDS [@phillips2017; @wittmann2006; @roenneberg2012; @winnebeck2018].
 
 ```{r sleep, echo = FALSE}
 show_family("sleep")
@@ -136,4 +136,5 @@ show_family("sleep")
 Full citations for the method keys in the table above:
 [@vansomeren1999; @witting1990; @cornelissen2014; @nelson1979; @lomb1976;
 @baluev2008; @politis1992; @sokolove1978; @peng1994; @kantelhardt2002;
-@costa2002; @lim2011; @phillips2017; @wittmann2006; @winnebeck2018].
+@costa2002; @lim2011; @danilevicz2024; @phillips2017; @wittmann2006;
+@roenneberg2012; @winnebeck2018].

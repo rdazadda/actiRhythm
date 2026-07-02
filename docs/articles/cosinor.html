@@ -264,11 +264,12 @@ statistically real.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_extended_cosinor.html">plot_extended_cosinor</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="cosinor_files/figure-html/fit-plot-1.png" class="r-plt" alt="Hourly activity with the fitted 24-hour cosine overlaid. The peak of the curve is the acrophase; its height above the MESOR line is the amplitude. Where the points leave the curve is the structure a single cosine cannot follow." width="770"><p class="caption">
-Hourly activity with the fitted 24-hour cosine overlaid. The peak of the
-curve is the acrophase; its height above the MESOR line is the
-amplitude. Where the points leave the curve is the structure a single
-cosine cannot follow.
+<img src="cosinor_files/figure-html/fit-plot-1.png" class="r-plt" alt="The averaged hourly profile with two fits overlaid: the ordinary single cosine (dashed) and the extended Marler fit (orange), which allows squared-off peaks. Where the points leave the single cosine is the structure it cannot follow; the Marler fit is covered under the wider cosinor family below." width="770"><p class="caption">
+The averaged hourly profile with two fits overlaid: the ordinary single
+cosine (dashed) and the extended Marler fit (orange), which allows
+squared-off peaks. Where the points leave the single cosine is the
+structure it cannot follow; the Marler fit is covered under the wider
+cosinor family below.
 </p>
 </div>
 <p>For the joint uncertainty in amplitude and acrophase,
@@ -318,29 +319,30 @@ the rule above flags.</li>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">ts</span>, <span class="st">"%H"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">ts</span>, <span class="st">"%M"</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fl">60</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">siesta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">120</span> <span class="op">+</span> <span class="fl">70</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="op">(</span><span class="va">hod</span> <span class="op">-</span> <span class="fl">14</span><span class="op">)</span> <span class="op">/</span> <span class="fl">24</span><span class="op">)</span> <span class="op">+</span>     <span class="co"># day-night fundamental</span></span>
-<span>                    <span class="fl">55</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="va">hod</span> <span class="op">-</span> <span class="fl">14</span><span class="op">)</span> <span class="op">/</span> <span class="fl">24</span><span class="op">)</span> <span class="op">+</span>     <span class="co"># the midday dip</span></span>
+<span><span class="va">siesta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">pmax</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">120</span> <span class="op">+</span> <span class="fl">60</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">*</span> <span class="op">(</span><span class="va">hod</span> <span class="op">-</span> <span class="fl">9.5</span><span class="op">)</span> <span class="op">/</span> <span class="fl">24</span><span class="op">)</span> <span class="op">-</span>   <span class="co"># twin morning/evening peaks</span></span>
+<span>                    <span class="fl">45</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="op">(</span><span class="va">hod</span> <span class="op">-</span> <span class="fl">3</span><span class="op">)</span> <span class="op">/</span> <span class="fl">24</span><span class="op">)</span> <span class="op">+</span>             <span class="co"># carves the midday dip</span></span>
 <span>                    <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">ts</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">cs</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.analysis.html">cosinor.analysis</a></span><span class="op">(</span><span class="va">siesta</span>, <span class="va">ts</span><span class="op">)</span></span>
 <span><span class="va">rts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rhythmicity.test.html">rhythmicity.test</a></span><span class="op">(</span><span class="va">siesta</span>, <span class="va">ts</span>, cosinor_result <span class="op">=</span> <span class="va">cs</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>rhythmic <span class="op">=</span> <span class="va">rts</span><span class="op">$</span><span class="va">rhythmic</span>, p_value <span class="op">=</span> <span class="va">rts</span><span class="op">$</span><span class="va">p_value</span>, percent_rhythm <span class="op">=</span> <span class="va">rts</span><span class="op">$</span><span class="va">percent_rhythm</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       rhythmic        p_value percent_rhythm </span></span>
-<span><span class="co">#&gt;   1.000000e+00   3.743731e-05   6.212000e+01</span></span></code></pre></div>
+<span><span class="co">#&gt;    1.000000000    0.008707296   36.350000000</span></span></code></pre></div>
 <p>The test is significant (the rhythm is not flat), yet the single
-cosine explains only about 62 percent of the day. The missing third is
-the midday dip, which a symmetric cosine cannot represent. A
-multi-harmonic fit recovers it: it selects two components and explains
-essentially all of it (the chunk below reports the R-squared).</p>
+cosine explains only about 37 percent of the day. It cannot bend to the
+twin morning and evening peaks with the midday dip between them. A
+multi-harmonic fit recovers the shape: it selects two components and
+explains essentially all of it (the chunk below reports the
+R-squared).</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cosinor.multicomponent.html">cosinor.multicomponent</a></span><span class="op">(</span><span class="va">siesta</span>, <span class="va">ts</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>n_harmonics <span class="op">=</span> <span class="va">mc</span><span class="op">$</span><span class="va">n_harmonics</span>, r_squared <span class="op">=</span> <span class="va">mc</span><span class="op">$</span><span class="va">r_squared</span><span class="op">)</span></span>
 <span><span class="co">#&gt; n_harmonics   r_squared </span></span>
-<span><span class="co">#&gt;   2.0000000   0.9999345</span></span>
+<span><span class="co">#&gt;    2.000000    0.999903</span></span>
 <span><span class="va">mc</span><span class="op">$</span><span class="va">harmonics</span></span>
 <span><span class="co">#&gt;    harmonic amplitude acrophase_h</span></span>
-<span><span class="co">#&gt; x2        1  69.67840   14.012182</span></span>
-<span><span class="co">#&gt; x4        2  54.41006    2.011788</span></span></code></pre></div>
+<span><span class="co">#&gt; x2        1  44.72900   15.016326</span></span>
+<span><span class="co">#&gt; x4        2  59.18037    9.506901</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_multicomponent.html">plot_multicomponent</a></span><span class="op">(</span><span class="va">siesta</span>, <span class="va">ts</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">

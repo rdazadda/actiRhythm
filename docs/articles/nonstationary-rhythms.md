@@ -115,15 +115,17 @@ circadian.spectrogram(counts10, t10, window_hours = 48, step_hours = 12,
 ```
 
 ![Sliding-window periodogram. Each column is one 48-hour window stepped
-every 12 hours; colour is periodogram power. The circadian band is
-visible throughout, and its strength shifts as the recording moves from
-the stable first week into the fragmented
+every 12 hours; colour is periodogram power relative to the significance
+threshold (Qp / threshold). The circadian band is visible throughout,
+and its strength shifts as the recording moves from the stable first
+week into the fragmented
 second.](nonstationary-rhythms_files/figure-html/spectrogram-1.png)
 
 Sliding-window periodogram. Each column is one 48-hour window stepped
-every 12 hours; colour is periodogram power. The circadian band is
-visible throughout, and its strength shifts as the recording moves from
-the stable first week into the fragmented second.
+every 12 hours; colour is periodogram power relative to the significance
+threshold (Qp / threshold). The circadian band is visible throughout,
+and its strength shifts as the recording moves from the stable first
+week into the fragmented second.
 
 ## Locating the shift
 
@@ -209,7 +211,7 @@ fragmentation.
 
 ``` r
 
-plot_ssa_wcor(counts10, t10)
+plot_ssa_wcor(counts10, t10, window_hours = 24)
 ```
 
 ![The SSA w-correlation matrix that justifies the grouping above: bright
@@ -244,24 +246,24 @@ ggplot(data.frame(t = emd$times, period = hht$period), aes(t, period)) +
 ```
 
 ![Instantaneous period of the circadian mode from the Hilbert-Huang
-transform. It stays near 24 hours but is not flat: the phase advance
-leaves its mark on the cycle-by-cycle
-estimate.](nonstationary-rhythms_files/figure-html/emd-1.png)
+transform. It sits somewhat above 24 hours and wanders cycle to cycle,
+reflecting the phase advance and some mode mixing on this noisy
+series.](nonstationary-rhythms_files/figure-html/emd-1.png)
 
 Instantaneous period of the circadian mode from the Hilbert-Huang
-transform. It stays near 24 hours but is not flat: the phase advance
-leaves its mark on the cycle-by-cycle estimate.
+transform. It sits somewhat above 24 hours and wanders cycle to cycle,
+reflecting the phase advance and some mode mixing on this noisy series.
 
 ## Quantifying the complexity
 
 Fragmentation is a change in structure, not just in level, so it shows
 up in the multiscale measures. Splitting the recording into its clean
-first half and its broken second half, the late half carries more sample
-entropy ([Costa et al., 2002](#ref-costa2002)) and a narrower
-multifractal spectrum ([Kantelhardt et al.,
-2002](#ref-kantelhardt2002)), both signs that its dynamics have
-simplified toward noise: less predictable from epoch to epoch, and less
-richly self-similar across scales.
+first half and its broken second half, the late half carries more
+short-scale sample entropy ([Costa et al., 2002](#ref-costa2002)) and a
+narrower multifractal spectrum ([Kantelhardt et al.,
+2002](#ref-kantelhardt2002)), both signs that its dynamics have shifted
+toward noise: less predictable from epoch to epoch, and less richly
+self-similar across scales.
 
 ``` r
 
@@ -269,9 +271,9 @@ half  <- length(counts10) %/% 2
 early <- counts10[1:half]; late <- counts10[(half + 1):length(counts10)]
 mse_e <- multiscale.entropy(early, scales = 1:10)
 mse_l <- multiscale.entropy(late,  scales = 1:10)
-c(early_complexity = mse_e$area, late_complexity = mse_l$area)
-#> early_complexity  late_complexity 
-#>         2.905382         3.170657
+c(early_sampen1 = mse_e$mse[1], late_sampen1 = mse_l$mse[1])
+#> early_sampen1  late_sampen1 
+#>     0.1283535     0.2420052
 c(early_mf_width = mfdfa(early)$width, late_mf_width = mfdfa(late)$width)
 #> early_mf_width  late_mf_width 
 #>       1.654179       1.084617

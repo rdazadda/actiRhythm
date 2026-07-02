@@ -59,6 +59,10 @@ A list with class `"actiRhythm_cosinor_ext"` containing:
 
   Alias of `acrophase` (ActCR naming).
 
+- peak:
+
+  Fitted activity level at the acrophase (renormalized Marler peak).
+
 - UpMesor:
 
   Clock time of the rest-to-active (rising) transition,

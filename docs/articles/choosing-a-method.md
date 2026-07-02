@@ -83,11 +83,12 @@ percent-rhythm says is enough:
 
 - [`cosinor.analysis()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md):
   one symmetric cosine; simplest and most interpretable.
-- [`cosinor.extended()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.extended.md)
-  /
-  [`cosinor.antilogistic()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.antilogistic.md):
-  adds nonlinear shape for the asymmetric, squared-off real day ([Marler
-  et al., 2006](#ref-marler2006)).
+- [`cosinor.extended()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.extended.md):
+  several fixed harmonics (24 h + 12 h) for a bimodal or asymmetric day
+  ([Cornelissen, 2014](#ref-cornelissen2014)).
+- [`cosinor.antilogistic()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.antilogistic.md):
+  a sigmoidally transformed cosine with squared-off peaks and troughs
+  ([Marler et al., 2006](#ref-marler2006)).
 - [`cosinor.multicomponent()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.multicomponent.md):
   several harmonics, with the number chosen by AIC or BIC.
 - [`circadian.flm()`](https://rdazadda.github.io/actiRhythm/reference/circadian.flm.md):
@@ -229,12 +230,12 @@ Every function above describes one recording. For a study:
 
 | Your question | Reach for | Walkthrough |
 |----|----|----|
-| Is there a rhythm, and how strong? | `circadian.rhythm`, `cosinor.analysis` + `rhythmicity.test`, `consensus.rhythmicity` | Get started |
-| What is the period? | `circadian.period`, `chi.sq.periodogram`, `period.ci` | Get started |
-| What shape is the day? | `cosinor.extended`, `cosinor.multicomponent`, `circadian.flm` | Beyond the basics |
+| Is there a rhythm, and how strong? | `circadian.rhythm`, `cosinor.analysis` + `rhythmicity.test`, `consensus.rhythmicity` | Getting started |
+| What is the period? | `circadian.period`, `chi.sq.periodogram`, `period.ci` | Period and spectral analysis |
+| What shape is the day? | `cosinor.extended`, `cosinor.multicomponent`, `circadian.flm` | Cosinor models |
 | Does it drift or fragment? | `circadian.spectrogram`, `circadian.ssa`, `circadian.emd`, `sleep.changepoints` | Nonstationary and complex rhythms |
 | How fractal/complex? | `fractal.dfa`, `mfdfa`, `multiscale.entropy` | Beyond the basics |
-| When is sleep, how regular? | `sleep.cole.kripke`/`sleep.sadeh`, `sleep.regularity.index`, `rest.periods`/`rest.crespo` | Get started |
+| When is sleep, how regular? | `sleep.cole.kripke`/`sleep.sadeh`, `sleep.regularity.index`, `rest.periods`/`rest.crespo` | Sleep and rest detection |
 | Raw files, posture, diary-free sleep | `read.raw`, `raw.metrics`, `rest.spt` + `sib.vanhees` | From raw acceleration |
 | A group, not one subject | `population.cosinor`, `cosinor.compare`, then `lme4`/`nlme` | Get started |
 | What does column *X* mean? | the metric tables | Output codebook |

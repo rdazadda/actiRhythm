@@ -11,7 +11,14 @@ one solar day is visible.
 ## Usage
 
 ``` r
-plot_periodogram(counts, timestamps, from = 18, to = 30, ofac = 4)
+plot_periodogram(
+  counts,
+  timestamps,
+  from = 18,
+  to = 30,
+  ofac = 4,
+  alpha = 0.05
+)
 ```
 
 ## Arguments
@@ -42,6 +49,11 @@ plot_periodogram(counts, timestamps, from = 18, to = 30, ofac = 4)
   Integer oversampling factor for the period grid. Higher values give a
   finer grid (default `4`).
 
+- alpha:
+
+  Significance level for the Baluev false-alarm threshold (default
+  0.05).
+
 ## Value
 
 A `ggplot` object: Lomb-Scargle power (y) versus period in hours (x),
@@ -55,7 +67,7 @@ returned instead; the function never errors.
 The full standard-normalized Lomb-Scargle spectrum over the period
 window is computed by the package's own estimator (the same one behind
 [`circadian.period`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md));
-the peak period `tau`, its Baluev `p_value`, and the 0.05 false-alarm
+the peak period `tau`, its Baluev `p_value`, and the false-alarm
 threshold line all come from that function, so the highlighted peak and
 threshold match the reported values. The Lomb-Scargle periodogram is the
 least-squares spectral estimator for unevenly sampled series and is

@@ -29,4 +29,5 @@ L5M10_cpp(minute_data, window_L5 = 300L, window_M10 = 600L, start_minute = 0L)
 
 ## Value
 
-List with L5_value, L5_onset, M10_value, M10_onset, RA
+List with L5_value, L5_onset, L5_onset_hours, M10_value, M10_onset,
+M10_onset_hours, RA

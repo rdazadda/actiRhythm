@@ -174,9 +174,11 @@ percent-rhythm says is enough:</p>
 <code><a href="../reference/cosinor.analysis.html">cosinor.analysis()</a></code>: one symmetric cosine; simplest and
 most interpretable.</li>
 <li>
-<code><a href="../reference/cosinor.extended.html">cosinor.extended()</a></code> /
-<code><a href="../reference/cosinor.antilogistic.html">cosinor.antilogistic()</a></code>: adds nonlinear shape for the
-asymmetric, squared-off real day <span class="citation">(<a href="#ref-marler2006">Marler et al., 2006</a>)</span>.</li>
+<code><a href="../reference/cosinor.extended.html">cosinor.extended()</a></code>: several fixed harmonics (24 h + 12
+h) for a bimodal or asymmetric day <span class="citation">(<a href="#ref-cornelissen2014">Cornelissen, 2014</a>)</span>.</li>
+<li>
+<code><a href="../reference/cosinor.antilogistic.html">cosinor.antilogistic()</a></code>: a sigmoidally transformed
+cosine with squared-off peaks and troughs <span class="citation">(<a href="#ref-marler2006">Marler et al., 2006</a>)</span>.</li>
 <li>
 <code><a href="../reference/cosinor.multicomponent.html">cosinor.multicomponent()</a></code>: several harmonics, with the
 number chosen by AIC or BIC.</li>
@@ -340,7 +342,7 @@ metrics; you supply the multilevel model.</li>
 <code>circadian.rhythm</code>, <code>cosinor.analysis</code> +
 <code>rhythmicity.test</code>, <code>consensus.rhythmicity</code>
 </td>
-<td>Get started</td>
+<td>Getting started</td>
 </tr>
 <tr class="even">
 <td>What is the period?</td>
@@ -348,7 +350,7 @@ metrics; you supply the multilevel model.</li>
 <code>circadian.period</code>, <code>chi.sq.periodogram</code>,
 <code>period.ci</code>
 </td>
-<td>Get started</td>
+<td>Period and spectral analysis</td>
 </tr>
 <tr class="odd">
 <td>What shape is the day?</td>
@@ -356,7 +358,7 @@ metrics; you supply the multilevel model.</li>
 <code>cosinor.extended</code>, <code>cosinor.multicomponent</code>,
 <code>circadian.flm</code>
 </td>
-<td>Beyond the basics</td>
+<td>Cosinor models</td>
 </tr>
 <tr class="even">
 <td>Does it drift or fragment?</td>
@@ -381,7 +383,7 @@ metrics; you supply the multilevel model.</li>
 <code>sleep.regularity.index</code>,
 <code>rest.periods</code>/<code>rest.crespo</code>
 </td>
-<td>Get started</td>
+<td>Sleep and rest detection</td>
 </tr>
 <tr class="odd">
 <td>Raw files, posture, diary-free sleep</td>

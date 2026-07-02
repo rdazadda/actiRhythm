@@ -190,11 +190,12 @@ of averaging through it.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/circadian.spectrogram.html">circadian.spectrogram</a></span><span class="op">(</span><span class="va">counts10</span>, <span class="va">t10</span>, window_hours <span class="op">=</span> <span class="fl">48</span>, step_hours <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>                      epoch_length <span class="op">=</span> <span class="fl">600</span><span class="op">)</span><span class="op">$</span><span class="va">plot</span></span></code></pre></div>
 <div class="figure">
-<img src="nonstationary-rhythms_files/figure-html/spectrogram-1.png" class="r-plt" alt="Sliding-window periodogram. Each column is one 48-hour window stepped every 12 hours; colour is periodogram power. The circadian band is visible throughout, and its strength shifts as the recording moves from the stable first week into the fragmented second." width="770"><p class="caption">
+<img src="nonstationary-rhythms_files/figure-html/spectrogram-1.png" class="r-plt" alt="Sliding-window periodogram. Each column is one 48-hour window stepped every 12 hours; colour is periodogram power relative to the significance threshold (Qp / threshold). The circadian band is visible throughout, and its strength shifts as the recording moves from the stable first week into the fragmented second." width="770"><p class="caption">
 Sliding-window periodogram. Each column is one 48-hour window stepped
-every 12 hours; colour is periodogram power. The circadian band is
-visible throughout, and its strength shifts as the recording moves from
-the stable first week into the fragmented second.
+every 12 hours; colour is periodogram power relative to the significance
+threshold (Qp / threshold). The circadian band is visible throughout,
+and its strength shifts as the recording moves from the stable first
+week into the fragmented second.
 </p>
 </div>
 </div>
@@ -265,7 +266,7 @@ fragmentation.
 </p>
 </div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_ssa_wcor.html">plot_ssa_wcor</a></span><span class="op">(</span><span class="va">counts10</span>, <span class="va">t10</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_ssa_wcor.html">plot_ssa_wcor</a></span><span class="op">(</span><span class="va">counts10</span>, <span class="va">t10</span>, window_hours <span class="op">=</span> <span class="fl">24</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="nonstationary-rhythms_files/figure-html/ssa-wcor-1.png" class="r-plt" alt="The SSA w-correlation matrix that justifies the grouping above: bright off-diagonal 2x2 blocks are oscillatory pairs (the circadian rhythm), a single bright cell is the trend, and the diffuse tail is noise." width="770"><p class="caption">
 The SSA w-correlation matrix that justifies the grouping above: bright
@@ -291,10 +292,10 @@ shows up as a moving line rather than a single number.</p>
 <span><span class="co">#&gt; Warning: Removed 108 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
 <div class="figure">
-<img src="nonstationary-rhythms_files/figure-html/emd-1.png" class="r-plt" alt="Instantaneous period of the circadian mode from the Hilbert-Huang transform. It stays near 24 hours but is not flat: the phase advance leaves its mark on the cycle-by-cycle estimate." width="770"><p class="caption">
+<img src="nonstationary-rhythms_files/figure-html/emd-1.png" class="r-plt" alt="Instantaneous period of the circadian mode from the Hilbert-Huang transform. It sits somewhat above 24 hours and wanders cycle to cycle, reflecting the phase advance and some mode mixing on this noisy series." width="770"><p class="caption">
 Instantaneous period of the circadian mode from the Hilbert-Huang
-transform. It stays near 24 hours but is not flat: the phase advance
-leaves its mark on the cycle-by-cycle estimate.
+transform. It sits somewhat above 24 hours and wanders cycle to cycle,
+reflecting the phase advance and some mode mixing on this noisy series.
 </p>
 </div>
 </div>
@@ -304,19 +305,18 @@ leaves its mark on the cycle-by-cycle estimate.
 <p>Fragmentation is a change in structure, not just in level, so it
 shows up in the multiscale measures. Splitting the recording into its
 clean first half and its broken second half, the late half carries more
-sample entropy <span class="citation">(<a href="#ref-costa2002">Costa et
-al., 2002</a>)</span> and a narrower multifractal spectrum <span class="citation">(<a href="#ref-kantelhardt2002">Kantelhardt et al.,
-2002</a>)</span>, both signs that its dynamics have simplified toward
-noise: less predictable from epoch to epoch, and less richly
-self-similar across scales.</p>
+short-scale sample entropy <span class="citation">(<a href="#ref-costa2002">Costa et al., 2002</a>)</span> and a narrower
+multifractal spectrum <span class="citation">(<a href="#ref-kantelhardt2002">Kantelhardt et al., 2002</a>)</span>, both
+signs that its dynamics have shifted toward noise: less predictable from
+epoch to epoch, and less richly self-similar across scales.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">half</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">counts10</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%/%</a></span> <span class="fl">2</span></span>
 <span><span class="va">early</span> <span class="op">&lt;-</span> <span class="va">counts10</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">half</span><span class="op">]</span>; <span class="va">late</span> <span class="op">&lt;-</span> <span class="va">counts10</span><span class="op">[</span><span class="op">(</span><span class="va">half</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">counts10</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">mse_e</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiscale.entropy.html">multiscale.entropy</a></span><span class="op">(</span><span class="va">early</span>, scales <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">mse_l</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/multiscale.entropy.html">multiscale.entropy</a></span><span class="op">(</span><span class="va">late</span>,  scales <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>early_complexity <span class="op">=</span> <span class="va">mse_e</span><span class="op">$</span><span class="va">area</span>, late_complexity <span class="op">=</span> <span class="va">mse_l</span><span class="op">$</span><span class="va">area</span><span class="op">)</span></span>
-<span><span class="co">#&gt; early_complexity  late_complexity </span></span>
-<span><span class="co">#&gt;         2.905382         3.170657</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>early_sampen1 <span class="op">=</span> <span class="va">mse_e</span><span class="op">$</span><span class="va">mse</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, late_sampen1 <span class="op">=</span> <span class="va">mse_l</span><span class="op">$</span><span class="va">mse</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; early_sampen1  late_sampen1 </span></span>
+<span><span class="co">#&gt;     0.1283535     0.2420052</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>early_mf_width <span class="op">=</span> <span class="fu"><a href="../reference/mfdfa.html">mfdfa</a></span><span class="op">(</span><span class="va">early</span><span class="op">)</span><span class="op">$</span><span class="va">width</span>, late_mf_width <span class="op">=</span> <span class="fu"><a href="../reference/mfdfa.html">mfdfa</a></span><span class="op">(</span><span class="va">late</span><span class="op">)</span><span class="op">$</span><span class="va">width</span><span class="op">)</span></span>
 <span><span class="co">#&gt; early_mf_width  late_mf_width </span></span>
 <span><span class="co">#&gt;       1.654179       1.084617</span></span></code></pre></div>

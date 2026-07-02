@@ -1,17 +1,16 @@
 # actiRhythm
 
-**actiRhythm turns activity counts or raw acceleration into a complete
-picture of the circadian rest-activity rhythm.** It reads ActiGraph
-`.agd` counts and raw `.gt3x`, `.cwa`, and `.bin` recordings,
-auto-calibrates the raw signal, and derives the ENMO, MAD, and z-angle
-metrics that agree with GGIR. From a single recording it computes what a
-chronobiology analysis reports, from the nonparametric measures and
-cosinor through periodograms and fractal structure to wavelet and
-empirical-mode decomposition, sleep scoring, and a state-space
-rest-activity model. Methods that usually live in separate packages, or
-in no R package at all, sit behind one consistent interface, and every
-analysis returns a typed object that prints its own summary and draws
-its own plots.
+**actiRhythm turns activity counts or raw acceleration into the full set
+of circadian rest-activity measures.** It reads ActiGraph `.agd` counts
+and raw `.gt3x`, `.cwa`, and `.bin` recordings, auto-calibrates the raw
+signal, and derives the ENMO, MAD, and z-angle metrics that agree with
+GGIR. From a single recording it computes what a chronobiology analysis
+reports, from the nonparametric measures and cosinor through
+periodograms and fractal structure to wavelet and empirical-mode
+decomposition, sleep scoring, and a hidden Markov rest-activity model.
+Methods that usually live in separate packages, or in no R package at
+all, sit behind one consistent interface, and every analysis returns a
+typed object that prints its own summary and draws its own plots.
 
 Each method carries the reference that defined it, and where a trusted
 implementation already exists, actiRhythm is checked against it: the raw
@@ -121,13 +120,14 @@ compares groups.
 estimates the free-running period from a Lomb-Scargle periodogram (Lomb
 1976) and
 [`chi.sq.periodogram()`](https://rdazadda.github.io/actiRhythm/reference/chi.sq.periodogram.md)
-from the chi-square periodogram (Sokolove 1978);
+from the chi-square periodogram (Sokolove and Bushell 1978);
 [`period.ci()`](https://rdazadda.github.io/actiRhythm/reference/period.ci.md)
 puts a bootstrap interval on it, and
 [`circadian.spectrogram()`](https://rdazadda.github.io/actiRhythm/reference/circadian.spectrogram.md)
 shows how the period drifts across the recording.
 [`fractal.dfa()`](https://rdazadda.github.io/actiRhythm/reference/fractal.dfa.md)
-measures the long-range correlation in the series (Peng 1994), and
+measures the long-range correlation in the series (Peng et al. 1994),
+and
 [`mfdfa()`](https://rdazadda.github.io/actiRhythm/reference/mfdfa.md)
 and
 [`multiscale.entropy()`](https://rdazadda.github.io/actiRhythm/reference/multiscale.entropy.md)
@@ -165,7 +165,7 @@ included, while
 [`rest.crespo()`](https://rdazadda.github.io/actiRhythm/reference/rest.crespo.md)
 (Crespo et al. 2012) detects the main daily rest periods.
 [`sleep.regularity.index()`](https://rdazadda.github.io/actiRhythm/reference/sleep.regularity.index.md)
-(Phillips 2017),
+(Phillips et al. 2017),
 [`social.jet.lag()`](https://rdazadda.github.io/actiRhythm/reference/social.jet.lag.md),
 and [`lids()`](https://rdazadda.github.io/actiRhythm/reference/lids.md)
 (Winnebeck 2018) summarise sleep regularity, chronotype misalignment,
@@ -196,9 +196,9 @@ auto-calibration, and
 runs every method above on ENMO from one call. The z-angle drives a
 diary-free sleep pipeline that counts cannot:
 [`rest.spt()`](https://rdazadda.github.io/actiRhythm/reference/rest.spt.md)
-finds the nightly sleep-period window (HDCZA, van Hees 2018),
+finds the nightly sleep-period window (HDCZA, van Hees et al. 2018),
 [`sib.vanhees()`](https://rdazadda.github.io/actiRhythm/reference/sib.vanhees.md)
-scores sustained-inactivity bouts (van Hees 2015), and
+scores sustained-inactivity bouts (van Hees et al. 2015), and
 [`sleep.from.spt()`](https://rdazadda.github.io/actiRhythm/reference/sleep.from.spt.md)
 reports onset, wake, WASO, and efficiency.
 [`detect.nonwear.choi()`](https://rdazadda.github.io/actiRhythm/reference/detect.nonwear.choi.md),

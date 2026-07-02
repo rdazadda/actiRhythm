@@ -81,7 +81,7 @@ true phase distorts every $`Q_P`$.
 - **Regular sampling, for the chi-square periodogram only.** Its
   phase-folding needs a near-uniform grid; gaps mis-align the fold.
   Lomb-Scargle carries the real times and is unbiased under irregular
-  sampling, the centrepiece of this article.
+  sampling.
 - **A search window.** The peak is taken within `[from, to]` (default
   18-30 h). A rhythm outside the window cannot be found; widen it for
   ultradian or infradian work.
@@ -113,7 +113,7 @@ knitr::kable(
 
 | method       | planted | tau_h |
 |:-------------|--------:|------:|
-| Lomb-Scargle |      25 | 25.26 |
+| Lomb-Scargle |      25 | 25.03 |
 | chi-square   |      25 | 25.05 |
 
 Both periodograms recover the planted 25-hour period. {.table}
@@ -154,7 +154,7 @@ ls  <- circadian.period(agd$axis1, agd$timestamp)
 c(tau = ls$tau, peak_power = ls$peak_power, p_value = ls$p_value,
   n_used = ls$n_used, span_days = round(ls$span_days, 2))
 #>          tau   peak_power      p_value       n_used    span_days 
-#> 2.448889e+01 4.418582e-02 4.916458e-98 9.919000e+03 6.890000e+00
+#> 2.489529e+01 4.418582e-02 4.916458e-98 9.919000e+03 6.890000e+00
 ```
 
 ``` r
@@ -166,15 +166,14 @@ plot_periodogram(agd$axis1, agd$timestamp)
 window. The orange line marks the dominant period, the grey dashed line
 is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm
 threshold, which is flat across periods (unlike the chi-square critical
-curve below). The peak sits to the right of 24, a longer-than-day
-dominant cycle.](period-estimation_files/figure-html/ls-plot-1.png)
+curve below). The peak sits just above 24 hours, close to a solar
+day.](period-estimation_files/figure-html/ls-plot-1.png)
 
 The Lomb-Scargle periodogram of the bundled recording over the 18-30 h
 window. The orange line marks the dominant period, the grey dashed line
 is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm
 threshold, which is flat across periods (unlike the chi-square critical
-curve below). The peak sits to the right of 24, a longer-than-day
-dominant cycle.
+curve below). The peak sits just above 24 hours, close to a solar day.
 
 The bootstrap interval shows how firmly that period is pinned down. On
 this recording the replicate periods spread widely across the search
@@ -243,7 +242,7 @@ knitr::kable(
 
 | method       | truth |  full | gappy |
 |:-------------|------:|------:|------:|
-| Lomb-Scargle |    25 | 25.26 | 25.26 |
+| Lomb-Scargle |    25 | 25.03 | 25.03 |
 | chi-square   |    25 | 25.05 | 24.13 |
 
 After a multi-day gap, Lomb-Scargle stays on 25 h; the chi-square peak

@@ -275,7 +275,9 @@ emd <- circadian.emd(as.numeric(counts10), t10, epoch_length = 600)
 hilbert.huang(emd)
 #> Hilbert-Huang Instantaneous Dynamics
 #> 
-#>   No circadian IMF to analyse
+#>   Instantaneous period: 60.65 h (SD 234.76)
+#>   Instantaneous amplitude: 33236.5 (CV 0.67)
+#>   Time in 20-28 h band: 11%
 ```
 
 ``` r

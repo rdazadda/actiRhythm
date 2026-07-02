@@ -28,7 +28,7 @@ Bin the recording to hourly means: let $`x_1, \dots, x_n`$ be the $`n`$
 hourly values with overall mean $`\bar x`$, and let $`\bar x_h`$ be the
 mean across all days at hour-of-day $`h`$, over $`p = 24`$ hours. The IS
 and IV formulas below are computed on this hourly series; the raw-epoch
-series is used separately for the multiscale and fractal measures.
+series is used separately for the multiscale measures.
 
 **Interdaily stability (IS)**, how tightly the pattern repeats from one
 day to the next ([Witting et al., 1990](#ref-witting1990)):
@@ -60,8 +60,8 @@ window.
 The L5 and M10 windows are placed on a minute-resolution average day and
 reported in counts per minute, the sliding-window convention also used
 by nparACT and GGIR. These values track but are not identical to the
-original hourly counts-per-hour of Witting et al.
-([1990](#ref-witting1990)), and they depend on epoch length.
+original hourly counts-per-hour of Van Someren et al.
+([1999](#ref-vansomeren1999)), and they depend on epoch length.
 
 ## Assumptions, and when they break
 
@@ -82,12 +82,12 @@ original hourly counts-per-hour of Witting et al.
 
 ## Recovering known truth
 
-Before trusting these numbers on real data, it is worth seeing them
-behave on data whose answer we know. We build three seven-day
-recordings: one whose day repeats **exactly**, one whose peak
-**wanders** a few hours from day to day, and one that is **pure noise**.
-IS should fall from near 1 toward 0 across the three, and IV should rise
-toward its noise ceiling of about 2.
+Before trusting these numbers on real data, see them behave on data
+whose answer we know. We build three seven-day recordings: one whose day
+repeats **exactly**, one whose peak **wanders** a few hours from day to
+day, and one that is **pure noise**. IS should fall from near 1 toward 0
+across the three, and IV should rise toward its noise ceiling of about
+2.
 
 ``` r
 
@@ -385,6 +385,12 @@ rest-span counts fall below the active-span median
 Rest-span and active-span count distributions. A high I\<O means most
 rest-span counts fall below the active-span median (dashed).
 
+On this recording the active-span count median is zero, so the strict I
+\< median comparison collapses to 0 percent. The dichotomy index needs a
+denser active span, a coarser epoch or a count threshold in place of the
+median, to separate quiet rest from an active day; it is a caution worth
+keeping for sparse minute-level counts.
+
 **Fragmentation.**
 [`state.transitions()`](https://rdazadda.github.io/actiRhythm/reference/state.transitions.md)
 gives the kRA and kAR rates, the rest-to-active and active-to-rest
@@ -393,7 +399,8 @@ probabilities read off the plateau of the bout-length survival curve
 [`transition.probability()`](https://rdazadda.github.io/actiRhythm/reference/transition.probability.md)
 gives the maximum-likelihood and Bayesian transition probabilities of
 Danilevicz et al. ([2024](#ref-danilevicz2024)), taken straight from the
-bout counts. Both capture fragmentation a single amplitude cannot.
+epoch-to-epoch transition counts. Both capture fragmentation a single
+amplitude cannot.
 
 ``` r
 

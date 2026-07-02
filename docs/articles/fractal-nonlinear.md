@@ -114,7 +114,7 @@ n <- 8192
 white <- rnorm(n)                                   # planted alpha = 0.5
 brown <- cumsum(rnorm(n))                            # planted alpha = 1.5
 pink  <- {                                           # planted alpha = 1.0
-  amp  <- 1 / sqrt(1:(n / 2))                        # 1/f amplitude spectrum
+  amp  <- 1 / sqrt(1:(n / 2))                        # 1/sqrt(f) amplitude -> 1/f power
   ph   <- runif(n / 2, 0, 2 * pi)
   half <- complex(modulus = c(0, amp), argument = c(0, ph))
   Re(fft(c(half, Conj(rev(half[2:(n / 2)]))), inverse = TRUE))[1:n]
@@ -141,8 +141,11 @@ DFA recovers the planted scaling exponent: 0.5 for white noise, 1.0 for
 1/f, 1.5 for a random walk. {.table}
 
 The exponent tracks the planted process almost exactly. The fluctuation
-plot for the random-walk (brown) series shows the scaling directly: a
-single straight line on log-log axes, whose slope is the exponent.
+plot for the random-walk (brown) series shows the scaling directly on
+log-log axes, with one dominant slope, the scaling exponent.
+[`plot_dfa()`](https://rdazadda.github.io/actiRhythm/reference/plot_dfa.md)
+also draws the short- and long-scale segment fits and a breakpoint
+marker; for a monofractal series they coincide with that overall line.
 
 ``` r
 
@@ -150,13 +153,13 @@ plot_dfa(brown)
 ```
 
 ![DFA fluctuation curve for the random-walk (brown) series on log-log
-axes. The slope is the scaling exponent (~1.5 here); one straight line
-is monofractal
+axes. The slope is the scaling exponent (~1.5 here); the coinciding
+short- and long-scale segments mark monofractal
 scaling.](fractal-nonlinear_files/figure-html/dfa-plot-1.png)
 
 DFA fluctuation curve for the random-walk (brown) series on log-log
-axes. The slope is the scaling exponent (~1.5 here); one straight line
-is monofractal scaling.
+axes. The slope is the scaling exponent (~1.5 here); the coinciding
+short- and long-scale segments mark monofractal scaling.
 
 ## On a real recording
 
@@ -296,7 +299,7 @@ mse
 #>   Scales:             20 (1-20)
 #>   SampEn @ scale 1:   0.0727
 #>   Complexity (area):  1.4636
-#>   Slope (mse on scale):0.0005
+#>   Slope (mse on scale): 0.0005
 #> 
 #>   Negative slope => noise-like; flat/positive => complex
 ```

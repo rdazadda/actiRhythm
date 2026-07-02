@@ -51,9 +51,9 @@ auto.calibrate(
 
 A list with `scale` and `offset` (length-3), the calibration error
 before and after (`cal_error_start`, `cal_error_end`, mean absolute
-deviation from 1 g), `npoints`, and a `calibrated` flag. When there is
-too little non-movement data the identity correction is returned with
-`calibrated = FALSE`.
+deviation from 1 g), `npoints`, a `calibrated` flag, and a `reason`
+string describing the outcome. When there is too little non-movement
+data the identity correction is returned with `calibrated = FALSE`.
 
 ## References
 

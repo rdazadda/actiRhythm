@@ -138,12 +138,12 @@ Webster’s rescoring rules <span class="citation">(<a href="#ref-webster1982">W
 short sleep bouts bracketed by sustained wake.</p>
 <p><strong>Sadeh</strong> <span class="citation">(<a href="#ref-sadeh1994">Sadeh et al., 1994</a>)</span> uses an
 eleven-epoch window (five each side):
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>I</mi><mo>=</mo><mn>7.601</mn><mo>−</mo><mn>0.065</mn><mspace width="0.167em"></mspace><mover><mi>A</mi><mo accent="true">¯</mo></mover><mo>−</mo><mn>1.08</mn><mspace width="0.167em"></mspace><mrow><mi mathvariant="normal">N</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">T</mi></mrow><mo>−</mo><mn>0.056</mn><mspace width="0.167em"></mspace><mi>s</mi><mo>−</mo><mn>0.703</mn><mspace width="0.167em"></mspace><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>C</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
-SI = 7.601 - 0.065\,\overline{A} - 1.08\,\mathrm{NAT} - 0.056\,s - 0.703\,\log(C+1),
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>I</mi><mo>=</mo><mn>7.601</mn><mo>−</mo><mn>0.065</mn><mspace width="0.167em"></mspace><mover><mi>A</mi><mo accent="true">¯</mo></mover><mo>−</mo><mn>1.08</mn><mspace width="0.167em"></mspace><mrow><mi mathvariant="normal">N</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">T</mi><mi mathvariant="normal">S</mi></mrow><mo>−</mo><mn>0.056</mn><mspace width="0.167em"></mspace><mi>s</mi><mo>−</mo><mn>0.703</mn><mspace width="0.167em"></mspace><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>C</mi><mo>+</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
+SI = 7.601 - 0.065\,\overline{A} - 1.08\,\mathrm{NATS} - 0.056\,s - 0.703\,\log(C+1),
 </annotation></semantics></math> where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>A</mi><mo accent="true">¯</mo></mover><annotation encoding="application/x-tex">\overline{A}</annotation></semantics></math>
 is the window mean,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">N</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">T</mi></mrow><annotation encoding="application/x-tex">\mathrm{NAT}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">N</mi><mi mathvariant="normal">A</mi><mi mathvariant="normal">T</mi><mi mathvariant="normal">S</mi></mrow><annotation encoding="application/x-tex">\mathrm{NATS}</annotation></semantics></math>
 the count of epochs in
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">[</mo><mn>50</mn><mo>,</mo><mn>100</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">[50,100)</annotation></semantics></math>,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>
@@ -158,10 +158,10 @@ rather than weighted: it fits a 24-hour cosinor to bound each rest and
 active span roughly, then places the exact transition inside each bound
 at the split
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
-minimising the within-segment residual sum of squares, <span class="math display">$$
-k^\* = \arg\min_k \;\sum_{i \le k}(x_i - \bar x_{\le k})^2 + \sum_{i
-&gt; k}(x_i - \bar x_{&gt;k})^2 .
-$$</span></p>
+minimising the within-segment residual sum of squares,
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>k</mi><mo>*</mo></msup><mo>=</mo><mrow><mi mathvariant="normal">arg</mi><mo>⁡</mo></mrow><munder><mi mathvariant="normal">min</mi><mi>k</mi></munder><mspace width="0.278em"></mspace><munder><mo>∑</mo><mrow><mi>i</mi><mo>≤</mo><mi>k</mi></mrow></munder><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mrow><mo>≤</mo><mi>k</mi></mrow></msub><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><munder><mo>∑</mo><mrow><mi>i</mi><mo>&gt;</mo><mi>k</mi></mrow></munder><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mrow><mo>&gt;</mo><mi>k</mi></mrow></msub><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
+k^* = \arg\min_k \;\sum_{i \le k}(x_i - \bar x_{\le k})^2 + \sum_{i &gt; k}(x_i - \bar x_{&gt;k})^2 .
+</annotation></semantics></math></p>
 </div>
 <div class="section level2">
 <h2 id="assumptions-and-when-they-break">Assumptions, and when they break<a class="anchor" aria-label="anchor" href="#assumptions-and-when-they-break"></a>
@@ -278,9 +278,10 @@ planted values.</caption>
 <span><span class="co">#&gt;            n_episodes mean_sleep_duration_h </span></span>
 <span><span class="co">#&gt;                     6                     8</span></span></code></pre></div>
 <p>The recovered onset and wake land within a minute of the planted
-23:00 and 07:00, the detector finds exactly seven nightly episodes, and
-the mean duration is the eight hours we built in. The method recovers
-the truth we planted.</p>
+23:00 and 07:00, the detector pairs them into six complete episodes (the
+seventh night’s 23:00 onset has no wake onset inside the record, so it
+is left unpaired), and the mean duration is the eight hours we built in.
+The method recovers the truth we planted.</p>
 </div>
 <div class="section level2">
 <h2 id="on-a-real-recording">On a real recording<a class="anchor" aria-label="anchor" href="#on-a-real-recording"></a>

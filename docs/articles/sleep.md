@@ -48,10 +48,10 @@ bouts bracketed by sustained wake.
 **Sadeh** ([Sadeh et al., 1994](#ref-sadeh1994)) uses an eleven-epoch
 window (five each side):
 ``` math
-SI = 7.601 - 0.065\,\overline{A} - 1.08\,\mathrm{NAT} - 0.056\,s - 0.703\,\log(C+1),
+SI = 7.601 - 0.065\,\overline{A} - 1.08\,\mathrm{NATS} - 0.056\,s - 0.703\,\log(C+1),
 ```
-where $`\overline{A}`$ is the window mean, $`\mathrm{NAT}`$ the count of
-epochs in $`[50,100)`$, $`s`$ the standard deviation over the current
+where $`\overline{A}`$ is the window mean, $`\mathrm{NATS}`$ the count
+of epochs in $`[50,100)`$, $`s`$ the standard deviation over the current
 and five preceding epochs, and $`C`$ the current count. The epoch is
 scored **sleep when $`SI \ge 0`$**; set `wake_threshold = -4` and
 `clip = 300` for ActiLife parity.
@@ -60,8 +60,10 @@ The change-point detector ([Chen & Sun, 2024](#ref-chensun2024)) is
 geometric rather than weighted: it fits a 24-hour cosinor to bound each
 rest and active span roughly, then places the exact transition inside
 each bound at the split $`k`$ minimising the within-segment residual sum
-of squares, \$\$ k^\\ = \arg\min_k \\\sum\_{i \le k}(x_i - \bar x\_{\le
-k})^2 + \sum\_{i \> k}(x_i - \bar x\_{\>k})^2 . \$\$
+of squares,
+``` math
+k^* = \arg\min_k \;\sum_{i \le k}(x_i - \bar x_{\le k})^2 + \sum_{i > k}(x_i - \bar x_{>k})^2 .
+```
 
 ## Assumptions, and when they break
 
@@ -157,9 +159,10 @@ c(n_episodes = cp$n_episodes, mean_sleep_duration_h = cp$mean_sleep_duration)
 ```
 
 The recovered onset and wake land within a minute of the planted 23:00
-and 07:00, the detector finds exactly seven nightly episodes, and the
-mean duration is the eight hours we built in. The method recovers the
-truth we planted.
+and 07:00, the detector pairs them into six complete episodes (the
+seventh night’s 23:00 onset has no wake onset inside the record, so it
+is left unpaired), and the mean duration is the eight hours we built in.
+The method recovers the truth we planted.
 
 ## On a real recording
 

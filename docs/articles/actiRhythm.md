@@ -199,15 +199,15 @@ and returns the dominant period `tau`, with a false-alarm probability in
 per <- circadian.period(agd$axis1, agd$timestamp)
 c(tau = per$tau, p_value = per$p_value)
 #>          tau      p_value 
-#> 2.448889e+01 4.916458e-98
+#> 2.489529e+01 4.916458e-98
 ```
 
-The strongest cycle here sits near 25.4 hours, meaningfully longer than
-a solar day, and the false-alarm probability is essentially zero, so the
+The strongest cycle here sits near 24.9 hours, a little longer than a
+solar day, and the false-alarm probability is essentially zero, so the
 cycle itself is not in doubt. Its exact length is less certain.
 [`period.ci()`](https://rdazadda.github.io/actiRhythm/reference/period.ci.md)
-refines that peak and bootstraps it with a circular block bootstrap
-([Kunsch, 1989](#ref-kunsch1989); [Politis & Romano,
+puts a confidence interval around that same peak with a circular block
+bootstrap ([Kunsch, 1989](#ref-kunsch1989); [Politis & Romano,
 1992](#ref-politis1992)), which respects the autocorrelation in activity
 data. The interval it returns is wide enough to span 24 hours. On a
 single recording the period is clearly present but not pinned to the
@@ -282,11 +282,11 @@ Period (vertical) against time (horizontal), coloured by spectral power.
 A horizontal band of colour is a stable period; a band that bends upward
 or downward is a rhythm lengthening or shortening across the recording.
 
-Follow the band of colour left to right: here it drifts upward, the
-dominant period lengthening across the recording rather than holding at
-24 hours. Read the later windows with some caution, since they ride the
-upper edge of the search band, where a weakening rhythm and a genuinely
-longer period can look alike.
+Follow the band of colour left to right: here the dominant period
+wanders rather than holding steady at 24 hours. Read the final window
+with particular caution, since it rides the upper edge of the search
+band, where a weakening rhythm and a genuinely longer period can look
+alike.
 
 ## Nonlinear structure
 
@@ -405,9 +405,10 @@ clock time. The detector reads the per-night sleep and wake timing
 directly from the counts.
 
 For this recording the detector finds seven nights, sleep onset late in
-the evening and wake onset around seven in the morning, with most nights
-near eight to nine hours of rest. That is the per-night sleep and wake
-timing the single transition rate above cannot localise.
+the evening and wake onset spread from early morning to around midday,
+with most rest spans in the eleven-to-twelve-hour range. That is the
+per-night sleep and wake timing the single transition rate above cannot
+localise.
 
 ## Every rest bout, naps included
 
@@ -529,12 +530,12 @@ consensus.rhythmicity(agd$axis1, agd$timestamp)
 #>   Consensus:    RHYTHMIC (alpha = 0.05)
 ```
 
-For this recording the tests agree that a rhythm is present and the
-combined p-value is effectively zero, so the evidence leans firmly
-toward a real rhythm even where one method on its own might hesitate.
-The three tests run on the same series, so they are not independent; the
-Cauchy combination stays valid under that dependence, where Fisher’s
-method would not.
+For this recording a majority of the tests find a rhythm (two of the
+three) and the combined p-value is effectively zero, so the evidence
+leans firmly toward a real rhythm even where one method on its own
+hesitates. The three tests run on the same series, so they are not
+independent; the Cauchy combination stays valid under that dependence,
+where Fisher’s method would not.
 
 ## A one-row summary
 
@@ -553,7 +554,7 @@ data.frame(
   dfa_alpha = fractal.dfa(agd$axis1)$alpha
 )
 #>              IS     IV   RA      tau amplitude acrophase dfa_alpha
-#> cos_term 0.2279 1.0008 0.98 24.48889    295.63     16.92 0.9263546
+#> cos_term 0.2279 1.0008 0.98 24.89529    295.63     16.92 0.9263546
 ```
 
 Read across, this row is one person: a strongly amplitude-modulated
@@ -580,15 +581,15 @@ batch <- circadian.batch(
 )
 batch[, c("file", "IS", "IV", "RA", "period_tau", "rhythm_p_value")]
 #>                      file     IS     IV     RA period_tau rhythm_p_value
-#> 1 MOS2E39230594_60sec.agd 0.2279 1.0008 0.9800   24.48889    0.002396228
-#> 2  MOS2E3923063660sec.agd 0.4230 1.2687 0.7706   24.09425    0.050151893
+#> 1 MOS2E39230594_60sec.agd 0.2279 1.0008 0.9800   24.89529    0.002396228
+#> 2  MOS2E3923063660sec.agd 0.4230 1.2687 0.7706   24.08320    0.050151893
 ```
 
 Each row is one subject, described by the same metrics as the
 walkthrough above, and already the two differ: the second is steadier
 from day to day (higher IS) but less amplitude-modulated (lower RA), and
-its rhythm clears significance only at the margin. Point the call at
-your own folder and nothing else changes.
+its rhythm falls just short of significance (p = 0.05). Point the call
+at your own folder and nothing else changes.
 
 When you want the full analysis for a single recording rather than a
 summary row,

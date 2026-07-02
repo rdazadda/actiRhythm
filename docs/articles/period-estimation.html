@@ -194,7 +194,7 @@ fragmentation), a single global number hides it. Use
 <strong>Regular sampling, for the chi-square periodogram
 only.</strong> Its phase-folding needs a near-uniform grid; gaps
 mis-align the fold. Lomb-Scargle carries the real times and is unbiased
-under irregular sampling, the centrepiece of this article.</li>
+under irregular sampling.</li>
 <li>
 <strong>A search window.</strong> The peak is taken within
 <code>[from, to]</code> (default 18-30 h). A rhythm outside the window
@@ -234,7 +234,7 @@ tau), then add noise.</p>
 <tr class="odd">
 <td align="left">Lomb-Scargle</td>
 <td align="right">25</td>
-<td align="right">25.26</td>
+<td align="right">25.03</td>
 </tr>
 <tr class="even">
 <td align="left">chi-square</td>
@@ -273,17 +273,16 @@ Baluev false-alarm probability.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>tau <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">tau</span>, peak_power <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">peak_power</span>, p_value <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">p_value</span>,</span>
 <span>  n_used <span class="op">=</span> <span class="va">ls</span><span class="op">$</span><span class="va">n_used</span>, span_days <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">ls</span><span class="op">$</span><span class="va">span_days</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          tau   peak_power      p_value       n_used    span_days </span></span>
-<span><span class="co">#&gt; 2.448889e+01 4.418582e-02 4.916458e-98 9.919000e+03 6.890000e+00</span></span></code></pre></div>
+<span><span class="co">#&gt; 2.489529e+01 4.418582e-02 4.916458e-98 9.919000e+03 6.890000e+00</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_periodogram.html">plot_periodogram</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="period-estimation_files/figure-html/ls-plot-1.png" class="r-plt" alt="The Lomb-Scargle periodogram of the bundled recording over the 18-30 h window. The orange line marks the dominant period, the grey dashed line is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm threshold, which is flat across periods (unlike the chi-square critical curve below). The peak sits to the right of 24, a longer-than-day dominant cycle." width="770"><p class="caption">
+<img src="period-estimation_files/figure-html/ls-plot-1.png" class="r-plt" alt="The Lomb-Scargle periodogram of the bundled recording over the 18-30 h window. The orange line marks the dominant period, the grey dashed line is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm threshold, which is flat across periods (unlike the chi-square critical curve below). The peak sits just above 24 hours, close to a solar day." width="770"><p class="caption">
 The Lomb-Scargle periodogram of the bundled recording over the 18-30 h
 window. The orange line marks the dominant period, the grey dashed line
 is 24 hours, and the red dashed line is the 0.05 Baluev false-alarm
 threshold, which is flat across periods (unlike the chi-square critical
-curve below). The peak sits to the right of 24, a longer-than-day
-dominant cycle.
+curve below). The peak sits just above 24 hours, close to a solar day.
 </p>
 </div>
 <p>The bootstrap interval shows how firmly that period is pinned down.
@@ -363,8 +362,8 @@ chi-square peak slips off.</caption>
 <tr class="odd">
 <td align="left">Lomb-Scargle</td>
 <td align="right">25</td>
-<td align="right">25.26</td>
-<td align="right">25.26</td>
+<td align="right">25.03</td>
+<td align="right">25.03</td>
 </tr>
 <tr class="even">
 <td align="left">chi-square</td>

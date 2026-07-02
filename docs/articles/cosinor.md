@@ -155,15 +155,17 @@ rhythmicity.test(agd$axis1, agd$timestamp, cosinor_result = cos)
 plot_extended_cosinor(agd$axis1, agd$timestamp)
 ```
 
-![Hourly activity with the fitted 24-hour cosine overlaid. The peak of
-the curve is the acrophase; its height above the MESOR line is the
-amplitude. Where the points leave the curve is the structure a single
-cosine cannot follow.](cosinor_files/figure-html/fit-plot-1.png)
+![The averaged hourly profile with two fits overlaid: the ordinary
+single cosine (dashed) and the extended Marler fit (orange), which
+allows squared-off peaks. Where the points leave the single cosine is
+the structure it cannot follow; the Marler fit is covered under the
+wider cosinor family below.](cosinor_files/figure-html/fit-plot-1.png)
 
-Hourly activity with the fitted 24-hour cosine overlaid. The peak of the
-curve is the acrophase; its height above the MESOR line is the
-amplitude. Where the points leave the curve is the structure a single
-cosine cannot follow.
+The averaged hourly profile with two fits overlaid: the ordinary single
+cosine (dashed) and the extended Marler fit (orange), which allows
+squared-off peaks. Where the points leave the single cosine is the
+structure it cannot follow; the Marler fit is covered under the wider
+cosinor family below.
 
 For the joint uncertainty in amplitude and acrophase,
 [`cosinor.confidence.ellipse()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.confidence.ellipse.md)
@@ -216,33 +218,33 @@ not a single symmetric cosine.
 
 hod <- as.numeric(format(ts, "%H")) + as.numeric(format(ts, "%M")) / 60
 set.seed(2)
-siesta <- pmax(0, 120 + 70 * cos(2 * pi * (hod - 14) / 24) +     # day-night fundamental
-                    55 * cos(2 * pi * 2 * (hod - 14) / 24) +     # the midday dip
+siesta <- pmax(0, 120 + 60 * cos(2 * pi * 2 * (hod - 9.5) / 24) -   # twin morning/evening peaks
+                    45 * cos(2 * pi * (hod - 3) / 24) +             # carves the midday dip
                     rnorm(length(ts), 0, 12))
 
 cs  <- cosinor.analysis(siesta, ts)
 rts <- rhythmicity.test(siesta, ts, cosinor_result = cs)
 c(rhythmic = rts$rhythmic, p_value = rts$p_value, percent_rhythm = rts$percent_rhythm)
 #>       rhythmic        p_value percent_rhythm 
-#>   1.000000e+00   3.743731e-05   6.212000e+01
+#>    1.000000000    0.008707296   36.350000000
 ```
 
 The test is significant (the rhythm is not flat), yet the single cosine
-explains only about 62 percent of the day. The missing third is the
-midday dip, which a symmetric cosine cannot represent. A multi-harmonic
-fit recovers it: it selects two components and explains essentially all
-of it (the chunk below reports the R-squared).
+explains only about 37 percent of the day. It cannot bend to the twin
+morning and evening peaks with the midday dip between them. A
+multi-harmonic fit recovers the shape: it selects two components and
+explains essentially all of it (the chunk below reports the R-squared).
 
 ``` r
 
 mc <- cosinor.multicomponent(siesta, ts)
 c(n_harmonics = mc$n_harmonics, r_squared = mc$r_squared)
 #> n_harmonics   r_squared 
-#>   2.0000000   0.9999345
+#>    2.000000    0.999903
 mc$harmonics
 #>    harmonic amplitude acrophase_h
-#> x2        1  69.67840   14.012182
-#> x4        2  54.41006    2.011788
+#> x2        1  44.72900   15.016326
+#> x4        2  59.18037    9.506901
 ```
 
 ``` r

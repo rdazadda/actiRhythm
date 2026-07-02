@@ -148,9 +148,10 @@ The population cosinor recovers each group’s planted acrophase and
 amplitude. {.table}
 
 [`cosinor.compare()`](https://rdazadda.github.io/actiRhythm/reference/cosinor.compare.md)
-then tests whether the two groups differ. The omnibus is a Bingham /
-Hotelling $`T^2`$ on the joint (MESOR, cosine, sine) vector ([Bingham et
-al., 1982](#ref-bingham1982)); the per-parameter rows break it down,
+then tests whether the two groups differ. The amplitude/acrophase test
+is a two-variate Hotelling $`T^2`$ on the (cosine, sine) coefficients
+([Bingham et al., 1982](#ref-bingham1982)); the MESOR difference is a
+separate pooled-variance F-test. The per-parameter rows break both down,
 with the acrophase test made circular-aware.
 
 ``` r
@@ -195,8 +196,8 @@ batch[, c("file", "error", "IS", "IV", "RA",
 #> 1 MOS2E39230594_60sec.agd  <NA> 0.2279 1.0008 0.9800            295.63
 #> 2  MOS2E3923063660sec.agd  <NA> 0.4230 1.2687 0.7706            351.14
 #>   rhythm_p_value period_tau
-#> 1    0.002396228   24.48889
-#> 2    0.050151893   24.09425
+#> 1    0.002396228   24.89529
+#> 2    0.050151893   24.08320
 ```
 
 Two files in, two rows out, with `error` all `NA` (both read and

@@ -78,8 +78,7 @@ coarse-grained series with embedding dimension `m` and the FIXED
 absolute tolerance `r * sd(x_original)`. Sample Entropy is the negative
 natural log of the conditional probability that two sub-sequences
 matching for `m` points (within the tolerance, Chebyshev distance,
-self-matches excluded) also match for `m + 1` points. The implementation
-is fully self-contained (base R / stats only).
+self-matches excluded) also match for `m + 1` points.
 
 ## See also
 

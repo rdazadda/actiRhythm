@@ -66,8 +66,9 @@ angle $`\theta_j = 2\pi t_j / 24`$. The mean resultant length
 $`R = \lVert N^{-1}\sum_j e^{i\theta_j} \rVert`$ measures clustering,
 and the Rayleigh statistic $`Z = N R^2`$ tests it against uniformity
 ([Fisher, 1993](#ref-fisher1993)). The **composite phase deviation**
-combines each day’s precision (the deviation from the previous day) and
-accuracy (the deviation from the chronotype reference) as
+combines each day’s precision (the deviation from the individual’s own
+mean phase) and accuracy (the deviation from the chronotype reference)
+as
 $`\mathrm{CPD} = \overline{\sqrt{\text{precision}^2 + \text{accuracy}^2}}`$([Fischer
 et al., 2016](#ref-fischer2016)).
 
@@ -234,7 +235,8 @@ The free-day mid-sleep falls 2.5 hours later than the work-day one (the
 social jet lag), and the sleep-debt correction trims that to the smaller
 SJLsc, the part of the shift not explained by weekend catch-up sleep. A
 value above one hour is the threshold commonly flagged as a health
-concern ([Wittmann et al., 2006](#ref-wittmann2006)).
+concern ([Roenneberg et al., 2012](#ref-roenneberg2012); [Wittmann et
+al., 2006](#ref-wittmann2006)).
 
 **Do the daily markers cluster?** A regular phase lands at the same
 clock time each day. We take the per-day activity onset and test whether
@@ -361,9 +363,9 @@ circadian.onset.ci(onsets)
 - **Social jet lag needs both kinds of day.** With no free nights (or no
   work nights) MSF or MSW is undefined and the difference is `NA`; a
   single free night gives an unstable free-day mid-point.
-- **Circular statistics need several days.** The concentration tests,
-  the CPD, and the onset confidence interval all return `NA` below three
-  days and are noisy with only a handful.
+- **Circular statistics need several days.** The concentration tests and
+  the onset confidence interval return `NA` below three days (the CPD
+  needs at least two) and are noisy with only a handful.
 
 ## Reference and validation
 

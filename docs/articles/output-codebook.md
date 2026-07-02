@@ -52,7 +52,7 @@ assumed waveform ([Van Someren et al., 1999](#ref-vansomeren1999);
 | `RA` | Relative amplitude of the rest-activity rhythm | (M10 - L5) / (M10 + L5); unitless | 0 to 1; higher = stronger rhythm | vansomeren1999 | `circadian.rhythm()$RA` |
 | `IS` | Interdaily stability: strength of coupling of the rhythm to the 24 h day | n\*sum((xbar_h - xbar)^2) / (p\*sum((x_i - xbar)^2)); unitless | 0 to 1; near 1 = highly stable, \< 0.3 = weak | witting1990 | `circadian.rhythm()$IS` |
 | `IV` | Intradaily variability: fragmentation of the rest-activity rhythm | n\*sum((x_i - x\_{i-1})^2) / ((n-1)\*sum((x_i - xbar)^2)); unitless | 0 to ~2; ~0 = smooth sine, ~2 = noisy/fragmented | witting1990 | `circadian.rhythm()$IV` |
-| `phi` | Autocorrelation-based predictability of the rhythm at the 24 h lag | unitless | higher = more predictable day-to-day |  | `circadian.rhythm()$phi` |
+| `phi` | First-order (lag-1) autocorrelation of the hourly activity series (1 h lag) | unitless | about -1 to 1; higher = smoother, more predictable hour-to-hour |  | `circadian.rhythm()$phi` |
 
 ## Cosinor and rhythmicity
 
@@ -74,9 +74,10 @@ The single-component cosinor and its zero-amplitude rhythmicity test
 
 ## Period and spectral
 
-The endogenous period from the Lomb-Scargle and chi-square periodograms,
-with a bootstrap confidence interval ([Lomb, 1976](#ref-lomb1976);
-[Sokolove & Bushell, 1978](#ref-sokolove1978)).
+The endogenous period from the Lomb-Scargle ([Lomb,
+1976](#ref-lomb1976)) and chi-square ([Sokolove & Bushell,
+1978](#ref-sokolove1978)) periodograms, with a circular block-bootstrap
+confidence interval ([Politis & Romano, 1992](#ref-politis1992)).
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
@@ -109,7 +110,8 @@ al., 2002](#ref-costa2002); [Kantelhardt et al.,
 ## Rest-activity transitions
 
 State-transition rates and probabilities that capture fragmentation a
-single amplitude cannot ([Lim et al., 2011](#ref-lim2011)).
+single amplitude cannot ([Danilevicz et al., 2024](#ref-danilevicz2024);
+[Lim et al., 2011](#ref-lim2011)).
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
@@ -122,8 +124,9 @@ single amplitude cannot ([Lim et al., 2011](#ref-lim2011)).
 
 Metrics that need a sleep label or sleep periods: the Sleep Regularity
 Index, social jet lag, and LIDS ([Phillips et al.,
-2017](#ref-phillips2017); [Winnebeck et al., 2018](#ref-winnebeck2018);
-[Wittmann et al., 2006](#ref-wittmann2006)).
+2017](#ref-phillips2017); [Roenneberg et al.,
+2012](#ref-roenneberg2012); [Winnebeck et al.,
+2018](#ref-winnebeck2018); [Wittmann et al., 2006](#ref-wittmann2006)).
 
 | Metric | Definition | Formula / units | Range / interpretation | Reference | Output object |
 |:---|:---|:---|:---|:---|:---|
@@ -138,11 +141,13 @@ Index, social jet lag, and LIDS ([Phillips et al.,
 
 Full citations for the method keys in the table above: ([Baluev,
 2008](#ref-baluev2008); [Cornelissen, 2014](#ref-cornelissen2014);
-[Costa et al., 2002](#ref-costa2002); [Kantelhardt et al.,
+[Costa et al., 2002](#ref-costa2002); [Danilevicz et al.,
+2024](#ref-danilevicz2024); [Kantelhardt et al.,
 2002](#ref-kantelhardt2002); [Lim et al., 2011](#ref-lim2011); [Lomb,
 1976](#ref-lomb1976); [Nelson et al., 1979](#ref-nelson1979); [Peng et
 al., 1994](#ref-peng1994); [Phillips et al., 2017](#ref-phillips2017);
-[Politis & Romano, 1992](#ref-politis1992); [Sokolove & Bushell,
+[Politis & Romano, 1992](#ref-politis1992); [Roenneberg et al.,
+2012](#ref-roenneberg2012); [Sokolove & Bushell,
 1978](#ref-sokolove1978); [Van Someren et al.,
 1999](#ref-vansomeren1999); [Winnebeck et al.,
 2018](#ref-winnebeck2018); [Witting et al., 1990](#ref-witting1990);
@@ -159,6 +164,12 @@ and Medical Modelling*, *11*, 16.
 Costa, M., Goldberger, A. L., & Peng, C.-K. (2002). Multiscale entropy
 analysis of complex physiologic time series. *Physical Review Letters*,
 *89*(6), 068102. <https://doi.org/10.1103/PhysRevLett.89.068102>
+
+Danilevicz, I. M., Hees, V. T. van, Heide, F. van der, Jacob, L.,
+Landre, B., Benadjaoud, M. A., & Sabia, S. (2024). Measures of
+fragmentation of rest activity patterns: Mathematical properties and
+interpretability. *BMC Medical Research Methodology*, *24*, 132.
+<https://doi.org/10.1186/s12874-024-02255-w>
 
 Kantelhardt, J. W., Zschiegner, S. A., Koscielny-Bunde, E., Havlin, S.,
 Bunde, A., & Stanley, H. E. (2002). Multifractal detrended fluctuation
@@ -194,6 +205,10 @@ academic performance and delayed circadian and sleep/wake timing.
 Politis, D. N., & Romano, J. P. (1992). A circular block-resampling
 procedure for stationary data. In R. LePage & L. Billard (Eds.),
 *Exploring the limits of bootstrap* (pp. 263–270). Wiley.
+
+Roenneberg, T., Allebrandt, K. V., Merrow, M., & Vetter, C. (2012).
+Social jetlag and obesity. *Current Biology*, *22*(10), 939–943.
+<https://doi.org/10.1016/j.cub.2012.03.038>
 
 Sokolove, P. G., & Bushell, W. N. (1978). The chi square periodogram:
 Its utility for analysis of circadian rhythms. *Journal of Theoretical

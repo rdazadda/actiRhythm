@@ -127,8 +127,7 @@ be the mean across all days at hour-of-day
 over
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>24</mn></mrow><annotation encoding="application/x-tex">p = 24</annotation></semantics></math>
 hours. The IS and IV formulas below are computed on this hourly series;
-the raw-epoch series is used separately for the multiscale and fractal
-measures.</p>
+the raw-epoch series is used separately for the multiscale measures.</p>
 <p><strong>Interdaily stability (IS)</strong>, how tightly the pattern
 repeats from one day to the next <span class="citation">(<a href="#ref-witting1990">Witting et al., 1990</a>)</span>:
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">I</mi><mi mathvariant="normal">S</mi></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><munderover><mo>∑</mo><mrow><mi>h</mi><mo>=</mo><mn>1</mn></mrow><mi>p</mi></munderover><mo stretchy="false" form="prefix">(</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>h</mi></msub><mo>−</mo><mover><mi>x</mi><mo accent="true">‾</mo></mover><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow><mrow><mi>p</mi><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo stretchy="false" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mover><mi>x</mi><mo accent="true">‾</mo></mover><msup><mo stretchy="false" form="postfix">)</mo><mn>2</mn></msup></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
@@ -155,9 +154,9 @@ and the onset times of each window.</p>
 <p>The L5 and M10 windows are placed on a minute-resolution average day
 and reported in counts per minute, the sliding-window convention also
 used by nparACT and GGIR. These values track but are not identical to
-the original hourly counts-per-hour of <span class="citation">Witting et
-al. (<a href="#ref-witting1990">1990</a>)</span>, and they depend on
-epoch length.</p>
+the original hourly counts-per-hour of <span class="citation">Van
+Someren et al. (<a href="#ref-vansomeren1999">1999</a>)</span>, and they
+depend on epoch length.</p>
 </div>
 <div class="section level2">
 <h2 id="assumptions-and-when-they-break">Assumptions, and when they break<a class="anchor" aria-label="anchor" href="#assumptions-and-when-they-break"></a>
@@ -186,13 +185,12 @@ device-off stretches.</li>
 <div class="section level2">
 <h2 id="recovering-known-truth">Recovering known truth<a class="anchor" aria-label="anchor" href="#recovering-known-truth"></a>
 </h2>
-<p>Before trusting these numbers on real data, it is worth seeing them
-behave on data whose answer we know. We build three seven-day
-recordings: one whose day repeats <strong>exactly</strong>, one whose
-peak <strong>wanders</strong> a few hours from day to day, and one that
-is <strong>pure noise</strong>. IS should fall from near 1 toward 0
-across the three, and IV should rise toward its noise ceiling of about
-2.</p>
+<p>Before trusting these numbers on real data, see them behave on data
+whose answer we know. We build three seven-day recordings: one whose day
+repeats <strong>exactly</strong>, one whose peak
+<strong>wanders</strong> a few hours from day to day, and one that is
+<strong>pure noise</strong>. IS should fall from near 1 toward 0 across
+the three, and IV should rise toward its noise ceiling of about 2.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ts</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">"2024-01-01"</span>, tz <span class="op">=</span> <span class="st">"UTC"</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">60</span>, length.out <span class="op">=</span> <span class="fl">7</span> <span class="op">*</span> <span class="fl">1440</span><span class="op">)</span></span>
 <span><span class="va">hod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">ts</span>, <span class="st">"%H"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">ts</span>, <span class="st">"%M"</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fl">60</span></span>
@@ -479,13 +477,19 @@ Rest-span and active-span count distributions. A high I&lt;O means most
 rest-span counts fall below the active-span median (dashed).
 </p>
 </div>
+<p>On this recording the active-span count median is zero, so the strict
+I &lt; median comparison collapses to 0 percent. The dichotomy index
+needs a denser active span, a coarser epoch or a count threshold in
+place of the median, to separate quiet rest from an active day; it is a
+caution worth keeping for sparse minute-level counts.</p>
 <p><strong>Fragmentation.</strong> <code><a href="../reference/state.transitions.html">state.transitions()</a></code>
 gives the kRA and kAR rates, the rest-to-active and active-to-rest
 probabilities read off the plateau of the bout-length survival curve
 <span class="citation">(<a href="#ref-lim2011">Lim et al.,
 2011</a>)</span>. <code><a href="../reference/transition.probability.html">transition.probability()</a></code> gives the
 maximum-likelihood and Bayesian transition probabilities of <span class="citation">Danilevicz et al. (<a href="#ref-danilevicz2024">2024</a>)</span>, taken straight from the
-bout counts. Both capture fragmentation a single amplitude cannot.</p>
+epoch-to-epoch transition counts. Both capture fragmentation a single
+amplitude cannot.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/state.transitions.html">state.transitions</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rest-Activity State Transitions</span></span>

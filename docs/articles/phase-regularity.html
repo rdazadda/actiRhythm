@@ -169,8 +169,8 @@ measures clustering, and the Rayleigh statistic
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>=</mo><mi>N</mi><msup><mi>R</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">Z = N R^2</annotation></semantics></math>
 tests it against uniformity <span class="citation">(<a href="#ref-fisher1993">Fisher, 1993</a>)</span>. The <strong>composite
 phase deviation</strong> combines each day’s precision (the deviation
-from the previous day) and accuracy (the deviation from the chronotype
-reference) as
+from the individual’s own mean phase) and accuracy (the deviation from
+the chronotype reference) as
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">C</mi><mi mathvariant="normal">P</mi><mi mathvariant="normal">D</mi></mrow><mo>=</mo><mover><msqrt><mrow><msup><mtext mathvariant="normal">precision</mtext><mn>2</mn></msup><mo>+</mo><msup><mtext mathvariant="normal">accuracy</mtext><mn>2</mn></msup></mrow></msqrt><mo accent="true">¯</mo></mover></mrow><annotation encoding="application/x-tex">\mathrm{CPD} = \overline{\sqrt{\text{precision}^2 + \text{accuracy}^2}}</annotation></semantics></math><span class="citation">(<a href="#ref-fischer2016">Fischer et al.,
 2016</a>)</span>.</p>
 </div>
@@ -363,7 +363,7 @@ usually are.</p>
 (the social jet lag), and the sleep-debt correction trims that to the
 smaller SJLsc, the part of the shift not explained by weekend catch-up
 sleep. A value above one hour is the threshold commonly flagged as a
-health concern <span class="citation">(<a href="#ref-wittmann2006">Wittmann et al., 2006</a>)</span>.</p>
+health concern <span class="citation">(<a href="#ref-roenneberg2012">Roenneberg et al., 2012</a>; <a href="#ref-wittmann2006">Wittmann et al., 2006</a>)</span>.</p>
 <p><strong>Do the daily markers cluster?</strong> A regular phase lands
 at the same clock time each day. We take the per-day activity onset and
 test whether those onsets are concentrated rather than scattered around
@@ -471,9 +471,9 @@ difference is <code>NA</code>; a single free night gives an unstable
 free-day mid-point.</li>
 <li>
 <strong>Circular statistics need several days.</strong> The
-concentration tests, the CPD, and the onset confidence interval all
-return <code>NA</code> below three days and are noisy with only a
-handful.</li>
+concentration tests and the onset confidence interval return
+<code>NA</code> below three days (the CPD needs at least two) and are
+noisy with only a handful.</li>
 </ul>
 </div>
 <div class="section level2">

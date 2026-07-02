@@ -169,11 +169,11 @@ assumed waveform <span class="citation">(<a href="#ref-vansomeren1999">Van Somer
 <table class="table">
 <colgroup>
 <col width="2%">
-<col width="30%">
 <col width="29%">
-<col width="20%">
-<col width="6%">
-<col width="10%">
+<col width="27%">
+<col width="24%">
+<col width="5%">
+<col width="9%">
 </colgroup>
 <thead><tr class="header">
 <th align="left">Metric</th>
@@ -232,10 +232,11 @@ unitless</td>
 </tr>
 <tr class="even">
 <td align="left"><code>phi</code></td>
-<td align="left">Autocorrelation-based predictability of the rhythm at
-the 24 h lag</td>
+<td align="left">First-order (lag-1) autocorrelation of the hourly
+activity series (1 h lag)</td>
 <td align="left">unitless</td>
-<td align="left">higher = more predictable day-to-day</td>
+<td align="left">about -1 to 1; higher = smoother, more predictable
+hour-to-hour</td>
 <td align="left"></td>
 <td align="left"><code>circadian.rhythm()$phi</code></td>
 </tr>
@@ -352,8 +353,10 @@ R-squared)</td>
 <div class="section level2">
 <h2 id="period-and-spectral">Period and spectral<a class="anchor" aria-label="anchor" href="#period-and-spectral"></a>
 </h2>
-<p>The endogenous period from the Lomb-Scargle and chi-square
-periodograms, with a bootstrap confidence interval <span class="citation">(<a href="#ref-lomb1976">Lomb, 1976</a>; <a href="#ref-sokolove1978">Sokolove &amp; Bushell, 1978</a>)</span>.</p>
+<p>The endogenous period from the Lomb-Scargle <span class="citation">(<a href="#ref-lomb1976">Lomb, 1976</a>)</span> and
+chi-square <span class="citation">(<a href="#ref-sokolove1978">Sokolove
+&amp; Bushell, 1978</a>)</span> periodograms, with a circular
+block-bootstrap confidence interval <span class="citation">(<a href="#ref-politis1992">Politis &amp; Romano, 1992</a>)</span>.</p>
 <table class="table">
 <colgroup>
 <col width="10%">
@@ -544,7 +547,7 @@ scale</td>
 <h2 id="rest-activity-transitions">Rest-activity transitions<a class="anchor" aria-label="anchor" href="#rest-activity-transitions"></a>
 </h2>
 <p>State-transition rates and probabilities that capture fragmentation a
-single amplitude cannot <span class="citation">(<a href="#ref-lim2011">Lim et al., 2011</a>)</span>.</p>
+single amplitude cannot <span class="citation">(<a href="#ref-danilevicz2024">Danilevicz et al., 2024</a>; <a href="#ref-lim2011">Lim et al., 2011</a>)</span>.</p>
 <table class="table">
 <colgroup>
 <col width="3%">
@@ -608,7 +611,7 @@ active-bout length)</td>
 <h2 id="sleep-timing-and-regularity">Sleep timing and regularity<a class="anchor" aria-label="anchor" href="#sleep-timing-and-regularity"></a>
 </h2>
 <p>Metrics that need a sleep label or sleep periods: the Sleep
-Regularity Index, social jet lag, and LIDS <span class="citation">(<a href="#ref-phillips2017">Phillips et al., 2017</a>; <a href="#ref-winnebeck2018">Winnebeck et al., 2018</a>; <a href="#ref-wittmann2006">Wittmann et al., 2006</a>)</span>.</p>
+Regularity Index, social jet lag, and LIDS <span class="citation">(<a href="#ref-phillips2017">Phillips et al., 2017</a>; <a href="#ref-roenneberg2012">Roenneberg et al., 2012</a>; <a href="#ref-winnebeck2018">Winnebeck et al., 2018</a>; <a href="#ref-wittmann2006">Wittmann et al., 2006</a>)</span>.</p>
 <table class="table">
 <colgroup>
 <col width="6%">
@@ -688,8 +691,8 @@ ultradian rhythm</td>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<p>Full citations for the method keys in the table above: <span class="citation">(<a href="#ref-baluev2008">Baluev, 2008</a>; <a href="#ref-cornelissen2014">Cornelissen, 2014</a>; <a href="#ref-costa2002">Costa et al., 2002</a>; <a href="#ref-kantelhardt2002">Kantelhardt et al., 2002</a>; <a href="#ref-lim2011">Lim et al., 2011</a>; <a href="#ref-lomb1976">Lomb,
-1976</a>; <a href="#ref-nelson1979">Nelson et al., 1979</a>; <a href="#ref-peng1994">Peng et al., 1994</a>; <a href="#ref-phillips2017">Phillips et al., 2017</a>; <a href="#ref-politis1992">Politis &amp; Romano, 1992</a>; <a href="#ref-sokolove1978">Sokolove &amp; Bushell, 1978</a>; <a href="#ref-vansomeren1999">Van Someren et al., 1999</a>; <a href="#ref-winnebeck2018">Winnebeck et al., 2018</a>; <a href="#ref-witting1990">Witting et al., 1990</a>; <a href="#ref-wittmann2006">Wittmann et al., 2006</a>)</span>.</p>
+<p>Full citations for the method keys in the table above: <span class="citation">(<a href="#ref-baluev2008">Baluev, 2008</a>; <a href="#ref-cornelissen2014">Cornelissen, 2014</a>; <a href="#ref-costa2002">Costa et al., 2002</a>; <a href="#ref-danilevicz2024">Danilevicz et al., 2024</a>; <a href="#ref-kantelhardt2002">Kantelhardt et al., 2002</a>; <a href="#ref-lim2011">Lim et al., 2011</a>; <a href="#ref-lomb1976">Lomb,
+1976</a>; <a href="#ref-nelson1979">Nelson et al., 1979</a>; <a href="#ref-peng1994">Peng et al., 1994</a>; <a href="#ref-phillips2017">Phillips et al., 2017</a>; <a href="#ref-politis1992">Politis &amp; Romano, 1992</a>; <a href="#ref-roenneberg2012">Roenneberg et al., 2012</a>; <a href="#ref-sokolove1978">Sokolove &amp; Bushell, 1978</a>; <a href="#ref-vansomeren1999">Van Someren et al., 1999</a>; <a href="#ref-winnebeck2018">Winnebeck et al., 2018</a>; <a href="#ref-witting1990">Witting et al., 1990</a>; <a href="#ref-wittmann2006">Wittmann et al., 2006</a>)</span>.</p>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-baluev2008" class="csl-entry">
 Baluev, R. V. (2008). Assessing the statistical significance of
@@ -704,6 +707,13 @@ Biology and Medical Modelling</em>, <em>11</em>, 16. <a href="https://doi.org/10
 Costa, M., Goldberger, A. L., &amp; Peng, C.-K. (2002). Multiscale
 entropy analysis of complex physiologic time series. <em>Physical Review
 Letters</em>, <em>89</em>(6), 068102. <a href="https://doi.org/10.1103/PhysRevLett.89.068102" class="external-link">https://doi.org/10.1103/PhysRevLett.89.068102</a>
+</div>
+<div id="ref-danilevicz2024" class="csl-entry">
+Danilevicz, I. M., Hees, V. T. van, Heide, F. van der, Jacob, L.,
+Landre, B., Benadjaoud, M. A., &amp; Sabia, S. (2024). Measures of
+fragmentation of rest activity patterns: Mathematical properties and
+interpretability. <em>BMC Medical Research Methodology</em>,
+<em>24</em>, 132. <a href="https://doi.org/10.1186/s12874-024-02255-w" class="external-link">https://doi.org/10.1186/s12874-024-02255-w</a>
 </div>
 <div id="ref-kantelhardt2002" class="csl-entry">
 Kantelhardt, J. W., Zschiegner, S. A., Koscielny-Bunde, E., Havlin, S.,
@@ -745,6 +755,11 @@ academic performance and delayed circadian and sleep/wake timing.
 Politis, D. N., &amp; Romano, J. P. (1992). A circular block-resampling
 procedure for stationary data. In R. LePage &amp; L. Billard (Eds.),
 <em>Exploring the limits of bootstrap</em> (pp. 263–270). Wiley.
+</div>
+<div id="ref-roenneberg2012" class="csl-entry">
+Roenneberg, T., Allebrandt, K. V., Merrow, M., &amp; Vetter, C. (2012).
+Social jetlag and obesity. <em>Current Biology</em>, <em>22</em>(10),
+939–943. <a href="https://doi.org/10.1016/j.cub.2012.03.038" class="external-link">https://doi.org/10.1016/j.cub.2012.03.038</a>
 </div>
 <div id="ref-sokolove1978" class="csl-entry">
 Sokolove, P. G., &amp; Bushell, W. N. (1978). The chi square

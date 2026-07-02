@@ -68,13 +68,13 @@ plot_raw_metrics(raw, epoch_length = 60)
 ```
 
 ![The three raw-acceleration epoch metrics across the recording: ENMO
-and MAD (movement, in mg) are low at night and zero when the device is
-off, while the z-angle (degrees) tracks arm
+and MAD (movement, in mg) are low at night, while the z-angle (degrees)
+tracks arm
 posture.](raw-pipeline_files/figure-html/raw-metrics-plot-1.png)
 
 The three raw-acceleration epoch metrics across the recording: ENMO and
-MAD (movement, in mg) are low at night and zero when the device is off,
-while the z-angle (degrees) tracks arm posture.
+MAD (movement, in mg) are low at night, while the z-angle (degrees)
+tracks arm posture.
 
 ENMO is the activity signal, and every method above takes it directly:
 pass it to

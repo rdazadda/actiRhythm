@@ -119,9 +119,10 @@ windows below which a window counts as non-movement (default 0.013).</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A list with <code>scale</code> and <code>offset</code> (length-3), the calibration
 error before and after (<code>cal_error_start</code>, <code>cal_error_end</code>, mean
-absolute deviation from 1 g), <code>npoints</code>, and a <code>calibrated</code> flag.
-When there is too little non-movement data the identity correction is
-returned with <code>calibrated = FALSE</code>.</p>
+absolute deviation from 1 g), <code>npoints</code>, a <code>calibrated</code> flag, and a
+<code>reason</code> string describing the outcome. When there is too little
+non-movement data the identity correction is returned with
+<code>calibrated = FALSE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

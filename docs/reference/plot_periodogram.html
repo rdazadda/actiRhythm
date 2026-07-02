@@ -78,7 +78,14 @@ clock from exactly one solar day is visible.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_periodogram</span><span class="op">(</span><span class="va">counts</span>, <span class="va">timestamps</span>, from <span class="op">=</span> <span class="fl">18</span>, to <span class="op">=</span> <span class="fl">30</span>, ofac <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_periodogram</span><span class="op">(</span></span>
+<span>  <span class="va">counts</span>,</span>
+<span>  <span class="va">timestamps</span>,</span>
+<span>  from <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>  to <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  ofac <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -110,6 +117,10 @@ timestamps before estimation.</p></dd>
 <dd><p>Integer oversampling factor for the period grid. Higher values give
 a finer grid (default <code>4</code>).</p></dd>
 
+
+<dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
+<dd><p>Significance level for the Baluev false-alarm threshold (default 0.05).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -124,7 +135,7 @@ annotation is returned instead; the function never errors.</p>
     <p>The full standard-normalized Lomb-Scargle spectrum over the period window is
 computed by the package's own estimator (the same one behind
 <code><a href="circadian.period.html">circadian.period</a></code>); the peak period <code>tau</code>, its Baluev
-<code>p_value</code>, and the 0.05 false-alarm threshold line all come from that
+<code>p_value</code>, and the false-alarm threshold line all come from that
 function, so the highlighted peak and threshold match the reported values. The
 Lomb-Scargle periodogram is the least-squares spectral estimator for unevenly
 sampled series and is therefore appropriate for gappy actigraphy data, which an

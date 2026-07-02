@@ -252,12 +252,12 @@ probability in <code>$p_value</code> <span class="citation">(<a href="#ref-balue
 <code class="sourceCode R"><span><span class="va">per</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/circadian.period.html">circadian.period</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span>, <span class="va">agd</span><span class="op">$</span><span class="va">timestamp</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>tau <span class="op">=</span> <span class="va">per</span><span class="op">$</span><span class="va">tau</span>, p_value <span class="op">=</span> <span class="va">per</span><span class="op">$</span><span class="va">p_value</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          tau      p_value </span></span>
-<span><span class="co">#&gt; 2.448889e+01 4.916458e-98</span></span></code></pre></div>
-<p>The strongest cycle here sits near 25.4 hours, meaningfully longer
-than a solar day, and the false-alarm probability is essentially zero,
-so the cycle itself is not in doubt. Its exact length is less certain.
-<code><a href="../reference/period.ci.html">period.ci()</a></code> refines that peak and bootstraps it with a
-circular block bootstrap <span class="citation">(<a href="#ref-kunsch1989">Kunsch, 1989</a>; <a href="#ref-politis1992">Politis &amp; Romano, 1992</a>)</span>, which
+<span><span class="co">#&gt; 2.489529e+01 4.916458e-98</span></span></code></pre></div>
+<p>The strongest cycle here sits near 24.9 hours, a little longer than a
+solar day, and the false-alarm probability is essentially zero, so the
+cycle itself is not in doubt. Its exact length is less certain.
+<code><a href="../reference/period.ci.html">period.ci()</a></code> puts a confidence interval around that same
+peak with a circular block bootstrap <span class="citation">(<a href="#ref-kunsch1989">Kunsch, 1989</a>; <a href="#ref-politis1992">Politis &amp; Romano, 1992</a>)</span>, which
 respects the autocorrelation in activity data. The interval it returns
 is wide enough to span 24 hours. On a single recording the period is
 clearly present but not pinned to the hour. Passing
@@ -313,11 +313,11 @@ A horizontal band of colour is a stable period; a band that bends upward
 or downward is a rhythm lengthening or shortening across the recording.
 </p>
 </div>
-<p>Follow the band of colour left to right: here it drifts upward, the
-dominant period lengthening across the recording rather than holding at
-24 hours. Read the later windows with some caution, since they ride the
-upper edge of the search band, where a weakening rhythm and a genuinely
-longer period can look alike.</p>
+<p>Follow the band of colour left to right: here the dominant period
+wanders rather than holding steady at 24 hours. Read the final window
+with particular caution, since it rides the upper edge of the search
+band, where a weakening rhythm and a genuinely longer period can look
+alike.</p>
 </div>
 <div class="section level2">
 <h2 id="nonlinear-structure">Nonlinear structure<a class="anchor" aria-label="anchor" href="#nonlinear-structure"></a>
@@ -413,9 +413,10 @@ directly from the counts.
 </p>
 </div>
 <p>For this recording the detector finds seven nights, sleep onset late
-in the evening and wake onset around seven in the morning, with most
-nights near eight to nine hours of rest. That is the per-night sleep and
-wake timing the single transition rate above cannot localise.</p>
+in the evening and wake onset spread from early morning to around
+midday, with most rest spans in the eleven-to-twelve-hour range. That is
+the per-night sleep and wake timing the single transition rate above
+cannot localise.</p>
 </div>
 <div class="section level2">
 <h2 id="every-rest-bout-naps-included">Every rest bout, naps included<a class="anchor" aria-label="anchor" href="#every-rest-bout-naps-included"></a>
@@ -516,12 +517,12 @@ p-value <span class="citation">(<a href="#ref-liu2020">Liu &amp; Xie,
 <span><span class="co">#&gt;   Votes:        2 / 3 methods</span></span>
 <span><span class="co">#&gt;   Combined p:   &lt;2e-16</span></span>
 <span><span class="co">#&gt;   Consensus:    RHYTHMIC (alpha = 0.05)</span></span></code></pre></div>
-<p>For this recording the tests agree that a rhythm is present and the
-combined p-value is effectively zero, so the evidence leans firmly
-toward a real rhythm even where one method on its own might hesitate.
-The three tests run on the same series, so they are not independent; the
-Cauchy combination stays valid under that dependence, where Fisher’s
-method would not.</p>
+<p>For this recording a majority of the tests find a rhythm (two of the
+three) and the combined p-value is effectively zero, so the evidence
+leans firmly toward a real rhythm even where one method on its own
+hesitates. The three tests run on the same series, so they are not
+independent; the Cauchy combination stays valid under that dependence,
+where Fisher’s method would not.</p>
 </div>
 <div class="section level2">
 <h2 id="a-one-row-summary">A one-row summary<a class="anchor" aria-label="anchor" href="#a-one-row-summary"></a>
@@ -539,7 +540,7 @@ across subjects.</p>
 <span>  dfa_alpha <span class="op">=</span> <span class="fu"><a href="../reference/fractal.dfa.html">fractal.dfa</a></span><span class="op">(</span><span class="va">agd</span><span class="op">$</span><span class="va">axis1</span><span class="op">)</span><span class="op">$</span><span class="va">alpha</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt;              IS     IV   RA      tau amplitude acrophase dfa_alpha</span></span>
-<span><span class="co">#&gt; cos_term 0.2279 1.0008 0.98 24.48889    295.63     16.92 0.9263546</span></span></code></pre></div>
+<span><span class="co">#&gt; cos_term 0.2279 1.0008 0.98 24.89529    295.63     16.92 0.9263546</span></span></code></pre></div>
 <p>Read across, this row is one person: a strongly amplitude-modulated
 rhythm whose timing is irregular from day to day, running on a period a
 little over 24 hours.</p>
@@ -562,13 +563,13 @@ two recordings, so this runs as a real, if small, batch.</p>
 <span><span class="op">)</span></span>
 <span><span class="va">batch</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"file"</span>, <span class="st">"IS"</span>, <span class="st">"IV"</span>, <span class="st">"RA"</span>, <span class="st">"period_tau"</span>, <span class="st">"rhythm_p_value"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                      file     IS     IV     RA period_tau rhythm_p_value</span></span>
-<span><span class="co">#&gt; 1 MOS2E39230594_60sec.agd 0.2279 1.0008 0.9800   24.48889    0.002396228</span></span>
-<span><span class="co">#&gt; 2  MOS2E3923063660sec.agd 0.4230 1.2687 0.7706   24.09425    0.050151893</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 MOS2E39230594_60sec.agd 0.2279 1.0008 0.9800   24.89529    0.002396228</span></span>
+<span><span class="co">#&gt; 2  MOS2E3923063660sec.agd 0.4230 1.2687 0.7706   24.08320    0.050151893</span></span></code></pre></div>
 <p>Each row is one subject, described by the same metrics as the
 walkthrough above, and already the two differ: the second is steadier
 from day to day (higher IS) but less amplitude-modulated (lower RA), and
-its rhythm clears significance only at the margin. Point the call at
-your own folder and nothing else changes.</p>
+its rhythm falls just short of significance (p = 0.05). Point the call
+at your own folder and nothing else changes.</p>
 <p>When you want the full analysis for a single recording rather than a
 summary row, <code><a href="../reference/circadian.workbook.html">circadian.workbook()</a></code> writes every table to a
 multi-sheet Excel file: a summary row plus the hourly profile, both

@@ -163,6 +163,6 @@ t_hours <- seq(0, 7 * 24 - 1/60, by = 1/60)
 ts <- as.POSIXct("2024-01-01 00:00:00") + t_hours * 3600
 counts <- 100 + 80 * cos(2 * pi * (t_hours - 8) / 24) + rnorm(length(t_hours), 0, 5)
 circadian.period(counts, ts)$tau   # about 24.0
-#> [1] 23.99762
+#> [1] 24.04103
 # }
 ```

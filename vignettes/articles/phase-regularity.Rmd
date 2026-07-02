@@ -7,6 +7,10 @@ output:
 bibliography: ../REFERENCES.bib
 csl: ../apa.csl
 link-citations: true
+vignette: >
+  %\VignetteIndexEntry{Phase, regularity, and social jet lag}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}

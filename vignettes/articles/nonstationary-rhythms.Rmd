@@ -7,6 +7,10 @@ output:
 bibliography: ../REFERENCES.bib
 csl: ../apa.csl
 link-citations: true
+vignette: >
+  %\VignetteIndexEntry{Nonstationary and complex rhythms}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}

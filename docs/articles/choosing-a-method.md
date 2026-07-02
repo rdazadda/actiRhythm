@@ -1,12 +1,12 @@
 # Choosing a method
 
 actiRhythm gives you many functions, and several can look like they
-answer the same question. This guide maps the question you have to the
-function that answers it, and pulls apart the methods that overlap. The
-rule throughout: start simple, and escalate only when the data demand
-it. The actogram and the nonparametric summary answer most questions on
-their own; the rest of the package is there for the recordings that are
-not so tidy.
+answer the same question. This guide points each question to the
+function that answers it, and distinguishes the methods that overlap.
+The rule throughout: start simple, and escalate only when the data
+demand it. The actogram and the nonparametric summary answer most
+questions on their own; the rest of the package is there for the
+recordings that are not so tidy.
 
 ## Start here, every time
 

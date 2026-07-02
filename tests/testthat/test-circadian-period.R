@@ -77,7 +77,12 @@ test_that("circadian.period power matches a brute-force least-squares periodogra
     }, numeric(1))
 
     expect_equal(res$power, bf, tolerance = 1e-9)
-    expect_equal(res$tau, res$scanned[which.max(bf)], tolerance = 1e-12)
+    # circadian.period reports the sub-grid parabola-refined peak (matching period.ci),
+    # so check that both periodograms pick the same grid node (exact cross-check) and
+    # that the refined tau sits within one grid step of it.
+    peak_grid <- res$scanned[which.max(bf)]
+    expect_equal(res$scanned[which.max(res$power)], peak_grid, tolerance = 1e-12)
+    expect_lt(abs(res$tau - peak_grid), max(diff(res$scanned)))
     expect_lte(res$peak_power, 1 + 1e-9)
   }
 })
@@ -191,8 +196,9 @@ test_that("circadian.period exposes the full Lomb-Scargle spectrum", {
   expect_true(is.numeric(r$scanned) && is.numeric(r$power))
   expect_equal(length(r$scanned), length(r$power))
   expect_gt(length(r$scanned), 1)
-  # tau is the period at the spectral peak (spectrum is consistent with scalar)
-  expect_equal(r$tau, r$scanned[which.max(r$power)])
+  # tau is the sub-grid parabola-refined peak, so it sits within one grid step of
+  # the grid-node argmax of the spectrum.
+  expect_lt(abs(r$tau - r$scanned[which.max(r$power)]), max(diff(r$scanned)))
 
   # NA-branch (too short) returns an empty spectrum but a stable shape
   r2 <- circadian.period(counts[1:1440], ts[1:1440])

@@ -7,6 +7,10 @@ output:
 bibliography: ../REFERENCES.bib
 csl: ../apa.csl
 link-citations: true
+vignette: >
+  %\VignetteIndexEntry{Fractal and nonlinear dynamics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}

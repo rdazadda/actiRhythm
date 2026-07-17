@@ -59,6 +59,7 @@ test_that("non-wear detectors recover an injected gap and differ as designed", {
 
 test_that("read.actigraph.csv parses an ActiLife epoch CSV", {
   f <- tempfile(fileext = ".csv")
+  on.exit(unlink(f), add = TRUE)
   writeLines(c(
     "------------ Data File Created By ActiGraph GT3X+ ActiLife v6.13.3 date format M/d/yyyy at 30 Hz Filter Normal -----------",
     "Serial Number: NEO1B41100262", "Start Time 10:00:00", "Start Date 1/1/2024",

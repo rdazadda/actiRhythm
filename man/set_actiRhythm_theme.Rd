@@ -9,6 +9,10 @@ set_actiRhythm_theme(...)
 \arguments{
 \item{...}{Arguments passed to theme_actiRhythm()}
 }
+\value{
+\code{NULL}, invisibly; called for its side effect of setting
+\code{theme_actiRhythm()} as the session default ggplot2 theme.
+}
 \description{
 Sets theme_actiRhythm() as the default ggplot2 theme for the session.
 }

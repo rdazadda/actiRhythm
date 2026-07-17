@@ -1656,6 +1656,7 @@ cosinor.extended <- function(counts, timestamps, harmonics = c(24, 12),
 #' Print method for extended cosinor analysis
 #' @param x actiRhythm_cosinor_extended object
 #' @param ... Additional arguments (ignored)
+#' @return Invisibly returns \code{x}.
 #' @export
 print.actiRhythm_cosinor_extended <- function(x, ...) {
   cat("Multi-Component Cosinor Analysis\n\n")
@@ -1705,6 +1706,7 @@ print.actiRhythm_cosinor_extended <- function(x, ...) {
 #' Print method for cosinor analysis
 #' @param x actiRhythm_cosinor object
 #' @param ... Additional arguments (ignored)
+#' @return Invisibly returns \code{x}.
 #' @export
 print.actiRhythm_cosinor <- function(x, ...) {
   cat("Cosinor Analysis Results\n\n")
@@ -1849,6 +1851,7 @@ print.actiRhythm_cosinor <- function(x, ...) {
 #' @param x Object of class 'actiRhythm_circadian'
 #' @param ... Additional arguments (unused)
 #'
+#' @return Invisibly returns \code{x}.
 #' @export
 print.actiRhythm_circadian <- function(x, ...) {
   cat("\nCircadian Rhythm Analysis\n\n")

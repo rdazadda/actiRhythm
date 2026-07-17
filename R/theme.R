@@ -197,6 +197,8 @@ theme_actiRhythm <- function(base_size = 14, base_family = "", grid = TRUE, dark
 #'
 #' @param ... Arguments passed to theme_actiRhythm()
 #'
+#' @return \code{NULL}, invisibly; called for its side effect of setting
+#'   \code{theme_actiRhythm()} as the session default ggplot2 theme.
 #' @export
 set_actiRhythm_theme <- function(...) {
   ggplot2::theme_set(theme_actiRhythm(...))

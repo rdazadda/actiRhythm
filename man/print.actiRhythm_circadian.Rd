@@ -11,6 +11,9 @@
 
 \item{...}{Additional arguments (unused)}
 }
+\value{
+Invisibly returns \code{x}.
+}
 \description{
 Print Method for Circadian Rhythm Results
 }

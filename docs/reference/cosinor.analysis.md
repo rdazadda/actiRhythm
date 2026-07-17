@@ -90,10 +90,10 @@ Where:
 
 - T = period (typically 24 hours)
 
-- φ = acrophase (phase angle, converted to time)
+- \\\phi\\ = acrophase (phase angle, converted to time)
 
-The model is fit using linear least squares on the linearized form: Y(t)
-= M + β₁·cos(2πt/T) + β₂·sin(2πt/T)
+The model is fit using linear least squares on the linearized form:
+\$\$Y(t) = M + \beta_1 \cos(2\pi t / T) + \beta_2 \sin(2\pi t / T)\$\$
 
 ## References
 

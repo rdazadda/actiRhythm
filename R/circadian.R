@@ -1056,11 +1056,11 @@ social.jet.lag <- function(sleep_periods, work_days = NULL) {
 #'   \item M = mesor (rhythm-adjusted mean)
 #'   \item A = amplitude (half peak-to-trough difference)
 #'   \item T = period (typically 24 hours)
-#'   \item φ = acrophase (phase angle, converted to time)
+#'   \item \eqn{\phi} = acrophase (phase angle, converted to time)
 #' }
 #'
 #' The model is fit using linear least squares on the linearized form:
-#' Y(t) = M + β₁·cos(2πt/T) + β₂·sin(2πt/T)
+#' \deqn{Y(t) = M + \beta_1 \cos(2\pi t / T) + \beta_2 \sin(2\pi t / T)}
 #'
 #' @references
 #' \insertRef{nelson1979}{actiRhythm}
@@ -1150,7 +1150,7 @@ cosinor.analysis <- function(counts, timestamps, period = 24, wear_time = NULL,
   # Angular frequency for 24-hour period
   omega <- 2 * pi / period
 
-  # Design matrix: [1, cos(ωt), sin(ωt)]
+  # Design matrix: [1, cos(wt), sin(wt)]
   cos_term <- cos(omega * t_hours)
   sin_term <- sin(omega * t_hours)
 

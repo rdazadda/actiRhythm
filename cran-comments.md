@@ -5,27 +5,54 @@ rhythm from activity counts and raw accelerometer recordings.
 
 ## Test environments
 
-- Windows 11, R 4.5.3 (local)
+- win-builder, R-devel (R Under development, 2026-07-16 r90264 ucrt),
+  Windows Server 2022
+- Windows 11, R 4.5.3 (local), `R CMD check --as-cran`
 - GitHub Actions: ubuntu-latest, windows-latest, and macos-latest, on R release
   and R-devel
-- win-builder, R-devel
 
 ## R CMD check results
 
-Local `R CMD check --as-cran` (Windows 11, R 4.5.3): 0 errors | 0 warnings | 1 note.
+win-builder R-devel (R Under development, 2026-07-16 r90264 ucrt): 0 errors |
+0 warnings | 1 note. The PDF and HTML manuals, the vignettes, the examples, and
+the test suite all build and pass.
 
 The one note is the expected new-submission note:
 
 ```
 * checking CRAN incoming feasibility ... NOTE
-  Maintainer: 'Raymond Dacosta Azadda <rdazadda@alaska.edu>'
-  New submission
+Maintainer: 'Raymond Dacosta Azadda <rdazadda@alaska.edu>'
+
+New submission
+
+Possibly misspelled words in DESCRIPTION:
+  Bushell (24:32)
+  Cornelissen (21:50)
+  ENMO (33:61)
+  Hees (32:52, 34:65)
+  Kantelhardt (27:5)
+  Lomb (23:51)
+  Marler (22:43)
+  Peng (26:29)
+  Scargle (23:56)
+  Sokolove (24:19)
+  Someren (19:19)
+  Winnebeck (30:19)
+  al (16:73, 19:30, ...)
+  cosinor (20:5, 21:5)
+  et (16:70, 19:27, ...)
+  interdaily (15:66)
+  intradaily (16:24)
 ```
 
+The flagged words are all spelled correctly: author surnames from the method
+references (Bushell, Cornelissen, Hees, Kantelhardt, Lomb, Marler, Peng,
+Scargle, Sokolove, Someren, Winnebeck), standard chronobiology terms (cosinor,
+interdaily, intradaily, ENMO), and "et al." from the citations. They are listed
+in `inst/WORDLIST`.
+
 The `URL` and `BugReports` fields point to the package's public GitHub
-repository, which will be live at the time of submission. Any words flagged by
-the spell check are correctly spelled chronobiology terms or author surnames from
-the method references, all listed in `inst/WORDLIST`.
+repository, which is live.
 
 ## Notes
 

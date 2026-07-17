@@ -1,8 +1,7 @@
 ## Submission
 
-This is a new submission. actiRhythm is a standalone package for circadian
-rest-activity rhythm analysis of activity time series (it is the analysis engine
-behind a larger actigraphy dashboard, released here as an independent package).
+This is a new submission. actiRhythm quantifies the circadian rest-activity
+rhythm from activity counts and raw accelerometer recordings.
 
 ## Test environments
 

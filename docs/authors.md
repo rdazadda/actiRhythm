@@ -4,9 +4,9 @@
 
 - **Raymond Dacosta Azadda**. Author, maintainer.
 
-- **Andrew Grogan-Kaylor**. Author.
+- **CEAL Team**. Author.
 
-- **KyungSook Lee**. Author.
+- **Stacy Rasmus**. Author.
 
 ## Citation
 

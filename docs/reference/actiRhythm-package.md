@@ -25,6 +25,6 @@ Authors:
 
 - Raymond Dacosta Azadda <rdazadda@alaska.edu>
 
-- Andrew Grogan-Kaylor <agrogan@umich.edu>
+- CEAL Team
 
-- KyungSook Lee <klee98@alaska.edu>
+- Stacy Rasmus

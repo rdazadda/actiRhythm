@@ -27,8 +27,8 @@ Useful links:
 Authors:
 \itemize{
   \item Raymond Dacosta Azadda \email{rdazadda@alaska.edu}
-  \item Andrew Grogan-Kaylor \email{agrogan@umich.edu}
-  \item KyungSook Lee \email{klee98@alaska.edu}
+  \item CEAL Team
+  \item Stacy Rasmus
 }
 
 }

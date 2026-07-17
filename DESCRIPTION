@@ -7,21 +7,18 @@ Authors@R: c(
     person("Raymond Dacosta", "Azadda",
            email = "rdazadda@alaska.edu",
            role = c("aut", "cre")),
-    person("Andrew", "Grogan-Kaylor",
-           email = "agrogan@umich.edu",
-           role = "aut"),
-    person("KyungSook", "Lee",
-           email = "klee98@alaska.edu",
-           role = "aut"))
-Description: Quantifies the circadian rest-activity rhythm of a single subject
-    from activity counts. Analyses run on an activity-count vector and its
+    person("CEAL Team", role = "aut"),
+    person("Stacy", "Rasmus", role = "aut"))
+Description: Quantifies the circadian rest-activity rhythm from activity
+    counts. Analyses run on an activity-count vector and its
     timestamps, and a built-in reader loads 'ActiGraph' '.agd' files (an
     'SQLite' database) directly. Computes nonparametric metrics (interdaily
     stability (IS) and intradaily variability (IV) following Witting et al.
     (1990) <doi:10.1016/0006-3223(90)90523-5>; relative amplitude (RA), the
     least-active 5-hour window (L5), and the most-active 10-hour window (M10)
     following Van Someren et al. (1999) <doi:10.3109/07420529908998724>),
-    cosinor models with a rhythmicity test and confidence ellipses (Cornelissen
+    cosinor models with a rhythmicity test, confidence ellipses, population-mean
+    cosinor, and two-group parameter comparison (Cornelissen
     (2014) <doi:10.1186/1742-4682-11-16>; Marler et al. (2006)
     <doi:10.1002/sim.2466>), period estimation by Lomb-Scargle and chi-square
     periodograms (Sokolove and Bushell (1978) <doi:10.1016/0022-5193(78)90022-X>)
@@ -35,10 +32,9 @@ Description: Quantifies the circadian rest-activity rhythm of a single subject
     'GENEActiv' '.bin'), auto-calibrates them (van Hees et al. (2014)
     <doi:10.1152/japplphysiol.00421.2014>), and derives the ENMO, MAD, and
     z-angle metrics with diary-free sleep-period detection (van Hees et al.
-    (2018) <doi:10.1038/s41598-018-31266-z>), matching 'GGIR' output. A batch
+    (2018) <doi:10.1038/s41598-018-31266-z>), cross-checked against 'GGIR'. A batch
     mode runs the analysis over a folder of files and writes a multi-sheet
-    'Excel' workbook. Developed by the Center for Alaska Native Health Research
-    (CANHR).
+    'Excel' workbook.
 License: MIT + file LICENSE
 URL: https://github.com/rdazadda/actiRhythm, https://rdazadda.github.io/actiRhythm/
 BugReports: https://github.com/rdazadda/actiRhythm/issues

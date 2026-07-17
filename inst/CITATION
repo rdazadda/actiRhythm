@@ -2,9 +2,9 @@ bibentry(
   bibtype  = "Manual",
   title    = "actiRhythm: Circadian Rest-Activity Rhythm Analysis",
   author   = c(
-    person("Raymond Dacosta", "Azadda"),
-    person("Andrew", "Grogan-Kaylor"),
-    person("KyungSook", "Lee")
+    person(c("Raymond", "Dacosta"), "Azadda"),
+    person("CEAL Team"),
+    person("Stacy", "Rasmus")
   ),
   year     = "2026",
   note     = "R package version 0.1.0",

@@ -615,6 +615,12 @@ circadian.workbook(agd$axis1, agd$timestamp, file = "subject01.xlsx")
 - When a rhythm drifts, shifts phase, or fragments across the recording,
   see [Nonstationary and complex
   rhythms](https://rdazadda.github.io/actiRhythm/articles/nonstationary-rhythms.html).
+- Every method family has its own walkthrough as well: cosinor models,
+  period and spectral analysis, sleep and rest detection, phase and
+  regularity, fractal and nonlinear dynamics, choosing a method, and
+  validation against reference packages. The full set is in the
+  [articles
+  index](https://rdazadda.github.io/actiRhythm/articles/index.html).
 - [`?circadian.rhythm`](https://rdazadda.github.io/actiRhythm/reference/circadian.rhythm.md),
   [`?cosinor.analysis`](https://rdazadda.github.io/actiRhythm/reference/cosinor.analysis.md),
   [`?circadian.period`](https://rdazadda.github.io/actiRhythm/reference/circadian.period.md),

@@ -4,7 +4,7 @@ Title: Circadian Rest-Activity Rhythm Analysis
 Version: 0.1.0
 Date: 2026-06-21
 Authors@R: c(
-    person("Raymond Dacosta", "Azadda",
+    person(c("Raymond", "Dacosta"), "Azadda",
            email = "rdazadda@alaska.edu",
            role = c("aut", "cre")),
     person("CEAL Team", role = "aut"),

@@ -8,8 +8,6 @@ rhythm from activity counts and raw accelerometer recordings.
 - win-builder, R-devel (R Under development, 2026-07-16 r90264 ucrt),
   Windows Server 2022
 - Windows 11, R 4.5.3 (local), `R CMD check --as-cran`
-- GitHub Actions: ubuntu-latest, windows-latest, and macos-latest, on R release
-  and R-devel
 
 ## R CMD check results
 
@@ -53,13 +51,3 @@ in `inst/WORDLIST`.
 
 The `URL` and `BugReports` fields point to the package's public GitHub
 repository, which is live.
-
-## Notes
-
-- No `\dontrun{}` is used. Examples either run quickly or, where they read the
-  bundled sample data or perform a full multi-method analysis, are wrapped in
-  `\donttest{}`.
-- The package implements published circadian methods, cited by author and year
-  in the Description and in full in each function's `\references` section.
-- Functions that draw bootstrap samples take an optional `seed` argument passed
-  to `set.seed()`; they do not otherwise alter the global random-number state.

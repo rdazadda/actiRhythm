@@ -122,7 +122,7 @@ Demonstrated in *Beyond the basics*.
 ## When does the person sleep, and how regular?
 
 - **A per-epoch sleep/wake label from counts**: `sleep.cole.kripke()` for adults
-  [@cole1992], `sleep.sadeh()` for children and adolescents [@sadeh1994].
+  [@cole1992], `sleep.sadeh()` validated on adults and adolescents [@sadeh1994].
 - **Regularity of that label day to day**: `sleep.regularity.index()`
   [@phillips2017], with `sri.matrix()` for the day-by-day heatmap.
 - **Each night's onset and wake, straight from the counts**:

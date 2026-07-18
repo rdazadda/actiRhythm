@@ -40,4 +40,6 @@ ultradian.bandpower(100 + 50 * sin(2 * pi * th / 4), ts)   # a 4-hour rhythm
 }
 \references{
 \insertRef{percival2000}{actiRhythm}
+
+\insertRef{leise2013}{actiRhythm}
 }

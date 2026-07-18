@@ -161,8 +161,8 @@ detector resolves one main sleep episode per night with onset and wake clock tim
 - **Onset and wake times** from `sleep.changepoints()` are clock times; read them
   as "when did the main rest bout begin and end", and read `mean_sleep_duration` as
   the average nightly rest length.
-- **Cole-Kripke vs Sadeh.** Cole-Kripke was validated for adults [@cole1992],
-  Sadeh for children and adolescents [@sadeh1994]; pick by population. They will
+- **Cole-Kripke vs Sadeh.** Cole-Kripke was validated on adults [@cole1992],
+  Sadeh on adults and adolescents [@sadeh1994]. They will
   not agree epoch-for-epoch, and the disagreement is largest at the sleep-wake
   boundary, not in the middle of the night.
 
@@ -272,7 +272,9 @@ The mean LIDS period lands in the roughly 90-to-130-minute band, near Winnebeck'
 
 The epoch scorers follow @cole1992 with the Webster rescoring
 rules [@webster1982] and @sadeh1994. The bout detectors
-implement the CircaCP change-point method of @chensun2024, the
+follow the two-stage CircaCP design of @chensun2024 (cosinor segmentation, then a
+single change point inside each segment), with a least-squares mean-shift cost in
+place of CircaCP's gamma-scale MIC criterion, the
 Roenneberg / MASDA consolidation [@roenneberg2015] with the open re-implementation of
 @loock2021, the @crespo2012 morphology pipeline, and the hidden-Markov rest-activity
 model of @huang2018hmm; `lids()` follows @winnebeck2018.

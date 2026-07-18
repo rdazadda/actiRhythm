@@ -23,6 +23,8 @@
 #' @references
 #' \insertRef{lim2011}{actiRhythm}
 #'
+#' \insertRef{hammad2021}{actiRhythm}
+#'
 #' @examples
 #' set.seed(1)
 #' counts <- as.integer(stats::runif(5000) < 0.1) * 100

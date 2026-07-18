@@ -9,8 +9,9 @@ Authors@R: c(
            role = c("aut", "cre")),
     person("CEAL Team", role = "aut"),
     person("Stacy", "Rasmus", role = "aut"))
-Description: Quantifies the circadian rest-activity rhythm from activity
-    counts. Analyses run on an activity-count vector and its
+Description: Quantifies the circadian rest-activity rhythm, the roughly 24-hour
+    cycle of activity and rest, from activity counts and raw accelerometer
+    recordings. Analyses run on an activity-count vector and its
     timestamps, and a built-in reader loads 'ActiGraph' '.agd' files (an
     'SQLite' database) directly. Computes nonparametric metrics (interdaily
     stability (IS) and intradaily variability (IV) following Witting et al.
@@ -20,8 +21,9 @@ Description: Quantifies the circadian rest-activity rhythm from activity
     cosinor models with a rhythmicity test, confidence ellipses, population-mean
     cosinor, and two-group parameter comparison (Cornelissen
     (2014) <doi:10.1186/1742-4682-11-16>; Marler et al. (2006)
-    <doi:10.1002/sim.2466>), period estimation by Lomb-Scargle and chi-square
-    periodograms (Sokolove and Bushell (1978) <doi:10.1016/0022-5193(78)90022-X>)
+    <doi:10.1002/sim.2466>), period estimation by Lomb-Scargle (Lomb (1976)
+    <doi:10.1007/BF00648343>; Scargle (1982) <doi:10.1086/160554>) and chi-square
+    (Sokolove and Bushell (1978) <doi:10.1016/0022-5193(78)90022-X>) periodograms
     with bootstrap confidence intervals and a sliding-window spectrogram, fractal
     and nonlinear measures (Peng et al. (1994) <doi:10.1103/PhysRevE.49.1685>;
     Kantelhardt et al. (2002) <doi:10.1016/S0378-4371(02)01383-3>), the Sleep

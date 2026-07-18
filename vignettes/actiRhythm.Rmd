@@ -279,7 +279,7 @@ first if a recording has device-off stretches.
 The metrics so far describe the rhythm; the next need a per-epoch sleep or wake
 label. `sleep.cole.kripke()` produces that label directly from the counts, the
 standard count-based classifier for adults [@cole1992], with
-`sleep.sadeh()` as the children-and-adolescents alternative.
+`sleep.sadeh()`, validated on adults and adolescents, as the alternative.
 
 ```{r scoring}
 state <- sleep.cole.kripke(agd$axis1)

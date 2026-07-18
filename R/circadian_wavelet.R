@@ -187,6 +187,8 @@ wavelet.coi <- function(timestamps, omega0 = 6, epoch_length = 60) {
 #' @references
 #' \insertRef{percival2000}{actiRhythm}
 #'
+#' \insertRef{leise2013}{actiRhythm}
+#'
 #' @examples
 #' ts <- seq(as.POSIXct("2024-01-01", tz = "UTC"), by = 60, length.out = 2 * 1440)
 #' th <- as.numeric(difftime(ts, ts[1], units = "hours"))

@@ -11,8 +11,11 @@ composite.phase.deviation(onset_hours, reference_phase = NULL)
 decimal hours (e.g. daily L5 onsets).}
 
 \item{reference_phase}{Optional reference phase in decimal hours (e.g. a
-scheduled/expected time, or a group mean). Default \code{NULL} uses the
-individual's own mean phase (accuracy term = 0).}
+scheduled/expected time, or a group mean). With the default \code{NULL} the
+accuracy term is measured from the individual's own mean phase, so it
+collapses onto the precision term and \code{CPD = sqrt(2) * mean(|precision|)},
+a within-individual dispersion measure. The published misalignment CPD of
+Fischer and Roenneberg requires an external \code{reference_phase}.}
 }
 \value{
 List with \code{CPD}, \code{precision} (mean absolute deviation from

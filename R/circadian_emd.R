@@ -4,10 +4,10 @@
   list(maxi = which(s < 0) + 1L, mini = which(s > 0) + 1L)
 }
 
-# Sift one intrinsic mode function out of the residual h. Stops on the Wu & Huang
-# (2009) Cauchy-type energy ratio sum((h - h1)^2) / sum(h^2); the ~1e-3 threshold
-# gives proper convergence (the 0.2-0.3 range belongs to Huang's per-point SD, a
-# different statistic).
+# Sift one intrinsic mode function out of the residual h. Stops on a Cauchy-type
+# convergence test (Huang et al. 1998), here in the energy-ratio form
+# sum((h - h1)^2) / sum(h^2); the ~1e-3 threshold gives proper convergence (the
+# 0.2-0.3 range belongs to Huang's per-point SD, a different statistic).
 .emd_sift_one <- function(x, max_sift = 50L, cauchy_tol = 1e-3) {
   h <- x; n <- length(h)
   for (it in seq_len(max_sift)) {

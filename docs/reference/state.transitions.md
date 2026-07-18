@@ -43,11 +43,18 @@ Lim et al. (2011).
 
 ## References
 
-Lim ASP, Yu L, Costa MD, Leurgans SE, Buchman AS, Bennett DA, Saper CB
+Lim ASP, Yu L, Costa MD, Buchman AS, Bennett DA, Leurgans SE, Saper CB
 (2011). “Quantification of the fragmentation of rest-activity patterns
 in elderly individuals using a state transition analysis.” *Sleep*,
 **34**(11), 1569–1581.
 [doi:10.5665/sleep.1400](https://doi.org/10.5665/sleep.1400) .
+
+Hammad G, Reyt M, Beliy N, Baillet M, Deantoni M, Lesoinne A, Muto V,
+Schmidt C (2021). “pyActigraphy: open-source python package for
+actigraphy data visualization and analysis.” *PLOS Computational
+Biology*, **17**(10), e1009514.
+[doi:10.1371/journal.pcbi.1009514](https://doi.org/10.1371/journal.pcbi.1009514)
+.
 
 ## Examples
 

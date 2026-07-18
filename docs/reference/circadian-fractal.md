@@ -24,9 +24,9 @@ on detrended fluctuation analysis.” *Physical Review E*, **64**(1),
 .
 
 Hu K, Van Someren EJW, Shea SA, Scheer FAJL (2009). “Reduction of scale
-invariance of activity fluctuations with aging and Alzheimer's disease.”
-*Proceedings of the National Academy of Sciences*, **106**(8),
-2490–2494.
+invariance of activity fluctuations with aging and Alzheimer's disease:
+Involvement of the circadian pacemaker.” *Proceedings of the National
+Academy of Sciences*, **106**(8), 2490–2494.
 [doi:10.1073/pnas.0806087106](https://doi.org/10.1073/pnas.0806087106) .
 
 Richman JS, Moorman JR (2000). “Physiological time-series analysis using

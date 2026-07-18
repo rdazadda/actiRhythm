@@ -335,12 +335,12 @@ did the main rest bout begin and end”, and read
 <code>mean_sleep_duration</code> as the average nightly rest
 length.</li>
 <li>
-<strong>Cole-Kripke vs Sadeh.</strong> Cole-Kripke was validated for
+<strong>Cole-Kripke vs Sadeh.</strong> Cole-Kripke was validated on
 adults <span class="citation">(<a href="#ref-cole1992">Cole et al.,
-1992</a>)</span>, Sadeh for children and adolescents <span class="citation">(<a href="#ref-sadeh1994">Sadeh et al.,
-1994</a>)</span>; pick by population. They will not agree
-epoch-for-epoch, and the disagreement is largest at the sleep-wake
-boundary, not in the middle of the night.</li>
+1992</a>)</span>, Sadeh on adults and adolescents <span class="citation">(<a href="#ref-sadeh1994">Sadeh et al.,
+1994</a>)</span>. They will not agree epoch-for-epoch, and the
+disagreement is largest at the sleep-wake boundary, not in the middle of
+the night.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -526,9 +526,11 @@ the recording at hand.</li>
 </h2>
 <p>The epoch scorers follow <span class="citation">Cole et al. (<a href="#ref-cole1992">1992</a>)</span> with the Webster rescoring rules
 <span class="citation">(<a href="#ref-webster1982">Webster et al.,
-1982</a>)</span> and <span class="citation">Sadeh et al. (<a href="#ref-sadeh1994">1994</a>)</span>. The bout detectors implement the
-CircaCP change-point method of <span class="citation">Chen &amp; Sun (<a href="#ref-chensun2024">2024</a>)</span>, the Roenneberg / MASDA
-consolidation <span class="citation">(<a href="#ref-roenneberg2015">Roenneberg et al., 2015</a>)</span> with the
+1982</a>)</span> and <span class="citation">Sadeh et al. (<a href="#ref-sadeh1994">1994</a>)</span>. The bout detectors follow the
+two-stage CircaCP design of <span class="citation">Chen &amp; Sun (<a href="#ref-chensun2024">2024</a>)</span> (cosinor segmentation, then a
+single change point inside each segment), with a least-squares
+mean-shift cost in place of CircaCP’s gamma-scale MIC criterion, the
+Roenneberg / MASDA consolidation <span class="citation">(<a href="#ref-roenneberg2015">Roenneberg et al., 2015</a>)</span> with the
 open re-implementation of <span class="citation">Loock et al. (<a href="#ref-loock2021">2021</a>)</span>, the <span class="citation">Crespo et al. (<a href="#ref-crespo2012">2012</a>)</span> morphology pipeline, and the
 hidden-Markov rest-activity model of <span class="citation">Huang et al.
 (<a href="#ref-huang2018hmm">2018</a>)</span>; <code><a href="../reference/lids.html">lids()</a></code>

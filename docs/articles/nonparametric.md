@@ -482,7 +482,8 @@ article and the package’s test suite.
 Danilevicz, I. M., Hees, V. T. van, Heide, F. van der, Jacob, L.,
 Landre, B., Benadjaoud, M. A., & Sabia, S. (2024). Measures of
 fragmentation of rest activity patterns: Mathematical properties and
-interpretability. *BMC Medical Research Methodology*, *24*, 132.
+interpretability based on accelerometer real life data. *BMC Medical
+Research Methodology*, *24*, 132.
 <https://doi.org/10.1186/s12874-024-02255-w>
 
 Goncalves, B. S. B., Cavalcanti, P. R. A., Tavares, G. R., Campos, T.
@@ -490,8 +491,8 @@ F., & Araujo, J. F. (2014). Nonparametric methods in actigraphy: An
 update. *Sleep Science*, *7*(3), 158–164.
 <https://doi.org/10.1016/j.slsci.2014.09.013>
 
-Lim, A. S. P., Yu, L., Costa, M. D., Leurgans, S. E., Buchman, A. S.,
-Bennett, D. A., & Saper, C. B. (2011). Quantification of the
+Lim, A. S. P., Yu, L., Costa, M. D., Buchman, A. S., Bennett, D. A.,
+Leurgans, S. E., & Saper, C. B. (2011). Quantification of the
 fragmentation of rest-activity patterns in elderly individuals using a
 state transition analysis. *Sleep*, *34*(11), 1569–1581.
 <https://doi.org/10.5665/sleep.1400>

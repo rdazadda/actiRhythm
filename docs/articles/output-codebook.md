@@ -168,7 +168,8 @@ analysis of complex physiologic time series. *Physical Review Letters*,
 Danilevicz, I. M., Hees, V. T. van, Heide, F. van der, Jacob, L.,
 Landre, B., Benadjaoud, M. A., & Sabia, S. (2024). Measures of
 fragmentation of rest activity patterns: Mathematical properties and
-interpretability. *BMC Medical Research Methodology*, *24*, 132.
+interpretability based on accelerometer real life data. *BMC Medical
+Research Methodology*, *24*, 132.
 <https://doi.org/10.1186/s12874-024-02255-w>
 
 Kantelhardt, J. W., Zschiegner, S. A., Koscielny-Bunde, E., Havlin, S.,
@@ -177,8 +178,8 @@ analysis of nonstationary time series. *Physica A: Statistical Mechanics
 and Its Applications*, *316*(1-4), 87–114.
 <https://doi.org/10.1016/S0378-4371(02)01383-3>
 
-Lim, A. S. P., Yu, L., Costa, M. D., Leurgans, S. E., Buchman, A. S.,
-Bennett, D. A., & Saper, C. B. (2011). Quantification of the
+Lim, A. S. P., Yu, L., Costa, M. D., Buchman, A. S., Bennett, D. A.,
+Leurgans, S. E., & Saper, C. B. (2011). Quantification of the
 fragmentation of rest-activity patterns in elderly individuals using a
 state transition analysis. *Sleep*, *34*(11), 1569–1581.
 <https://doi.org/10.5665/sleep.1400>

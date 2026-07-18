@@ -35,8 +35,9 @@ bout length.
 
 Danilevicz IM, van Hees VT, van der Heide F, Jacob L, Landre B,
 Benadjaoud MA, Sabia S (2024). “Measures of fragmentation of rest
-activity patterns: mathematical properties and interpretability.” *BMC
-Medical Research Methodology*, **24**, 132.
+activity patterns: mathematical properties and interpretability based on
+accelerometer real life data.” *BMC Medical Research Methodology*,
+**24**, 132.
 [doi:10.1186/s12874-024-02255-w](https://doi.org/10.1186/s12874-024-02255-w)
 .
 

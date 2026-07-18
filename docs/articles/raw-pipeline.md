@@ -326,7 +326,8 @@ the sleep detector relies on.
 Danilevicz, I. M., Hees, V. T. van, Heide, F. van der, Jacob, L.,
 Landre, B., Benadjaoud, M. A., & Sabia, S. (2024). Measures of
 fragmentation of rest activity patterns: Mathematical properties and
-interpretability. *BMC Medical Research Methodology*, *24*, 132.
+interpretability based on accelerometer real life data. *BMC Medical
+Research Methodology*, *24*, 132.
 <https://doi.org/10.1186/s12874-024-02255-w>
 
 Hees, V. T. van, Fang, Z., Langford, J., Assah, F., Mohammad, A., Silva,

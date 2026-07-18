@@ -33,8 +33,8 @@ A `ggplot` object.
 
 ## References
 
-Golyandina N, Zhigljavsky A (2013). “Singular Spectrum Analysis for Time
-Series.” *SpringerBriefs in Statistics*.
+Golyandina N, Zhigljavsky A (2013). *Singular Spectrum Analysis for Time
+Series*, SpringerBriefs in Statistics. Springer.
 [doi:10.1007/978-3-642-34913-3](https://doi.org/10.1007/978-3-642-34913-3)
 .
 

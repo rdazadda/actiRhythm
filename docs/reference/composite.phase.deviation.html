@@ -92,8 +92,11 @@ decimal hours (e.g. daily L5 onsets).</p></dd>
 
 <dt id="arg-reference-phase">reference_phase<a class="anchor" aria-label="anchor" href="#arg-reference-phase"></a></dt>
 <dd><p>Optional reference phase in decimal hours (e.g. a
-scheduled/expected time, or a group mean). Default <code>NULL</code> uses the
-individual's own mean phase (accuracy term = 0).</p></dd>
+scheduled/expected time, or a group mean). With the default <code>NULL</code> the
+accuracy term is measured from the individual's own mean phase, so it
+collapses onto the precision term and <code>CPD = sqrt(2) * mean(|precision|)</code>,
+a within-individual dispersion measure. The published misalignment CPD of
+Fischer and Roenneberg requires an external <code>reference_phase</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

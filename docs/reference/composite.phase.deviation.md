@@ -23,8 +23,11 @@ composite.phase.deviation(onset_hours, reference_phase = NULL)
 - reference_phase:
 
   Optional reference phase in decimal hours (e.g. a scheduled/expected
-  time, or a group mean). Default `NULL` uses the individual's own mean
-  phase (accuracy term = 0).
+  time, or a group mean). With the default `NULL` the accuracy term is
+  measured from the individual's own mean phase, so it collapses onto
+  the precision term and `CPD = sqrt(2) * mean(|precision|)`, a
+  within-individual dispersion measure. The published misalignment CPD
+  of Fischer and Roenneberg requires an external `reference_phase`.
 
 ## Value
 

@@ -359,9 +359,8 @@ Costa, M., Goldberger, A. L., & Peng, C.-K. (2002). Multiscale entropy
 analysis of complex physiologic time series. *Physical Review Letters*,
 *89*(6), 068102. <https://doi.org/10.1103/PhysRevLett.89.068102>
 
-Golyandina, N., & Zhigljavsky, A. (2013). Singular spectrum analysis for
-time series. *SpringerBriefs in Statistics*.
-<https://doi.org/10.1007/978-3-642-34913-3>
+Golyandina, N., & Zhigljavsky, A. (2013). *Singular spectrum analysis
+for time series*. Springer. <https://doi.org/10.1007/978-3-642-34913-3>
 
 Huang, N. E., Shen, Z., Long, S. R., Wu, M. C., Shih, H. H., Zheng, Q.,
 Yen, N. C., Tung, C. C., & Liu, H. H. (1998). The empirical mode

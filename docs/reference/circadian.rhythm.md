@@ -110,7 +110,8 @@ List with class 'actiRhythm_circadian' containing:
 
 ## Details
 
-**Non-Parametric Metrics (van Someren et al., 1999):**
+**Non-Parametric Metrics (L5/M10/RA: van Someren et al., 1999; IS/IV:
+Witting et al., 1990):**
 
 L5/M10 use a **minute-level sliding window**, not hourly aggregation, so
 timing is resolved to the minute rather than the hour.

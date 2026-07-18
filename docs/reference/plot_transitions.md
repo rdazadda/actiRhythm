@@ -30,7 +30,7 @@ A `ggplot` object.
 
 ## References
 
-Lim ASP, Yu L, Costa MD, Leurgans SE, Buchman AS, Bennett DA, Saper CB
+Lim ASP, Yu L, Costa MD, Buchman AS, Bennett DA, Leurgans SE, Saper CB
 (2011). “Quantification of the fragmentation of rest-activity patterns
 in elderly individuals using a state transition analysis.” *Sleep*,
 **34**(11), 1569–1581.

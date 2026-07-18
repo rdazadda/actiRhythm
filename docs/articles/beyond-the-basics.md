@@ -323,9 +323,8 @@ share of each clock hour the decoded path spends in the rest state.
 
 ## References
 
-Golyandina, N., & Zhigljavsky, A. (2013). Singular spectrum analysis for
-time series. *SpringerBriefs in Statistics*.
-<https://doi.org/10.1007/978-3-642-34913-3>
+Golyandina, N., & Zhigljavsky, A. (2013). *Singular spectrum analysis
+for time series*. Springer. <https://doi.org/10.1007/978-3-642-34913-3>
 
 Mormont, M. C., Waterhouse, J., Bleuzen, P., Giacchetti, S., Jami, A.,
 Bogdan, A., Lellouch, J., Misset, J. L., Touitou, Y., & Levi, F. (2000).

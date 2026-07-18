@@ -475,8 +475,8 @@ or wake label.
 [`sleep.cole.kripke()`](https://rdazadda.github.io/actiRhythm/reference/sleep.cole.kripke.md)
 produces that label directly from the counts, the standard count-based
 classifier for adults ([Cole et al., 1992](#ref-cole1992)), with
-[`sleep.sadeh()`](https://rdazadda.github.io/actiRhythm/reference/sleep.sadeh.md)
-as the children-and-adolescents alternative.
+[`sleep.sadeh()`](https://rdazadda.github.io/actiRhythm/reference/sleep.sadeh.md),
+validated on adults and adolescents, as the alternative.
 
 ``` r
 
@@ -690,8 +690,8 @@ Kunsch, H. R. (1989). The jackknife and the bootstrap for general
 stationary observations. *The Annals of Statistics*, *17*(3), 1217–1241.
 <https://doi.org/10.1214/aos/1176347265>
 
-Lim, A. S. P., Yu, L., Costa, M. D., Leurgans, S. E., Buchman, A. S.,
-Bennett, D. A., & Saper, C. B. (2011). Quantification of the
+Lim, A. S. P., Yu, L., Costa, M. D., Buchman, A. S., Bennett, D. A.,
+Leurgans, S. E., & Saper, C. B. (2011). Quantification of the
 fragmentation of rest-activity patterns in elderly individuals using a
 state transition analysis. *Sleep*, *34*(11), 1569–1581.
 <https://doi.org/10.5665/sleep.1400>

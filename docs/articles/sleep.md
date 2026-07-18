@@ -214,11 +214,11 @@ onset and wake clock times.
   are clock times; read them as “when did the main rest bout begin and
   end”, and read `mean_sleep_duration` as the average nightly rest
   length.
-- **Cole-Kripke vs Sadeh.** Cole-Kripke was validated for adults ([Cole
-  et al., 1992](#ref-cole1992)), Sadeh for children and adolescents
-  ([Sadeh et al., 1994](#ref-sadeh1994)); pick by population. They will
-  not agree epoch-for-epoch, and the disagreement is largest at the
-  sleep-wake boundary, not in the middle of the night.
+- **Cole-Kripke vs Sadeh.** Cole-Kripke was validated on adults ([Cole
+  et al., 1992](#ref-cole1992)), Sadeh on adults and adolescents ([Sadeh
+  et al., 1994](#ref-sadeh1994)). They will not agree epoch-for-epoch,
+  and the disagreement is largest at the sleep-wake boundary, not in the
+  middle of the night.
 
 ## One bout per night, or every bout? The rest detectors compared
 
@@ -404,9 +404,11 @@ Winnebeck’s ~110 min median, recovered from the inactivity signal alone.
 
 The epoch scorers follow Cole et al. ([1992](#ref-cole1992)) with the
 Webster rescoring rules ([Webster et al., 1982](#ref-webster1982)) and
-Sadeh et al. ([1994](#ref-sadeh1994)). The bout detectors implement the
-CircaCP change-point method of Chen & Sun ([2024](#ref-chensun2024)),
-the Roenneberg / MASDA consolidation ([Roenneberg et al.,
+Sadeh et al. ([1994](#ref-sadeh1994)). The bout detectors follow the
+two-stage CircaCP design of Chen & Sun ([2024](#ref-chensun2024))
+(cosinor segmentation, then a single change point inside each segment),
+with a least-squares mean-shift cost in place of CircaCP’s gamma-scale
+MIC criterion, the Roenneberg / MASDA consolidation ([Roenneberg et al.,
 2015](#ref-roenneberg2015)) with the open re-implementation of Loock et
 al. ([2021](#ref-loock2021)), the Crespo et al.
 ([2012](#ref-crespo2012)) morphology pipeline, and the hidden-Markov

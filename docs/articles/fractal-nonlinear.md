@@ -368,8 +368,8 @@ Effect of trends on detrended fluctuation analysis. *Physical Review E*,
 
 Hu, K., Van Someren, E. J. W., Shea, S. A., & Scheer, F. A. J. L.
 (2009). Reduction of scale invariance of activity fluctuations with
-aging and Alzheimer’s disease. *Proceedings of the National Academy of
-Sciences*, *106*(8), 2490–2494.
+aging and Alzheimer’s disease: Involvement of the circadian pacemaker.
+*Proceedings of the National Academy of Sciences*, *106*(8), 2490–2494.
 <https://doi.org/10.1073/pnas.0806087106>
 
 Kantelhardt, J. W., Zschiegner, S. A., Koscielny-Bunde, E., Havlin, S.,

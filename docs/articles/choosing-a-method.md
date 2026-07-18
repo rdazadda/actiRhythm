@@ -147,7 +147,8 @@ Demonstrated in *Beyond the basics*.
   [`sleep.cole.kripke()`](https://rdazadda.github.io/actiRhythm/reference/sleep.cole.kripke.md)
   for adults ([Cole et al., 1992](#ref-cole1992)),
   [`sleep.sadeh()`](https://rdazadda.github.io/actiRhythm/reference/sleep.sadeh.md)
-  for children and adolescents ([Sadeh et al., 1994](#ref-sadeh1994)).
+  validated on adults and adolescents ([Sadeh et al.,
+  1994](#ref-sadeh1994)).
 - **Regularity of that label day to day**:
   [`sleep.regularity.index()`](https://rdazadda.github.io/actiRhythm/reference/sleep.regularity.index.md)
   ([Phillips et al., 2017](#ref-phillips2017)), with
@@ -296,9 +297,8 @@ identification of activity-rest periods based on actigraphy. *Medical &
 Biological Engineering & Computing*, *50*(4), 329–340.
 <https://doi.org/10.1007/s11517-012-0875-y>
 
-Golyandina, N., & Zhigljavsky, A. (2013). Singular spectrum analysis for
-time series. *SpringerBriefs in Statistics*.
-<https://doi.org/10.1007/978-3-642-34913-3>
+Golyandina, N., & Zhigljavsky, A. (2013). *Singular spectrum analysis
+for time series*. Springer. <https://doi.org/10.1007/978-3-642-34913-3>
 
 Huang, N. E., Shen, Z., Long, S. R., Wu, M. C., Shih, H. H., Zheng, Q.,
 Yen, N. C., Tung, C. C., & Liu, H. H. (1998). The empirical mode

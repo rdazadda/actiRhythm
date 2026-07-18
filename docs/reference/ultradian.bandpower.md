@@ -48,6 +48,10 @@ Analysis*. Cambridge University Press.
 [doi:10.1017/CBO9780511841040](https://doi.org/10.1017/CBO9780511841040)
 .
 
+Leise TL (2013). “Wavelet analysis of circadian and ultradian behavioral
+rhythms.” *Journal of Circadian Rhythms*, **11**, 5.
+[doi:10.1186/1740-3391-11-5](https://doi.org/10.1186/1740-3391-11-5) .
+
 ## Examples
 
 ``` r

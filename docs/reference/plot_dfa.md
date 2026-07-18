@@ -51,9 +51,9 @@ Peng CK, Buldyrev SV, Havlin S, Simons M, Stanley HE, Goldberger AL
 .
 
 Hu K, Van Someren EJW, Shea SA, Scheer FAJL (2009). “Reduction of scale
-invariance of activity fluctuations with aging and Alzheimer's disease.”
-*Proceedings of the National Academy of Sciences*, **106**(8),
-2490–2494.
+invariance of activity fluctuations with aging and Alzheimer's disease:
+Involvement of the circadian pacemaker.” *Proceedings of the National
+Academy of Sciences*, **106**(8), 2490–2494.
 [doi:10.1073/pnas.0806087106](https://doi.org/10.1073/pnas.0806087106) .
 
 ## See also

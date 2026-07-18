@@ -136,8 +136,9 @@ rhythms with symmetric non-sinusoidal shapes.” *Statistics in Medicine*,
 **25**(22), 3893–3904.
 [doi:10.1002/sim.2466](https://doi.org/10.1002/sim.2466) .
 
-Wang J, Xian H, Di J, Zipunnikov V (2021). *ActCR: Extract Circadian
-Rhythms Metrics from Actigraphy Data*. R package.
+Di J, Zipunnikov V (2021). *ActCR: Extract Circadian Rhythms Metrics
+from Actigraphy Data*. R package version 0.2.0,
+<https://CRAN.R-project.org/package=ActCR>.
 
 ## Examples
 

@@ -5,6 +5,10 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/actiRhythm)](https://CRAN.R-project.org/package=actiRhythm)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/actiRhythm)](https://CRAN.R-project.org/package=actiRhythm)
 [![R-CMD-check](https://github.com/rdazadda/actiRhythm/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rdazadda/actiRhythm/actions/workflows/R-CMD-check.yaml)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
